@@ -29,34 +29,52 @@ public class Field {
 
     public void step()
     {
-        int firstCount = getFirstCount();
-        int secondCound = getSecondCount();
-
-        for(int i = 0; i < n; i++)
+        for(int y = 0; y < n; y++)
         {
-            if(i % 2 == 0)
-                for(int j = 0; j < m; j++)
-                    ;
-            else
-                for(int j = 0; j < m - 1; j++)
-                    ;
+            for(int x = 0; x < (y % 2 == 0 ? m : m-1); x++)
+            {
+                int firstCount = getFirstCount(y,x);
+                int secondCount = getSecondCount(y,x);
+            }
+            
             System.out.println();
         }
 
         printField();
     }
 
-    private int getFirstCount() {
+    public int getFirstCount(int y, int x) {
         int count = 0;
 
-
+        //TODO: добавить метод boolean Exists(y,x)
+        if(x > 0 && field[y][x-1].isAlive())
+            count++;
+        if(x < (y % 2 == 0 ? m : m-1) - 1 && field[y][x+1].isAlive())
+            count++;
+        if(y > 0 && field[y-1][x].isAlive())
+            count++;
+        if(y < n - 1 && field[y+1][x].isAlive())
+            count++;
+        if(y % 2 == 0 && x > 0)
+        {
+            if(y > 0 && field[y-1][x-1].isAlive())
+                count++;
+            if(y < n - 1 && field[y+1][x-1].isAlive())
+                count++;
+        }
+        else if (y % 2 == 1 && x < (y % 2 == 0 ? m : m-1) - 1)
+        {
+            if(y > 0 && field[y-1][x+1].isAlive())
+                count++;
+            if(y < n - 1 && field[y+1][x+1].isAlive())
+                count++;
+        }
 
         return count;
     }
 
-    private int getSecondCount() {
+    private int getSecondCount(int y, int x) {
         int count = 0;
-
 
 
         return count;
@@ -84,5 +102,21 @@ public class Field {
                     System.out.print(" " + field[i][j]);
             System.out.println();
         }
+    }
+
+    public void setCell(int x, int y)
+    {
+        field[x][y].set();
+    }
+    public void clearCell(int x, int y)
+    {
+        field[x][y].clear();
+    }
+
+    private boolean exists(int y, int x)
+    {
+        if(y < 0 || x < 0 || y >= n || x >= m)
+            return false;
+        if()
     }
 }
