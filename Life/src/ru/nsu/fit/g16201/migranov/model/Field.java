@@ -1,9 +1,5 @@
 package ru.nsu.fit.g16201.migranov.model;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 public class Field {
     private static double LIVE_BEGIN =  2.0, LIVE_END =  3.3, BIRTH_BEGIN = 2.3, BIRTH_END = 2.9, FST_IMPACT = 1.0, SND_IMPACT = 0.3;
 
@@ -29,5 +25,10 @@ public class Field {
             }
         }
         System.out.println(field[0][2].isAlive());
+    }
+
+    public void step()
+    {
+        //шаг игры
     }
 }

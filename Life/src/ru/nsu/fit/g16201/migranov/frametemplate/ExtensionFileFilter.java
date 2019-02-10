@@ -1,4 +1,4 @@
-package ru.nsu.fit.g16201.migranov.mainframe;
+package ru.nsu.fit.g16201.migranov.frametemplate;
 
 import java.io.File;
 

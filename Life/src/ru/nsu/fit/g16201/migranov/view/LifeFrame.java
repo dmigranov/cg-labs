@@ -1,4 +1,4 @@
-package ru.nsu.fit.g16201.migranov;
+package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
 import java.awt.*;
