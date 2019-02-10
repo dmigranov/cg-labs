@@ -25,4 +25,10 @@ class Cell {
     public boolean isAlive() {
         return isAlive;
     }
+
+    @Override
+    public String toString()
+    {
+        return isAlive ? "1" : "0";
+    }
 }

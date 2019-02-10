@@ -2,33 +2,30 @@ package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import ru.nsu.fit.g16201.migranov.frametemplate.MainFrame;
 import ru.nsu.fit.g16201.migranov.model.Field;
 
-public class LifeFrame extends JFrame {
-    public static void main(String[] args)
+public class LifeFrame extends MainFrame {
+    public static void main(String[] args) throws Exception
     {
         new LifeFrame();
     }
 
-    public LifeFrame() {
+    public LifeFrame() throws Exception {
         //инициализация
-        super("Life");  //формат, группа?
+        super(600, 400, "Life");  //формат, группа?
 
-        try
-        {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        }
-        catch(Exception e)
-        {
-        }
 
         //setSize(720, 480);
-        setPreferredSize(new Dimension(800, 600));
-        setMinimumSize(new Dimension(800, 600));
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        addSubMenu("File", KeyEvent.VK_F);
+        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
+        addSubMenu("Help", KeyEvent.VK_H);
+        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
 
-        JToolBar toolBar = new JToolBar();
+        /*JToolBar toolBar = new JToolBar();
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
@@ -41,13 +38,23 @@ public class LifeFrame extends JFrame {
         menuItem = new JMenuItem("Black");
         menu.add(menuItem);
         //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
-        setJMenuBar(menuBar);
+        setJMenuBar(menuBar);*/
 
         add(new FieldPanel(100, 1));
 
-        pack();                                                         //ужимает всё при использовании setSize
+        //pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
 
-        Field field = new Field(5,5);
+
+    }
+
+    public void onAbout()
+    {
+        JOptionPane.showMessageDialog(this, "group 1234", "About Init", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void onExit()
+    {
+        System.exit(0);
     }
 }

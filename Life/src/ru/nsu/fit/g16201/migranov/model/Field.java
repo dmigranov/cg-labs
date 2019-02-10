@@ -24,11 +24,65 @@ public class Field {
                     field[i][j] = new Cell();
             }
         }
-        System.out.println(field[0][2].isAlive());
+
     }
 
     public void step()
     {
-        //шаг игры
+        int firstCount = getFirstCount();
+        int secondCound = getSecondCount();
+
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0)
+                for(int j = 0; j < m; j++)
+                    ;
+            else
+                for(int j = 0; j < m - 1; j++)
+                    ;
+            System.out.println();
+        }
+
+        printField();
+    }
+
+    private int getFirstCount() {
+        int count = 0;
+
+
+
+        return count;
+    }
+
+    private int getSecondCount() {
+        int count = 0;
+
+
+
+        return count;
+    }
+
+    public int getN() {
+        return n;
+    }
+
+
+    public int getM() {
+        return m;
+    }
+
+    //for testing only
+    private void printField()
+    {
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0)
+                for(int j = 0; j < m; j++)
+                    System.out.print(field[i][j] + " ");
+            else
+                for(int j = 0; j < m - 1; j++)
+                    System.out.print(" " + field[i][j]);
+            System.out.println();
+        }
     }
 }
