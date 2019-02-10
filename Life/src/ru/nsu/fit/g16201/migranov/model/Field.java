@@ -1,0 +1,33 @@
+package ru.nsu.fit.g16201.migranov.model;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Field {
+    private static double LIVE_BEGIN =  2.0, LIVE_END =  3.3, BIRTH_BEGIN = 2.3, BIRTH_END = 2.9, FST_IMPACT = 1.0, SND_IMPACT = 0.3;
+
+    private int m, n;
+    private Cell[][] field;
+    public Field (int m, int n)
+    {
+        this.m = m;
+        this.n = n;
+
+        field = new Cell[n][];
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0) {
+                field[i] = new Cell[m];
+                for(int j = 0; j < m; j++)
+                    field[i][j] = new Cell();
+            }
+            else {
+                field[i] = new Cell[m - 1];
+                for(int j = 0; j < m - 1; j++)
+                    field[i][j] = new Cell();
+            }
+        }
+        System.out.println(field[0][2].isAlive());
+    }
+}
