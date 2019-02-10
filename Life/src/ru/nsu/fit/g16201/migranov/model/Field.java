@@ -46,27 +46,28 @@ public class Field {
     public int getFirstCount(int y, int x) {
         int count = 0;
 
-        //TODO: добавить метод boolean Exists(y,x)
-        if(x > 0 && field[y][x-1].isAlive())
+        //прошлый вариант (без exists) был более оптимален, но этот проще?
+        if(exists(y, x - 1) && field[y][x-1].isAlive())
             count++;
-        if(x < (y % 2 == 0 ? m : m-1) - 1 && field[y][x+1].isAlive())
+        //if(x < (y % 2 == 0 ? m : m-1) - 1 && field[y][x+1].isAlive())
+        if(exists(y, x+1) && field[y][x+1].isAlive())
             count++;
-        if(y > 0 && field[y-1][x].isAlive())
+        if(exists(y - 1, x) && field[y-1][x].isAlive())
             count++;
-        if(y < n - 1 && field[y+1][x].isAlive())
+        if(exists(y+1, x) && field[y+1][x].isAlive())
             count++;
-        if(y % 2 == 0 && x > 0)
+        if(y % 2 == 0)
         {
-            if(y > 0 && field[y-1][x-1].isAlive())
+            if(exists(y-1, x-1) && field[y-1][x-1].isAlive())
                 count++;
-            if(y < n - 1 && field[y+1][x-1].isAlive())
+            if(exists(y+1,x-1) && field[y+1][x-1].isAlive())
                 count++;
         }
-        else if (y % 2 == 1 && x < (y % 2 == 0 ? m : m-1) - 1)
+        else if (y % 2 == 1)
         {
-            if(y > 0 && field[y-1][x+1].isAlive())
+            if(exists(y-1, x+1) && field[y-1][x+1].isAlive())
                 count++;
-            if(y < n - 1 && field[y+1][x+1].isAlive())
+            if(exists(y+1, x+1) && field[y+1][x+1].isAlive())
                 count++;
         }
 
@@ -76,6 +77,12 @@ public class Field {
     private int getSecondCount(int y, int x) {
         int count = 0;
 
+        if(exists(y - 2, x) && field[y-2][x].isAlive())
+            count++;
+        if(exists(y + 2, x) && field[y+2][x].isAlive())
+            count++;
+
+        //TODO: остальные условия
 
         return count;
     }
@@ -115,8 +122,8 @@ public class Field {
 
     private boolean exists(int y, int x)
     {
-        if(y < 0 || x < 0 || y >= n || x >= m)
+        if(y < 0 || x < 0 || y >= n || x >= (y % 2 == 0 ? m : m-1))
             return false;
-        if()
+        return true;
     }
 }
