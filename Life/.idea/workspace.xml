@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ab4219b-4b58-4aee-a2bf-fd04d200df5e" name="Default Changelist" comment="something">
+      <change afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/FieldTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Life.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Life.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Cell.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java" afterDir="false" />
     </list>
@@ -28,7 +30,7 @@
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
-              <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+              <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,12 +64,34 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="43" column="89" lean-forward="true" selection-start-line="43" selection-start-column="89" selection-end-line="43" selection-end-column="89" />
+            <state relative-caret-position="1422">
+              <caret line="117" column="39" selection-start-line="117" selection-start-column="39" selection-end-line="117" selection-end-column="39" />
               <folding>
-                <element signature="e#1380#1381#0" expanded="true" />
-                <element signature="e#1430#1431#0" expanded="true" />
+                <element signature="e#2158#2159#0" expanded="true" />
+                <element signature="e#2208#2209#0" expanded="true" />
+                <element signature="e#2609#2610#0" expanded="true" />
+                <element signature="e#2632#2633#0" expanded="true" />
+                <element signature="e#2686#2687#0" expanded="true" />
+                <element signature="e#2719#2720#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.4.0/junit-platform-commons-1.4.0.jar!/org/junit/platform/commons/util/ReflectionUtils.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="303" selection-start-line="303" selection-end-line="303" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/FieldTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
             </state>
           </provider>
         </entry>
@@ -109,6 +133,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -134,6 +159,7 @@
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Cell.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/FieldTest.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java" />
       </list>
     </option>
@@ -198,14 +224,27 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ru.nsu.fit.g16201.migranov.model" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="ru.nsu.fit.g16201.migranov.model" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Code\ComputerGraphics\Life\src\ru\nsu\fit\g16201\migranov\mainframe" />
@@ -223,7 +262,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.FieldTest">
     <configuration name="LifeFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g16201.migranov.view.LifeFrame" />
       <module name="Life" />
@@ -237,8 +276,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="FieldTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Life" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.nsu.fit.g16201.migranov.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ru.nsu.fit.g16201.migranov.model" />
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g16201.migranov.model.FieldTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FieldTest" />
         <item itemvalue="Application.LifeFrame" />
       </list>
     </recent_temporary>
@@ -252,7 +307,7 @@
       <updated>1549619067960</updated>
       <workItem from="1549619072506" duration="585000" />
       <workItem from="1549633352907" duration="722000" />
-      <workItem from="1549790985193" duration="9008000" />
+      <workItem from="1549790985193" duration="11107000" />
     </task>
     <task id="LOCAL-00001" summary="started writing model">
       <created>1549794535836</created>
@@ -296,15 +351,41 @@
       <option name="project" value="LOCAL" />
       <updated>1549801447080</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="well, at least I've got the idea">
+      <created>1549801715680</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1549801715680</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="FieldTest - 2019.02.10 at 20h 23m 11s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FieldTest - 2019.02.10 at 20h 23m 59s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FieldTest - 2019.02.10 at 20h 24m 41s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FieldTest - 2019.02.10 at 20h 25m 03s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FieldTest - 2019.02.10 at 20h 25m 25s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="FieldTest - 2019.02.10 at 20h 27m 33s.xml">
+      <configuration name="FieldTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10315000" />
+    <option name="totallyTimeSpent" value="12414000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25637585" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -314,7 +395,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3286119" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -342,7 +423,20 @@
     <MESSAGE value="started drawing some hexagons" />
     <MESSAGE value="well, not very good, but it's something" />
     <MESSAGE value="more model" />
-    <option name="LAST_COMMIT_MESSAGE" value="more model" />
+    <MESSAGE value="well, at least I've got the idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="well, at least I've got the idea" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/FieldTest.java</url>
+          <line>20</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/Downloads/FF_1234_Pupkin_Init_1/FF_1234_Pupkin_Init_1/.project">
@@ -415,17 +509,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/frametemplate/ExtensionFileFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="27" column="10" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -453,13 +540,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/frametemplate/ExtensionFileFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="27" column="10" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/FieldTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.4.0/junit-platform-commons-1.4.0.jar!/org/junit/platform/commons/util/ReflectionUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="303" selection-start-line="303" selection-end-line="303" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="43" column="89" lean-forward="true" selection-start-line="43" selection-start-column="89" selection-end-line="43" selection-end-column="89" />
+        <state relative-caret-position="1422">
+          <caret line="117" column="39" selection-start-line="117" selection-start-column="39" selection-end-line="117" selection-end-column="39" />
           <folding>
-            <element signature="e#1380#1381#0" expanded="true" />
-            <element signature="e#1430#1431#0" expanded="true" />
+            <element signature="e#2158#2159#0" expanded="true" />
+            <element signature="e#2208#2209#0" expanded="true" />
+            <element signature="e#2609#2610#0" expanded="true" />
+            <element signature="e#2632#2633#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+            <element signature="e#2719#2720#0" expanded="true" />
           </folding>
         </state>
       </provider>
