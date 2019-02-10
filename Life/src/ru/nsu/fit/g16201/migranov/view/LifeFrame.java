@@ -43,6 +43,8 @@ public class LifeFrame extends JFrame {
         //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
         setJMenuBar(menuBar);
 
+        add(new FieldPanel(100, 1));
+
         pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
 
