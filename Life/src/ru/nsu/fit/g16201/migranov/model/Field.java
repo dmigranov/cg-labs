@@ -30,6 +30,9 @@ public class Field {
 
     public void step()
     {
+        //todo: возможно, перерасчёт импактов нужно будет вынести туда, где будет изменение стейта клетки (для динамического изменения как в примерах). Тогда не надо будет обсчитывать все клетки
+        //в таком случае, после изменения состояния (т.е после степа) нужно будет пересчитать импакты как тут
+
         for(int y = 0; y < n; y++)
         {
             for(int x = 0; x < (y % 2 == 0 ? m : m-1); x++)
@@ -41,9 +44,29 @@ public class Field {
             }
         }
 
+        //может, для импактов лучше создавать отдельный массив?..
+        //пересчёт состояний
+        for(int y = 0; y < n; y++)
+        {
+            for (int x = 0; x < (y % 2 == 0 ? m : m - 1); x++)
+            {
+                Cell cell = field[y][x];
+                double impact = cell.getImpact();
+                if(!cell.isAlive() && (BIRTH_BEGIN <= impact && impact <= BIRTH_END))
+                    cell.set();
+                if (cell.isAlive() && !(LIVE_BEGIN <= impact && impact <= LIVE_END))
+                    cell.clear();
 
+            }
+        }
 
-        printField();
+        //printField();
+    }
+
+    //пересчитывает импакты вокруг точки с кооррдинатами y x - нужно при изменении состояния
+    private void recalculateImpacts(int y, int x)
+    {
+
     }
 
     protected int getFirstCount(int y, int x) {
@@ -120,8 +143,8 @@ public class Field {
         return m;
     }
 
-    //for testing only
-    private void printField()
+    //for testing purposes only
+    protected void printField()
     {
         for(int i = 0; i < n; i++)
         {
@@ -131,6 +154,20 @@ public class Field {
             else
                 for(int j = 0; j < m - 1; j++)
                     System.out.print(" " + field[i][j]);
+            System.out.println();
+        }
+    }
+
+    protected void printImpactField()
+    {
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0)
+                for(int j = 0; j < m; j++)
+                    System.out.print(field[i][j].getImpact() + " ");
+            else
+                for(int j = 0; j < m - 1; j++)
+                    System.out.print(" " + field[i][j].getImpact());
             System.out.println();
         }
     }

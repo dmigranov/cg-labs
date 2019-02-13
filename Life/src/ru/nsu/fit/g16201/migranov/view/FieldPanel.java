@@ -55,7 +55,7 @@ public class FieldPanel extends JPanel {
         //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
 
         int rh = k/2;
-        int rs =(int)Math.sqrt(3)* k /2;
+        int rs =(int)(Math.sqrt(3)* k /2);
 
         g.drawLine(x - k, y, x - rh, y + rs);
         g.drawLine(x - rh, y + rs, x + rh, y + rs);

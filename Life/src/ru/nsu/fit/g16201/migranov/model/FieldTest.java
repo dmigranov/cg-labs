@@ -34,10 +34,25 @@ class FieldTest {
     }
 
 
-    /*@org.junit.jupiter.api.Test
+    @org.junit.jupiter.api.Test
     void step()
     {
-        Field field = new Field(30, 30);
+        Field field = new Field(6, 5);
+        field.setCell(1, 1);
+        field.setCell(1, 2);
+        field.setCell(2, 1);
+        field.setCell(3, 2);
+        field.setCell(2, 4);
+        field.setCell(4, 4);
+
+        field.printField();
+
         field.step();
-    }*/
+
+        System.out.println();
+
+        field.printField();
+        System.out.println();
+        field.printImpactField();
+    }
 }
