@@ -5,6 +5,7 @@ public class Field {
 
     private int m, n;
     private Cell[][] field;
+    //TODO: возможно, в файле координаты описываются x,y а тут y,x! проверить!
     public Field (int m, int n)
     {
         this.m = m;
@@ -35,15 +36,17 @@ public class Field {
             {
                 int firstCount = getFirstCount(y,x);
                 int secondCount = getSecondCount(y,x);
+                double impact = FST_IMPACT * firstCount + SND_IMPACT * secondCount;
+                field[y][x].setImpact(impact);
             }
-            
-            System.out.println();
         }
+
+
 
         printField();
     }
 
-    public int getFirstCount(int y, int x) {
+    protected int getFirstCount(int y, int x) {
         int count = 0;
 
         //прошлый вариант (без exists) был более оптимален, но этот проще?
@@ -74,7 +77,7 @@ public class Field {
         return count;
     }
 
-    private int getSecondCount(int y, int x) {
+    protected int getSecondCount(int y, int x) {
         int count = 0;
 
         if(exists(y - 2, x) && field[y-2][x].isAlive())
@@ -82,7 +85,28 @@ public class Field {
         if(exists(y + 2, x) && field[y+2][x].isAlive())
             count++;
 
-        //TODO: остальные условия
+        if(y % 2 == 0)
+        {
+            if(exists(y + 1, x - 2) && field[y + 1][x - 2].isAlive())
+                count++;
+            if(exists(y - 1, x - 2) && field[y - 1][x - 2].isAlive())
+                count++;
+            if(exists(y + 1, x + 1) && field[y + 1][x + 1].isAlive())
+                count++;
+            if(exists(y - 1, x + 1) && field[y - 1][x + 1].isAlive())
+                count++;
+        }
+        else
+        {
+            if(exists(y + 1, x + 2) && field[y + 1][x + 2].isAlive())
+                count++;
+            if(exists(y - 1, x + 2) && field[y - 1][x + 2].isAlive())
+                count++;
+            if(exists(y + 1, x - 1) && field[y + 1][x - 1].isAlive())
+                count++;
+            if(exists(y - 1, x - 1) && field[y - 1][x - 1].isAlive())
+                count++;
+        }
 
         return count;
     }
@@ -111,13 +135,13 @@ public class Field {
         }
     }
 
-    public void setCell(int x, int y)
+    public void setCell(int y, int x)
     {
-        field[x][y].set();
+        field[y][x].set();
     }
-    public void clearCell(int x, int y)
+    public void clearCell(int y, int x)
     {
-        field[x][y].clear();
+        field[y][x].clear();
     }
 
     private boolean exists(int y, int x)

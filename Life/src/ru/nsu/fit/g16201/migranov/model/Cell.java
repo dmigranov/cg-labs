@@ -2,7 +2,7 @@ package ru.nsu.fit.g16201.migranov.model;
 
 class Cell {
     private boolean isAlive;
-    private int impact = 0;
+    private double impact = 0;
     public void set()
     {
         isAlive = true;
@@ -32,11 +32,11 @@ class Cell {
         return isAlive ? "1" : "0";
     }
 
-    public int getImpact() {
+    public double getImpact() {
         return impact;
     }
 
-    public void setImpact(int impact) {
+    public void setImpact(double impact) {
         this.impact = impact;
     }
 }
