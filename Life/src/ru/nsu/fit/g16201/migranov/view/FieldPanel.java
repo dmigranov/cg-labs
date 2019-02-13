@@ -4,10 +4,14 @@ import ru.nsu.fit.g16201.migranov.model.Field;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FieldPanel extends JPanel {
     private int k, w;           //w - толщина, k - длина ребра
     private Field field;
+
+    //TODO: java.awt.BufferedImage
 
     public FieldPanel(int k, int w)
     {
@@ -19,6 +23,14 @@ public class FieldPanel extends JPanel {
         field.step();
 
         //TODO: listeners
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                spanFill(e.getX(), e.getY(), Color.cyan);
+            }
+        });
     }
 
     @Override
@@ -54,6 +66,7 @@ public class FieldPanel extends JPanel {
         //A, D = x +- k, y
         //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
 
+        //TODO: это рисует повернутый на 90 градусов гексагон! исправить в брезенхэме
         int rh = k/2;
         int rs =(int)(Math.sqrt(3)* k /2);
 
@@ -64,5 +77,24 @@ public class FieldPanel extends JPanel {
         g.drawLine(x - k, y, x - rh, y - rs);
         g.drawLine(x - rh, y - rs, x + rh, y - rs);
         g.drawLine(x + k, y, x + rh, y - rs);
+    }
+
+    //Bresenham's line algorithm
+    private void drawLine(int x1)
+    {
+
+    }
+
+
+    public void spanFill(int x, int y, Color newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
+    {
+        //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
+        Color oldValue;
+
+        class Span
+        {
+            int y;
+            int lx, ly;
+        }
     }
 }
