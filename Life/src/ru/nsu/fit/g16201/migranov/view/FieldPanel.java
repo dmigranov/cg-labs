@@ -100,6 +100,8 @@ public class FieldPanel extends JPanel {
     public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
+
+        //TODO: если не граница?
         int oldValue = canvas.getRGB(x, y);
 
 
@@ -123,6 +125,7 @@ public class FieldPanel extends JPanel {
         Deque<Span> spanStack = new ArrayDeque<>();
         Span span = new Span(x, y, oldValue);
         spanStack.push(span);
+
 
         while (!spanStack.isEmpty())
         {

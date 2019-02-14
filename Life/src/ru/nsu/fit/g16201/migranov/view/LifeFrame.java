@@ -7,7 +7,8 @@ import java.awt.event.KeyEvent;
 import ru.nsu.fit.g16201.migranov.frametemplate.MainFrame;
 import ru.nsu.fit.g16201.migranov.model.Field;
 
-public class LifeFrame extends MainFrame {
+//public class LifeFrame extends MainFrame {
+public class LifeFrame extends JFrame {
     public static void main(String[] args) throws Exception
     {
         new LifeFrame();
@@ -15,15 +16,16 @@ public class LifeFrame extends MainFrame {
 
     public LifeFrame() throws Exception {
         //инициализация
-        super(600, 400, "Life");  //формат, группа?
+        //super(600, 400, "Life");  //формат, группа?
+        super();
 
 
         //setSize(720, 480);
 
-        addSubMenu("File", KeyEvent.VK_F);
+        /*addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");*/
 
         /*JToolBar toolBar = new JToolBar();
         JMenuBar menuBar = new JMenuBar();
@@ -40,9 +42,20 @@ public class LifeFrame extends MainFrame {
         //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
         setJMenuBar(menuBar);*/
 
-        add(new FieldPanel(30, 1));
+        JScrollPane scrollPane = new JScrollPane(new FieldPanel(30, 1));
+        scrollPane.setWheelScrollingEnabled(true);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        //pack();                                                         //ужимает всё при использовании setSize
+        JPanel contentPane = new JPanel();
+        contentPane.setPreferredSize(new Dimension(720, 480));
+        setContentPane(scrollPane);
+        contentPane.add(scrollPane);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        //add(new FieldPanel(30, 1));
+
+        pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
 
 
