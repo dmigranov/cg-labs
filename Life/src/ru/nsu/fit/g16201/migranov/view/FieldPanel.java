@@ -17,6 +17,8 @@ public class FieldPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics2D graphics;
 
+    private int width, heigth;
+
 
     public FieldPanel(int k, int w)
     {
@@ -32,6 +34,9 @@ public class FieldPanel extends JPanel {
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
         graphics = canvas.createGraphics();
+
+        width = canvas.getWidth();
+        heigth = canvas.getHeight();
 
         //TODO: listeners
 
@@ -94,46 +99,50 @@ public class FieldPanel extends JPanel {
     }
 
 
+    class Span
+    {
+        int y;
+        int lx, rx;
+
+        Span(int lx, int rx, int y)
+        {
+            this.y = y;
+            this.lx = lx;
+            this.rx = rx;
+        }
+
+    }
+
     public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
 
         //TODO: если не граница?
         int oldValue = canvas.getRGB(x, y);
-        int width = canvas.getWidth();
 
-        class Span
-        {
-            int y;
-            int lx, rx;
-
-            Span(int x, int y, int color)
-            {
-                this.y = y;
-                int lx = x, rx = x;
-                while(lx > 0 && canvas.getRGB(--lx, y) == color);
-                while(rx < width - 1 && canvas.getRGB(++rx, y) == color);
-                this.lx = lx++;
-                this.rx = rx--; //не исключаем границы
-            }
-
-        }
 
         Deque<Span> spanStack = new ArrayDeque<>();
-        Span span = new Span(x, y, oldValue);
-        spanStack.push(span);
+        Span span = getSpan(x, y, oldValue);
+        if (span != null)
+            spanStack.push(span);
 
 
         while (!spanStack.isEmpty())
         {
+;
             span = spanStack.pop();
+            System.out.println(span.y);
             for(int i = span.lx; i <= span.rx; i++) {
                 canvas.setRGB(i, y, newValue);
                 //смотрим вверх и вниз, но как это сделать эффективнее? смотреть для каждой клетки?
             }
-            if(y > 0) {
-                for (int i = span.lx; i <= span.rx; i++) {
-                    Span newSpan = new Span(i, y - 1, oldValue);
+            if(y > 0)
+            {
+                for (int i = span.lx; i <= span.rx; i++)
+                {
+                    Span newSpan = getSpan(i, y - 1, oldValue);
+                    if (newSpan == null)
+                        continue;
                     i += (newSpan.rx - newSpan.lx);
                     spanStack.push(newSpan);
                 }
@@ -142,7 +151,9 @@ public class FieldPanel extends JPanel {
             {
                 for(int i = span.lx; i <= span.rx; i++)
                 {
-                    Span newSpan = new Span(i, y+1, oldValue);
+                    Span newSpan = getSpan(i, y+1, oldValue);
+                    if (newSpan == null)
+                        continue;
                     i += (newSpan.rx - newSpan.lx);
                     spanStack.push(newSpan);
                 }
@@ -153,6 +164,16 @@ public class FieldPanel extends JPanel {
         repaint();
     }
 
-
+    private Span getSpan(int x, int y, int color)
+    {
+        if(canvas.getRGB(x, y) != color)
+            return null;
+        int lx = x, rx = x;
+        while(lx > 0 && canvas.getRGB(--lx, y) == color);
+        while(rx < width - 1 && canvas.getRGB(++rx, y) == color);
+        lx++;
+        rx--; //не исключаем границы
+        return new Span(lx, rx, y);
+    }
 
 }
