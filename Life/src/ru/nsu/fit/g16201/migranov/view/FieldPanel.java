@@ -6,12 +6,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class FieldPanel extends JPanel {
     private int k, w;           //w - толщина, k - длина ребра
     private Field field;
 
-    //TODO: java.awt.BufferedImage
+    private BufferedImage canvas;
+    private Graphics2D graphics;
+
 
     public FieldPanel(int k, int w)
     {
@@ -21,6 +24,9 @@ public class FieldPanel extends JPanel {
         field = new Field(5,5);     //TODO: откуда передавать?
 
         field.step();
+
+        canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        graphics = canvas.createGraphics();
 
         //TODO: listeners
 
@@ -35,9 +41,9 @@ public class FieldPanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.BLACK);
+        graphics.setColor(Color.BLACK);
 
-
+        //g.drawImage()
         /*g.setColor(Color.BLACK);
         g.drawLine(0, 0, getWidth() - 1, getHeight() - 1); //т.к. считаем с нуля и без отиммания выходит за пределы
 
@@ -48,16 +54,18 @@ public class FieldPanel extends JPanel {
 
         //в шестиугольнике радиус равен стороне
 
-        for (int i = 0; i < field.getN(); i++)
-        {
+        /*for (int i = 0; i < field.getN(); i++) {
 
-            for (int j = 0; j < field.getM(); j++)
-            {
+            for (int j = 0; j < field.getM(); j++) {
                 int x = 50, y = 50;   //координаты середины, как-то вычисленные
-                drawHexagon(g, x, y);
+                drawHexagon(graphics, x, y);
             }
 
-        }
+        }*/
+
+
+        graphics.drawOval(50, 50, 100, 100);
+        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
@@ -90,6 +98,7 @@ public class FieldPanel extends JPanel {
     {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
         Color oldValue;
+
 
         class Span
         {
