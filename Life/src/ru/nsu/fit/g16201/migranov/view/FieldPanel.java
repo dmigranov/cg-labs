@@ -90,6 +90,12 @@ public class FieldPanel extends JPanel {
         g.drawLine(x - k, y, x - rh, y - rs);
         g.drawLine(x - rh, y - rs, x + rh, y - rs);
         g.drawLine(x + k, y, x + rh, y - rs);
+
+
+        g.drawLine(400, 400, 500, 500);
+        g.drawLine(400, 400, 400, 600);
+        g.drawLine(400, 600, 500, 500);
+
     }
 
     //Bresenham's line algorithm
@@ -99,27 +105,13 @@ public class FieldPanel extends JPanel {
     }
 
 
-    class Span
-    {
-        int y;
-        int lx, rx;
-
-        Span(int lx, int rx, int y)
-        {
-            this.y = y;
-            this.lx = lx;
-            this.rx = rx;
-        }
-
-    }
-
     public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
 
         //TODO: если не граница?
+        //TODO: при попытке закрасить уже закрашенное возникает ошибка! исправить!
         int oldValue = canvas.getRGB(x, y);
-
 
         Deque<Span> spanStack = new ArrayDeque<>();
         Span span = getSpan(x, y, oldValue);
@@ -129,16 +121,15 @@ public class FieldPanel extends JPanel {
 
         while (!spanStack.isEmpty())
         {
-;
             span = spanStack.pop();
-            System.out.println(span.y);
+            y = span.y;
+            System.out.println(y);
             for(int i = span.lx; i <= span.rx; i++) {
                 canvas.setRGB(i, y, newValue);
-                //смотрим вверх и вниз, но как это сделать эффективнее? смотреть для каждой клетки?
             }
             if(y > 0)
             {
-                for (int i = span.lx; i <= span.rx; i++)
+                for (int i = span.lx; i <= span.rx; i+=2)    //прибавляю сразу два, чтобы не проверять заведомый пробел между двумя спанами
                 {
                     Span newSpan = getSpan(i, y - 1, oldValue);
                     if (newSpan == null)
@@ -149,7 +140,7 @@ public class FieldPanel extends JPanel {
             }
             if(y < canvas.getHeight() - 1)
             {
-                for(int i = span.lx; i <= span.rx; i++)
+                for(int i = span.lx; i <= span.rx; i+=2)
                 {
                     Span newSpan = getSpan(i, y+1, oldValue);
                     if (newSpan == null)
@@ -166,6 +157,7 @@ public class FieldPanel extends JPanel {
 
     private Span getSpan(int x, int y, int color)
     {
+
         if(canvas.getRGB(x, y) != color)
             return null;
         int lx = x, rx = x;
@@ -176,4 +168,17 @@ public class FieldPanel extends JPanel {
         return new Span(lx, rx, y);
     }
 
+    class Span
+    {
+        int y;
+        int lx, rx;
+
+        Span(int lx, int rx, int y)
+        {
+            this.y = y;
+            this.lx = lx;
+            this.rx = rx;
+        }
+
+    }
 }
