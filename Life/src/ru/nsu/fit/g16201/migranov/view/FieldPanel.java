@@ -42,8 +42,8 @@ public class FieldPanel extends JPanel {
 
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
                 spanFill(e.getX(), e.getY(), Color.RED.getRGB());
             }
         });
@@ -92,10 +92,12 @@ public class FieldPanel extends JPanel {
         g.drawLine(x + k, y, x + rh, y - rs);
 
 
-        g.drawLine(400, 400, 500, 500);
-        g.drawLine(400, 400, 400, 600);
-        g.drawLine(400, 600, 500, 500);
+        //g.drawLine(400, 400, 500, 500);
+        //g.drawLine(400, 400, 400, 600);
+        //g.drawLine(400, 600, 500, 500);
 
+        g.drawRect(400, 400, 200, 200);
+        g.drawRect(450, 450, 100, 100);
     }
 
     //Bresenham's line algorithm
@@ -110,8 +112,11 @@ public class FieldPanel extends JPanel {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
 
         //TODO: если не граница?
-        //TODO: при попытке закрасить уже закрашенное возникает ошибка! исправить!
+
         int oldValue = canvas.getRGB(x, y);
+
+        if(oldValue == newValue)
+            return;
 
         Deque<Span> spanStack = new ArrayDeque<>();
         Span span = getSpan(x, y, oldValue);

@@ -29,10 +29,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="130" column="25" lean-forward="true" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
+            <state relative-caret-position="306">
+              <caret line="48" column="11" lean-forward="true" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1071#1297#0" expanded="true" />
+                <element signature="e#1296#1297#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -310,7 +312,7 @@
       <workItem from="1549790985193" duration="12070000" />
       <workItem from="1550065175106" duration="28000" />
       <workItem from="1550065782102" duration="5987000" />
-      <workItem from="1550145764011" duration="11878000" />
+      <workItem from="1550145764011" duration="13765000" />
     </task>
     <task id="LOCAL-00001" summary="started writing model">
       <created>1549794535836</created>
@@ -445,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550156439033</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="неплохо! но:&#10;1) проверить прибавление двойки&#10;2) при попытке закрасить закрашенное возникает ошибка. исправить!!!">
+      <created>1550158284479</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1550158284479</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -481,7 +490,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31270000" />
+    <option name="totallyTimeSpent" value="33157000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -542,7 +551,8 @@
     <MESSAGE value="что ж, это уже что-то. надо разобраться с шириной канваса, но по крайней мере что-то уже есть!" />
     <MESSAGE value="gonna change Span" />
     <MESSAGE value="я понял в чем проблема! надо идти строго вниз и строго вверх, а у меня зацикливается: вверх-вниз ..." />
-    <option name="LAST_COMMIT_MESSAGE" value="я понял в чем проблема! надо идти строго вниз и строго вверх, а у меня зацикливается: вверх-вниз ..." />
+    <MESSAGE value="неплохо! но:&#10;1) проверить прибавление двойки&#10;2) при попытке закрасить закрашенное возникает ошибка. исправить!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="неплохо! но:&#10;1) проверить прибавление двойки&#10;2) при попытке закрасить закрашенное возникает ошибка. исправить!!!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/Downloads/FF_1234_Pupkin_Init_1/FF_1234_Pupkin_Init_1/.project">
@@ -669,10 +679,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="130" column="25" lean-forward="true" selection-start-line="130" selection-start-column="25" selection-end-line="130" selection-end-column="25" />
+        <state relative-caret-position="306">
+          <caret line="48" column="11" lean-forward="true" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1071#1297#0" expanded="true" />
+            <element signature="e#1296#1297#0" expanded="true" />
           </folding>
         </state>
       </provider>
