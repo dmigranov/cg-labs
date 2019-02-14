@@ -25,10 +25,10 @@ public class FieldPanel extends JPanel {
         this.k = k;
         this.w = w;
         field = new Field(5,5);     //TODO: откуда передавать?
+        // TODO: размер канваса?
 
         field.step();
 
-        //TODO: размер канваса?
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
         graphics = canvas.createGraphics();
@@ -39,7 +39,7 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                spanFill(e.getX(), e.getY(), Color.cyan.getRGB());
+                spanFill(e.getX(), e.getY(), Color.RED.getRGB());
             }
         });
     }
@@ -49,17 +49,13 @@ public class FieldPanel extends JPanel {
         super.paint(g);
         graphics.setColor(Color.BLACK);
 
-        //g.drawImage()
         /*g.setColor(Color.BLACK);
         g.drawLine(0, 0, getWidth() - 1, getHeight() - 1); //т.к. считаем с нуля и без отиммания выходит за пределы
-
-
 
         g.drawRect(getWidth() * 1/4, getHeight() * 1/4, getWidth() * 1/2, getHeight() * 1/2);*/
 
 
         //в шестиугольнике радиус равен стороне
-
         for (int i = 0; i < field.getN(); i++) {
 
             for (int j = 0; j < field.getM(); j++) {
@@ -68,7 +64,6 @@ public class FieldPanel extends JPanel {
             }
 
         }
-
 
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
     }
@@ -105,7 +100,7 @@ public class FieldPanel extends JPanel {
 
         //TODO: если не граница?
         int oldValue = canvas.getRGB(x, y);
-
+        int width = canvas.getWidth();
 
         class Span
         {
@@ -117,7 +112,7 @@ public class FieldPanel extends JPanel {
                 this.y = y;
                 int lx = x, rx = x;
                 while(lx > 0 && canvas.getRGB(--lx, y) == color);
-                while(rx < canvas.getWidth() - 1 && canvas.getRGB(++rx, y) == color);
+                while(rx < width - 1 && canvas.getRGB(++rx, y) == color);
                 this.lx = lx++;
                 this.rx = rx--; //не исключаем границы
             }
@@ -132,11 +127,28 @@ public class FieldPanel extends JPanel {
         while (!spanStack.isEmpty())
         {
             span = spanStack.pop();
-            for(int i = span.lx; i <= span.rx; i++)
+            for(int i = span.lx; i <= span.rx; i++) {
                 canvas.setRGB(i, y, newValue);
+                //смотрим вверх и вниз, но как это сделать эффективнее? смотреть для каждой клетки?
+            }
+            if(y > 0) {
+                for (int i = span.lx; i <= span.rx; i++) {
+                    Span newSpan = new Span(i, y - 1, oldValue);
+                    i += (newSpan.rx - newSpan.lx);
+                    spanStack.push(newSpan);
+                }
+            }
+            if(y < canvas.getHeight() - 1)
+            {
+                for(int i = span.lx; i <= span.rx; i++)
+                {
+                    Span newSpan = new Span(i, y+1, oldValue);
+                    i += (newSpan.rx - newSpan.lx);
+                    spanStack.push(newSpan);
+                }
+            }
+
         }
-
-
 
         repaint();
     }

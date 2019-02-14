@@ -20,7 +20,7 @@ public class LifeFrame extends JFrame {
         super();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        setSize(720, 480);
+        //setSize(720, 480);
 
         /*addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
@@ -50,15 +50,10 @@ public class LifeFrame extends JFrame {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-
-
         setContentPane(scrollPane);
 
 
-
-        //add(new FieldPanel(30, 1));
-
-        //pack();                                                         //ужимает всё при использовании setSize
+        pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
 
 
