@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class FieldPanel extends JPanel {
     private int k, w;           //w - толщина, k - длина ребра
@@ -25,6 +27,7 @@ public class FieldPanel extends JPanel {
 
         field.step();
 
+        //TODO: размер канваса?
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         graphics = canvas.createGraphics();
 
@@ -34,13 +37,14 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                spanFill(e.getX(), e.getY(), Color.cyan);
+                spanFill(e.getX(), e.getY(), Color.cyan.getRGB());
             }
         });
     }
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         graphics.setColor(Color.BLACK);
 
         //g.drawImage()
@@ -54,17 +58,16 @@ public class FieldPanel extends JPanel {
 
         //в шестиугольнике радиус равен стороне
 
-        /*for (int i = 0; i < field.getN(); i++) {
+        for (int i = 0; i < field.getN(); i++) {
 
             for (int j = 0; j < field.getM(); j++) {
                 int x = 50, y = 50;   //координаты середины, как-то вычисленные
                 drawHexagon(graphics, x, y);
             }
 
-        }*/
+        }
 
 
-        graphics.drawOval(50, 50, 100, 100);
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
     }
 
@@ -94,16 +97,45 @@ public class FieldPanel extends JPanel {
     }
 
 
-    public void spanFill(int x, int y, Color newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
+    public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
-        Color oldValue;
+        int oldValue = canvas.getRGB(x, y);
 
 
         class Span
         {
             int y;
-            int lx, ly;
+            int lx, rx;
+
+            Span(int x, int y, int color)
+            {
+                this.y = y;
+                int lx = x, rx = x;
+                while(lx > 0 && canvas.getRGB(--lx, y) == color);
+                while(rx < canvas.getWidth() - 1 && canvas.getRGB(++rx, y) == color);
+                this.lx = lx++;
+                this.rx = rx--; //не исключаем границы
+            }
+
         }
+
+        Deque<Span> spanStack = new ArrayDeque<>();
+        Span span = new Span(x, y, oldValue);
+        spanStack.push(span);
+
+        while (!spanStack.isEmpty())
+        {
+            span = spanStack.pop();
+            for(int i = span.lx; i <= span.rx; i++)
+                canvas.setRGB(i, y, newValue);
+        }
+
+
+
+        repaint();
     }
+
+
+
 }
