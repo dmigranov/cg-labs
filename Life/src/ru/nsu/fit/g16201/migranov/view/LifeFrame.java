@@ -14,13 +14,13 @@ public class LifeFrame extends JFrame {
         new LifeFrame();
     }
 
-    public LifeFrame() throws Exception {
+    private LifeFrame() throws Exception {
         //инициализация
         //super(600, 400, "Life");  //формат, группа?
         super();
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
-        //setSize(720, 480);
+        setSize(720, 480);
 
         /*addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
@@ -42,20 +42,23 @@ public class LifeFrame extends JFrame {
         //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
         setJMenuBar(menuBar);*/
 
-        JScrollPane scrollPane = new JScrollPane(new FieldPanel(30, 1));
+        JPanel middlePanel = new JPanel();
+        middlePanel.add(new FieldPanel(30, 1));
+
+        JScrollPane scrollPane = new JScrollPane(middlePanel);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setPreferredSize(new Dimension(720, 480));
+
+
         setContentPane(scrollPane);
-        contentPane.add(scrollPane);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
 
         //add(new FieldPanel(30, 1));
 
-        pack();                                                         //ужимает всё при использовании setSize
+        //pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
 
 

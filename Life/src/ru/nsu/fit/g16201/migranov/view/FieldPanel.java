@@ -21,6 +21,7 @@ public class FieldPanel extends JPanel {
     public FieldPanel(int k, int w)
     {
         super();
+
         this.k = k;
         this.w = w;
         field = new Field(5,5);     //TODO: откуда передавать?
@@ -29,6 +30,7 @@ public class FieldPanel extends JPanel {
 
         //TODO: размер канваса?
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        setPreferredSize(new Dimension(1366, 768));
         graphics = canvas.createGraphics();
 
         //TODO: listeners
