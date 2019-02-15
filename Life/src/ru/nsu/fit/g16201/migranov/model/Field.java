@@ -210,6 +210,10 @@ public class Field {
     {
         field[y][x].clear();
     }
+    public void invertrCell(int y, int x)
+    {
+        field[y][x].invert();
+    }
 
     private boolean exists(int y, int x)
     {

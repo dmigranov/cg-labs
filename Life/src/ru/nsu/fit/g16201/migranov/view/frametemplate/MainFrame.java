@@ -1,4 +1,4 @@
-package ru.nsu.fit.g16201.migranov.frametemplate;
+package ru.nsu.fit.g16201.migranov.view.frametemplate;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

@@ -1,14 +1,13 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
-import ru.nsu.fit.g16201.migranov.frametemplate.MainFrame;
-import ru.nsu.fit.g16201.migranov.model.Field;
+import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
-//public class LifeFrame extends MainFrame {
-public class LifeFrame extends JFrame {
+//public class LifeFrame extends JFrame {
+public class LifeFrame extends MainFrame {
     public static void main(String[] args) throws Exception
     {
         new LifeFrame();
@@ -22,10 +21,12 @@ public class LifeFrame extends JFrame {
 
         //setSize(720, 480);
 
-        /*addSubMenu("File", KeyEvent.VK_F);
+        addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
+        addMenuItem("File/Open", "Open a field file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
+
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");*/
+        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
 
         /*JToolBar toolBar = new JToolBar();
         JMenuBar menuBar = new JMenuBar();
@@ -42,16 +43,13 @@ public class LifeFrame extends JFrame {
         //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
         setJMenuBar(menuBar);*/
 
-        JPanel middlePanel = new JPanel();
+        JPanel middlePanel = new JPanel();  //можно ли обойтись без лишней панели?
         middlePanel.add(new FieldPanel(30, 1));
-
         JScrollPane scrollPane = new JScrollPane(middlePanel);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
         setContentPane(scrollPane);
-
 
         pack();                                                         //ужимает всё при использовании setSize
         setVisible(true);
@@ -67,5 +65,10 @@ public class LifeFrame extends JFrame {
     public void onExit()
     {
         System.exit(0);
+    }
+
+    public void onOpen()
+    {
+        File file = getOpenFileName("txt", "A field description file");
     }
 }

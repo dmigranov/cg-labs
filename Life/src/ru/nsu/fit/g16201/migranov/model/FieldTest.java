@@ -61,8 +61,4 @@ class FieldTest {
         field.printImpactField();
     }
 
-    @Test
-    void fileCreate() throws IOException {
-        Field field = new Field(new File("second.txt"));
-    }
 }

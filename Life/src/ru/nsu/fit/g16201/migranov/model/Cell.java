@@ -39,4 +39,9 @@ class Cell {
     public void setImpact(double impact) {
         this.impact = impact;
     }
+
+    public void invert()
+    {
+        isAlive = !isAlive;
+    }
 }
