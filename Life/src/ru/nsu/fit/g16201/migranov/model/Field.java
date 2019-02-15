@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import java.io.*;
+
 public class Field {
     private static double LIVE_BEGIN =  2.0, LIVE_END =  3.3, BIRTH_BEGIN = 2.3, BIRTH_END = 2.9, FST_IMPACT = 1.0, SND_IMPACT = 0.3;
 
@@ -27,6 +29,34 @@ public class Field {
         }
 
     }
+
+    /*public Field(File file) throws IOException
+    {
+        //TODO: exceptions! (бросать свое исключение?)
+        //в файле координаты в формате x,y!
+        /*BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+
+        line = br.readLine();
+        line = line.substring(0, line.indexOf('/'));
+        String[] substrs = line.split(" "); //todo
+        m = Integer.parseInt(substrs[0]);
+        n = Integer.parseInt(substrs[1]);
+        field = new Cell[n][];
+        for(int i = 0; i < n; i++)
+        {
+            if(i % 2 == 0)
+                field[i] = new Cell[m];
+            else
+                field[i] = new Cell[m - 1];
+        }
+
+        while((line = br.readLine()) != null)
+        {
+
+        }
+        //чтение файла должно проводиться в контроллере (т.к для модели k и  не имеет смысла. там будет по обычному создаваться поле а далее будут заполняться поля
+    }*/
 
     public void step()
     {

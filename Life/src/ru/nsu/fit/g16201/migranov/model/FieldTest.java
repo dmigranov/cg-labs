@@ -1,5 +1,10 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class FieldTest {
@@ -54,5 +59,10 @@ class FieldTest {
         field.printField();
         System.out.println();
         field.printImpactField();
+    }
+
+    @Test
+    void fileCreate() throws IOException {
+        Field field = new Field(new File("second.txt"));
     }
 }

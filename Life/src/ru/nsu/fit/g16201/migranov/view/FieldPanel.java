@@ -15,7 +15,8 @@ public class FieldPanel extends JPanel {
     private Field field;
 
     private BufferedImage canvas;
-    private Graphics2D graphics;
+    //private Graphics2D graphics;
+    private Graphics graphics;
 
     private int width, heigth;
 
@@ -33,7 +34,8 @@ public class FieldPanel extends JPanel {
 
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
-        graphics = canvas.createGraphics();
+
+        graphics = canvas.getGraphics();
 
         width = canvas.getWidth();
         heigth = canvas.getHeight();
@@ -70,6 +72,7 @@ public class FieldPanel extends JPanel {
 
         }
 
+
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
     }
 
@@ -92,12 +95,19 @@ public class FieldPanel extends JPanel {
         g.drawLine(x + k, y, x + rh, y - rs);
 
 
-        //g.drawLine(400, 400, 500, 500);
-        //g.drawLine(400, 400, 400, 600);
-        //g.drawLine(400, 600, 500, 500);
-
-        g.drawRect(400, 400, 200, 200);
+       /* g.drawRect(400, 400, 200, 200);
         g.drawRect(450, 450, 100, 100);
+
+        g.drawLine(800, 400, 820, 400);
+        g.drawLine(800, 420, 820, 420);
+
+        g.drawLine(800, 400, 800, 420);
+        g.drawLine(820, 400, 820, 420);
+        g.drawLine(802, 402, 802, 420);
+        g.drawLine(804, 400, 804, 418);*/
+
+
+
     }
 
     //Bresenham's line algorithm
@@ -115,6 +125,7 @@ public class FieldPanel extends JPanel {
 
         int oldValue = canvas.getRGB(x, y);
 
+
         if(oldValue == newValue)
             return;
 
@@ -128,7 +139,6 @@ public class FieldPanel extends JPanel {
         {
             span = spanStack.pop();
             y = span.y;
-            System.out.println(y);
             for(int i = span.lx; i <= span.rx; i++) {
                 canvas.setRGB(i, y, newValue);
             }
