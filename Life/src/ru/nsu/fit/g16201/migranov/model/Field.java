@@ -7,7 +7,6 @@ public class Field {
 
     private int m, n;
     private Cell[][] field;
-    //TODO: возможно, в файле координаты описываются x,y а тут y,x! проверить!
     public Field (int m, int n)
     {
         this.m = m;
@@ -30,37 +29,10 @@ public class Field {
 
     }
 
-    /*public Field(File file) throws IOException
-    {
-        //TODO: exceptions! (бросать свое исключение?)
-        //в файле координаты в формате x,y!
-        /*BufferedReader br = new BufferedReader(new FileReader(file));
-        String line;
-
-        line = br.readLine();
-        line = line.substring(0, line.indexOf('/'));
-        String[] substrs = line.split(" "); //todo
-        m = Integer.parseInt(substrs[0]);
-        n = Integer.parseInt(substrs[1]);
-        field = new Cell[n][];
-        for(int i = 0; i < n; i++)
-        {
-            if(i % 2 == 0)
-                field[i] = new Cell[m];
-            else
-                field[i] = new Cell[m - 1];
-        }
-
-        while((line = br.readLine()) != null)
-        {
-
-        }
-        //чтение файла должно проводиться в контроллере (т.к для модели k и  не имеет смысла. там будет по обычному создаваться поле а далее будут заполняться поля
-    }*/
 
     public void step()
     {
-        //todo: возможно, перерасчёт импактов нужно будет вынести туда, где будет изменение стейта клетки (для динамического изменения как в примерах). Тогда не надо будет обсчитывать все клетки
+        //todo: перерасчёт импактов нужно будет вынести туда, где будет изменение стейта клетки (для динамического изменения как в примерах). Тогда не надо будет обсчитывать все клетки
         //в таком случае, после изменения состояния (т.е после степа) нужно будет пересчитать импакты как тут
 
         for(int y = 0; y < n; y++)

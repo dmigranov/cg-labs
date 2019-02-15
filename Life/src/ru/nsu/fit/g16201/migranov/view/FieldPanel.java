@@ -26,11 +26,9 @@ public class FieldPanel extends JPanel {
 
         this.k = k;
         this.w = w;
-        field = new Field(5,5);     //TODO: откуда передавать?
-        // TODO: размер канваса?
+        //field = new Field(5,5);     //TODO: откуда передавать?
 
-        field.step();
-
+        // TODO: размер канваса? возможно, он должен зависеть от n и m! то есть надо пересоздавать canvas при новых n и m, в зависимости от k
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
 
@@ -54,9 +52,6 @@ public class FieldPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         graphics.setColor(Color.BLACK);
-
-        /*g.drawLine(0, 0, getWidth() - 1, getHeight() - 1); //т.к. считаем с нуля и без отиммания выходит за пределы
-        g.drawRect(getWidth() * 1/4, getHeight() * 1/4, getWidth() * 1/2, getHeight() * 1/2);*/
 
 
         //в шестиугольнике радиус равен стороне
@@ -204,4 +199,10 @@ public class FieldPanel extends JPanel {
         return field;
     }
 
+    public void setField(Field field)
+    {
+        //новый пустой канвас нужных размеров
+        System.out.println("New field");
+        this.field = field;
+    }
 }

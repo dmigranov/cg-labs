@@ -21,8 +21,8 @@ public class LifeFrame extends MainFrame {
 
     private LifeFrame() throws Exception {
         //инициализация
-        //super(600, 400, "Life");  //формат, группа?
-        super();
+        super(720, 480, "Life | Denis Migranov, 16201");
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //setSize(720, 480);
@@ -37,27 +37,13 @@ public class LifeFrame extends MainFrame {
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
 
-        /*JToolBar toolBar = new JToolBar();
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("File");
-        menuBar.add(menu);
-        JMenuItem menuItem = new JMenuItem("Red");
-        menu.add(menuItem);
-        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.RED));
-        menuItem = new JMenuItem("Green");
-        menu.add(menuItem);
-        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.GREEN));
-        menuItem = new JMenuItem("Black");
-        menu.add(menuItem);
-        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
-        setJMenuBar(menuBar);*/
-
-        JPanel middlePanel = new JPanel();  //можно ли обойтись без лишней панели?
+        JPanel middlePanel = new JPanel();  //TODO: можно ли обойтись без лишней панели? и сделать так, чтобы всё было красиво (слева ввреху приклеено?)
         middlePanel.add(fieldPanel);
         JScrollPane scrollPane = new JScrollPane(middlePanel);
         scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setContentPane(scrollPane);
 
         pack();                                                         //ужимает всё при использовании setSize

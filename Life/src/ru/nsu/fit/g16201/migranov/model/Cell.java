@@ -1,6 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model;
 
-class Cell {
+public class Cell {
     private boolean isAlive;
     private double impact = 0;
     public void set()

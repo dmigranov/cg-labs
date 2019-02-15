@@ -24,6 +24,21 @@ public class LifeFrameNotGood extends JFrame {
         setContentPane(scrollPane);
 
 
+                /*JToolBar toolBar = new JToolBar();
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("File");
+        menuBar.add(menu);
+        JMenuItem menuItem = new JMenuItem("Red");
+        menu.add(menuItem);
+        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.RED));
+        menuItem = new JMenuItem("Green");
+        menu.add(menuItem);
+        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.GREEN));
+        menuItem = new JMenuItem("Black");
+        menu.add(menuItem);
+        //menuItem.addActionListener(e -> ((MyPanel) panel).setColor(Color.BLACK));
+        setJMenuBar(menuBar);*/
+
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("File");
         menuBar.add(menu);
