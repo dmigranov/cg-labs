@@ -12,8 +12,8 @@ import java.io.IOException;
 
 public class Controller {
 
-    FieldPanel fieldPanel;
-    Field field;
+    private FieldPanel fieldPanel;
+    private Field field;
 
     //TODO: создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel) {
@@ -26,8 +26,7 @@ public class Controller {
     {
         //TODO: продумать, как Frame, Panel и Controller и их контроллеры связаны друг с другом
         //короче надо чтобы панели параметры поля всегда передавал контроллер! по умолчанию - какие-то стандартные
-
-        //в файле координаты в формате x,y!
+        //в файле координаты в формате x,y!!!
         try {
 
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -35,9 +34,9 @@ public class Controller {
 
             line = br.readLine();
             line = line.substring(0, line.indexOf('/'));
-            String[] substrs = line.split(" "); //todo
-            int m = Integer.parseInt(substrs[0]);
-            int n = Integer.parseInt(substrs[1]);
+            String[] substrings = line.split(" "); //todo
+            int m = Integer.parseInt(substrings[0]);
+            int n = Integer.parseInt(substrings[1]);
 
             field = new Field(m, n);
 

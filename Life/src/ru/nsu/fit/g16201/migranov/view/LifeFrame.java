@@ -10,9 +10,9 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 //public class LifeFrame extends JFrame {
 public class LifeFrame extends MainFrame {
-    Field field;
-    FieldPanel fieldPanel;
-    Controller controller;
+    private Field field;
+    private FieldPanel fieldPanel;
+    private Controller controller;
 
     public static void main(String[] args) throws Exception
     {
@@ -22,17 +22,13 @@ public class LifeFrame extends MainFrame {
     private LifeFrame() throws Exception {
         //инициализация
         super(720, 480, "Life | Denis Migranov, 16201");
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        //setSize(720, 480);
         fieldPanel = new FieldPanel(30, 1);
-
         controller = new Controller(fieldPanel);
 
         addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
-        addMenuItem("File/Open", "Open a field file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
+        addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
 
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");

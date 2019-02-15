@@ -53,7 +53,6 @@ public class FieldPanel extends JPanel {
         super.paint(g);
         graphics.setColor(Color.BLACK);
 
-
         //в шестиугольнике радиус равен стороне
         for (int i = 0; i < field.getN(); i++) {
 
@@ -63,7 +62,6 @@ public class FieldPanel extends JPanel {
             }
 
         }
-
 
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
     }
@@ -99,7 +97,6 @@ public class FieldPanel extends JPanel {
         g.drawLine(804, 400, 804, 418);*/
 
 
-
     }
 
     //Bresenham's line algorithm
@@ -117,12 +114,9 @@ public class FieldPanel extends JPanel {
 
     public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
-        //вообще, нам надо будет цвет только "инвертировать"! но радим универсальности добавлю ,пожалуй, аргуемнт цвет
-
-        //TODO: если не граница?
+        //TODO: если не граница, то?..
 
         int oldValue = canvas.getRGB(x, y);
-
 
         if(oldValue == newValue)
             return;
@@ -131,7 +125,6 @@ public class FieldPanel extends JPanel {
         Span span = getSpan(x, y, oldValue);
         if (span != null)
             spanStack.push(span);
-
 
         while (!spanStack.isEmpty())
         {
@@ -164,13 +157,11 @@ public class FieldPanel extends JPanel {
             }
 
         }
-
         repaint();
     }
 
     private Span getSpan(int x, int y, int color)
     {
-
         if(canvas.getRGB(x, y) != color)
             return null;
         int lx = x, rx = x;
@@ -192,7 +183,6 @@ public class FieldPanel extends JPanel {
             this.lx = lx;
             this.rx = rx;
         }
-
     }
 
     public Field getField() {
@@ -201,7 +191,7 @@ public class FieldPanel extends JPanel {
 
     public void setField(Field field)
     {
-        //новый пустой канвас нужных размеров
+        //TODO: новый пустой канвас нужных размеров
         System.out.println("New field");
         this.field = field;
     }
