@@ -199,4 +199,9 @@ public class FieldPanel extends JPanel {
         }
 
     }
+
+    public Field getField() {
+        return field;
+    }
+
 }
