@@ -12,7 +12,7 @@ import javax.swing.filechooser.FileFilter;
 public class FileUtils {
 	private static File dataDirectory = null;
 	/**
-	 * Returns File pointing to Data directory of current project. If Data directory is not found, returns project directory.
+	 * Returns File pointing to Data controller of current project. If Data controller is not found, returns project controller.
 	 * @return File object. 
 	 */
 	public static File getDataDirectory()

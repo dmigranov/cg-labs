@@ -15,7 +15,6 @@ public class FieldPanel extends JPanel {
     private Field field;
 
     private BufferedImage canvas;
-    //private Graphics2D graphics;
     private Graphics graphics;
 
     private int width, heigth;
@@ -56,9 +55,7 @@ public class FieldPanel extends JPanel {
         super.paint(g);
         graphics.setColor(Color.BLACK);
 
-        /*g.setColor(Color.BLACK);
-        g.drawLine(0, 0, getWidth() - 1, getHeight() - 1); //т.к. считаем с нуля и без отиммания выходит за пределы
-
+        /*g.drawLine(0, 0, getWidth() - 1, getHeight() - 1); //т.к. считаем с нуля и без отиммания выходит за пределы
         g.drawRect(getWidth() * 1/4, getHeight() * 1/4, getWidth() * 1/2, getHeight() * 1/2);*/
 
 
@@ -111,8 +108,14 @@ public class FieldPanel extends JPanel {
     }
 
     //Bresenham's line algorithm
-    private void drawLine(int x1)
+    private void drawLine(int x1, int y1, int x2, int y2)
     {
+        int dx = Math.abs(x2 - x1);
+        int dy = Math.abs(y2 - y1);
+
+        int error = 0;
+        //учесть 8 направлений
+
 
     }
 
