@@ -24,7 +24,6 @@ public class Controller {
 
     public void loadFieldFromFile(File file)
     {
-        //TODO: продумать, как Frame, Panel и Controller и их контроллеры связаны друг с другом
         //короче надо чтобы панели параметры поля всегда передавал контроллер! по умолчанию - какие-то стандартные
         //в файле координаты в формате x,y!!!
         try {
@@ -34,17 +33,33 @@ public class Controller {
 
             line = br.readLine();
             line = line.substring(0, line.indexOf('/'));
-            String[] substrings = line.split(" "); //todo
+            String[] substrings = line.split(" "); //todo: better parsing?
             int m = Integer.parseInt(substrings[0]);
             int n = Integer.parseInt(substrings[1]);
-
             field = new Field(m, n);
 
+            line = br.readLine();
+            line = line.substring(0, line.indexOf('/'));
+            int w = Integer.parseInt(line);
+            line = br.readLine();
+            line = line.substring(0, line.indexOf('/'));
+            int k = Integer.parseInt(line);
 
+            line = br.readLine();
+            line = line.substring(0, line.indexOf('/'));
+            int all = Integer.parseInt(line);
 
-            while ((line = br.readLine()) != null) {
+            //в файле клетки в формате xy, а у меня - yx!
+            while ((line = br.readLine()) != null)
+            {
+                substrings = line.split(" ");
+                int x = Integer.parseInt(substrings[0]);
+                int y = Integer.parseInt(substrings[1]);
+                field.setCell(y, x);
 
+                all--;
             }
+            //TODO: проверить all и выкинуть exception
 
             //когда её передать панели?
             fieldPanel.setField(field);

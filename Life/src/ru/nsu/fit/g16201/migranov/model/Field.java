@@ -143,7 +143,7 @@ public class Field {
     }
 
     //for testing purposes only
-    protected void printField()
+    public void printField()
     {
         for(int i = 0; i < n; i++)
         {
@@ -155,6 +155,7 @@ public class Field {
                     System.out.print(" " + field[i][j]);
             System.out.println();
         }
+        System.out.println();
     }
 
     protected void printImpactField()
