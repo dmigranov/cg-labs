@@ -26,19 +26,22 @@ public class FieldPanel extends JPanel {
 
         this.k = k;
         this.w = w;
-        //field = new Field(5,5);     //TODO: откуда передавать?
 
         // TODO: размер канваса? возможно, он должен зависеть от n и m! то есть надо пересоздавать canvas при новых n и m, в зависимости от k
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
 
         graphics = canvas.getGraphics();
+        graphics.setColor(Color.BLACK);
 
         width = canvas.getWidth();
         heigth = canvas.getHeight();
 
-        //TODO: listeners
+        //drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
+        drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
+        graphics.drawLine(800, 420, 820, 430);
 
+        //TODO: listeners
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -51,7 +54,7 @@ public class FieldPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        graphics.setColor(Color.BLACK);
+
 
         //в шестиугольнике радиус равен стороне
         for (int i = 0; i < field.getN(); i++) {
@@ -85,30 +88,39 @@ public class FieldPanel extends JPanel {
         g.drawLine(x + k, y, x + rh, y - rs);
 
 
-       /* g.drawRect(400, 400, 200, 200);
-        g.drawRect(450, 450, 100, 100);
 
-        g.drawLine(800, 400, 820, 400);
-        g.drawLine(800, 420, 820, 420);
+        //g.drawLine(800, 430, 820, 420);
 
-        g.drawLine(800, 400, 800, 420);
-        g.drawLine(820, 400, 820, 420);
-        g.drawLine(802, 402, 802, 420);
-        g.drawLine(804, 400, 804, 418);*/
+
 
 
     }
 
     //Bresenham's line algorithm
-    private void drawLine(int x1, int y1, int x2, int y2)
+    private void drawLine(int x1, int y1, int x2, int y2, int color)
     {
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
-        int error = 0;
-        //учесть 8 направлений
+        int err = 0;
 
+        int diry = y2 > y1 ? 1 : -1;
+        //todo: учесть 8 направлений!!!
 
+        int y = y1;
+        for(int x = x1; x <= x2; x++)   //границы?
+        {
+            err += 2 * dy;
+            canvas.setRGB(x, y, color);
+            System.out.println(x + " " + y);
+            if(err > dx)
+            {
+                err -= 2 * dx;
+                y+=diry;
+            }
+        }
+
+        repaint();
     }
 
 
@@ -170,6 +182,12 @@ public class FieldPanel extends JPanel {
         lx++;
         rx--; //не исключаем границы
         return new Span(lx, rx, y);
+    }
+
+    public void setDrawingParameters(int w, int k) {
+        this.w = w;
+        this.k = k;
+        //TODO: перерисовать
     }
 
     class Span

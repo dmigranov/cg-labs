@@ -27,11 +27,18 @@ public class LifeFrame extends MainFrame {
         controller = new Controller(fieldPanel);
 
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
+        addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
         addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
+        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+
+
+        addToolBarButton("File/New");
+        //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
+
+
 
         JPanel middlePanel = new JPanel();  //TODO: можно ли обойтись без лишней панели? и сделать так, чтобы всё было красиво (слева ввреху приклеено?)
         middlePanel.add(fieldPanel);
@@ -61,7 +68,13 @@ public class LifeFrame extends MainFrame {
     public void onOpen()
     {
         File file = getOpenFileName("txt", "A field description file");
-        controller.loadFieldFromFile(file);
+        if(file != null)
+            controller.loadFieldFromFile(file);
 
+    }
+
+    public void onNew()
+    {
+        //спросить параметры
     }
 }

@@ -44,6 +44,7 @@ public class Controller {
             line = br.readLine();
             line = line.substring(0, line.indexOf('/'));
             int k = Integer.parseInt(line);
+            fieldPanel.setDrawingParameters(w, k);
 
             line = br.readLine();
             line = line.substring(0, line.indexOf('/'));
