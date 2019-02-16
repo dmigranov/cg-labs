@@ -1,10 +1,8 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
-
 import ru.nsu.fit.g16201.migranov.model.Field;
 import ru.nsu.fit.g16201.migranov.view.FieldPanel;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,7 +13,7 @@ public class Controller {
     private FieldPanel fieldPanel;
     private Field field;
 
-    //TODO: создать интерфейс типа fieldPanel а то как-то не по ооп
+    //создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel) {
         this.fieldPanel = fieldPanel;
         field = new Field(10, 10);
@@ -60,9 +58,11 @@ public class Controller {
 
                 all--;
             }
-            //TODO: проверить all и выкинуть exception
+            //TODO: проверить all и выкинуть exception если что-то не так
+            System.out.println("All: " + all);
+            if(all > 0)     //прочли меньше чем обещано; А ЕСЛИ БОЛЬШЕ?
+                throw new IOException();
 
-            //когда её передать панели?
             fieldPanel.setField(field);
         }
         catch (IOException e)

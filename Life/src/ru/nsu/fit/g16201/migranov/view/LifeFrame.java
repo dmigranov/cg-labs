@@ -29,6 +29,8 @@ public class LifeFrame extends MainFrame {
         addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
         addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
+        addMenuItem("File/Save As", "Save a field state", KeyEvent.VK_S, "Exit.gif", "onSaveAs");//
+
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
         addSubMenu("Help", KeyEvent.VK_H);
@@ -37,8 +39,7 @@ public class LifeFrame extends MainFrame {
 
         addToolBarButton("File/New");
         //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
-
-
+        //middlePanel.add(toolBar);
 
         JPanel middlePanel = new JPanel();  //TODO: можно ли обойтись без лишней панели? и сделать так, чтобы всё было красиво (слева ввреху приклеено?)
         middlePanel.add(fieldPanel);
@@ -76,5 +77,10 @@ public class LifeFrame extends MainFrame {
     public void onNew()
     {
         //спросить параметры
+    }
+
+    public void onSaveAs()
+    {
+
     }
 }

@@ -27,7 +27,7 @@ public class FieldPanel extends JPanel {
         this.k = k;
         this.w = w;
 
-        // TODO: размер канваса? возможно, он должен зависеть от n и m! то есть надо пересоздавать canvas при новых n и m, в зависимости от k
+        // TODO: надо пересоздавать canvas при новых n и m, в зависимости от k и w тоже
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
 
@@ -46,7 +46,10 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                spanFill(e.getX(), e.getY(), Color.RED.getRGB());
+                int x = e.getX();
+                int y = e.getY();
+                if (canvas.getRGB(x, y) != Color.BLACK.getRGB())
+                    spanFill(x, y, Color.RED.getRGB());
             }
         });
     }
@@ -55,8 +58,7 @@ public class FieldPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
-
-        //в шестиугольнике радиус равен стороне
+        //в шестиугольнике радиус равен стороне; ЭТО ПОТОМ УДАЛИТЬ!!!
         for (int i = 0; i < field.getN(); i++) {
 
             for (int j = 0; j < field.getM(); j++) {
@@ -126,8 +128,6 @@ public class FieldPanel extends JPanel {
 
     public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
-        //TODO: если не граница, то?..
-
         int oldValue = canvas.getRGB(x, y);
 
         if(oldValue == newValue)
@@ -167,7 +167,6 @@ public class FieldPanel extends JPanel {
                     spanStack.push(newSpan);
                 }
             }
-
         }
         repaint();
     }
@@ -209,7 +208,7 @@ public class FieldPanel extends JPanel {
 
     public void setField(Field field)
     {
-        //TODO: новый пустой канвас нужных размеров
+        //TODO: новый пустой канвас нужных размеров + перерисовать
         System.out.println("New field");
         this.field = field;
     }
