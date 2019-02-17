@@ -6,12 +6,11 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 import ru.nsu.fit.g16201.migranov.controller.Controller;
-import ru.nsu.fit.g16201.migranov.model.Field;
+
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 //public class LifeFrame extends JFrame {
 public class LifeFrame extends MainFrame {
-    private Field field;
     private FieldPanel fieldPanel;
     private Controller controller;
 
@@ -36,7 +35,6 @@ public class LifeFrame extends MainFrame {
 
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
-
 
         addToolBarButton("File/New");
 

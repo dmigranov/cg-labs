@@ -191,4 +191,8 @@ public class Field {
             return false;
         return true;
     }
+
+    public boolean isAlive(int y, int x) {
+        return field[y][x].isAlive();
+    }
 }
