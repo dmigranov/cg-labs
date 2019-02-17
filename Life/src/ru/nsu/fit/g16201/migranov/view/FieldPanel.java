@@ -27,8 +27,6 @@ public class FieldPanel extends JPanel {
         this.k = k;
         this.w = w;
 
-        // TODO: надо пересоздавать canvas при новых n и m, в зависимости от k и w тоже
-
         /*drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
         drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
@@ -49,6 +47,7 @@ public class FieldPanel extends JPanel {
                 int y = e.getY();
                 if (canvas.getRGB(x, y) != Color.BLACK.getRGB())    //TODO: плюс если совсем не пустое (т.к. клетки закрашены изначально)
                 {
+                    //TODO: проверять текущий цвет, и если это цвет одной из клетов - инвертировать её состояние и цвет самой клетки
                     spanFill(x, y, Color.RED.getRGB());
                     repaint();
                 }
@@ -68,20 +67,30 @@ public class FieldPanel extends JPanel {
     {
         //TODO: округление; продумать начальные
         int y = 50;
-        //в шестиугольнике радиус равен стороне; ЭТО ПОТОМ УДАЛИТЬ!!!
-        for (int i = 0; i < field.getN(); i+=2) {
+        for (int i = 0; i < field.getN(); i++) {
             int x = 50;
-            for (int j = 0; j < field.getM(); j++) {
-                   //координаты середины, как-то вычисленные
-                drawHexagon(graphics, x, y);
-                x+=(int)(Math.sqrt(3) * k / 2) * 2;
+            if(i % 2 != 0)
+            {
+                x += (int)(Math.sqrt(3)* k /2);
             }
-            y += 3 * k;
+            for (int j = 0; j < (i % 2 == 0 ? field.getM() : field.getM() - 1); j++)
+            {
+                drawHexagon(graphics, x, y);
+                if(field.isAlive(i, j))
+                {
+                    spanFill(x, y, Color.GREEN.getRGB());
+                }
+                else
+                {
+                    //залить
+                }
+                x+=(int)(Math.sqrt(3) * k / 2) * 2;
+
+            }
+            y += (3 * k / 2);
         }
 
-        //TODO: дорисовать боковушки и если n - чётное, послежний ряд (это вообще сильно рентабельно?
-
-        System.out.println("Draw hexagons");
+        System.out.println("Drew hexagons");
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
@@ -122,7 +131,6 @@ public class FieldPanel extends JPanel {
         {
             drawUniversalLine(y1, x1, y2, x2, color, true);
         }
-
         //repaint();
     }
 
@@ -223,7 +231,7 @@ public class FieldPanel extends JPanel {
     public void setDrawingParameters(int w, int k) {
         this.w = w;
         this.k = k;
-        //TODO: перерисовать
+        //TODO: перерисовать (+новый канвас)
     }
 
     class Span
@@ -244,7 +252,7 @@ public class FieldPanel extends JPanel {
         System.out.println("New field");
         this.field = field;
 
-        //TODO: рассчитать размер и перерисовать
+        //TODO: рассчитать размер и перерисовать canvas при новых n и m, в зависимости от k и w тоже
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
         graphics = canvas.getGraphics();
