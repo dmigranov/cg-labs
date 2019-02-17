@@ -29,10 +29,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="44" column="30" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+            <state relative-caret-position="229">
+              <caret line="75" column="41" lean-forward="true" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1560#2049#0" expanded="true" />
+                <element signature="e#2048#2049#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-900">
-              <caret column="46" selection-start-column="46" selection-end-column="46" />
+            <state relative-caret-position="145">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -391,7 +393,7 @@
       <workItem from="1550145764011" duration="14901000" />
       <workItem from="1550231932796" duration="10439000" />
       <workItem from="1550318587459" duration="6900000" />
-      <workItem from="1550398422977" duration="8911000" />
+      <workItem from="1550398422977" duration="10715000" />
     </task>
     <task id="LOCAL-00001" summary="started writing model">
       <created>1549794535836</created>
@@ -638,7 +640,21 @@
       <option name="project" value="LOCAL" />
       <updated>1550406285424</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="looks like bresenham is ready">
+      <created>1550410182126</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1550410182126</updated>
+    </task>
+    <task id="LOCAL-00037" summary="some drawing">
+      <created>1550411113830</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1550411113830</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -674,7 +690,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60543000" />
+    <option name="totallyTimeSpent" value="62347000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -696,16 +712,16 @@
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48926175" visible="true" weight="0.3186969" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.48791945" visible="true" weight="0.31444758" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39943343" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49530202" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.490604" weight="0.24787535" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.48926175" weight="0.24787535" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.3286119" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.51073825" side_tool="true" visible="true" weight="0.3186969" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.51208055" side_tool="true" visible="true" weight="0.31444758" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.4986577" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -720,8 +736,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="not bad! I can find &quot;first count&quot; now. and I tested it, too!" />
-    <MESSAGE value="wrote getSecondCount" />
     <MESSAGE value="more model changes: looks like step works!" />
     <MESSAGE value="enough for today. started doing span" />
     <MESSAGE value="плохо&#10;нужно разобраться с канвасом!" />
@@ -745,7 +759,9 @@
     <MESSAGE value="ура я разобрался с тулбаром!" />
     <MESSAGE value="Bresenham for 1/2 of cases" />
     <MESSAGE value="gonna universalize it" />
-    <option name="LAST_COMMIT_MESSAGE" value="gonna universalize it" />
+    <MESSAGE value="looks like bresenham is ready" />
+    <MESSAGE value="some drawing" />
+    <option name="LAST_COMMIT_MESSAGE" value="some drawing" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/Downloads/FF_1234_Pupkin_Init_1/FF_1234_Pupkin_Init_1/.project">
@@ -893,16 +909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-900">
-          <caret column="46" selection-start-column="46" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
@@ -924,12 +930,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="44" column="30" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+        <state relative-caret-position="145">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="75" column="41" lean-forward="true" selection-start-line="75" selection-start-column="41" selection-end-line="75" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1560#2049#0" expanded="true" />
+            <element signature="e#2048#2049#0" expanded="true" />
           </folding>
         </state>
       </provider>

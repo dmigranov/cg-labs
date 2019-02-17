@@ -28,14 +28,8 @@ public class FieldPanel extends JPanel {
         this.w = w;
 
         // TODO: надо пересоздавать canvas при новых n и m, в зависимости от k и w тоже
-        canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
-        setPreferredSize(new Dimension(1366, 768));
-        graphics = canvas.getGraphics();
-        graphics.setColor(Color.BLACK);
-        width = canvas.getWidth();
-        heigth = canvas.getHeight();
 
-        drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
+        /*drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
         drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
         drawLine(780, 450, 760, 440, Color.BLACK.getRGB());
@@ -43,7 +37,8 @@ public class FieldPanel extends JPanel {
 
         drawLine(600, 420, 610, 440, Color.BLACK.getRGB());
         drawLine(580, 440, 590, 420, Color.BLACK.getRGB());
-        drawLine(570, 440, 560, 420, Color.BLACK.getRGB());
+        drawLine(570, 440, 560, 420, Color.BLACK.getRGB());*/
+
 
         //TODO: listeners
         addMouseListener(new MouseAdapter() {
@@ -65,17 +60,23 @@ public class FieldPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
 
+        System.out.println("Updated");
+        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
+    }
+
+    private void drawField()
+    {
+        int x = 50, y = 50;
         //в шестиугольнике радиус равен стороне; ЭТО ПОТОМ УДАЛИТЬ!!!
         for (int i = 0; i < field.getN(); i++) {
 
-            for (int j = 0; j < field.getM(); j++) {
-                int x = 50, y = 50;   //координаты середины, как-то вычисленные
+            //for (int j = 0; j < field.getM(); j++) {
+                   //координаты середины, как-то вычисленные
                 drawHexagon(graphics, x, y);
-            }
-
+                x+=(int)(Math.sqrt(3) * k);
+            //}
         }
-
-        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
+        System.out.println("Draw hexagons");
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
@@ -96,9 +97,6 @@ public class FieldPanel extends JPanel {
         drawLine(x - k, y, x - rh, y - rs, color);
         drawLine(x - rh, y - rs, x + rh, y - rs, color);
         drawLine(x + k, y, x + rh, y - rs, color);
-
-        System.out.println("hello");
-
 
 
 
@@ -236,23 +234,21 @@ public class FieldPanel extends JPanel {
         }
     }
 
-    public Field getField() {
-        return field;
-    }
-
     public void setField(Field field)
     {
         System.out.println("New field");
         this.field = field;
 
         //TODO: рассчитать размер и перерисовать
-        /*canvas = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
-        setPreferredSize(new Dimension(3000, 2000));
+        canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        setPreferredSize(new Dimension(1366, 768));
         graphics = canvas.getGraphics();
         graphics.setColor(Color.BLACK);
         width = canvas.getWidth();
-        heigth = canvas.getHeight();*/
+        heigth = canvas.getHeight();
 
-        //repaint();
+        drawField();
+
+        repaint();
     }
 }
