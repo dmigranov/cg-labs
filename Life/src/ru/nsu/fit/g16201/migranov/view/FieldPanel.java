@@ -66,17 +66,21 @@ public class FieldPanel extends JPanel {
 
     private void drawField()
     {
-        //TODO: округление
-        int x = 50, y = 50;
+        //TODO: округление; продумать начальные
+        int y = 50;
         //в шестиугольнике радиус равен стороне; ЭТО ПОТОМ УДАЛИТЬ!!!
-        for (int i = 0; i < field.getN(); i++) {
-
-            //for (int j = 0; j < field.getM(); j++) {
+        for (int i = 0; i < field.getN(); i+=2) {
+            int x = 50;
+            for (int j = 0; j < field.getM(); j++) {
                    //координаты середины, как-то вычисленные
                 drawHexagon(graphics, x, y);
                 x+=(int)(Math.sqrt(3) * k / 2) * 2;
-            //}
+            }
+            y += 3 * k;
         }
+
+        //TODO: дорисовать боковушки и если n - чётное, послежний ряд (это вообще сильно рентабельно?
+
         System.out.println("Draw hexagons");
     }
 
@@ -89,7 +93,6 @@ public class FieldPanel extends JPanel {
         int rh = k/2;
         int rs =(int)(Math.sqrt(3)* k /2);
 
-        System.out.println(rs);
         int color = Color.BLACK.getRGB();
 
         if(w == 1) {
@@ -141,12 +144,14 @@ public class FieldPanel extends JPanel {
             j2 = temp;
         }
 
+        //TODO: не забыть рассчитать правильно канвас, а не то индексаутофбэнд!
         int dirj = j2 > j1 ? 1 : -1;
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
             err += 2 * dj;
-            if(!isInverted)
+            if(!isInverted) {
                 canvas.setRGB(i, j, color);
+            }
             else
                 canvas.setRGB(j, i, color);
             if(err > di)
