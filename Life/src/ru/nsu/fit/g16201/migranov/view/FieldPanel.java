@@ -90,17 +90,21 @@ public class FieldPanel extends JPanel {
         int rs =(int)(Math.sqrt(3)* k /2);
         int color = Color.BLACK.getRGB();
 
-        drawLine(x - k, y, x - rh, y + rs, color);
+        /*drawLine(x - k, y, x - rh, y + rs, color);
         drawLine(x - rh, y + rs, x + rh, y + rs, color);
         drawLine(x + k, y, x + rh, y + rs, color);
 
         drawLine(x - k, y, x - rh, y - rs, color);
         drawLine(x - rh, y - rs, x + rh, y - rs, color);
-        drawLine(x + k, y, x + rh, y - rs, color);
+        drawLine(x + k, y, x + rh, y - rs, color);*/
 
+        drawLine(x, y - k, x - rs, y - rh, color);
+        drawLine(x - rs, y - rh, x - rs, y + rh, color);
+        drawLine(x, y + k, x - rs, y + rh, color);
 
-
-
+        drawLine(x, y - k, x + rs, y - rh, color);
+        drawLine(x + rs, y - rh, x + rs, y + rh, color);
+        drawLine(x, y + k, x + rs, y + rh, color);
     }
 
     //Bresenham's line algorithm;
