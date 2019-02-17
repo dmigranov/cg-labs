@@ -35,11 +35,13 @@ public class FieldPanel extends JPanel {
         width = canvas.getWidth();
         heigth = canvas.getHeight();
 
-        //drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
+        drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
         drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
         drawLine(780, 450, 760, 440, Color.BLACK.getRGB());
         drawLine(780, 420, 760, 430, Color.BLACK.getRGB());
+
+        drawLine(600, 420, 610, 440, Color.BLACK.getRGB());
         //TODO: listeners
         addMouseListener(new MouseAdapter() {
             @Override
@@ -93,8 +95,6 @@ public class FieldPanel extends JPanel {
         //g.drawLine(800, 430, 820, 420);
 
 
-
-
     }
 
     //Bresenham's line algorithm
@@ -108,9 +108,10 @@ public class FieldPanel extends JPanel {
 
         //todo: учесть 8 направлений!!!
 
-        //нельзя ли это сделать поинтеллектуальнее
+
         //if(dy/dx > 1) //то есть если угол больше 45 в случае 1 первой четверти
-        if(dy <= dx)
+        //нельзя ли это сделать поинтеллектуальнее, а то два раза переписывать одно и то же..
+        //if(dy <= dx)
         {
             if(x2 < x1)
             {
@@ -139,7 +140,7 @@ public class FieldPanel extends JPanel {
                 }
             }
         }
-        else
+        //else
         {
 
         }
@@ -147,6 +148,11 @@ public class FieldPanel extends JPanel {
 
 
         repaint();
+    }
+
+    public void drawUniversalLine(int i1, int j1, int i2, int j2, int color)
+    {
+
     }
 
 
