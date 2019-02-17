@@ -44,6 +44,7 @@ public class FieldPanel extends JPanel {
         drawLine(600, 420, 610, 440, Color.BLACK.getRGB());
         drawLine(580, 440, 590, 420, Color.BLACK.getRGB());
         drawLine(570, 440, 560, 420, Color.BLACK.getRGB());
+
         //TODO: listeners
         addMouseListener(new MouseAdapter() {
             @Override
@@ -51,8 +52,11 @@ public class FieldPanel extends JPanel {
                 super.mouseReleased(e);
                 int x = e.getX();
                 int y = e.getY();
-                if (canvas.getRGB(x, y) != Color.BLACK.getRGB())
+                if (canvas.getRGB(x, y) != Color.BLACK.getRGB())    //TODO: плюс если совсем не пустое (т.к. клетки закрашены изначально)
+                {
                     spanFill(x, y, Color.RED.getRGB());
+                    repaint();
+                }
             }
         });
     }
@@ -71,7 +75,7 @@ public class FieldPanel extends JPanel {
 
         }
 
-        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
@@ -83,36 +87,32 @@ public class FieldPanel extends JPanel {
         //TODO: это рисует повернутый на 90 градусов гексагон! исправить в брезенхэме
         int rh = k/2;
         int rs =(int)(Math.sqrt(3)* k /2);
+        int color = Color.BLACK.getRGB();
 
-        g.drawLine(x - k, y, x - rh, y + rs);
-        g.drawLine(x - rh, y + rs, x + rh, y + rs);
-        g.drawLine(x + k, y, x + rh, y + rs);
+        drawLine(x - k, y, x - rh, y + rs, color);
+        drawLine(x - rh, y + rs, x + rh, y + rs, color);
+        drawLine(x + k, y, x + rh, y + rs, color);
 
-        g.drawLine(x - k, y, x - rh, y - rs);
-        g.drawLine(x - rh, y - rs, x + rh, y - rs);
-        g.drawLine(x + k, y, x + rh, y - rs);
+        drawLine(x - k, y, x - rh, y - rs, color);
+        drawLine(x - rh, y - rs, x + rh, y - rs, color);
+        drawLine(x + k, y, x + rh, y - rs, color);
+
+        System.out.println("hello");
 
 
 
-        //g.drawLine(800, 430, 820, 420);
 
 
     }
 
-    //Bresenham's line algorithm
+    //Bresenham's line algorithm;
+    //DRAWS ON CANVAS< SO SHOULD BE REPAINTED TO GRAPHICS!
     private void drawLine(int x1, int y1, int x2, int y2, int color)
     {
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
-        int err = 0;
-
-
-        //todo: учесть 8 направлений!!!
-
-
         //if(dy/dx > 1) //то есть если угол больше 45 в случае 1 первой четверти
-        //нельзя ли это сделать поинтеллектуальнее, а то два раза переписывать одно и то же..
         if(dy <= dx)
         {
             drawUniversalLine(x1, y1, x2, y2, color, false);
@@ -121,11 +121,10 @@ public class FieldPanel extends JPanel {
         {
             drawUniversalLine(y1, x1, y2, x2, color, true);
         }
-        System.out.println();
 
-
-        repaint();
+        //repaint();
     }
+
 
     public void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
     {
@@ -144,27 +143,20 @@ public class FieldPanel extends JPanel {
             j2 = temp;
         }
 
-        System.out.println(i1 + " " + j1 + "; " + i2 + " " + j2);
-
         int dirj = j2 > j1 ? 1 : -1;
-
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
-            System.out.println(i + " " + j);
             err += 2 * dj;
-
             if(!isInverted)
                 canvas.setRGB(i, j, color);
             else
                 canvas.setRGB(j, i, color);
-
             if(err > di)
             {
                 err -= 2 * di;
                 j+=dirj;
             }
         }
-    
     }
 
 
@@ -210,7 +202,7 @@ public class FieldPanel extends JPanel {
                 }
             }
         }
-        repaint();
+        //repaint();
     }
 
     private Span getSpan(int x, int y, int color)
