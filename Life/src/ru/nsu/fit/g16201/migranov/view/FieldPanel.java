@@ -37,8 +37,9 @@ public class FieldPanel extends JPanel {
 
         //drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
-        graphics.drawLine(800, 420, 820, 430);
-
+        drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
+        drawLine(780, 450, 760, 440, Color.BLACK.getRGB());
+        drawLine(780, 420, 760, 430, Color.BLACK.getRGB());
         //TODO: listeners
         addMouseListener(new MouseAdapter() {
             @Override
@@ -104,21 +105,46 @@ public class FieldPanel extends JPanel {
 
         int err = 0;
 
-        int diry = y2 > y1 ? 1 : -1;
+
         //todo: учесть 8 направлений!!!
 
-        int y = y1;
-        for(int x = x1; x <= x2; x++)   //границы?
+        //нельзя ли это сделать поинтеллектуальнее
+        //if(dy/dx > 1) //то есть если угол больше 45 в случае 1 первой четверти
+        if(dy <= dx)
         {
-            err += 2 * dy;
-            canvas.setRGB(x, y, color);
-            System.out.println(x + " " + y);
-            if(err > dx)
+            if(x2 < x1)
             {
-                err -= 2 * dx;
-                y+=diry;
+                int temp;
+                temp = x1;
+                x1 = x2;
+                x2 = temp;
+                temp = y1;
+                y1 = y2;
+                y2 = temp;
+            }
+
+            System.out.println(x1 + " " + y1 + "; " + x2 + " " + y2);
+
+            int diry = y2 > y1 ? 1 : -1;
+
+            for(int x = x1, y = y1; x <= x2; x++)   //границы?
+            {
+                System.out.println(x + " " + y);
+                err += 2 * dy;
+                canvas.setRGB(x, y, color);
+                if(err > dx)
+                {
+                    err -= 2 * dx;
+                    y+=diry;
+                }
             }
         }
+        else
+        {
+
+        }
+        System.out.println();
+
 
         repaint();
     }
@@ -210,12 +236,12 @@ public class FieldPanel extends JPanel {
         this.field = field;
 
         //TODO: рассчитать размер и перерисовать
-        canvas = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        /*canvas = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(3000, 2000));
         graphics = canvas.getGraphics();
         graphics.setColor(Color.BLACK);
         width = canvas.getWidth();
-        heigth = canvas.getHeight();
+        heigth = canvas.getHeight();*/
 
         //repaint();
     }

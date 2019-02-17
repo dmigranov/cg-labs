@@ -39,27 +39,19 @@ public class LifeFrame extends MainFrame {
 
 
         addToolBarButton("File/New");
-        //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
-
 
 
         JPanel middlePanel = new JPanel();
-
         middlePanel.add(fieldPanel);
+        middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JScrollPane scrollPane = new JScrollPane(middlePanel);
-
         scrollPane.setWheelScrollingEnabled(true);
-
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
         add(scrollPane);
-        //middlePanel.add(toolBar, BorderLayout.PAGE_START);
 
         //TODO: статусюар
-
         setMinimumSize(new Dimension(800, 600));
-
         setVisible(true);
 
 
@@ -67,7 +59,7 @@ public class LifeFrame extends MainFrame {
 
     public void onAbout()
     {
-        JOptionPane.showMessageDialog(this, "group 1234", "About Init", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "group 16201", "About Init", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void onExit()
