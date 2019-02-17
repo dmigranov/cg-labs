@@ -22,7 +22,7 @@ public class LifeFrame extends MainFrame {
 
     private LifeFrame() throws Exception {
         //инициализация
-        super(720, 480, "Life | Denis Migranov, 16201");
+        super(800, 600, "Life | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         fieldPanel = new FieldPanel(30, 1);
         controller = new Controller(fieldPanel);
@@ -42,7 +42,9 @@ public class LifeFrame extends MainFrame {
         //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
 
 
+
         JPanel middlePanel = new JPanel();
+
         middlePanel.add(fieldPanel);
         JScrollPane scrollPane = new JScrollPane(middlePanel);
 
@@ -50,10 +52,14 @@ public class LifeFrame extends MainFrame {
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        setContentPane(scrollPane);
+
+        add(scrollPane);
+        //middlePanel.add(toolBar, BorderLayout.PAGE_START);
+
+        //TODO: статусюар
 
         setMinimumSize(new Dimension(800, 600));
-        setPreferredSize(new Dimension(800, 600));
+
         setVisible(true);
 
 
