@@ -208,8 +208,14 @@ public class FieldPanel extends JPanel {
 
     public void setField(Field field)
     {
-        //TODO: новый пустой канвас нужных размеров + перерисовать
+        //TODO: новый пустой канвас и панель нужных размеров + перерисовать
         System.out.println("New field");
         this.field = field;
+
+        canvas = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        setPreferredSize(new Dimension(3000, 2000));
+
+        graphics = canvas.getGraphics();
+        graphics.setColor(Color.BLACK);
     }
 }

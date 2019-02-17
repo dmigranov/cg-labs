@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -39,18 +40,22 @@ public class LifeFrame extends MainFrame {
 
         addToolBarButton("File/New");
         //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
-        //middlePanel.add(toolBar);
+
 
         JPanel middlePanel = new JPanel();  //TODO: можно ли обойтись без лишней панели? и сделать так, чтобы всё было красиво (слева ввреху приклеено?)
+        //middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         middlePanel.add(fieldPanel);
         JScrollPane scrollPane = new JScrollPane(middlePanel);
+
         scrollPane.setWheelScrollingEnabled(true);
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setContentPane(scrollPane);
 
-        pack();                                                         //ужимает всё при использовании setSize
+        //pack();                                                         //ужимает всё при использовании setSize
+        setMinimumSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(800, 600));
         setVisible(true);
 
 
