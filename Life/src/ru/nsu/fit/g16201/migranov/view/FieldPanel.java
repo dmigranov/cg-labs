@@ -66,6 +66,7 @@ public class FieldPanel extends JPanel {
 
     private void drawField()
     {
+        //TODO: округление
         int x = 50, y = 50;
         //в шестиугольнике радиус равен стороне; ЭТО ПОТОМ УДАЛИТЬ!!!
         for (int i = 0; i < field.getN(); i++) {
@@ -73,7 +74,7 @@ public class FieldPanel extends JPanel {
             //for (int j = 0; j < field.getM(); j++) {
                    //координаты середины, как-то вычисленные
                 drawHexagon(graphics, x, y);
-                x+=(int)(Math.sqrt(3) * k);
+                x+=(int)(Math.sqrt(3) * k / 2) * 2;
             //}
         }
         System.out.println("Draw hexagons");
@@ -85,26 +86,21 @@ public class FieldPanel extends JPanel {
         //A, D = x +- k, y
         //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
 
-        //TODO: это рисует повернутый на 90 градусов гексагон! исправить в брезенхэме
         int rh = k/2;
         int rs =(int)(Math.sqrt(3)* k /2);
+
+        System.out.println(rs);
         int color = Color.BLACK.getRGB();
 
-        /*drawLine(x - k, y, x - rh, y + rs, color);
-        drawLine(x - rh, y + rs, x + rh, y + rs, color);
-        drawLine(x + k, y, x + rh, y + rs, color);
+        if(w == 1) {
+            drawLine(x, y - k, x - rs, y - rh, color);
+            drawLine(x - rs, y - rh, x - rs, y + rh, color);
+            drawLine(x, y + k, x - rs, y + rh, color);
 
-        drawLine(x - k, y, x - rh, y - rs, color);
-        drawLine(x - rh, y - rs, x + rh, y - rs, color);
-        drawLine(x + k, y, x + rh, y - rs, color);*/
-
-        drawLine(x, y - k, x - rs, y - rh, color);
-        drawLine(x - rs, y - rh, x - rs, y + rh, color);
-        drawLine(x, y + k, x - rs, y + rh, color);
-
-        drawLine(x, y - k, x + rs, y - rh, color);
-        drawLine(x + rs, y - rh, x + rs, y + rh, color);
-        drawLine(x, y + k, x + rs, y + rh, color);
+            drawLine(x, y - k, x + rs, y - rh, color);
+            drawLine(x + rs, y - rh, x + rs, y + rh, color);
+            drawLine(x, y + k, x + rs, y + rh, color);
+        }
     }
 
     //Bresenham's line algorithm;
