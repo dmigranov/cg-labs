@@ -42,6 +42,8 @@ public class FieldPanel extends JPanel {
         drawLine(780, 420, 760, 430, Color.BLACK.getRGB());
 
         drawLine(600, 420, 610, 440, Color.BLACK.getRGB());
+        drawLine(580, 440, 590, 420, Color.BLACK.getRGB());
+        drawLine(570, 440, 560, 420, Color.BLACK.getRGB());
         //TODO: listeners
         addMouseListener(new MouseAdapter() {
             @Override
@@ -111,38 +113,13 @@ public class FieldPanel extends JPanel {
 
         //if(dy/dx > 1) //то есть если угол больше 45 в случае 1 первой четверти
         //нельзя ли это сделать поинтеллектуальнее, а то два раза переписывать одно и то же..
-        //if(dy <= dx)
+        if(dy <= dx)
         {
-            if(x2 < x1)
-            {
-                int temp;
-                temp = x1;
-                x1 = x2;
-                x2 = temp;
-                temp = y1;
-                y1 = y2;
-                y2 = temp;
-            }
-
-            System.out.println(x1 + " " + y1 + "; " + x2 + " " + y2);
-
-            int diry = y2 > y1 ? 1 : -1;
-
-            for(int x = x1, y = y1; x <= x2; x++)   //границы?
-            {
-                System.out.println(x + " " + y);
-                err += 2 * dy;
-                canvas.setRGB(x, y, color);
-                if(err > dx)
-                {
-                    err -= 2 * dx;
-                    y+=diry;
-                }
-            }
+            drawUniversalLine(x1, y1, x2, y2, color, false);
         }
-        //else
+        else
         {
-
+            drawUniversalLine(y1, x1, y2, x2, color, true);
         }
         System.out.println();
 
@@ -150,9 +127,44 @@ public class FieldPanel extends JPanel {
         repaint();
     }
 
-    public void drawUniversalLine(int i1, int j1, int i2, int j2, int color)
+    public void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
     {
+        int err = 0;
+        int di = Math.abs(i2 - i1);
+        int dj = Math.abs(j2 - j1);
+        
+        if(i2 < i1)
+        {
+            int temp;
+            temp = i1;
+            i1 = i2;
+            i2 = temp;
+            temp = j1;
+            j1 = j2;
+            j2 = temp;
+        }
 
+        System.out.println(i1 + " " + j1 + "; " + i2 + " " + j2);
+
+        int dirj = j2 > j1 ? 1 : -1;
+
+        for(int i = i1, j = j1; i <= i2; i++)   //границы?
+        {
+            System.out.println(i + " " + j);
+            err += 2 * dj;
+
+            if(!isInverted)
+                canvas.setRGB(i, j, color);
+            else
+                canvas.setRGB(j, i, color);
+
+            if(err > di)
+            {
+                err -= 2 * di;
+                j+=dirj;
+            }
+        }
+    
     }
 
 
