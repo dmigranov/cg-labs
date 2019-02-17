@@ -42,8 +42,7 @@ public class LifeFrame extends MainFrame {
         //TODO: если панелей нет, то тулбар показывается. а сейчас - нет...
 
 
-        JPanel middlePanel = new JPanel();  //TODO: можно ли обойтись без лишней панели? и сделать так, чтобы всё было красиво (слева ввреху приклеено?)
-        //middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JPanel middlePanel = new JPanel();
         middlePanel.add(fieldPanel);
         JScrollPane scrollPane = new JScrollPane(middlePanel);
 
@@ -53,7 +52,6 @@ public class LifeFrame extends MainFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         setContentPane(scrollPane);
 
-        //pack();                                                         //ужимает всё при использовании setSize
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(800, 600));
         setVisible(true);

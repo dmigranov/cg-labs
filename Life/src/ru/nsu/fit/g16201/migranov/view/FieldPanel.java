@@ -30,10 +30,8 @@ public class FieldPanel extends JPanel {
         // TODO: надо пересоздавать canvas при новых n и m, в зависимости от k и w тоже
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
-
         graphics = canvas.getGraphics();
         graphics.setColor(Color.BLACK);
-
         width = canvas.getWidth();
         heigth = canvas.getHeight();
 
@@ -208,14 +206,17 @@ public class FieldPanel extends JPanel {
 
     public void setField(Field field)
     {
-        //TODO: новый пустой канвас и панель нужных размеров + перерисовать
         System.out.println("New field");
         this.field = field;
 
+        //TODO: рассчитать размер и перерисовать
         canvas = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(3000, 2000));
-
         graphics = canvas.getGraphics();
         graphics.setColor(Color.BLACK);
+        width = canvas.getWidth();
+        heigth = canvas.getHeight();
+
+        //repaint();
     }
 }
