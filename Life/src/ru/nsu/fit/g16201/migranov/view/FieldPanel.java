@@ -177,8 +177,6 @@ public class FieldPanel extends JPanel {
 
     public void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
     {
-        int pixelCount = 0;
-
         int err = 0;
         int di = Math.abs(i2 - i1);
         int dj = Math.abs(j2 - j1);
@@ -198,7 +196,6 @@ public class FieldPanel extends JPanel {
         int dirj = j2 > j1 ? 1 : -1;
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
-            pixelCount++;
             err += 2 * dj;
             if(!isInverted) {
                 canvas.setRGB(i, j, color);
@@ -211,8 +208,6 @@ public class FieldPanel extends JPanel {
                 j+=dirj;
             }
         }
-        pixelCount = pixelCount;
-
     }
 
 

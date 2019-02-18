@@ -23,7 +23,6 @@ public class Controller {
     public void loadFieldFromFile(File file)
     {
         //короче надо чтобы панели параметры поля всегда передавал контроллер! по умолчанию - какие-то стандартные
-        //в файле координаты в формате x,y!!!
         try {
 
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -48,14 +47,13 @@ public class Controller {
             line = line.substring(0, line.indexOf('/'));
             int all = Integer.parseInt(line);
 
-            //в файле клетки в формате xy, а у меня - yx!
+            //в файле клетки в формате xy, а у меня во внутреннем представлении - yx!
             while ((line = br.readLine()) != null)
             {
                 substrings = line.split(" ");
                 int x = Integer.parseInt(substrings[0]);
                 int y = Integer.parseInt(substrings[1]);
                 field.setCell(y, x);
-
                 all--;
             }
             //TODO: проверить all и выкинуть exception если что-то не так

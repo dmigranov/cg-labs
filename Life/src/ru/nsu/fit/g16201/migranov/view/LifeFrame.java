@@ -48,7 +48,9 @@ public class LifeFrame extends MainFrame {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
 
-        //TODO: статусюар
+        //TODO: статусбар
+
+
         setMinimumSize(new Dimension(800, 600));
         setVisible(true);
 
