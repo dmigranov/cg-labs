@@ -11,11 +11,16 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class FieldPanel extends JPanel {
-    private int k, w;           //w - толщина, k - длина ребра
+    private int k, w, r;           //w - толщина, k - длина ребра, r - радиус отрисовки
     private Field field;
 
     private BufferedImage canvas;
     private Graphics graphics;
+
+    private static final int aliveCellColor = new Color(0x00FF09).getRGB();
+    private static final int emptyCellColor = new Color(0xFFF8AF).getRGB();
+    private static final int notFieldColor = new Color(0xFFFFFF).getRGB();
+    private static final int borderColor = new Color(0).getRGB();
 
     private int width, heigth;
 
@@ -45,10 +50,10 @@ public class FieldPanel extends JPanel {
                 super.mouseReleased(e);
                 int x = e.getX();
                 int y = e.getY();
-                if (canvas.getRGB(x, y) != Color.BLACK.getRGB())    //TODO: плюс если совсем не пустое (т.к. клетки закрашены изначально)
+                if (canvas.getRGB(x, y) != borderColor && canvas.getRGB(x, y) != notFieldColor)    //TODO: плюс если совсем не пустое (т.к. клетки закрашены изначально)
                 {
                     //TODO: проверять текущий цвет, и если это цвет одной из клетов - инвертировать её состояние и цвет самой клетки
-                    spanFill(x, y, Color.RED.getRGB());
+                    spanFill(x, y, aliveCellColor);
                     repaint();
                 }
             }
@@ -89,6 +94,8 @@ public class FieldPanel extends JPanel {
             }
             y += (3 * k / 2);
         }
+
+        spanFill(0, 0, notFieldColor);
 
         System.out.println("Drew hexagons");
     }
@@ -231,6 +238,8 @@ public class FieldPanel extends JPanel {
     public void setDrawingParameters(int w, int k) {
         this.w = w;
         this.k = k;
+        r = k - 1;
+
         //TODO: перерисовать (+новый канвас)
     }
 
