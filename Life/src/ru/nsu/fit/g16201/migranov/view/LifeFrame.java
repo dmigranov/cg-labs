@@ -23,7 +23,7 @@ public class LifeFrame extends MainFrame {
         //инициализация
         super(800, 600, "Life | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        fieldPanel = new FieldPanel(20, 1);
+        fieldPanel = new FieldPanel(21, 1);
         controller = new Controller(fieldPanel);
 
         addSubMenu("File", KeyEvent.VK_F);

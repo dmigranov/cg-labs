@@ -31,7 +31,7 @@ public class Controller {
 
             line = br.readLine();
             line = line.substring(0, line.indexOf('/'));
-            String[] substrings = line.split(" "); //todo: better parsing?
+            String[] substrings = line.split(" ");
             int m = Integer.parseInt(substrings[0]);
             int n = Integer.parseInt(substrings[1]);
             field = new Field(m, n);
@@ -70,4 +70,6 @@ public class Controller {
             //диалог
         }
     }
+
+
 }

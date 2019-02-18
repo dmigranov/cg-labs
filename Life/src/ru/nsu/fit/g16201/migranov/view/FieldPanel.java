@@ -24,6 +24,8 @@ public class FieldPanel extends JPanel {
 
     private int width, heigth;
 
+    private boolean XOR = true;
+
 
     public FieldPanel(int k, int w)
     {
@@ -51,11 +53,23 @@ public class FieldPanel extends JPanel {
                 super.mouseReleased(e);
                 int x = e.getX();
                 int y = e.getY();
-                if (canvas.getRGB(x, y) != borderColor && canvas.getRGB(x, y) != notFieldColor)    //TODO: плюс если совсем не пустое (т.к. клетки закрашены изначально)
+                int currentColor = canvas.getRGB(x, y);
+                if (currentColor != borderColor && currentColor != notFieldColor)
                 {
-                    //TODO: проверять текущий цвет, и если это цвет одной из клетов - инвертировать её состояние и цвет самой клетки
-                    spanFill(x, y, aliveCellColor);
-                    repaint();
+                    if(!XOR) {
+                        spanFill(x, y, aliveCellColor);
+                        //TODO: поменять состояние модели, предварительно посчитав индексы поля
+                        repaint();
+                    }
+                    else
+                    {
+                        //TODO: поменять состояние самой модели
+                        if(currentColor == aliveCellColor)
+                            spanFill(x, y, emptyCellColor);
+                        else if(currentColor == emptyCellColor)
+                            spanFill(x, y, aliveCellColor);
+                        repaint();
+                    }
                 }
             }
         });
@@ -71,8 +85,8 @@ public class FieldPanel extends JPanel {
 
     private void drawField()
     {
-        //TODO: округление; продумать начальные
-        int y = 50;
+        //TODO: продумать начальные; непонятки с длиной: если k = 20, то он чертит либо 21, либо 19 (если от к перейти к к-1). Это понятно почему так, но как исправить?
+        int y = 50; //на самом деле тоже зависит от к и w
         for (int i = 0; i < field.getN(); i++) {
             int x = 50;
             if(i % 2 != 0)
@@ -84,11 +98,11 @@ public class FieldPanel extends JPanel {
                 drawHexagon(graphics, x, y);
                 if(field.isAlive(i, j))
                 {
-                    spanFill(x, y, Color.GREEN.getRGB());
+                    spanFill(x, y, aliveCellColor);
                 }
                 else
                 {
-                    //залить
+                    spanFill(x, y, emptyCellColor);
                 }
                 x+=(int)(Math.sqrt(3) * k / 2) * 2;
 
@@ -97,7 +111,6 @@ public class FieldPanel extends JPanel {
         }
 
         spanFill(0, 0, notFieldColor);
-
         System.out.println("Drew hexagons");
     }
 
@@ -107,7 +120,8 @@ public class FieldPanel extends JPanel {
         //A, D = x +- k, y
         //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
 
-        int rh = k/2;
+        int rhn = k/2;
+        int rhp = k % 2 == 0 ? k /2 - 1 : rhn;
         int rs =(int)(Math.sqrt(3)* k /2);
 
         int color = Color.BLACK.getRGB();
@@ -119,6 +133,7 @@ public class FieldPanel extends JPanel {
 
             drawLine(x, y - k, x + rs, y - rh, color);
             drawLine(x + rs, y - rh, x + rs, y + rh, color);
+            System.out.println(y - rh + " " + (y+rh));
             drawLine(x, y + k, x + rs, y + rh, color);
         }
     }
@@ -139,7 +154,6 @@ public class FieldPanel extends JPanel {
         {
             drawUniversalLine(y1, x1, y2, x2, color, true);
         }
-        //repaint();
     }
 
 
@@ -221,7 +235,6 @@ public class FieldPanel extends JPanel {
                 }
             }
         }
-        //repaint();
     }
 
     private Span getSpan(int x, int y, int color)
