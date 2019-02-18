@@ -24,7 +24,7 @@ public class FieldPanel extends JPanel {
 
     private int width, heigth;
 
-    private boolean XOR = true;
+    private boolean XOR = false;
 
 
     public FieldPanel(int k, int w)
@@ -108,9 +108,16 @@ public class FieldPanel extends JPanel {
 
             }
             y += (3 * k / 2);
+            if (k % 2 == 0)
+                y--;
         }
 
         spanFill(0, 0, notFieldColor);
+
+        /*drawLine(600, 220, 600, 350, Color.BLACK.getRGB());
+        drawLine(610, 220, 610, 350, Color.BLACK.getRGB());
+        drawLine(611, 220, 611, 350, Color.BLACK.getRGB());*/   //for demonstration of width only
+
         System.out.println("Drew hexagons");
     }
 
@@ -121,20 +128,25 @@ public class FieldPanel extends JPanel {
         //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
 
         int rhn = k/2;
-        int rhp = k % 2 == 0 ? k /2 - 1 : rhn;
+        int rhp = (k % 2 == 0 ? k /2 - 1 : rhn);
+        int kp = (k % 2 == 0 ? k - 1 : k);
         int rs =(int)(Math.sqrt(3)* k /2);
 
         int color = Color.BLACK.getRGB();
 
         if(w == 1) {
-            drawLine(x, y - k, x - rs, y - rh, color);
-            drawLine(x - rs, y - rh, x - rs, y + rh, color);
-            drawLine(x, y + k, x - rs, y + rh, color);
+            drawLine(x, y - k, x - rs, y - rhn, color);
+            drawLine(x - rs, y - rhn, x - rs, y + rhp, color);
+            drawLine(x, y + kp, x - rs, y + rhp, color);
 
-            drawLine(x, y - k, x + rs, y - rh, color);
-            drawLine(x + rs, y - rh, x + rs, y + rh, color);
-            System.out.println(y - rh + " " + (y+rh));
-            drawLine(x, y + k, x + rs, y + rh, color);
+            drawLine(x, y - k, x + rs, y - rhn, color);
+            drawLine(x + rs, y - rhn, x + rs, y + rhp, color);
+            //System.out.println(y - rhn + " " + (y+rhp));
+            drawLine(x, y + kp, x + rs, y + rhp, color);
+        }
+        else
+        {
+            //TODO: нарисовать
         }
     }
 
