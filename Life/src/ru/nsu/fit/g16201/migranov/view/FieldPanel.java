@@ -12,6 +12,7 @@ import java.util.Deque;
 
 public class FieldPanel extends JPanel {
     private int k, w, r;           //w - толщина, k - длина ребра, r - радиус отрисовки
+    private int xStart, yStart;
     private Field field;
 
     private BufferedImage canvas;
@@ -35,6 +36,9 @@ public class FieldPanel extends JPanel {
         this.w = w;
         r = k - 1;
 
+        xStart = 25 + k;
+        yStart = 25 + k;
+
         /*drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
         drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
@@ -46,7 +50,7 @@ public class FieldPanel extends JPanel {
         drawLine(570, 440, 560, 420, Color.BLACK.getRGB());*/
 
 
-        //TODO: listeners
+        //TODO: listeners: moving with pressed etc.
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -86,9 +90,9 @@ public class FieldPanel extends JPanel {
     private void drawField()
     {
         //TODO: продумать начальные; непонятки с длиной: если k = 20, то он чертит либо 21, либо 19 (если от к перейти к к-1). Это понятно почему так, но как исправить?
-        int y = 50; //на самом деле тоже зависит от к и w
+        int y = yStart; //на самом деле тоже зависит от к и w
         for (int i = 0; i < field.getN(); i++) {
-            int x = 50;
+            int x = xStart;
             if(i % 2 != 0)
             {
                 x += (int)(Math.sqrt(3)* k /2);
@@ -123,9 +127,9 @@ public class FieldPanel extends JPanel {
 
     private void drawHexagon(Graphics g, int x, int y) {
         //r = k
-        //шестиугольник abcdeg начиная с левого угла
-        //A, D = x +- k, y
-        //B, C, F, G = x +- r/2, y+- sqrt(3)/2 * r
+        //шестиугольник abcdeg начиная с верхнего угла
+        //A, D = x, y +- k/2 (если k нечётное, а если чётное, то надо дополнительно либо верх, либо вниз сдвинуть на -1, т.к без этого рисует k + 1 точку)
+        //B, C, F, G = x +- rs, y+- rh(n/p) - в зависимости от чётности k.
 
         int rhn = k/2;
         int rhp = (k % 2 == 0 ? k /2 - 1 : rhn);
@@ -147,6 +151,7 @@ public class FieldPanel extends JPanel {
         else
         {
             //TODO: нарисовать
+            //setstroke
         }
     }
 
@@ -154,6 +159,7 @@ public class FieldPanel extends JPanel {
     //DRAWS ON CANVAS< SO SHOULD BE REPAINTED TO GRAPHICS!
     private void drawLine(int x1, int y1, int x2, int y2, int color)
     {
+
         int dx = Math.abs(x2 - x1);
         int dy = Math.abs(y2 - y1);
 
@@ -171,6 +177,8 @@ public class FieldPanel extends JPanel {
 
     public void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
     {
+        int pixelCount = 0;
+
         int err = 0;
         int di = Math.abs(i2 - i1);
         int dj = Math.abs(j2 - j1);
@@ -190,6 +198,7 @@ public class FieldPanel extends JPanel {
         int dirj = j2 > j1 ? 1 : -1;
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
+            pixelCount++;
             err += 2 * dj;
             if(!isInverted) {
                 canvas.setRGB(i, j, color);
@@ -202,6 +211,8 @@ public class FieldPanel extends JPanel {
                 j+=dirj;
             }
         }
+        pixelCount = pixelCount;
+
     }
 
 
@@ -265,6 +276,9 @@ public class FieldPanel extends JPanel {
         this.w = w;
         this.k = k;
         r = k - 1;
+
+        xStart = 25 + k;
+        yStart = 25 + k;
 
         //TODO: перерисовать (+новый канвас)
     }
