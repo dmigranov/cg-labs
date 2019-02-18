@@ -31,6 +31,7 @@ public class FieldPanel extends JPanel {
 
         this.k = k;
         this.w = w;
+        r = k - 1;
 
         /*drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
         drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
