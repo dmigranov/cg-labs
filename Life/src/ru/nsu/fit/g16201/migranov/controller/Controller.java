@@ -16,7 +16,7 @@ public class Controller {
     //создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel) {
         this.fieldPanel = fieldPanel;
-        field = new Field(5, 5);
+        field = new Field(20, 20);
         fieldPanel.setField(field);
     }
 

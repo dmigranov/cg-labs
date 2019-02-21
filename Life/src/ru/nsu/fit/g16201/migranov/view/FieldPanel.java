@@ -27,10 +27,11 @@ public class FieldPanel extends JPanel {
     private static final int borderColor = new Color(0).getRGB();
 
     Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
+    Point current = null;       //нужно для закрашивания поля с зажатой мышкой
 
     private int width, heigth;
 
-    private boolean XOR = false;
+    private boolean XOR = true;
 
 
     public FieldPanel(int k, int w)
@@ -46,7 +47,7 @@ public class FieldPanel extends JPanel {
 
         //TODO: listeners: moving with pressed etc.
         //в таком случае нам надо хранить "текущую' клетку (координаты её центра). если полученные нами координаты совпадают, то ничего не делаем. иначе перекрашиваем и присваиваем текущей клетке значение этих координат
-        addMouseListener(new MouseAdapter() {
+        /*addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
@@ -73,17 +74,35 @@ public class FieldPanel extends JPanel {
                     }
                 }
             }
-        });
+        });*/
 
-        /*addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
 
-                lineHasStarted = false;
-
-                //xPrev = x;
-                //yPrev = y;
+                current = null;
+            }
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                int x = e.getX();
+                int y = e.getY();
+                int currentColor = canvas.getRGB(x, y);
+                if (currentColor != borderColor && currentColor != notFieldColor) {
+                    Point point = getFieldCoordinates(x, y);
+                    if (!XOR) {
+                        spanFill(x, y, aliveCellColor);
+                        field.setCell(point.y, point.x);
+                    } else {
+                        if (currentColor == aliveCellColor)
+                            spanFill(x, y, emptyCellColor);
+                        else if (currentColor == emptyCellColor)
+                            spanFill(x, y, aliveCellColor);
+                        field.invertrCell(point.y, point.x);
+                    }
+                    repaint();
+                }
             }
         });
 
@@ -91,21 +110,38 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-                //if(x != -1  && y != -1) {
-                if(lineHasStarted){
-                    xPrev = x;
-                    yPrev = y;
-                    x = e.getX();
-                    y = e.getY();
+
+                int x = e.getX();
+                int y = e.getY();
+                int currentColor = canvas.getRGB(x, y);
+
+                if (currentColor != borderColor && currentColor != notFieldColor) {
+
+                    Point point = getFieldCoordinates(x, y);
+
+                    if (current != null)
+                    {
+                        if(current.equals(point))
+                            return;
+
+                    }
+
+                    current = point;
+                    if(!XOR) {
+                        spanFill(x, y, aliveCellColor);
+                        field.setCell(point.y, point.x);
+                    }
+                    else {
+                        if(currentColor == aliveCellColor)
+                            spanFill(x, y, emptyCellColor);
+                        else if(currentColor == emptyCellColor)
+                            spanFill(x, y, aliveCellColor);
+                        field.invertrCell(point.y, point.x);
+                    }
+                    repaint();
                 }
-                else {
-                    xPrev = x = e.getX();
-                    yPrev = y = e.getY();
-                    lineHasStarted = true;
-                }
-                repaint();
             }
-        });*/
+        });
     }
 
     private Point getFieldCoordinates(int x, int y) {
