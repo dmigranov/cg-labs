@@ -31,7 +31,8 @@ public class FieldPanel extends JPanel {
 
     private int width, heigth;
 
-    private boolean XOR = true;
+    private boolean XOR = false;
+    private boolean impactsShows = false;
 
 
     public FieldPanel(int k, int w)
@@ -45,7 +46,6 @@ public class FieldPanel extends JPanel {
         xStart = 25 + k;
         yStart = 25 + k;
 
-        //TODO: listeners: moving with pressed etc.
         //в таком случае нам надо хранить "текущую' клетку (координаты её центра). если полученные нами координаты совпадают, то ничего не делаем. иначе перекрашиваем и присваиваем текущей клетке значение этих координат
         /*addMouseListener(new MouseAdapter() {
             @Override
@@ -86,6 +86,7 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e)
             {
+                //TODO: мож вынести повторяющийся код в отдельный метод? +проверить
                 int x = e.getX();
                 int y = e.getY();
                 int currentColor = canvas.getRGB(x, y);
@@ -121,11 +122,9 @@ public class FieldPanel extends JPanel {
 
                     if (current != null)
                     {
-                        if(current.equals(point))
+                        if(current.equals(point))   //если эту клетку уже обработали, то ничего делать не надо
                             return;
-
                     }
-
                     current = point;
                     if(!XOR) {
                         spanFill(x, y, aliveCellColor);
@@ -145,8 +144,6 @@ public class FieldPanel extends JPanel {
     }
 
     private Point getFieldCoordinates(int x, int y) {
-        //TODO: если w > 1, то не всегда срабатывает (не всегда находит)
-
         int lx = x, rx = x;
         while(lx > 0 && canvas.getRGB(lx, y) != borderColor)
             lx--;
@@ -174,7 +171,7 @@ public class FieldPanel extends JPanel {
             point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
             if(point != null)
                 System.out.println("FOUND 2");
-            //todo: зять другие окрестности (w = 6 k = 5)
+            //todo: взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
             else
                 System.out.println("NOT FOUND");
         return point;
@@ -190,7 +187,6 @@ public class FieldPanel extends JPanel {
 
     public void drawField()
     {
-        //TODO: продумать начальные; непонятки с длиной: если k = 20, то он чертит либо 21, либо 19 (если от к перейти к к-1). Это понятно почему так, но как исправить?
         int y = yStart; //на самом деле тоже зависит от к и w
         for (int i = 0; i < field.getN(); i++) {
             int x = xStart;
@@ -250,7 +246,7 @@ public class FieldPanel extends JPanel {
         {
             //setstroke
             graphics.setColor(new Color(borderColor));
-            //прочекать другие параметры
+            //прочекать 2 и 3 параметры
             ((Graphics2D)graphics).setStroke(new BasicStroke(w, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));//
 
             graphics.drawLine(x, y - k, x - rs, y - rhn);
@@ -357,7 +353,6 @@ public class FieldPanel extends JPanel {
                     Span newSpan = getSpan(i, y+1, oldValue);
                     if (newSpan == null)
                         continue;
-                    //i += (newSpan.rx - newSpan.lx);
                     i += (newSpan.rx - (newSpan.lx > span.lx ? newSpan.lx : span.lx));
                     spanStack.push(newSpan);
                 }

@@ -41,6 +41,9 @@ public class LifeFrame extends MainFrame {
         addSubMenu("Game", KeyEvent.VK_G);
         addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
 
+        addSubMenu("Edit", KeyEvent.VK_E);
+        //addMenuItem();
+
         addToolBarButton("File/New");
         addToolBarButton("Game/Step");
 
