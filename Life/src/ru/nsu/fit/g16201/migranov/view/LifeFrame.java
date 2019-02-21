@@ -23,7 +23,7 @@ public class LifeFrame extends MainFrame {
         //инициализация
         super(800, 600, "Life | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        fieldPanel = new FieldPanel(24, 1);
+        fieldPanel = new FieldPanel(22, 5);
         controller = new Controller(fieldPanel);
 
         addSubMenu("File", KeyEvent.VK_F);
@@ -34,9 +34,13 @@ public class LifeFrame extends MainFrame {
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About...", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+
+        addSubMenu("Game", KeyEvent.VK_G);
+        addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
 
         addToolBarButton("File/New");
+        addToolBarButton("Game/Step");
 
 
         JPanel middlePanel = new JPanel();
@@ -83,5 +87,10 @@ public class LifeFrame extends MainFrame {
     public void onSaveAs()
     {
 
+    }
+
+    public void onStep()
+    {
+        controller.step();
     }
 }

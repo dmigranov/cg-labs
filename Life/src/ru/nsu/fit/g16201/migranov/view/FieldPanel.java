@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FieldPanel extends JPanel {
     private int k, w, r;           //w - толщина, k - длина ребра, r - радиус отрисовки
@@ -22,6 +24,8 @@ public class FieldPanel extends JPanel {
     private static final int emptyCellColor = new Color(0xFFF8AF).getRGB();
     private static final int notFieldColor = new Color(0xFFFFFF).getRGB();
     private static final int borderColor = new Color(0).getRGB();
+
+    Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
 
     private int width, heigth;
 
@@ -39,18 +43,8 @@ public class FieldPanel extends JPanel {
         xStart = 25 + k;
         yStart = 25 + k;
 
-        /*drawLine(800, 440, 820, 450, Color.BLACK.getRGB());
-        drawLine(800, 450, 820, 440, Color.BLACK.getRGB());
-        drawLine(800, 420, 820, 430, Color.BLACK.getRGB());
-        drawLine(780, 450, 760, 440, Color.BLACK.getRGB());
-        drawLine(780, 420, 760, 430, Color.BLACK.getRGB());
-
-        drawLine(600, 420, 610, 440, Color.BLACK.getRGB());
-        drawLine(580, 440, 590, 420, Color.BLACK.getRGB());
-        drawLine(570, 440, 560, 420, Color.BLACK.getRGB());*/
-
-
         //TODO: listeners: moving with pressed etc.
+        //в таком случае нам надо хранить "текущую' клетку (координаты её центра). если полученные нами координаты совпадают, то ничего не делаем. иначе перекрашиваем и присваиваем текущей клетке значение этих координат
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -60,23 +54,52 @@ public class FieldPanel extends JPanel {
                 int currentColor = canvas.getRGB(x, y);
                 if (currentColor != borderColor && currentColor != notFieldColor)
                 {
+                    Point point = getFieldCoordinates(x, y);
+
                     if(!XOR) {
                         spanFill(x, y, aliveCellColor);
-                        //TODO: поменять состояние модели, предварительно посчитав индексы поля
+                        field.setCell(point.y, point.x);
                         repaint();
                     }
                     else
                     {
-                        //TODO: поменять состояние самой модели
                         if(currentColor == aliveCellColor)
                             spanFill(x, y, emptyCellColor);
                         else if(currentColor == emptyCellColor)
                             spanFill(x, y, aliveCellColor);
+                        field.invertrCell(point.y, point.x);
                         repaint();
                     }
                 }
             }
         });
+    }
+
+    private Point getFieldCoordinates(int x, int y) {
+        int lx = x, rx = x;
+        while(lx > 0 && canvas.getRGB(lx, y) != borderColor)
+            lx--;
+        while(rx < width - 1 && canvas.getRGB(rx, y) != borderColor)
+            rx++;
+        int ly = y, ry = y;
+        while(ly > 0 && canvas.getRGB(x, ly) != borderColor)
+            ly--;
+        while(ry < heigth - 1 && canvas.getRGB(x, ry) != borderColor)
+            ry++;
+
+        int cx = (lx + rx)/2;
+        int cy = (ly + ry)/2;
+        if(k % 2 == 0)
+        {
+            cy++;
+        }
+
+        Point point = centerMap.get(new Point(cx, cy));     //TODO: проверить корректность
+        if(point != null)
+            System.out.println("FOUND");
+        else
+            System.out.println("NOT FOUND");
+        return point;
     }
 
     @Override
@@ -87,7 +110,7 @@ public class FieldPanel extends JPanel {
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
     }
 
-    private void drawField()
+    public void drawField()
     {
         //TODO: продумать начальные; непонятки с длиной: если k = 20, то он чертит либо 21, либо 19 (если от к перейти к к-1). Это понятно почему так, но как исправить?
         int y = yStart; //на самом деле тоже зависит от к и w
@@ -100,6 +123,7 @@ public class FieldPanel extends JPanel {
             for (int j = 0; j < (i % 2 == 0 ? field.getM() : field.getM() - 1); j++)
             {
                 drawHexagon(graphics, x, y);
+                centerMap.put(new Point(x, y), new Point(j, i));
                 if(field.isAlive(i, j))
                 {
                     spanFill(x, y, aliveCellColor);
@@ -111,16 +135,13 @@ public class FieldPanel extends JPanel {
                 x+=(int)(Math.sqrt(3) * k / 2) * 2;
 
             }
+
             y += (3 * k / 2);
             if (k % 2 == 0)
                 y--;
         }
 
         spanFill(0, 0, notFieldColor);
-
-        /*drawLine(600, 220, 600, 350, Color.BLACK.getRGB());
-        drawLine(610, 220, 610, 350, Color.BLACK.getRGB());
-        drawLine(611, 220, 611, 350, Color.BLACK.getRGB());*/   //for demonstration of width only
 
         System.out.println("Drew hexagons");
     }
@@ -136,7 +157,7 @@ public class FieldPanel extends JPanel {
         int kp = (k % 2 == 0 ? k - 1 : k);
         int rs =(int)(Math.sqrt(3)* k /2);
 
-        int color = Color.BLACK.getRGB();
+        int color = borderColor;
 
         if(w == 1) {
             drawLine(x, y - k, x - rs, y - rhn, color);
@@ -145,13 +166,22 @@ public class FieldPanel extends JPanel {
 
             drawLine(x, y - k, x + rs, y - rhn, color);
             drawLine(x + rs, y - rhn, x + rs, y + rhp, color);
-            //System.out.println(y - rhn + " " + (y+rhp));
             drawLine(x, y + kp, x + rs, y + rhp, color);
         }
         else
         {
             //TODO: нарисовать
             //setstroke
+            graphics.setColor(new Color(borderColor));
+            ((Graphics2D)graphics).setStroke(new BasicStroke(w));//
+
+            graphics.drawLine(x, y - k, x - rs, y - rhn);
+            graphics.drawLine(x - rs, y - rhn, x - rs, y + rhp);
+            graphics.drawLine(x, y + kp, x - rs, y + rhp);
+
+            graphics.drawLine(x, y - k, x + rs, y - rhn);
+            graphics.drawLine(x + rs, y - rhn, x + rs, y + rhp);
+            graphics.drawLine(x, y + kp, x + rs, y + rhp);
         }
     }
 
@@ -237,7 +267,8 @@ public class FieldPanel extends JPanel {
                     Span newSpan = getSpan(i, y - 1, oldValue);
                     if (newSpan == null)
                         continue;
-                    i += (newSpan.rx - newSpan.lx);
+                    //i += (newSpan.rx - newSpan.lx);   //это неправильно, смотри в тетрадке на первой. исправил чтобы учитывать этот случай
+                    i += (newSpan.rx - (newSpan.lx > span.lx ? newSpan.lx : span.lx));
                     spanStack.push(newSpan);
                 }
             }
@@ -248,7 +279,8 @@ public class FieldPanel extends JPanel {
                     Span newSpan = getSpan(i, y+1, oldValue);
                     if (newSpan == null)
                         continue;
-                    i += (newSpan.rx - newSpan.lx);
+                    //i += (newSpan.rx - newSpan.lx);
+                    i += (newSpan.rx - (newSpan.lx > span.lx ? newSpan.lx : span.lx));
                     spanStack.push(newSpan);
                 }
             }

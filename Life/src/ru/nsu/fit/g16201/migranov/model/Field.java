@@ -65,7 +65,7 @@ public class Field {
     //пересчитывает импакты вокруг точки с кооррдинатами y x - нужно при изменении состояния
     private void recalculateImpacts(int y, int x)
     {
-
+        boolean state = field[y][x].isAlive();      //это то, что сейчас. а то что было - противоположное этоиу
     }
 
     protected int getFirstCount(int y, int x) {
