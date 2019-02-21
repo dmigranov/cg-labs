@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -73,9 +74,43 @@ public class FieldPanel extends JPanel {
                 }
             }
         });
+
+        /*addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+                lineHasStarted = false;
+
+                //xPrev = x;
+                //yPrev = y;
+            }
+        });
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                //if(x != -1  && y != -1) {
+                if(lineHasStarted){
+                    xPrev = x;
+                    yPrev = y;
+                    x = e.getX();
+                    y = e.getY();
+                }
+                else {
+                    xPrev = x = e.getX();
+                    yPrev = y = e.getY();
+                    lineHasStarted = true;
+                }
+                repaint();
+            }
+        });*/
     }
 
     private Point getFieldCoordinates(int x, int y) {
+        //TODO: если w > 1, то не всегда срабатывает (не всегда находит)
+
         int lx = x, rx = x;
         while(lx > 0 && canvas.getRGB(lx, y) != borderColor)
             lx--;
@@ -94,11 +129,18 @@ public class FieldPanel extends JPanel {
             cy++;
         }
 
+        //cx 122, y 47, in map x 123 y 47
+
         Point point = centerMap.get(new Point(cx, cy));     //TODO: проверить корректность
         if(point != null)
             System.out.println("FOUND");
         else
-            System.out.println("NOT FOUND");
+            point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
+            if(point != null)
+                System.out.println("FOUND 2");
+            //todo: зять другие окрестности (w = 6 k = 5)
+            else
+                System.out.println("NOT FOUND");
         return point;
     }
 
@@ -170,10 +212,10 @@ public class FieldPanel extends JPanel {
         }
         else
         {
-            //TODO: нарисовать
             //setstroke
             graphics.setColor(new Color(borderColor));
-            ((Graphics2D)graphics).setStroke(new BasicStroke(w));//
+            //прочекать другие параметры
+            ((Graphics2D)graphics).setStroke(new BasicStroke(w, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));//
 
             graphics.drawLine(x, y - k, x - rs, y - rhn);
             graphics.drawLine(x - rs, y - rhn, x - rs, y + rhp);
