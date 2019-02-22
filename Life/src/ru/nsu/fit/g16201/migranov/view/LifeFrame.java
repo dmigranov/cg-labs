@@ -2,8 +2,11 @@ package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
 import ru.nsu.fit.g16201.migranov.controller.Controller;
@@ -39,22 +42,12 @@ public class LifeFrame extends MainFrame {
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
         addSubMenu("Edit", KeyEvent.VK_E);
-        //addMenuItem("Edit/Replace", "Replace mode", KeyEvent.VK_R, "About.gif", "onReplace");
-        //addMenuItem("Edit/XOR", "XOR mode", KeyEvent.VK_X, "About.gif", "onXOR");
         JMenu editMenu = (JMenu)getMenuElement("Edit");
-
         ButtonGroup group = new ButtonGroup();
-        /*JRadioButtonMenuItem replaceMenuItem = new JRadioButtonMenuItem("XOR", false);//icons description etc
-        group.add(replaceMenuItem);
-        JRadioButtonMenuItem xorMenuItem = new JRadioButtonMenuItem("Replace", true);//
-        group.add(xorMenuItem);
-        editMenu.add(replaceMenuItem);
-        editMenu.add(xorMenuItem);
-        xorMenuItem.setMnemonic(mnemonic);
-        xorMenuItem.setToolTipText(tooltip);*/
-
-        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "About.gif", group, true);
-        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "About.gif", group, false);
+        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "About.gif", group, true, "onReplace");
+        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "About.gif", group, false, "onXOR");
+        addToolBarToggleButton("Edit/Replace");
+        addToolBarToggleButton("Edit/XOR");
 
 
         addSubMenu("Game", KeyEvent.VK_G);
@@ -121,15 +114,15 @@ public class LifeFrame extends MainFrame {
 
     public void onReplace()
     {
-
+        System.out.println("Replace");
     }
 
     public void onXOR()
     {
-
+        System.out.println("XOR");
     }
 
-    public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state) throws SecurityException, NoSuchMethodException
+    public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
     {
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(title, state);//icons description etc
         if(icon != null)
@@ -138,7 +131,42 @@ public class LifeFrame extends MainFrame {
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
 
+        final Method method = getClass().getMethod(actionMethod);
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    method.invoke(LifeFrame.this);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
         parent.add(item);
         group.add(item);
+    }
+
+    public JToggleButton createToolBarToggleButton(JMenuItem item)
+    {
+        JToggleButton button = new JToggleButton(item.getIcon());
+        /*for(ActionListener listener: item.getActionListeners())
+            button.addActionListener(listener);*/
+        button.setToolTipText(item.getToolTipText());
+        button.setModel(item.getModel());   //button state model
+        return button;
+    }
+
+    public JToggleButton createToolBarToggleButton(String menuPath)
+    {
+        JMenuItem item = (JMenuItem)getMenuElement(menuPath);
+        if(item == null)
+            throw new InvalidParameterException("Menu path not found: "+menuPath);
+        return createToolBarToggleButton(item);
+    }
+
+    public void addToolBarToggleButton(String menuPath)
+    {
+        toolBar.add(createToolBarToggleButton(menuPath));
     }
 }
