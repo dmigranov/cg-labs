@@ -45,7 +45,7 @@ public class LifeFrame extends MainFrame {
         JMenu editMenu = (JMenu)getMenuElement("Edit");
         ButtonGroup group = new ButtonGroup();
         addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "About.gif", group, true, "onReplace");
-        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "About.gif", group, false, "onXOR");
+        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "XOR.gif", group, false, "onXOR");
         addToolBarToggleButton("Edit/Replace");
         addToolBarToggleButton("Edit/XOR");
 
@@ -53,6 +53,9 @@ public class LifeFrame extends MainFrame {
         addSubMenu("Game", KeyEvent.VK_G);
         addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
 
+        addSubMenu("View", KeyEvent.VK_V);
+        addMenuItem("View/Show impacts", "Shows impacts of cells", KeyEvent.VK_I, "About.gif", "onShowImpacts");
+//todo: ticked impact!
 
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
@@ -114,12 +117,17 @@ public class LifeFrame extends MainFrame {
 
     public void onReplace()
     {
-        System.out.println("Replace");
+        fieldPanel.setXOR(false);
     }
 
     public void onXOR()
     {
-        System.out.println("XOR");
+        fieldPanel.setXOR(true);
+    }
+
+    public void onShowImpacts()
+    {
+        fieldPanel.changeImpactsShow();
     }
 
     public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException

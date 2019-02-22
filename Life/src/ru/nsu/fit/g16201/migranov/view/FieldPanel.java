@@ -19,21 +19,23 @@ public class FieldPanel extends JPanel {
     private Field field;
 
     private BufferedImage canvas;
-    private Graphics graphics;
+    private Graphics2D graphics;
+
+    private BufferedImage impactCanvas;
+    private Graphics2D impactGraphics;
 
     private static final int aliveCellColor = new Color(0x00FF09).getRGB();
     private static final int emptyCellColor = new Color(0xFFF8AF).getRGB();
     private static final int notFieldColor = new Color(0xFFFFFF).getRGB();
     private static final int borderColor = new Color(0).getRGB();
 
-    Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
-    Point current = null;       //нужно для закрашивания поля с зажатой мышкой
+    private Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
+    private Point current = null;       //нужно для закрашивания поля с зажатой мышкой
 
     private int width, heigth;
 
     private boolean XOR = false;
-    private boolean impactsShows = false;
-
+    private boolean impactsShown = false;
 
     public FieldPanel(int k, int w)
     {
@@ -45,36 +47,6 @@ public class FieldPanel extends JPanel {
 
         xStart = 25 + k;
         yStart = 25 + k;
-
-        //в таком случае нам надо хранить "текущую' клетку (координаты её центра). если полученные нами координаты совпадают, то ничего не делаем. иначе перекрашиваем и присваиваем текущей клетке значение этих координат
-        /*addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                int x = e.getX();
-                int y = e.getY();
-                int currentColor = canvas.getRGB(x, y);
-                if (currentColor != borderColor && currentColor != notFieldColor)
-                {
-                    Point point = getFieldCoordinates(x, y);
-
-                    if(!XOR) {
-                        spanFill(x, y, aliveCellColor);
-                        field.setCell(point.y, point.x);
-                        repaint();
-                    }
-                    else
-                    {
-                        if(currentColor == aliveCellColor)
-                            spanFill(x, y, emptyCellColor);
-                        else if(currentColor == emptyCellColor)
-                            spanFill(x, y, aliveCellColor);
-                        field.invertrCell(point.y, point.x);
-                        repaint();
-                    }
-                }
-            }
-        });*/
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -100,7 +72,7 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, emptyCellColor);
                         else if (currentColor == emptyCellColor)
                             spanFill(x, y, aliveCellColor);
-                        field.invertrCell(point.y, point.x);
+                        field.invertCell(point.y, point.x);
                     }
                     repaint();
                 }
@@ -135,7 +107,7 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, emptyCellColor);
                         else if(currentColor == emptyCellColor)
                             spanFill(x, y, aliveCellColor);
-                        field.invertrCell(point.y, point.x);
+                        field.invertCell(point.y, point.x);
                     }
                     repaint();
                 }
@@ -183,6 +155,8 @@ public class FieldPanel extends JPanel {
 
         System.out.println("Updated");
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
+        if(impactsShown)
+            g.drawImage(impactCanvas, 0, 0, getWidth(), getHeight(), null);
     }
 
     public void drawField()
@@ -247,7 +221,7 @@ public class FieldPanel extends JPanel {
             //setstroke
             graphics.setColor(new Color(borderColor));
             //прочекать 2 и 3 параметры
-            ((Graphics2D)graphics).setStroke(new BasicStroke(w, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));//
+            graphics.setStroke(new BasicStroke(w, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));//
 
             graphics.drawLine(x, y - k, x - rs, y - rhn);
             graphics.drawLine(x - rs, y - rhn, x - rs, y + rhp);
@@ -256,6 +230,17 @@ public class FieldPanel extends JPanel {
             graphics.drawLine(x, y - k, x + rs, y - rhn);
             graphics.drawLine(x + rs, y - rhn, x + rs, y + rhp);
             graphics.drawLine(x, y + kp, x + rs, y + rhp);
+        }
+    }
+
+
+    public void drawImpacts()
+    {
+        impactGraphics.setBackground(new Color(0,0,0,0));
+        impactGraphics.clearRect(0, 0, impactCanvas.getWidth(), impactCanvas.getHeight());
+        for(Point p : centerMap.keySet())
+        {
+            impactGraphics.drawString("Z", p.x, p.y);
         }
     }
 
@@ -278,8 +263,7 @@ public class FieldPanel extends JPanel {
         }
     }
 
-
-    public void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
+    private void drawUniversalLine(int i1, int j1, int i2, int j2, int color, boolean isInverted)
     {
         int err = 0;
         int di = Math.abs(i2 - i1);
@@ -315,7 +299,7 @@ public class FieldPanel extends JPanel {
     }
 
 
-    public void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
+    private void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         int oldValue = canvas.getRGB(x, y);
 
@@ -383,6 +367,15 @@ public class FieldPanel extends JPanel {
         //TODO: перерисовать (+новый канвас)
     }
 
+    public void changeImpactsShow()
+    {
+        impactsShown = ! impactsShown;
+        if(impactsShown)
+            drawImpacts();
+        repaint();
+    }
+
+
     class Span
     {
         int y;
@@ -404,13 +397,23 @@ public class FieldPanel extends JPanel {
         //TODO: рассчитать размер и перерисовать canvas при новых n и m, в зависимости от k и w тоже
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(1366, 768));
-        graphics = canvas.getGraphics();
+        graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         width = canvas.getWidth();
         heigth = canvas.getHeight();
 
+        impactCanvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        impactGraphics = impactCanvas.createGraphics();
+        impactGraphics.setColor(Color.BLACK);
+
+
         drawField();
 
         repaint();
+    }
+
+    public void setXOR(boolean state)
+    {
+        this.XOR = state;
     }
 }

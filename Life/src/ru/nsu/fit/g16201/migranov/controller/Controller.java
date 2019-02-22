@@ -73,8 +73,11 @@ public class Controller {
     {
         field.step();
         fieldPanel.drawField();
+        fieldPanel.drawImpacts();
         fieldPanel.repaint();
     }
+
+
 
 
 }

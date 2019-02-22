@@ -180,7 +180,7 @@ public class Field {
     {
         field[y][x].clear();
     }
-    public void invertrCell(int y, int x)
+    public void invertCell(int y, int x)
     {
         field[y][x].invert();
     }
