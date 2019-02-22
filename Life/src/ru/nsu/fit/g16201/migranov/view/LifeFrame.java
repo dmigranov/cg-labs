@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.security.InvalidParameterException;
 
 import ru.nsu.fit.g16201.migranov.controller.Controller;
 
@@ -35,14 +36,28 @@ public class LifeFrame extends MainFrame {
 
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
-        addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+        addSubMenu("Edit", KeyEvent.VK_E);
+        //addMenuItem("Edit/Replace", "Replace mode", KeyEvent.VK_R, "About.gif", "onReplace");
+        //addMenuItem("Edit/XOR", "XOR mode", KeyEvent.VK_X, "About.gif", "onXOR");
+        JMenu editMenu = (JMenu)getMenuElement("Edit");
+
+        ButtonGroup group = new ButtonGroup();
+        JRadioButtonMenuItem replaceMenuItem = new JRadioButtonMenuItem("XOR", false);//icons description etc
+        group.add(replaceMenuItem);
+        JRadioButtonMenuItem xorMenuItem = new JRadioButtonMenuItem("Replace", true);//
+        group.add(xorMenuItem);
+        editMenu.add(replaceMenuItem);
+        editMenu.add(xorMenuItem);
+        xorMenuItem.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+
 
         addSubMenu("Game", KeyEvent.VK_G);
         addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
 
-        addSubMenu("Edit", KeyEvent.VK_E);
-        //addMenuItem();
+
+        addSubMenu("Help", KeyEvent.VK_H);
+        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
 
         addToolBarButton("File/New");
         addToolBarButton("Game/Step");
@@ -97,5 +112,29 @@ public class LifeFrame extends MainFrame {
     public void onStep()
     {
         controller.step();
+    }
+
+    public void onReplace()
+    {
+
+    }
+
+    public void onXOR()
+    {
+
+    }
+
+    public void addRadioButtonMenuItem(String title, String tooltip, int mnemonic, String icon, ButtonGroup group) throws SecurityException, NoSuchMethodException
+    {
+        JMenu menu = (JMenu)getMenuElement(title);
+        if(element == null)
+            throw new InvalidParameterException("Menu path not found: "+title);
+        JMenuItem item = createMenuItem(getMenuPathName(title), tooltip, mnemonic, icon, actionMethod);
+        if(element instanceof JMenu)
+            ((JMenu)element).add(item);
+        else if(element instanceof JPopupMenu)
+            ((JPopupMenu)element).add(item);
+        else
+            throw new InvalidParameterException("Invalid menu path: "+title);
     }
 }
