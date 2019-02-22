@@ -10,6 +10,8 @@ import ru.nsu.fit.g16201.migranov.controller.Controller;
 
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
+import static java.awt.event.KeyEvent.VK_R;
+
 //public class LifeFrame extends JFrame {
 public class LifeFrame extends MainFrame {
     private FieldPanel fieldPanel;
@@ -42,14 +44,17 @@ public class LifeFrame extends MainFrame {
         JMenu editMenu = (JMenu)getMenuElement("Edit");
 
         ButtonGroup group = new ButtonGroup();
-        JRadioButtonMenuItem replaceMenuItem = new JRadioButtonMenuItem("XOR", false);//icons description etc
+        /*JRadioButtonMenuItem replaceMenuItem = new JRadioButtonMenuItem("XOR", false);//icons description etc
         group.add(replaceMenuItem);
         JRadioButtonMenuItem xorMenuItem = new JRadioButtonMenuItem("Replace", true);//
         group.add(xorMenuItem);
         editMenu.add(replaceMenuItem);
         editMenu.add(xorMenuItem);
         xorMenuItem.setMnemonic(mnemonic);
-        item.setToolTipText(tooltip);
+        xorMenuItem.setToolTipText(tooltip);*/
+
+        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "About.gif", group, true);
+        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "About.gif", group, false);
 
 
         addSubMenu("Game", KeyEvent.VK_G);
@@ -124,17 +129,16 @@ public class LifeFrame extends MainFrame {
 
     }
 
-    public void addRadioButtonMenuItem(String title, String tooltip, int mnemonic, String icon, ButtonGroup group) throws SecurityException, NoSuchMethodException
+    public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state) throws SecurityException, NoSuchMethodException
     {
-        JMenu menu = (JMenu)getMenuElement(title);
-        if(element == null)
-            throw new InvalidParameterException("Menu path not found: "+title);
-        JMenuItem item = createMenuItem(getMenuPathName(title), tooltip, mnemonic, icon, actionMethod);
-        if(element instanceof JMenu)
-            ((JMenu)element).add(item);
-        else if(element instanceof JPopupMenu)
-            ((JPopupMenu)element).add(item);
-        else
-            throw new InvalidParameterException("Invalid menu path: "+title);
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem(title, state);//icons description etc
+        if(icon != null)
+            item.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
+
+        item.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+
+        parent.add(item);
+        group.add(item);
     }
 }

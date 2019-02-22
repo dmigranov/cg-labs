@@ -205,7 +205,7 @@ public class MainFrame extends JFrame {
 			throw new InvalidParameterException("Invalid menu path: "+title);
 	}
 
-	private String getMenuPathName(String menuPath)
+	protected String getMenuPathName(String menuPath)
 	{
 		int pos = menuPath.lastIndexOf('/');
 		if(pos > 0)
@@ -219,7 +219,7 @@ public class MainFrame extends JFrame {
 	 * @param menuPath - '/'-separated path to menu item (example: "Help/About...") 
 	 * @return found menu item or null if no such item found
 	 */
-	private MenuElement getParentMenuElement(String menuPath)
+	protected MenuElement getParentMenuElement(String menuPath)
 	{
 		int pos = menuPath.lastIndexOf('/');
 		if(pos > 0)
