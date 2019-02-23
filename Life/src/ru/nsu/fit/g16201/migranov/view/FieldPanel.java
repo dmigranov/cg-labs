@@ -38,7 +38,7 @@ public class FieldPanel extends JPanel {
     private boolean XOR = false;
     private boolean impactsShown = false;
 
-    public FieldPanel(int k, int w)
+    public FieldPanel(int k, int w, JPanel middlePanel)
     {
         super();
 
@@ -49,18 +49,17 @@ public class FieldPanel extends JPanel {
         xStart = k; //w
         yStart = k; //w
 
-        addMouseListener(new MouseAdapter() {
+        middlePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-
                 current = null;
             }
             @Override
             public void mouseClicked(MouseEvent e)
             {
                 super.mouseClicked(e);
-                //TODO: мож вынести повторяющийся код в отдельный метод? +проверить
+
                 int x = e.getX();
                 int y = e.getY();
                 if(x >= canvas.getWidth() || y >= canvas.getHeight())
@@ -85,7 +84,7 @@ public class FieldPanel extends JPanel {
             }
         });
 
-        addMouseMotionListener(new MouseMotionAdapter() {
+        middlePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
@@ -98,9 +97,7 @@ public class FieldPanel extends JPanel {
                 int currentColor = canvas.getRGB(x, y);
 
                 if (currentColor != borderColor && currentColor != notFieldColor) {
-
                     Point point = getFieldCoordinates(x, y);
-
                     if (current != null)
                     {
                         if(current.equals(point))   //если эту клетку уже обработали, то ничего делать не надо
@@ -146,7 +143,6 @@ public class FieldPanel extends JPanel {
         }
 
         //cx 122, y 47, in map x 123 y 47
-
         Point point = centerMap.get(new Point(cx, cy));
         if(point == null)
             point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
@@ -159,7 +155,6 @@ public class FieldPanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-
         System.out.println("Updated");
         g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
         if(impactsShown)
@@ -202,16 +197,13 @@ public class FieldPanel extends JPanel {
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
-        //r = k
         //шестиугольник abcdeg начиная с верхнего угла
         //A, D = x, y +- k/2 (если k нечётное, а если чётное, то надо дополнительно либо верх, либо вниз сдвинуть на -1, т.к без этого рисует k + 1 точку)
         //B, C, F, G = x +- rs, y+- rh(n/p) - в зависимости от чётности k.
-
         int rhn = k/2;
         int rhp = (k % 2 == 0 ? k /2 - 1 : rhn);
         int kp = (k % 2 == 0 ? k - 1 : k);
         int rs =(int)(Math.sqrt(3)* k /2);
-
         int color = borderColor;
 
         if(w == 1) {
@@ -225,7 +217,6 @@ public class FieldPanel extends JPanel {
         }
         else
         {
-            //setstroke
             graphics.setColor(new Color(borderColor));
             //прочекать 2 и 3 параметры
             graphics.setStroke(new BasicStroke(w, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));//
@@ -239,7 +230,6 @@ public class FieldPanel extends JPanel {
             graphics.drawLine(x, y + kp, x + rs, y + rhp);
         }
     }
-
 
     public void drawImpacts()
     {
