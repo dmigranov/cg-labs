@@ -38,9 +38,7 @@ public class FieldPanel extends JPanel {
     private boolean XOR = false;
     private boolean impactsShown = false;
 
-    private JPanel parentPanel;
-
-    public FieldPanel(int k, int w, JPanel parentPanel)
+    public FieldPanel(int k, int w)
     {
         super();
 
@@ -48,11 +46,11 @@ public class FieldPanel extends JPanel {
         this.w = w;
         r = k - 1;
 
-        xStart = k; //w
-        yStart = k; //w
-        this.parentPanel = parentPanel;
+        xStart = 10 + k; //w
+        yStart = 10 + k; //w
+        //this.parentPanel = parentPanel;
 
-        parentPanel.addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
@@ -86,13 +84,13 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, aliveCellColor);
                         field.invertCell(point.y, point.x);
                     }
-                    if(impactsShown)
-                        drawImpacts();
+
+                    drawImpacts();
                     repaint();
                 }
             }
         });
-        parentPanel.addMouseMotionListener(new MouseMotionAdapter() {
+        addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
@@ -127,8 +125,8 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, aliveCellColor);
                         field.invertCell(point.y, point.x);
                     }
-                    if(impactsShown)
-                        drawImpacts();
+
+                    drawImpacts();
                     repaint();
                 }
             }
@@ -168,9 +166,9 @@ public class FieldPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         System.out.println("Updated");
-        g.drawImage(canvas, 0, 0, getWidth(), getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
+        g.drawImage(canvas, 0, 0, canvas.getWidth(), canvas.getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
         if(impactsShown)
-            g.drawImage(impactCanvas, 0, 0, getWidth(), getHeight(), null);
+            g.drawImage(impactCanvas, 0, 0, impactCanvas.getWidth(), impactCanvas.getHeight(), null);
     }
 
     public void drawField()
@@ -245,23 +243,24 @@ public class FieldPanel extends JPanel {
 
     public void drawImpacts()
     {
-        FontMetrics metrics = impactGraphics.getFontMetrics();
-        int rs =(int)(Math.sqrt(3)* k /2);
+        if (impactsShown) {
+            FontMetrics metrics = impactGraphics.getFontMetrics();
+            int rs = (int) (Math.sqrt(3) * k / 2);
 
-        impactGraphics.clearRect(0, 0, impactCanvas.getWidth(), impactCanvas.getHeight());
-        for(Map.Entry<Point, Point> entry : centerMap.entrySet())
-        {
-            Point centerPoint = entry.getKey();
-            Point fieldPoint  = entry.getValue();
-            double impact = field.getImpact(fieldPoint.y, fieldPoint.x);
-            String text;
-            if(impact == (int)impact)   //целое
-                text = Integer.toString((int)impact);
-            else
-                text = new DecimalFormat("#.##").format(impact);
-            int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
-            int y = centerPoint.y + impactGraphics.getFont().getSize()/3;
-            impactGraphics.drawString(text, x, y);
+            impactGraphics.clearRect(0, 0, impactCanvas.getWidth(), impactCanvas.getHeight());
+            for (Map.Entry<Point, Point> entry : centerMap.entrySet()) {
+                Point centerPoint = entry.getKey();
+                Point fieldPoint = entry.getValue();
+                double impact = field.getImpact(fieldPoint.y, fieldPoint.x);
+                String text;
+                if (impact == (int) impact)   //целое
+                    text = Integer.toString((int) impact);
+                else
+                    text = new DecimalFormat("#.##").format(impact);
+                int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
+                int y = centerPoint.y + impactGraphics.getFont().getSize() / 3;
+                impactGraphics.drawString(text, x, y);
+            }
         }
     }
 
@@ -405,12 +404,12 @@ public class FieldPanel extends JPanel {
         this.field = field;
         centerMap.clear();
 
-        int x = (int)(Math.sqrt(3) * k * field.getM()); //todo: w?
-        int y = (int)(1.5 * k * field.getN());          //w?
+        int x = (int)(Math.sqrt(3) * k * field.getM()) + 100; //todo: w?
+        int y = (int)(1.5 * k * field.getN()) + 100;          //w?
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(x, y));
-        parentPanel.setPreferredSize(new Dimension(x, y));
+
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
@@ -425,6 +424,8 @@ public class FieldPanel extends JPanel {
 
         drawField();
 
+        drawImpacts();
+
         repaint();
     }
 
@@ -435,9 +436,9 @@ public class FieldPanel extends JPanel {
 
     public void changeImpactsShow()
     {
-        impactsShown = ! impactsShown;
-        if(impactsShown)
-            drawImpacts();
+        impactsShown = !impactsShown;
+
+        drawImpacts();
         repaint();
     }
 }

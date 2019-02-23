@@ -80,6 +80,8 @@ public class Controller {
 
     public void clearField() {
         field.clear();
-
+        fieldPanel.drawField();
+        fieldPanel.drawImpacts();
+        fieldPanel.repaint();
     }
 }

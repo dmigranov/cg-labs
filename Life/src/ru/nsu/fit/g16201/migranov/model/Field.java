@@ -48,7 +48,7 @@ public class Field {
         calculateImpacts(); //дрова в избушке; теоретически можно оптимизировать, пересчитывая только ближайшие
     }
 
-        private void calculateImpacts()
+    private void calculateImpacts()
     {
         for(int y = 0; y < n; y++)
         {
@@ -199,5 +199,11 @@ public class Field {
     }
 
     public void clear() {
+        for(int y = 0; y < n; y++) {
+            for (int x = 0; x < (y % 2 == 0 ? m : m - 1); x++) {
+                field[y][x].clear();
+                field[y][x].setImpact(0);
+            }
+        }
     }
 }
