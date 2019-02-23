@@ -385,10 +385,8 @@ public class FieldPanel extends JPanel {
     public void setDrawingParameters(int w, int k) {
         this.w = w;
         this.k = k;
-
         xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
         yStart = k + w; //w
-
         setField(field);
     }
 
@@ -427,9 +425,9 @@ public class FieldPanel extends JPanel {
         if(field.getN() % 2 == 0)
             y = (int)(1.5 * k * field.getN()) + 2 * w;
         else
-            y = (int)(5.0/3 * k * field.getN()) + 2 * w;
+            y = (int)(5.0/3 * k * field.getN()) + 2 * w;    //y тоже увеличить: на 3, 4 происходит усечение
 
-        canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB);
         setPreferredSize(new Dimension(x, y));
 
         graphics = canvas.createGraphics();
@@ -437,7 +435,6 @@ public class FieldPanel extends JPanel {
         notFieldColor = canvas.getRGB(0,0);
         width = canvas.getWidth();
         height = canvas.getHeight();
-
         impactCanvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         impactGraphics = impactCanvas.createGraphics();
         impactGraphics.setColor(Color.BLACK);
@@ -445,9 +442,7 @@ public class FieldPanel extends JPanel {
         impactGraphics.setFont(impactGraphics.getFont().deriveFont(Font.BOLD, impactGraphics.getFont().getSize()));
 
         drawField();
-
         drawImpacts();
-
         repaint();
     }
 
@@ -459,7 +454,6 @@ public class FieldPanel extends JPanel {
     public void changeImpactsShow()
     {
         impactsShown = !impactsShown;
-
         drawImpacts();
         repaint();
     }

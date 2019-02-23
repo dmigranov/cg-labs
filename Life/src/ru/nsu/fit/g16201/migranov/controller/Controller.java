@@ -146,4 +146,10 @@ public class Controller {
     {
         this.isRunning = isRunning;
     }
+
+    public void setField(int m, int n)
+    {
+        field = new Field(m, n);
+        fieldPanel.setField(field);
+    }
 }

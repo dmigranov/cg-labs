@@ -66,6 +66,8 @@ public class LifeFrame extends MainFrame {
         addToolBarToggleButton("Edit/XOR");
         addMenuSeparator("Edit");
         addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "Exit.gif", "onClear");
+        addMenuSeparator("Edit");
+        addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "Exit.gif", "onParameters");
 
 
         addSubMenu("Game", KeyEvent.VK_G);
@@ -161,16 +163,12 @@ public class LifeFrame extends MainFrame {
             onSave();
         }
 
-        NumberFormat format = NumberFormat.getIntegerInstance();
-        NumberFormatter numberFormatter = new NumberFormatter(format);
-        numberFormatter.setValueClass(Integer.class);
-        numberFormatter.setAllowsInvalid(false);
-        numberFormatter.setMinimum(0);
+        JTextField mField = new JTextField(3);
+        JTextField nField = new JTextField(3);
 
-        JFormattedTextField mField = new JFormattedTextField(numberFormatter);
-        JFormattedTextField nField = new JFormattedTextField(numberFormatter);
+        mField.addKeyListener(new IntegerTextFieldKeyListener());
+        nField.addKeyListener(new IntegerTextFieldKeyListener());
 
-        //todo: ограничить воод
         JPanel mnPanel = new JPanel();
         mnPanel.add(new JLabel("m: "));
         mnPanel.add(mField);
@@ -180,8 +178,21 @@ public class LifeFrame extends MainFrame {
 
         if(JOptionPane.showConfirmDialog(this, mnPanel, "Field parameters", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
         {
-
+            String mText = mField.getText();
+            String nText = nField.getText();
+            if(!"".equals(mText) && !"".equals(nText))
+            {
+                int m = Integer.parseInt(mText);
+                int n = Integer.parseInt(nText);
+                controller.setField(m, n);
+            }
+            //я думаю, тут мы поле совсем очищаем. а вот при изменении параметров - надо ужимать.расширять по возможности сохраняя состояние
         }
+    }
+
+    public void onParameters()
+    {
+
     }
 
     public void onStep()
