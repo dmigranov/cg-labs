@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FieldPanel extends JPanel {
-    private int k, w, r;           //w - толщина, k - длина ребра, r - радиус отрисовки
+    private int k, w;           //w - толщина, k - длина ребра, r - радиус отрисовки
     private Field field;
     private int xStart, yStart;
 
@@ -44,10 +44,9 @@ public class FieldPanel extends JPanel {
 
         this.k = k;
         this.w = w;
-        r = k - 1;
 
-        xStart = 10 + k; //w
-        yStart = 10 + k; //w
+        xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
+        yStart = k + w; //w
         //this.parentPanel = parentPanel;
 
         addMouseListener(new MouseAdapter() {
@@ -304,16 +303,20 @@ public class FieldPanel extends JPanel {
         int dirj = j2 > j1 ? 1 : -1;
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
-            err += 2 * dj;
-            if(!isInverted) {
-                canvas.setRGB(i, j, color);
+            try {
+                err += 2 * dj;
+                if (!isInverted) {
+                    canvas.setRGB(i, j, color);
+                } else
+                    canvas.setRGB(j, i, color);
+                if (err > di) {
+                    err -= 2 * di;
+                    j += dirj;
+                }
             }
-            else
-                canvas.setRGB(j, i, color);
-            if(err > di)
+            catch(IndexOutOfBoundsException e)
             {
-                err -= 2 * di;
-                j+=dirj;
+                int x = 0;
             }
         }
     }
@@ -377,12 +380,18 @@ public class FieldPanel extends JPanel {
     public void setDrawingParameters(int w, int k) {
         this.w = w;
         this.k = k;
-        r = k - 1;
 
-        xStart = k;
-        yStart = k;
+        xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
+        yStart = k + w; //w
 
-        //TODO: перерисовать (+новый канвас)
+        setField(field);
+    }
+
+    public int getW() {
+        return w;
+    }
+    public int getK() {
+        return k;
     }
 
     class Span
@@ -404,8 +413,12 @@ public class FieldPanel extends JPanel {
         this.field = field;
         centerMap.clear();
 
-        int x = (int)(Math.sqrt(3) * k * field.getM()) + 100; //todo: w?
-        int y = (int)(1.5 * k * field.getN()) + 100;          //w?
+        int x = (int)(Math.sqrt(3) * k * field.getM()) + xStart; //todo: на файле не ломается, но всё равно неровно
+        int y;
+        if(field.getN() % 2 == 0)
+            y = (int)(1.5 * k * field.getN()) + 2 * w;
+        else
+            y = (int)(5.0/3 * k * field.getN()) + 2 * w;
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(x, y));

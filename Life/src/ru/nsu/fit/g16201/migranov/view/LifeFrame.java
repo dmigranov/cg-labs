@@ -50,10 +50,11 @@ public class LifeFrame extends MainFrame {
 
         addSubMenu("Game", KeyEvent.VK_G);
         addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
+        addMenuItem("Game/Run", "Run step-by-step execution", KeyEvent.VK_R, "About.gif", "onRun");
 
         addSubMenu("View", KeyEvent.VK_V);
-        addMenuItem("View/Show impacts", "Shows impacts of cells", KeyEvent.VK_I, "About.gif", "onShowImpacts");
-//todo: ticked impact!
+        JMenu viewMenu = (JMenu)getMenuElement("View");
+        addCheckBoxMenuItem(viewMenu, "Show impacts", "Indicates whether impacts should be shown", KeyEvent.VK_I, "About.gif", false, "onShowImpacts");
 
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
@@ -102,14 +103,16 @@ public class LifeFrame extends MainFrame {
 
     }
 
+    public void onSaveAs()
+    {
+        File file = getSaveFileName("txt", "A field description file");
+        if(file != null)
+            controller.saveFieldToFile(file);
+    }
+
     public void onNew()
     {
         //спросить параметры
-    }
-
-    public void onSaveAs()
-    {
-
     }
 
     public void onStep()
@@ -137,7 +140,12 @@ public class LifeFrame extends MainFrame {
         controller.clearField();
     }
 
-    public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
+    public void onRun()
+    {
+        controller.run();
+    }
+
+    private void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
     {
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(title, state);//icons description etc
         if(icon != null)
@@ -160,6 +168,30 @@ public class LifeFrame extends MainFrame {
 
         parent.add(item);
         group.add(item);
+    }
+
+    private void addCheckBoxMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
+    {
+        JCheckBoxMenuItem item = new JCheckBoxMenuItem(title, state);//icons description etc
+        if(icon != null)
+            item.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
+
+        item.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+
+        final Method method = getClass().getMethod(actionMethod);
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    method.invoke(LifeFrame.this);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        parent.add(item);
     }
 
     public JToggleButton createToolBarToggleButton(JMenuItem item)

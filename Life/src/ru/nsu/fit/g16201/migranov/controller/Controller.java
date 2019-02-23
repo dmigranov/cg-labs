@@ -3,15 +3,17 @@ package ru.nsu.fit.g16201.migranov.controller;
 import ru.nsu.fit.g16201.migranov.model.Field;
 import ru.nsu.fit.g16201.migranov.view.FieldPanel;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
+import javax.swing.Timer;
 
 public class Controller {
 
     private FieldPanel fieldPanel;
     private Field field;
+    private int period = 1000;
 
     //создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel) {
@@ -22,9 +24,7 @@ public class Controller {
 
     public void loadFieldFromFile(File file)
     {
-        //короче надо чтобы панели параметры поля всегда передавал контроллер! по умолчанию - какие-то стандартные
         try {
-
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
 
@@ -83,5 +83,40 @@ public class Controller {
         fieldPanel.drawField();
         fieldPanel.drawImpacts();
         fieldPanel.repaint();
+    }
+
+    public void run() {
+        new Timer(period, e -> step()).start();
+        //todo: stop
+    }
+
+    public void saveFieldToFile(File file) {
+        try
+        {
+            PrintWriter pw = new PrintWriter(file);
+            pw.println(field.getM() + " " + field.getN());
+            pw.println(fieldPanel.getW());
+            pw.println(fieldPanel.getK());
+
+            List<Point> notNullCells = new LinkedList<>();
+            for(int y = 0; y < field.getN(); y++) {
+                for (int x = 0; x < (y % 2 == 0 ? field.getM() : field.getM() - 1); x++) {
+                    if(field.isAlive(y, x))
+                        notNullCells.add(new Point(x, y));
+                }
+            }
+
+            pw.println(notNullCells.size());
+            for(Point p : notNullCells)
+            {
+                pw.println(p.x + " " + p.y);
+            }
+
+            pw.close();
+        }
+        catch(IOException e)
+        {
+            //диалог
+        }
     }
 }
