@@ -58,6 +58,7 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e)
             {
+
                 super.mouseClicked(e);
 
                 int x = e.getX();
@@ -68,8 +69,14 @@ public class FieldPanel extends JPanel {
                 if (currentColor != borderColor && currentColor != notFieldColor) {
                     Point point = getFieldCoordinates(x, y);
                     if (!XOR) {
-                        spanFill(x, y, aliveCellColor);
-                        field.setCell(point.y, point.x);
+                        if(SwingUtilities.isLeftMouseButton(e)) {
+                            spanFill(x, y, aliveCellColor);
+                            field.setCell(point.y, point.x);
+                        }
+                        else if(SwingUtilities.isRightMouseButton(e)) {
+                            spanFill(x, y, emptyCellColor);
+                            field.clearCell(point.y, point.x);
+                        }
                     } else {
                         if (currentColor == aliveCellColor)
                             spanFill(x, y, emptyCellColor);
@@ -88,10 +95,8 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-
                 int x = e.getX();
                 int y = e.getY();
-                System.out.println(x + " " + y);
                 if(x >= canvas.getWidth() || y >= canvas.getHeight())
                     return;
                 int currentColor = canvas.getRGB(x, y);
@@ -105,8 +110,14 @@ public class FieldPanel extends JPanel {
                     }
                     current = point;
                     if(!XOR) {
-                        spanFill(x, y, aliveCellColor);
-                        field.setCell(point.y, point.x);
+                        if(SwingUtilities.isLeftMouseButton(e)) {
+                            spanFill(x, y, aliveCellColor);
+                            field.setCell(point.y, point.x);
+                        }
+                        else if(SwingUtilities.isRightMouseButton(e)) {
+                            spanFill(x, y, emptyCellColor);
+                            field.clearCell(point.y, point.x);
+                        }
                     }
                     else {
                         if(currentColor == aliveCellColor)
