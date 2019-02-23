@@ -18,15 +18,12 @@ public class Controller {
     private int period = 1000;
     private boolean isRunning = false;
 
-    private File currentFile = null;
-
     //создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel, LifeFrame lifeFrame) {
         this.fieldPanel = fieldPanel;
         this.lifeFrame = lifeFrame;
         field = new Field(20, 20);
-        String fileName = "Untitled";
-        lifeFrame.setTitle(fileName + " | " + title);
+
         fieldPanel.setField(field);
     }
 
@@ -64,10 +61,9 @@ public class Controller {
                 field.setCell(y, x);
                 all--;
             }
-            //TODO: проверить all и выкинуть exception если что-то не так
-            System.out.println("All: " + all);
+
             if(all > 0)     //прочли меньше чем обещано; А ЕСЛИ БОЛЬШЕ?
-                throw new IOException();
+                throw new Exception();
 
             fieldPanel.setField(field);
         }
@@ -107,8 +103,9 @@ public class Controller {
 
         });
         fieldPanel.setActive(false);
+        //TODO: во фрейме тоже отключить менюшки!
         t.start();
-        //TODO: отключить возможноость трогать поле!
+
     }
 
     public void saveFieldToFile(File file) {

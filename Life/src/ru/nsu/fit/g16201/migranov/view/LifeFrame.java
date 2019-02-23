@@ -1,11 +1,13 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
+import java.text.NumberFormat;
 
 import ru.nsu.fit.g16201.migranov.controller.Controller;
 
@@ -18,6 +20,8 @@ public class LifeFrame extends MainFrame {
     private FieldPanel fieldPanel;
     private Controller controller;
 
+    private File currentFile = null;
+
     public static void main(String[] args) throws Exception
     {
         new LifeFrame();
@@ -25,7 +29,7 @@ public class LifeFrame extends MainFrame {
 
     private LifeFrame() throws Exception {
         //инициализация
-        super(800, 600, "Life | Denis Migranov, 16201");
+        super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -33,17 +37,23 @@ public class LifeFrame extends MainFrame {
                 super.windowClosing(e);
 
                 int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if(result == JOptionPane.YES_OPTION)
-                    onSaveAs();
+                if(result == JOptionPane.YES_OPTION) {
+                    onSave();
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
                 else if(result == JOptionPane.NO_OPTION)
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
 
+        JMenuItem item;
         addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
         addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
-        addMenuItem("File/Save As", "Save a field state", KeyEvent.VK_S, "Exit.gif", "onSaveAs");//
+        addMenuItem("File/Save", "Save a field state", KeyEvent.VK_S, "Exit.gif", "onSave");//
+        item = (JMenuItem)getMenuElement("File/Save");
+        item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+        addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "Exit.gif", "onSaveAs");//
 
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
 
@@ -103,27 +113,75 @@ public class LifeFrame extends MainFrame {
 
     public void onExit()
     {
-        System.exit(0);
+        int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION) {
+            onSave();
+            System.exit(0);
+        }
+        else if(result == JOptionPane.NO_OPTION)
+            System.exit(0);
+
     }
 
     public void onOpen()
     {
         File file = getOpenFileName("txt", "A field description file");
-        if(file != null)
+        if(file != null) {
+            currentFile = file;
+            setTitle(file.getName() + " | Denis Migranov, 16201");
             controller.loadFieldFromFile(file);
+        }
+    }
 
+    public void onSave()
+    {
+        if(currentFile != null)
+            controller.saveFieldToFile(currentFile);
+        else
+            onSaveAs();
     }
 
     public void onSaveAs()
     {
+        //todo: индикатор изменений в fieldpanel, чтобы если ничего не было изменено, не пересправшивать
         File file = getSaveFileName("txt", "A field description file");
-        if(file != null)
+        if(file != null) {
+            currentFile = file;
+            setTitle(file.getName() + " | Denis Migranov, 16201");
             controller.saveFieldToFile(file);
+        }
     }
 
     public void onNew()
     {
-        //спросить параметры
+        int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.CANCEL_OPTION)
+            return;
+        if(result == JOptionPane.YES_OPTION) {
+            onSave();
+        }
+
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        NumberFormatter numberFormatter = new NumberFormatter(format);
+        numberFormatter.setValueClass(Integer.class);
+        numberFormatter.setAllowsInvalid(false);
+        numberFormatter.setMinimum(0);
+
+        JFormattedTextField mField = new JFormattedTextField(numberFormatter);
+        JFormattedTextField nField = new JFormattedTextField(numberFormatter);
+
+        //todo: ограничить воод
+        JPanel mnPanel = new JPanel();
+        mnPanel.add(new JLabel("m: "));
+        mnPanel.add(mField);
+        mnPanel.add(Box.createHorizontalStrut(10));
+        mnPanel.add(new JLabel("n: "));
+        mnPanel.add(nField);
+
+        if(JOptionPane.showConfirmDialog(this, mnPanel, "Field parameters", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
+
+        }
     }
 
     public void onStep()
@@ -231,5 +289,10 @@ public class LifeFrame extends MainFrame {
     public void addToolBarToggleButton(String menuPath)
     {
         toolBar.add(createToolBarToggleButton(menuPath));
+    }
+
+    public void setActive(boolean isActive)
+    {
+
     }
 }
