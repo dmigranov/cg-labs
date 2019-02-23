@@ -167,8 +167,8 @@ public class FieldPanel extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         System.out.println("Updated");
         g.drawImage(canvas, 0, 0, canvas.getWidth(), canvas.getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
         if(impactsShown)

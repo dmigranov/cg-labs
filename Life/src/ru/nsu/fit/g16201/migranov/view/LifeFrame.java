@@ -2,9 +2,7 @@ package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
@@ -13,7 +11,7 @@ import ru.nsu.fit.g16201.migranov.controller.Controller;
 
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
-import static java.awt.event.KeyEvent.VK_R;
+
 
 //public class LifeFrame extends JFrame {
 public class LifeFrame extends MainFrame {
@@ -28,7 +26,19 @@ public class LifeFrame extends MainFrame {
     private LifeFrame() throws Exception {
         //инициализация
         super(800, 600, "Life | Denis Migranov, 16201");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+
+                int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if(result == JOptionPane.YES_OPTION)
+                    onSaveAs();
+                else if(result == JOptionPane.NO_OPTION)
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+        });
 
         addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
@@ -68,7 +78,7 @@ public class LifeFrame extends MainFrame {
         //ограничить w в параметрах функцией от k!!!
         JPanel middlePanel = new JPanel();
         fieldPanel = new FieldPanel(20, 4);
-        controller = new Controller(fieldPanel);
+        controller = new Controller(fieldPanel, this);
         middlePanel.add(fieldPanel);
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JScrollPane scrollPane = new JScrollPane(middlePanel);

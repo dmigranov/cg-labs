@@ -2,24 +2,31 @@ package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Field;
 import ru.nsu.fit.g16201.migranov.view.FieldPanel;
+import ru.nsu.fit.g16201.migranov.view.LifeFrame;
 
 import java.awt.*;
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class Controller {
-
+    private static final String title = "Migranov, 16201";
     private FieldPanel fieldPanel;
     private Field field;
+    private JFrame lifeFrame;
     private int period = 1000;
     private boolean isRunning = false;
 
+    private File currentFile = null;
+
     //создать интерфейс типа fieldPanel а то как-то не по ооп
-    public Controller(FieldPanel fieldPanel) {
+    public Controller(FieldPanel fieldPanel, LifeFrame lifeFrame) {
         this.fieldPanel = fieldPanel;
+        this.lifeFrame = lifeFrame;
         field = new Field(20, 20);
+        String fileName = "Untitled";
+        lifeFrame.setTitle(fileName + " | " + title);
         fieldPanel.setField(field);
     }
 
@@ -64,9 +71,10 @@ public class Controller {
 
             fieldPanel.setField(field);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
-            //диалог
+            JOptionPane.showMessageDialog(lifeFrame, "Could not read this file", "Error", JOptionPane.ERROR_MESSAGE);
+
         }
     }
 
@@ -129,7 +137,7 @@ public class Controller {
         }
         catch(IOException e)
         {
-            //диалог
+            //JOptionPane.showMessageDialog(lifeFrame, "Could not read this file", "Error", JOptionPane.ERROR);
         }
     }
 
