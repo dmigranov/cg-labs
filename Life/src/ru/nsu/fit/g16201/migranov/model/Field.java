@@ -25,25 +25,11 @@ public class Field {
             }
         }
 
+        calculateImpacts();
     }
 
     public void step()
     {
-        //todo: перерасчёт импактов нужно будет вынести туда, где будет изменение стейта клетки (для динамического изменения как в примерах). Тогда не надо будет обсчитывать все клетки
-        //в таком случае, после изменения состояния (т.е после степа) нужно будет пересчитать импакты как тут
-
-        for(int y = 0; y < n; y++)
-        {
-            for(int x = 0; x < (y % 2 == 0 ? m : m-1); x++)
-            {
-                int firstCount = getFirstCount(y,x);
-                int secondCount = getSecondCount(y,x);
-                double impact = FST_IMPACT * firstCount + SND_IMPACT * secondCount;
-                field[y][x].setImpact(impact);
-            }
-        }
-
-        //может, для импактов лучше создавать отдельный массив?..
         //пересчёт состояний
         for(int y = 0; y < n; y++)
         {
@@ -59,16 +45,10 @@ public class Field {
             }
         }
 
-        //printField();
+        calculateImpacts(); //дрова в избушке; теоретически можно оптимизировать, пересчитывая только ближайшие
     }
 
-    //пересчитывает импакты вокруг точки с кооррдинатами y x - нужно при изменении состояния
-    private void recalculateImpacts(int y, int x)
-    {
-        boolean state = field[y][x].isAlive();      //это то, что сейчас. а то что было - противоположное этоиу
-    }
-
-    private void calculateImpacts()
+        private void calculateImpacts()
     {
         for(int y = 0; y < n; y++)
         {
@@ -189,14 +169,17 @@ public class Field {
     public void setCell(int y, int x)
     {
         field[y][x].set();
+        calculateImpacts();
     }
     public void clearCell(int y, int x)
     {
         field[y][x].clear();
+        calculateImpacts();
     }
     public void invertCell(int y, int x)
     {
         field[y][x].invert();
+        calculateImpacts();
     }
 
     private boolean exists(int y, int x)

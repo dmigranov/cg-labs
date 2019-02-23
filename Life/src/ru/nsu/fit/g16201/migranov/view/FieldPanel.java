@@ -75,6 +75,8 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, aliveCellColor);
                         field.invertCell(point.y, point.x);
                     }
+                    if(impactsShown)
+                        drawImpacts();
                     repaint();
                 }
             }
@@ -110,6 +112,8 @@ public class FieldPanel extends JPanel {
                             spanFill(x, y, aliveCellColor);
                         field.invertCell(point.y, point.x);
                     }
+                    if(impactsShown)
+                        drawImpacts();
                     repaint();
                 }
             }
@@ -138,15 +142,11 @@ public class FieldPanel extends JPanel {
         //cx 122, y 47, in map x 123 y 47
 
         Point point = centerMap.get(new Point(cx, cy));     //TODO: проверить корректность
-        if(point != null)
-            System.out.println("FOUND");
-        else
+        if(point == null)
             point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
-            if(point != null)
-                System.out.println("FOUND 2");
             //todo: взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
-            else
-                System.out.println("NOT FOUND");
+            if(point == null)
+                ;
         return point;
     }
 
@@ -250,14 +250,11 @@ public class FieldPanel extends JPanel {
             if(impact == (int)impact)   //целое
                 text = Integer.toString((int)impact);
             else
-                //text = Double.toString(impact);
                 text = new DecimalFormat("#.##").format(impact);
             int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
-            impactGraphics.drawString(text, x, centerPoint.y);
-            //сейчас он показывает импакты с прошлого шага, которые привели к текущей конфигурации
+            int y = centerPoint.y + impactGraphics.getFont().getSize()/3;
+            impactGraphics.drawString(text, x, y);
         }
-
-
     }
 
     //Bresenham's line algorithm;

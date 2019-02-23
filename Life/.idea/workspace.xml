@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ab4219b-4b58-4aee-a2bf-fd04d200df5e" name="Default Changelist" comment="надо поработать над позицией текста (+ шрифт размеры ограничения etc.)">
+    <list default="true" id="0ab4219b-4b58-4aee-a2bf-fd04d200df5e" name="Default Changelist" comment="gonna change impacts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" afterDir="false" />
@@ -54,8 +54,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="253" column="23" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
+            <state relative-caret-position="251">
+              <caret line="258" column="72" selection-start-line="258" selection-start-column="72" selection-end-line="258" selection-end-column="72" />
               <folding>
                 <element signature="method#drawField#0;class#FieldPanel#0" />
               </folding>
@@ -107,9 +107,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="200" column="39" selection-start-line="200" selection-start-column="39" selection-end-line="200" selection-end-column="39" />
+            <state>
+              <caret column="32" lean-forward="true" selection-start-column="32" selection-end-column="32" />
               <folding>
+                <element signature="method#getFirstCount#0;class#Field#0" />
+                <element signature="method#getSecondCount#0;class#Field#0" />
+                <element signature="method#printField#0;class#Field#0" />
+                <element signature="method#printImpactField#0;class#Field#0" />
                 <element signature="e#5929#5930#0" expanded="true" />
                 <element signature="e#5959#5960#0" expanded="true" />
               </folding>
@@ -120,7 +124,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
+            <state relative-caret-position="540">
               <caret line="94" column="11" selection-start-line="83" selection-start-column="8" selection-end-line="94" selection-end-column="11" />
             </state>
           </provider>
@@ -158,6 +162,8 @@
       <find>inve</find>
       <find>repai</find>
       <find>rs</find>
+      <find>center</find>
+      <find>printl</find>
     </findStrings>
     <replaceStrings>
       <replace>j</replace>
@@ -426,21 +432,7 @@
       <workItem from="1550755093529" duration="19000" />
       <workItem from="1550755267540" duration="5372000" />
       <workItem from="1550839845220" duration="8591000" />
-      <workItem from="1550912217945" duration="3500000" />
-    </task>
-    <task id="LOCAL-00012" summary="more model changes: looks like step works!">
-      <created>1550069580707</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1550069580707</updated>
-    </task>
-    <task id="LOCAL-00013" summary="enough for today. started doing span">
-      <created>1550071786197</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1550071786197</updated>
+      <workItem from="1550912217945" duration="5023000" />
     </task>
     <task id="LOCAL-00014" summary="something">
       <created>1550148146298</created>
@@ -771,7 +763,21 @@
       <option name="project" value="LOCAL" />
       <updated>1550851967562</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="some impact drawing">
+      <created>1550915813406</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1550915813406</updated>
+    </task>
+    <task id="LOCAL-00062" summary="gonna change impacts">
+      <created>1550916316633</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1550916316633</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -807,7 +813,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95818000" />
+    <option name="totallyTimeSpent" value="97341000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -830,17 +836,17 @@
       <window_info anchor="bottom" id="Duplicate detector" order="0" sideWeight="0.4986577" weight="0.3286119" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.45838925" visible="true" weight="0.29745042" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.45637584" visible="true" weight="0.29745042" />
       <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.4885906" weight="0.45609066" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49127516" weight="0.3286119" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.46644294" weight="0.24787535" />
+      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.46510068" weight="0.24787535" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5416107" side_tool="true" visible="true" weight="0.29745042" />
-      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.4966443" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.54362416" side_tool="true" visible="true" weight="0.29745042" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.49597314" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -855,8 +861,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gonna universalize it" />
-    <MESSAGE value="looks like bresenham is ready" />
     <MESSAGE value="some drawing" />
     <MESSAGE value="надо повернуть гексагоны.&#10;и надо понять, как округлять!!!" />
     <MESSAGE value="что-то рисует. но на стыке толщина двойная. проблема - в округлении." />
@@ -880,19 +884,9 @@
     <MESSAGE value="yahoo" />
     <MESSAGE value="надо поработать над позицией текста (+ шрифт размеры ограничения etc.)" />
     <MESSAGE value="надо поработать над позицией текста (+ шрифт размеры ограничения etc.)&#10;а так неплохо поработал" />
-    <option name="LAST_COMMIT_MESSAGE" value="надо поработать над позицией текста (+ шрифт размеры ограничения etc.)&#10;а так неплохо поработал" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java</url>
-          <line>255</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="some impact drawing" />
+    <MESSAGE value="gonna change impacts" />
+    <option name="LAST_COMMIT_MESSAGE" value="gonna change impacts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$USER_HOME$/Downloads/FF_1234_Pupkin_Init_1/FF_1234_Pupkin_Init_1/.project">
@@ -1027,7 +1021,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
+        <state relative-caret-position="540">
           <caret line="94" column="11" selection-start-line="83" selection-start-column="8" selection-end-line="94" selection-end-column="11" />
         </state>
       </provider>
@@ -1061,9 +1055,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="200" column="39" selection-start-line="200" selection-start-column="39" selection-end-line="200" selection-end-column="39" />
+        <state>
+          <caret column="32" lean-forward="true" selection-start-column="32" selection-end-column="32" />
           <folding>
+            <element signature="method#getFirstCount#0;class#Field#0" />
+            <element signature="method#getSecondCount#0;class#Field#0" />
+            <element signature="method#printField#0;class#Field#0" />
+            <element signature="method#printImpactField#0;class#Field#0" />
             <element signature="e#5929#5930#0" expanded="true" />
             <element signature="e#5959#5960#0" expanded="true" />
           </folding>
@@ -1072,8 +1070,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="253" column="23" selection-start-line="253" selection-start-column="23" selection-end-line="253" selection-end-column="23" />
+        <state relative-caret-position="251">
+          <caret line="258" column="72" selection-start-line="258" selection-start-column="72" selection-end-line="258" selection-end-column="72" />
           <folding>
             <element signature="method#drawField#0;class#FieldPanel#0" />
           </folding>
