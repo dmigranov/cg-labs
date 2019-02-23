@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class FieldPanel extends JPanel {
     private int k, w, r;           //w - толщина, k - длина ребра, r - радиус отрисовки
-    private int xStart, yStart;
     private Field field;
+    private int xStart, yStart;
 
     private BufferedImage canvas;
     private Graphics2D graphics;
@@ -27,7 +27,7 @@ public class FieldPanel extends JPanel {
 
     private static final int aliveCellColor = new Color(0x00FF09).getRGB();
     private static final int emptyCellColor = new Color(0xFFF8AF).getRGB();
-    private static final int notFieldColor = new Color(0xFFFFFF).getRGB();
+    private static int notFieldColor;
     private static final int borderColor = new Color(0).getRGB();
 
     private Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
@@ -46,8 +46,8 @@ public class FieldPanel extends JPanel {
         this.w = w;
         r = k - 1;
 
-        xStart = 25 + k;
-        yStart = 25 + k;
+        xStart = k; //w
+        yStart = k; //w
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -59,9 +59,12 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e)
             {
+                super.mouseClicked(e);
                 //TODO: мож вынести повторяющийся код в отдельный метод? +проверить
                 int x = e.getX();
                 int y = e.getY();
+                if(x >= canvas.getWidth() || y >= canvas.getHeight())
+                    return;
                 int currentColor = canvas.getRGB(x, y);
                 if (currentColor != borderColor && currentColor != notFieldColor) {
                     Point point = getFieldCoordinates(x, y);
@@ -89,6 +92,9 @@ public class FieldPanel extends JPanel {
 
                 int x = e.getX();
                 int y = e.getY();
+                System.out.println(x + " " + y);
+                if(x >= canvas.getWidth() || y >= canvas.getHeight())
+                    return;
                 int currentColor = canvas.getRGB(x, y);
 
                 if (currentColor != borderColor && currentColor != notFieldColor) {
@@ -141,10 +147,10 @@ public class FieldPanel extends JPanel {
 
         //cx 122, y 47, in map x 123 y 47
 
-        Point point = centerMap.get(new Point(cx, cy));     //TODO: проверить корректность
+        Point point = centerMap.get(new Point(cx, cy));
         if(point == null)
             point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
-            //todo: взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
+            //todo: проверить корректность; взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
             if(point == null)
                 ;
         return point;
@@ -311,11 +317,9 @@ public class FieldPanel extends JPanel {
         }
     }
 
-
     private void spanFill(int x, int y, int newValue)  //x и y - координаты точки, куда нажали. эта точка является зерном
     {
         int oldValue = canvas.getRGB(x, y);
-
         if(oldValue == newValue)
             return;
 
@@ -374,20 +378,11 @@ public class FieldPanel extends JPanel {
         this.k = k;
         r = k - 1;
 
-        xStart = 25 + k;
-        yStart = 25 + k;
+        xStart = k;
+        yStart = k;
 
         //TODO: перерисовать (+новый канвас)
     }
-
-    public void changeImpactsShow()
-    {
-        impactsShown = ! impactsShown;
-        if(impactsShown)
-            drawImpacts();
-        repaint();
-    }
-
 
     class Span
     {
@@ -408,20 +403,22 @@ public class FieldPanel extends JPanel {
         this.field = field;
         centerMap.clear();
 
-        //TODO: рассчитать размер и перерисовать canvas при новых n и m, в зависимости от k и w тоже
-        canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
-        setPreferredSize(new Dimension(1366, 768));
+        int x = (int)(Math.sqrt(3) * k * field.getM()); //todo: w?
+        int y = (int)(1.5 * k * field.getN());          //w?
+
+        canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        setPreferredSize(new Dimension(x, y));
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
+        notFieldColor = canvas.getRGB(0,0);
         width = canvas.getWidth();
         heigth = canvas.getHeight();
 
-        impactCanvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
+        impactCanvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         impactGraphics = impactCanvas.createGraphics();
         impactGraphics.setColor(Color.BLACK);
         impactGraphics.setBackground(new Color(0,0,0,0));
         impactGraphics.setFont(impactGraphics.getFont().deriveFont(Font.BOLD, impactGraphics.getFont().getSize()));
-
 
         drawField();
 
@@ -431,5 +428,13 @@ public class FieldPanel extends JPanel {
     public void setXOR(boolean state)
     {
         this.XOR = state;
+    }
+
+    public void changeImpactsShow()
+    {
+        impactsShown = ! impactsShown;
+        if(impactsShown)
+            drawImpacts();
+        repaint();
     }
 }

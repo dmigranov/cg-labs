@@ -29,10 +29,6 @@ public class LifeFrame extends MainFrame {
         //инициализация
         super(800, 600, "Life | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        fieldPanel = new FieldPanel(20, 4);
-        //todo: k = 10, w = 15: всё заливает чёрным
-        //todo: ограничить w в параметрах функцией от k!!!
-        controller = new Controller(fieldPanel);
 
         addSubMenu("File", KeyEvent.VK_F);
         addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
@@ -64,7 +60,11 @@ public class LifeFrame extends MainFrame {
         addToolBarButton("Game/Step");
 
 
+        //todo: k = 10, w = 15: всё заливает чёрным
+        //ограничить w в параметрах функцией от k!!!
         JPanel middlePanel = new JPanel();
+        fieldPanel = new FieldPanel(20, 4);
+        controller = new Controller(fieldPanel);
         middlePanel.add(fieldPanel);
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JScrollPane scrollPane = new JScrollPane(middlePanel);
