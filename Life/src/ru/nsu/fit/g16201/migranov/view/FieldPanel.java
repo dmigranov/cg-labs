@@ -33,10 +33,11 @@ public class FieldPanel extends JPanel {
     private Map<Point, Point> centerMap = new HashMap<>();      //центр - координаты модели
     private Point current = null;       //нужно для закрашивания поля с зажатой мышкой
 
-    private int width, heigth;
+    private int width, height;
 
     private boolean XOR = false;
     private boolean impactsShown = false;
+    private boolean isActive = true;
 
     public FieldPanel(int k, int w)
     {
@@ -59,6 +60,8 @@ public class FieldPanel extends JPanel {
             public void mouseClicked(MouseEvent e)
             {
                 super.mouseClicked(e);
+                if(!isActive)
+                    return;
                 int x = e.getX();
                 int y = e.getY();
                 if(x >= canvas.getWidth() || y >= canvas.getHeight() || x < 0 || y < 0)
@@ -93,6 +96,8 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+                if(!isActive)
+                    return;
                 int x = e.getX();
                 int y = e.getY();
                 if(x >= canvas.getWidth() || y >= canvas.getHeight() || x < 0 || y < 0)
@@ -141,7 +146,7 @@ public class FieldPanel extends JPanel {
         int ly = y, ry = y;
         while(ly > 0 && canvas.getRGB(x, ly) != borderColor)
             ly--;
-        while(ry < heigth - 1 && canvas.getRGB(x, ry) != borderColor)
+        while(ry < height - 1 && canvas.getRGB(x, ry) != borderColor)
             ry++;
 
         int cx = (lx + rx)/2;
@@ -394,6 +399,10 @@ public class FieldPanel extends JPanel {
         return k;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     class Span
     {
         int y;
@@ -427,7 +436,7 @@ public class FieldPanel extends JPanel {
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
         width = canvas.getWidth();
-        heigth = canvas.getHeight();
+        height = canvas.getHeight();
 
         impactCanvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         impactGraphics = impactCanvas.createGraphics();

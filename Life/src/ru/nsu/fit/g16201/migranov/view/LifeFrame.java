@@ -49,8 +49,9 @@ public class LifeFrame extends MainFrame {
 
 
         addSubMenu("Game", KeyEvent.VK_G);
+        JMenu gameMenu = (JMenu)getMenuElement("Game");
         addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
-        addMenuItem("Game/Run", "Run step-by-step execution", KeyEvent.VK_R, "About.gif", "onRun");
+        addCheckBoxMenuItem(gameMenu, "Run", "Run step-by-step execution", KeyEvent.VK_R, "About.gif", false, "onRun");
 
         addSubMenu("View", KeyEvent.VK_V);
         JMenu viewMenu = (JMenu)getMenuElement("View");
@@ -142,7 +143,12 @@ public class LifeFrame extends MainFrame {
 
     public void onRun()
     {
-        controller.run();
+        if(controller.isRunning())
+            controller.setRunning(false);
+        else
+        {
+            controller.run();
+        }
     }
 
     private void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException

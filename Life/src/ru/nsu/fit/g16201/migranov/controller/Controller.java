@@ -14,6 +14,7 @@ public class Controller {
     private FieldPanel fieldPanel;
     private Field field;
     private int period = 1000;
+    private boolean isRunning = false;
 
     //создать интерфейс типа fieldPanel а то как-то не по ооп
     public Controller(FieldPanel fieldPanel) {
@@ -86,8 +87,20 @@ public class Controller {
     }
 
     public void run() {
-        new Timer(period, e -> step()).start();
-        //todo: stop
+        setRunning(true);
+        final Timer t = new Timer(period, null);
+        t.addActionListener( e -> {
+            if(!isRunning) {
+                t.stop();
+                fieldPanel.setActive(true);
+                return;
+            }
+            step();
+
+        });
+        fieldPanel.setActive(false);
+        t.start();
+        //TODO: отключить возможноость трогать поле!
     }
 
     public void saveFieldToFile(File file) {
@@ -118,5 +131,14 @@ public class Controller {
         {
             //диалог
         }
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean isRunning)
+    {
+        this.isRunning = isRunning;
     }
 }
