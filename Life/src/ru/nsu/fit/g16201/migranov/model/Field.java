@@ -25,7 +25,7 @@ public class Field {
             }
         }
 
-        calculateImpacts();
+        //calculateImpacts();
     }
 
     public void step()
@@ -196,5 +196,8 @@ public class Field {
     public double getImpact(int y, int x)
     {
         return field[y][x].getImpact();
+    }
+
+    public void clear() {
     }
 }

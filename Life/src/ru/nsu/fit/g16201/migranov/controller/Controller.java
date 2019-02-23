@@ -78,6 +78,8 @@ public class Controller {
     }
 
 
+    public void clearField() {
+        field.clear();
 
-
+    }
 }

@@ -44,6 +44,8 @@ public class LifeFrame extends MainFrame {
         addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "XOR.gif", group, false, "onXOR");
         addToolBarToggleButton("Edit/Replace");
         addToolBarToggleButton("Edit/XOR");
+        addMenuSeparator("Edit");
+        addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "Exit.gif", "onClear");
 
 
         addSubMenu("Game", KeyEvent.VK_G);
@@ -128,6 +130,11 @@ public class LifeFrame extends MainFrame {
     public void onShowImpacts()
     {
         fieldPanel.changeImpactsShow();
+    }
+
+    public void onClear()
+    {
+        controller.clearField();
     }
 
     public void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException

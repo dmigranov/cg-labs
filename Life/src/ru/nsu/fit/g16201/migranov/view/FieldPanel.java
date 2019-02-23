@@ -38,7 +38,9 @@ public class FieldPanel extends JPanel {
     private boolean XOR = false;
     private boolean impactsShown = false;
 
-    public FieldPanel(int k, int w, JPanel middlePanel)
+    private JPanel parentPanel;
+
+    public FieldPanel(int k, int w, JPanel parentPanel)
     {
         super();
 
@@ -48,8 +50,9 @@ public class FieldPanel extends JPanel {
 
         xStart = k; //w
         yStart = k; //w
+        this.parentPanel = parentPanel;
 
-        middlePanel.addMouseListener(new MouseAdapter() {
+        parentPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
@@ -58,13 +61,12 @@ public class FieldPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e)
             {
-
                 super.mouseClicked(e);
-
                 int x = e.getX();
                 int y = e.getY();
-                if(x >= canvas.getWidth() || y >= canvas.getHeight())
+                if(x >= canvas.getWidth() || y >= canvas.getHeight() || x < 0 || y < 0)
                     return;
+
                 int currentColor = canvas.getRGB(x, y);
                 if (currentColor != borderColor && currentColor != notFieldColor) {
                     Point point = getFieldCoordinates(x, y);
@@ -90,17 +92,16 @@ public class FieldPanel extends JPanel {
                 }
             }
         });
-
-        middlePanel.addMouseMotionListener(new MouseMotionAdapter() {
+        parentPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
                 int x = e.getX();
                 int y = e.getY();
-                if(x >= canvas.getWidth() || y >= canvas.getHeight())
+                if(x >= canvas.getWidth() || y >= canvas.getHeight() || x < 0 || y < 0)
                     return;
-                int currentColor = canvas.getRGB(x, y);
 
+                int currentColor = canvas.getRGB(x, y);
                 if (currentColor != borderColor && currentColor != notFieldColor) {
                     Point point = getFieldCoordinates(x, y);
                     if (current != null)
@@ -409,6 +410,7 @@ public class FieldPanel extends JPanel {
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         setPreferredSize(new Dimension(x, y));
+        parentPanel.setPreferredSize(new Dimension(x, y));
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
