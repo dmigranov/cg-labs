@@ -195,4 +195,9 @@ public class Field {
     public boolean isAlive(int y, int x) {
         return field[y][x].isAlive();
     }
+
+    public double getImpact(int y, int x)
+    {
+        return field[y][x].getImpact();
+    }
 }

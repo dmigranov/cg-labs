@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -236,12 +237,28 @@ public class FieldPanel extends JPanel {
 
     public void drawImpacts()
     {
-        impactGraphics.setBackground(new Color(0,0,0,0));
+        FontMetrics metrics = impactGraphics.getFontMetrics();
+        int rs =(int)(Math.sqrt(3)* k /2);
+
         impactGraphics.clearRect(0, 0, impactCanvas.getWidth(), impactCanvas.getHeight());
-        for(Point p : centerMap.keySet())
+        for(Map.Entry<Point, Point> entry : centerMap.entrySet())
         {
-            impactGraphics.drawString("Z", p.x, p.y);
+            Point centerPoint = entry.getKey();
+            Point fieldPoint  = entry.getValue();
+            double impact = field.getImpact(fieldPoint.y, fieldPoint.x);
+            String text;
+            if(impact == (int)impact)   //целое
+                text = Integer.toString((int)impact);
+            else
+                //text = Double.toString(impact);
+                text = new DecimalFormat("#.##").format(impact);
+            System.out.println(metrics.stringWidth(text));
+            int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
+            impactGraphics.drawString(text, x, centerPoint.y);
+            //сейчас он показывает импакты с прошлого шага, которые привели к текущей конфигурации
         }
+
+
     }
 
     //Bresenham's line algorithm;
@@ -405,6 +422,8 @@ public class FieldPanel extends JPanel {
         impactCanvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
         impactGraphics = impactCanvas.createGraphics();
         impactGraphics.setColor(Color.BLACK);
+        impactGraphics.setBackground(new Color(0,0,0,0));
+        impactGraphics.setFont(impactGraphics.getFont().deriveFont(Font.BOLD, impactGraphics.getFont().getSize()));
 
 
         drawField();
