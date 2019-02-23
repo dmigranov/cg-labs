@@ -68,6 +68,20 @@ public class Field {
         boolean state = field[y][x].isAlive();      //это то, что сейчас. а то что было - противоположное этоиу
     }
 
+    private void calculateImpacts()
+    {
+        for(int y = 0; y < n; y++)
+        {
+            for(int x = 0; x < (y % 2 == 0 ? m : m-1); x++)
+            {
+                int firstCount = getFirstCount(y,x);
+                int secondCount = getSecondCount(y,x);
+                double impact = FST_IMPACT * firstCount + SND_IMPACT * secondCount;
+                field[y][x].setImpact(impact);
+            }
+        }
+    }
+
     protected int getFirstCount(int y, int x) {
         int count = 0;
 

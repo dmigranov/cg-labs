@@ -252,7 +252,6 @@ public class FieldPanel extends JPanel {
             else
                 //text = Double.toString(impact);
                 text = new DecimalFormat("#.##").format(impact);
-            System.out.println(metrics.stringWidth(text));
             int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
             impactGraphics.drawString(text, x, centerPoint.y);
             //сейчас он показывает импакты с прошлого шага, которые привели к текущей конфигурации
@@ -410,6 +409,7 @@ public class FieldPanel extends JPanel {
     {
         System.out.println("New field");
         this.field = field;
+        centerMap.clear();
 
         //TODO: рассчитать размер и перерисовать canvas при новых n и m, в зависимости от k и w тоже
         canvas = new BufferedImage(1366, 768, BufferedImage.TYPE_INT_ARGB); //откуда узнать размер потом?
