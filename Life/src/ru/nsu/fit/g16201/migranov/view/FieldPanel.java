@@ -16,6 +16,7 @@ import java.util.Map;
 
 public class FieldPanel extends JPanel {
     private final JFrame parentFrame;
+    private final JPanel parentPanel;
     private int k, w;           //w - толщина, k - длина ребра, r - радиус отрисовки
     private Field field;
     private int xStart, yStart;
@@ -40,7 +41,7 @@ public class FieldPanel extends JPanel {
     private boolean impactsShown = false;
     private boolean isActive = true;
 
-    public FieldPanel(int k, int w, JFrame parentFrame)
+    public FieldPanel(int k, int w, JFrame parentFrame, JPanel parentPanel)
     {
         super();
 
@@ -49,7 +50,7 @@ public class FieldPanel extends JPanel {
         this.parentFrame = parentFrame;
         xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
         yStart = k + w; //w
-        //this.parentPanel = parentPanel;
+        this.parentPanel = parentPanel;
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -161,7 +162,6 @@ public class FieldPanel extends JPanel {
         Point point = centerMap.get(new Point(cx, cy));
         if(point == null) {
             point = centerMap.get(new Point(cx + 1, cy));       //необходимость позникает при w != 1 о
-            //todo: проверить корректность; взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
             if (point == null) {
                 point = centerMap.get(new Point(cx - 1, cy));
                 if(point == null){
@@ -318,7 +318,6 @@ public class FieldPanel extends JPanel {
             j2 = temp;
         }
 
-        //TODO: не забыть рассчитать правильно канвас, а не то индексаутофбэнд!
         int dirj = j2 > j1 ? 1 : -1;
         for(int i = i1, j = j1; i <= i2; i++)   //границы?
         {
@@ -436,7 +435,7 @@ public class FieldPanel extends JPanel {
 
         int x = (int)(Math.sqrt(3) * k * field.getM()) + xStart; //todo: на файле не ломается, но всё равно неровно
         System.out.println(x);
-        int y;
+        int y;  //y даже можно увеличить
         if(field.getN() % 2 == 0)
             y = (int)(1.5 * k * field.getN()) + 2 * w;
         else
@@ -444,6 +443,7 @@ public class FieldPanel extends JPanel {
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB);
         setPreferredSize(new Dimension(x, y));
+        parentPanel.setPreferredSize(new Dimension(x, y));
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
@@ -459,6 +459,7 @@ public class FieldPanel extends JPanel {
         drawImpacts();
         repaint();
         parentFrame.pack();
+        parentPanel.repaint();
     }
 
     public void setXOR(boolean state)

@@ -100,10 +100,8 @@ public class LifeFrame extends MainFrame {
         addToolBarSeparator();
         addToolBarToggleButton("Help/About");
 
-        //todo: k = 10, w = 15: всё заливает чёрным
-        //ограничить w в параметрах функцией от k!!!
         JPanel middlePanel = new JPanel();
-        fieldPanel = new FieldPanel(20, 4, this);
+        fieldPanel = new FieldPanel(20, 4, this, middlePanel);
         controller = new Controller(fieldPanel, this);
         middlePanel.add(fieldPanel);
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
