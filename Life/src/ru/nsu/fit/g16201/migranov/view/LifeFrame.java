@@ -57,7 +57,6 @@ public class LifeFrame extends MainFrame {
         item = (JMenuItem)getMenuElement("File/Save");
         item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
         addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "download-1.png", "onSaveAs");//
-
         addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "logout.png", "onExit");
 
         addSubMenu("Edit", KeyEvent.VK_E);
@@ -69,9 +68,11 @@ public class LifeFrame extends MainFrame {
         addToolBarToggleButton("Edit/XOR");
         addMenuSeparator("Edit");
         addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "cancel.png", "onClear");
+        addToolBarButton("Edit/Clear");
         addMenuSeparator("Edit");
         addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "settings.png", "onParameters");
-
+        addToolBarSeparator();
+        addToolBarButton("Edit/Parameters");
 
         addSubMenu("Game", KeyEvent.VK_G);
         JMenu gameMenu = (JMenu)getMenuElement("Game");
@@ -85,9 +86,11 @@ public class LifeFrame extends MainFrame {
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout");
 
-        addToolBarButton("File/New");
+        addToolBarSeparator();
         addToolBarButton("Game/Step");
-
+        addToolBarToggleButton("Game/Run");
+        addToolBarSeparator();
+        addToolBarToggleButton("Help/About");
 
         //todo: k = 10, w = 15: всё заливает чёрным
         //ограничить w в параметрах функцией от k!!!
@@ -151,7 +154,7 @@ public class LifeFrame extends MainFrame {
 
     public void onSaveAs()
     {
-        //todo: индикатор изменений в fieldpanel, чтобы если ничего не было изменено, не пересправшивать
+        //todo: индикатор изменений в fieldpanel, чтобы если ничего не было изменено, не пересправшивать (третий порядок впжности)
         File file = getSaveFileName("txt", "A field description file");
         if(file != null) {
             currentFile = file;
@@ -317,5 +320,6 @@ public class LifeFrame extends MainFrame {
         ((JMenuItem)getMenuElement("Game/Step")).setEnabled(isActive);
         ((JMenuItem)getMenuElement("Edit/Clear")).setEnabled(isActive);
         ((JMenuItem)getMenuElement("Edit/Parameters")).setEnabled(isActive);
+        get
     }
 }
