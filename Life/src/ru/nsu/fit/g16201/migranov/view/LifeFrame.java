@@ -1,6 +1,8 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -194,7 +196,7 @@ public class LifeFrame extends MainFrame {
         mnPanel.add(new JLabel("n: "));
         mnPanel.add(nField);
 
-        if(JOptionPane.showConfirmDialog(this, mnPanel, "Field parameters", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        if(JOptionPane.showConfirmDialog(this, mnPanel, "Field parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String mText = mField.getText();
             String nText = nField.getText();
@@ -210,7 +212,48 @@ public class LifeFrame extends MainFrame {
 
     public void onParameters()
     {
+        JPanel optionsPanel = new JPanel();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
+
+        JPanel mnPanel = new JPanel();
+        JTextField mField = new JTextField(3);
+        JTextField nField = new JTextField(3);
+        mField.addKeyListener(new IntegerTextFieldKeyListener());
+        nField.addKeyListener(new IntegerTextFieldKeyListener());
+        mnPanel.add(new JLabel("m: "));
+        mnPanel.add(mField);
+        mnPanel.add(Box.createHorizontalStrut(10));
+        mnPanel.add(new JLabel("n: "));
+        mnPanel.add(nField);
+
+        optionsPanel.add(mnPanel);
+        //тут надо ужимать/расширять поле, а не как в нью
+
+        JPanel kPanel = new JPanel();
+        JTextField kField = new JTextField("5",2);
+        kField.addKeyListener(new IntegerTextFieldKeyListener());
+        JSlider kSlider = new JSlider(JSlider.HORIZONTAL, 5, 50, 5);
+        //kSlider.setMinorTickSpacing(1);
+        kSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if(!kSlider.getValueIsAdjusting())
+                {
+                    int k = kSlider.getValue();
+                    kField.setText(k+ "");
+                }
+            }
+        });
+        //JTextField wField = new JTextField(3);
+        kPanel.add(new JLabel("k: "));
+        kPanel.add(kField);
+        kPanel.add(Box.createHorizontalStrut(10));
+        kPanel.add(kSlider);
+        optionsPanel.add(kPanel);
+
+
+        JOptionPane.showConfirmDialog(this, optionsPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION);
     }
 
     public void onStep()
