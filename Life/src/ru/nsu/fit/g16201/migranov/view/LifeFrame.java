@@ -3,6 +3,8 @@ package ru.nsu.fit.g16201.migranov.view;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -231,18 +233,17 @@ public class LifeFrame extends MainFrame {
         //тут надо ужимать/расширять поле, а не как в нью
 
         JPanel kPanel = new JPanel();
-        JTextField kField = new JTextField("5",2);
+        int kMin = 5, kMax = 50;
+        JSlider kSlider = new JSlider(JSlider.HORIZONTAL, kMin, kMax, kMin);
+        JTextField kField = new JTextField(kMin + "",2);
+
         kField.addKeyListener(new IntegerTextFieldKeyListener());
-        JSlider kSlider = new JSlider(JSlider.HORIZONTAL, 5, 50, 5);
-        //kSlider.setMinorTickSpacing(1);
+
         kSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if(!kSlider.getValueIsAdjusting())
-                {
-                    int k = kSlider.getValue();
-                    kField.setText(k+ "");
-                }
+                int k = kSlider.getValue();
+                kField.setText(k+ "");
             }
         });
         //JTextField wField = new JTextField(3);
