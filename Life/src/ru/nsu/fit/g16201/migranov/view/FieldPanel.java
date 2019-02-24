@@ -45,6 +45,7 @@ public class FieldPanel extends JPanel {
     {
         super();
 
+        setDoubleBuffered(true);
         this.k = k;
         this.w = w;
         this.parentFrame = parentFrame;
@@ -183,7 +184,7 @@ public class FieldPanel extends JPanel {
     public void paint(Graphics g)
     {
         super.paintComponent(g);
-        System.out.println("Updated");
+        //System.out.println("Updated");
         g.drawImage(canvas, 0, 0, canvas.getWidth(), canvas.getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
         if(impactsShown && k >= 15)
             g.drawImage(impactCanvas, 0, 0, impactCanvas.getWidth(), impactCanvas.getHeight(), null);
@@ -220,8 +221,7 @@ public class FieldPanel extends JPanel {
         }
 
         spanFill(0, 0, notFieldColor);
-
-        System.out.println("Drew hexagons");
+        //System.out.println("Drew hexagons");
     }
 
     private void drawHexagon(Graphics g, int x, int y) {
@@ -429,12 +429,11 @@ public class FieldPanel extends JPanel {
 
     public void setField(Field field)
     {
-        System.out.println("New field");
+        //System.out.println("New field");
         this.field = field;
         centerMap.clear();
 
         int x = (int)(Math.sqrt(3) * k * field.getM()); //todo: на файле не ломается, но всё равно неровно
-        System.out.println(x);
         int y;  //y даже можно увеличить
         if(field.getN() % 2 == 0)
             if(k%2 == 0)

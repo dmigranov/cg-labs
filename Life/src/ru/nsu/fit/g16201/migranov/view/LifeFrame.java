@@ -4,8 +4,6 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -22,7 +20,7 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 public class LifeFrame extends MainFrame {
     private FieldPanel fieldPanel;
     private Controller controller;
-
+         JLabel statusLabel;
     private File currentFile = null;
 
     private JButton clearButton, parametersButton, stepButton;
@@ -117,11 +115,11 @@ public class LifeFrame extends MainFrame {
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
         statusPanel.setPreferredSize(new Dimension(getWidth(), 16));
-        JLabel statusLabel = new JLabel("status");
+        statusLabel = new JLabel("status");
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
         statusPanel.add(statusLabel);
-        middlePanel.add(statusPanel, BorderLayout.SOUTH);
+        add(statusPanel, BorderLayout.SOUTH);
 
         setMinimumSize(new Dimension(800, 600));
         setVisible(true);

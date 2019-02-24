@@ -7,16 +7,9 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.MenuElement;
-import javax.swing.UIManager;
+import javax.swing.*;
+import javax.swing.event.MenuDragMouseEvent;
+import javax.swing.event.MenuDragMouseListener;
 
 /**
  * MainFrame - main application frame
@@ -74,11 +67,32 @@ public class MainFrame extends JFrame {
 	 * @throws NoSuchMethodException - when actionMethod method not found
 	 * @throws SecurityException - when actionMethod method is inaccessible
 	 */
-	public JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException
+	public JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
 	{
 		JMenuItem item = new JMenuItem(title);
 		item.setMnemonic(mnemonic);
 		item.setToolTipText(tooltip);
+		item.addMenuDragMouseListener(new MenuDragMouseListener() {
+			@Override
+			public void menuDragMouseEntered(MenuDragMouseEvent e) {
+
+			}
+
+			@Override
+			public void menuDragMouseExited(MenuDragMouseEvent e) {
+
+			}
+
+			@Override
+			public void menuDragMouseDragged(MenuDragMouseEvent e) {
+
+			}
+
+			@Override
+			public void menuDragMouseReleased(MenuDragMouseEvent e) {
+
+			}
+		});
 		if(icon != null)
 			item.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
 		final Method method = getClass().getMethod(actionMethod);
