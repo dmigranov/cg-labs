@@ -185,7 +185,7 @@ public class FieldPanel extends JPanel {
         super.paintComponent(g);
         System.out.println("Updated");
         g.drawImage(canvas, 0, 0, canvas.getWidth(), canvas.getHeight(), null);   //вообще, при таком построении в рисовании линий и спан не должно быть repaint(), т.к это приведёт к рекурсии
-        if(impactsShown)
+        if(impactsShown && k >= 15)
             g.drawImage(impactCanvas, 0, 0, impactCanvas.getWidth(), impactCanvas.getHeight(), null);
     }
 

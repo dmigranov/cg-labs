@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -113,6 +114,14 @@ public class LifeFrame extends MainFrame {
 
         //TODO: статусбар
 
+        JPanel statusPanel = new JPanel();
+        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        statusPanel.setPreferredSize(new Dimension(getWidth(), 16));
+        JLabel statusLabel = new JLabel("status");
+        statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+        statusPanel.add(statusLabel);
+        middlePanel.add(statusPanel, BorderLayout.SOUTH);
 
         setMinimumSize(new Dimension(800, 600));
         setVisible(true);
@@ -284,6 +293,9 @@ public class LifeFrame extends MainFrame {
         wPanel.add(Box.createHorizontalStrut(10));
         wPanel.add(wSlider);
         optionsPanel.add(wPanel);
+
+        JPanel lPanel = new JPanel();
+
 
 
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
