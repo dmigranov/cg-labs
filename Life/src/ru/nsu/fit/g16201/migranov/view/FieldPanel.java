@@ -458,7 +458,7 @@ public class FieldPanel extends JPanel {
         drawField();
         drawImpacts();
         repaint();
-        parentFrame.getContentPane().repaint();
+        parentFrame.pack();
     }
 
     public void setXOR(boolean state)
