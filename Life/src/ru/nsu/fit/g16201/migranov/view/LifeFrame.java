@@ -237,7 +237,7 @@ public class LifeFrame extends MainFrame {
         JSlider kSlider = new JSlider(JSlider.HORIZONTAL, kMin, kMax, kMin);
         JTextField kField = new JTextField(kMin + "",2);
 
-        kField.addKeyListener(new IntegerTextFieldKeyListener());
+        kField.addKeyListener(new IntegerTextFieldKeyListenerWithSlider(kSlider));
 
         kSlider.addChangeListener(new ChangeListener() {
             @Override
