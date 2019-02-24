@@ -39,7 +39,7 @@ public class LifeFrame extends MainFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-
+                boolean isRunning = controller.isRunning();
                 controller.setRunning(false);
                 int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(result == JOptionPane.YES_OPTION) {
@@ -48,7 +48,7 @@ public class LifeFrame extends MainFrame {
                 }
                 else if(result == JOptionPane.NO_OPTION)
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                else
+                else if(isRunning)
                     controller.run();
             }
         });
@@ -134,6 +134,7 @@ public class LifeFrame extends MainFrame {
 
     public void onExit()
     {
+        boolean isRunning = controller.isRunning();
         controller.setRunning(false);
         int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION) {
@@ -143,7 +144,8 @@ public class LifeFrame extends MainFrame {
         else if(result == JOptionPane.NO_OPTION)
             System.exit(0);
         else
-            controller.run();
+            if(isRunning)
+                controller.run();
 
     }
 
@@ -206,7 +208,7 @@ public class LifeFrame extends MainFrame {
             {
                 int m = Integer.parseInt(mText);
                 int n = Integer.parseInt(nText);
-                controller.setField(m, n);
+                controller.setNewField(m, n);
             }
             //я думаю, тут мы поле совсем очищаем. а вот при изменении параметров - надо ужимать.расширять по возможности сохраняя состояние
         }
@@ -217,10 +219,9 @@ public class LifeFrame extends MainFrame {
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
-
         JPanel mnPanel = new JPanel();
-        JTextField mField = new JTextField(3);
-        JTextField nField = new JTextField(3);
+        JTextField mField = new JTextField(controller.getM() + "", 3);
+        JTextField nField = new JTextField(controller.getM() + "", 3);
         mField.addKeyListener(new IntegerTextFieldKeyListener());
         nField.addKeyListener(new IntegerTextFieldKeyListener());
         mnPanel.add(new JLabel("m: "));
@@ -228,33 +229,56 @@ public class LifeFrame extends MainFrame {
         mnPanel.add(Box.createHorizontalStrut(10));
         mnPanel.add(new JLabel("n: "));
         mnPanel.add(nField);
-
         optionsPanel.add(mnPanel);
         //тут надо ужимать/расширять поле, а не как в нью
 
         JPanel kPanel = new JPanel();
         int kMin = 5, kMax = 50;
-        JSlider kSlider = new JSlider(JSlider.HORIZONTAL, kMin, kMax, kMin);
-        JTextField kField = new JTextField(kMin + "",2);
-
+        int wMin = 1, wMax;
+        JSlider kSlider = new JSlider(JSlider.HORIZONTAL, kMin, kMax, fieldPanel.getK());
+        JTextField kField = new JTextField(fieldPanel.getK() + "",2);
         kField.addKeyListener(new IntegerTextFieldKeyListenerWithSlider(kSlider));
-
         kSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int k = kSlider.getValue();
-                kField.setText(k+ "");
+                String fieldText = kField.getText();
+
+                if(!"".equals(fieldText)) {
+                    int fieldK = Integer.parseInt(fieldText);
+                    if (fieldK >= kMin && fieldK <= kMax) {
+                        kField.setText(k + "");
+
+                    }
+                }
+                else
+                    kField.setText(k+ "");
             }
         });
-        //JTextField wField = new JTextField(3);
         kPanel.add(new JLabel("k: "));
         kPanel.add(kField);
         kPanel.add(Box.createHorizontalStrut(10));
         kPanel.add(kSlider);
         optionsPanel.add(kPanel);
 
+        JPanel wPanel = new JPanel();
 
-        JOptionPane.showConfirmDialog(this, optionsPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION);
+
+        if(JOptionPane.showConfirmDialog(this, optionsPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            String mText = mField.getText();
+            String nText = nField.getText();
+            int k = kSlider.getValue();
+            if(!"".equals(mText) && !"".equals(nText))
+            {
+                int m = Integer.parseInt(mText);
+                int n = Integer.parseInt(nText);
+                controller.setFieldUsingExisting(m, n, 4, k);
+
+            }
+
+
+        }
     }
 
     public void onStep()

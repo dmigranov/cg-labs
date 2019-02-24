@@ -32,8 +32,10 @@ public class IntegerTextFieldKeyListenerWithSlider extends KeyAdapter {
                 int value = Integer.parseInt(text);
                 if(value >= slider.getMinimum() && value <= slider.getMaximum())
                     slider.setValue(value);
-                //else if (value > slider.getMaximum())
-                //    slider.setValue(slider.getMaximum());
+                else if (value > slider.getMaximum())
+                    slider.setValue(slider.getMaximum());
+                else
+                    slider.setValue(slider.getMinimum());
             }
         }
     }

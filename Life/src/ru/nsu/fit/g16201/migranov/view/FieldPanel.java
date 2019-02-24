@@ -158,11 +158,22 @@ public class FieldPanel extends JPanel {
 
         //cx 122, y 47, in map x 123 y 47
         Point point = centerMap.get(new Point(cx, cy));
-        if(point == null)
-            point = centerMap.get(new Point(cx+1, cy));       //необходимость позникает при w != 1 о
+        if(point == null) {
+            point = centerMap.get(new Point(cx + 1, cy));       //необходимость позникает при w != 1 о
             //todo: проверить корректность; взять ещё другие окрестности (w = 6 k = 5) (если w > 1, то не всегда срабатывает (не всегда находит)
-            if(point == null)
-                ;
+            if (point == null) {
+                point = centerMap.get(new Point(cx - 1, cy));
+                if(point == null){
+                    point = centerMap.get(new Point(cx, cy + 1));
+                    if(point == null) {
+                        point = centerMap.get(new Point(cx, cy - 1));
+                        if(point == null) {
+                            point = centerMap.get(new Point(cx + 1, cy + 1));
+                        }
+                    }
+                }
+            }
+        }
         return point;
     }
 
@@ -382,7 +393,7 @@ public class FieldPanel extends JPanel {
         return new Span(lx, rx, y);
     }
 
-    public void setDrawingParameters(int w, int k) {
+    public void setField(Field field, int w, int k) {
         this.w = w;
         this.k = k;
         xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
@@ -421,6 +432,7 @@ public class FieldPanel extends JPanel {
         centerMap.clear();
 
         int x = (int)(Math.sqrt(3) * k * field.getM()) + xStart; //todo: на файле не ломается, но всё равно неровно
+        System.out.println(x);
         int y;
         if(field.getN() % 2 == 0)
             y = (int)(1.5 * k * field.getN()) + 2 * w;

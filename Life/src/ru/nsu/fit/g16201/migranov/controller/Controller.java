@@ -34,28 +34,29 @@ public class Controller {
             String line;
 
             line = br.readLine();
-            line = line.substring(0, line.indexOf('/'));
-            String[] substrings = line.split(" ");
+            line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+            String[] substrings = line.split("\\s+");
             int m = Integer.parseInt(substrings[0]);
             int n = Integer.parseInt(substrings[1]);
             field = new Field(m, n);
 
             line = br.readLine();
-            line = line.substring(0, line.indexOf('/'));
-            int w = Integer.parseInt(line);
+            line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+            int w = Integer.parseInt(line.split("\\s+")[0]);
             line = br.readLine();
-            line = line.substring(0, line.indexOf('/'));
-            int k = Integer.parseInt(line);
-            fieldPanel.setDrawingParameters(w, k);
+            line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+            int k = Integer.parseInt(line.split("\\s+")[0]);
+            //fieldPanel.setDrawingParameters(w, k);
 
             line = br.readLine();
-            line = line.substring(0, line.indexOf('/'));
-            int all = Integer.parseInt(line);
+            line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+            int all = Integer.parseInt(line.split("\\s+")[0]);
 
             //в файле клетки в формате xy, а у меня во внутреннем представлении - yx!
             while ((line = br.readLine()) != null)
             {
-                substrings = line.split(" ");
+                line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+                substrings = line.split("\\s+");
                 int x = Integer.parseInt(substrings[0]);
                 int y = Integer.parseInt(substrings[1]);
                 field.setCell(y, x);
@@ -65,7 +66,7 @@ public class Controller {
             if(all > 0)     //прочли меньше чем обещано; А ЕСЛИ БОЛЬШЕ?
                 throw new Exception();
 
-            fieldPanel.setField(field);
+            fieldPanel.setField(field, w, k);
         }
         catch (Exception e)
         {
@@ -148,9 +149,33 @@ public class Controller {
         this.isRunning = isRunning;
     }
 
-    public void setField(int m, int n)
+    public void setNewField(int m, int n)
     {
         field = new Field(m, n);
         fieldPanel.setField(field);
     }
+
+    public void setFieldUsingExisting(int m, int n, int w, int k)
+    {
+        Field oldField = field;
+        field = new Field(m, n);
+        for(int y = 0; y < oldField.getN() && y < field.getN(); y++) {
+            for (int x = 0; x < (y % 2 == 0 ? oldField.getM() : oldField.getM() - 1) && x < (y % 2 == 0 ? field.getM() : field.getM() - 1); x++) {
+                if(oldField.isAlive(y, x))
+                    field.setCell(y, x);
+            }
+        }
+        fieldPanel.setField(field, w, k);
+    }
+
+    public int getM()
+    {
+        return field.getM();
+    }
+
+    public int getN()
+    {
+        return field.getN();
+    }
+
 }
