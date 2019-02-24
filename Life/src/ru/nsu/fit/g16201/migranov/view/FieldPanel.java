@@ -398,8 +398,8 @@ public class FieldPanel extends JPanel {
     public void setField(Field field, int w, int k) {
         this.w = w;
         this.k = k;
-        xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
-        yStart = k + w; //w
+        xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;
+        yStart = k + w;
         setField(field);
     }
 
@@ -433,17 +433,22 @@ public class FieldPanel extends JPanel {
         this.field = field;
         centerMap.clear();
 
-        int x = (int)(Math.sqrt(3) * k * field.getM()) + xStart; //todo: на файле не ломается, но всё равно неровно
+        int x = (int)(Math.sqrt(3) * k * field.getM()); //todo: на файле не ломается, но всё равно неровно
         System.out.println(x);
         int y;  //y даже можно увеличить
         if(field.getN() % 2 == 0)
-            y = (int)(1.5 * k * field.getN()) + 2 * w;
+            if(k%2 == 0)
+                y = (int)(1.5 * k * field.getN()) + 4 * w;
+            else
+                y = (int)(1.5 * (k+1) * field.getN()) + 2 * w;
         else
-            y = (int)(5.0/3 * k * field.getN()) + 2 * w;    //y тоже увеличить: на 3, 4 происходит усечение
+            //n/2 с вкладом k
+            //n/2 + 1 с вкладом 2k
+            y = (k*field.getN()/2 + k * field.getN() + 2 * k) + 2 * w ;    //y тоже увеличить: на 3, 4 происходит усечение
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB);
         setPreferredSize(new Dimension(x, y));
-        parentPanel.setPreferredSize(new Dimension(x, y));
+        //parentPanel.setPreferredSize(new Dimension(x, y));
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
@@ -458,8 +463,9 @@ public class FieldPanel extends JPanel {
         drawField();
         drawImpacts();
         repaint();
+        parentPanel.revalidate();
         parentFrame.pack();
-        parentPanel.repaint();
+
     }
 
     public void setXOR(boolean state)
