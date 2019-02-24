@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FieldPanel extends JPanel {
+    private final JFrame parentFrame;
     private int k, w;           //w - толщина, k - длина ребра, r - радиус отрисовки
     private Field field;
     private int xStart, yStart;
@@ -39,13 +40,13 @@ public class FieldPanel extends JPanel {
     private boolean impactsShown = false;
     private boolean isActive = true;
 
-    public FieldPanel(int k, int w)
+    public FieldPanel(int k, int w, JFrame parentFrame)
     {
         super();
 
         this.k = k;
         this.w = w;
-
+        this.parentFrame = parentFrame;
         xStart = (int)(Math.sqrt(3) * k / 2) + w /2 ;//
         yStart = k + w; //w
         //this.parentPanel = parentPanel;
@@ -443,7 +444,6 @@ public class FieldPanel extends JPanel {
 
         canvas = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB);
         setPreferredSize(new Dimension(x, y));
-
         graphics = canvas.createGraphics();
         graphics.setColor(Color.BLACK);
         notFieldColor = canvas.getRGB(0,0);
@@ -458,6 +458,7 @@ public class FieldPanel extends JPanel {
         drawField();
         drawImpacts();
         repaint();
+        parentFrame.getContentPane().repaint();
     }
 
     public void setXOR(boolean state)

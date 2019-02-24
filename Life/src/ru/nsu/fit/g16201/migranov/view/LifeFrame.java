@@ -103,7 +103,7 @@ public class LifeFrame extends MainFrame {
         //todo: k = 10, w = 15: всё заливает чёрным
         //ограничить w в параметрах функцией от k!!!
         JPanel middlePanel = new JPanel();
-        fieldPanel = new FieldPanel(20, 4);
+        fieldPanel = new FieldPanel(20, 4, this);
         controller = new Controller(fieldPanel, this);
         middlePanel.add(fieldPanel);
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
