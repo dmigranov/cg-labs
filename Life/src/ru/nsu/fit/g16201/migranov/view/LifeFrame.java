@@ -234,9 +234,18 @@ public class LifeFrame extends MainFrame {
 
         JPanel kPanel = new JPanel();
         int kMin = 5, kMax = 50;
-        int wMin = 1, wMax;
+        int wMin = 1, wMax = fieldPanel.getK();
         JSlider kSlider = new JSlider(JSlider.HORIZONTAL, kMin, kMax, fieldPanel.getK());
         JTextField kField = new JTextField(fieldPanel.getK() + "",2);
+
+        JSlider wSlider = new JSlider(JSlider.HORIZONTAL, wMin, wMax, fieldPanel.getW());
+        JTextField wField = new JTextField(fieldPanel.getW() + "",2);
+        wField.setEditable(false);
+        wSlider.setPaintLabels(true);
+        wSlider.setPaintTicks(true);
+        wSlider.setMajorTickSpacing(5);
+        wSlider.setMinorTickSpacing(1);
+
         kField.addKeyListener(new IntegerTextFieldKeyListenerWithSlider(kSlider));
         kSlider.addChangeListener(new ChangeListener() {
             @Override
@@ -248,11 +257,21 @@ public class LifeFrame extends MainFrame {
                     int fieldK = Integer.parseInt(fieldText);
                     if (fieldK >= kMin && fieldK <= kMax) {
                         kField.setText(k + "");
-
+                        wSlider.setMaximum(k);  //либо более сложная функция
                     }
                 }
-                else
-                    kField.setText(k+ "");
+                else {
+                    kField.setText(k + "");
+                    wSlider.setMaximum(k);
+                }
+            }
+        });
+
+        wSlider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int w = wSlider.getValue();
+                wField.setText(w + "");
             }
         });
         kPanel.add(new JLabel("k: "));
@@ -262,6 +281,11 @@ public class LifeFrame extends MainFrame {
         optionsPanel.add(kPanel);
 
         JPanel wPanel = new JPanel();
+        wPanel.add(new JLabel("w: "));
+        wPanel.add(wField);
+        wPanel.add(Box.createHorizontalStrut(10));
+        wPanel.add(wSlider);
+        optionsPanel.add(wPanel);
 
 
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
@@ -269,11 +293,12 @@ public class LifeFrame extends MainFrame {
             String mText = mField.getText();
             String nText = nField.getText();
             int k = kSlider.getValue();
+            int w = wSlider.getValue();
             if(!"".equals(mText) && !"".equals(nText))
             {
                 int m = Integer.parseInt(mText);
                 int n = Integer.parseInt(nText);
-                controller.setFieldUsingExisting(m, n, 4, k);
+                controller.setFieldUsingExisting(m, n, w, k);
 
             }
 

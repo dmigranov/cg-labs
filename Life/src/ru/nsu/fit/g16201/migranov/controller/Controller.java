@@ -67,6 +67,7 @@ public class Controller {
                 throw new Exception();
 
             fieldPanel.setField(field, w, k);
+
         }
         catch (Exception e)
         {
