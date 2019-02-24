@@ -14,7 +14,7 @@ public class Controller {
     private static final String title = "Migranov, 16201";
     private FieldPanel fieldPanel;
     private Field field;
-    private JFrame lifeFrame;
+    private LifeFrame lifeFrame;
     private int period = 1000;
     private boolean isRunning = false;
 
@@ -97,13 +97,14 @@ public class Controller {
             if(!isRunning) {
                 t.stop();
                 fieldPanel.setActive(true);
+                lifeFrame.setActive(true);
                 return;
             }
             step();
 
         });
         fieldPanel.setActive(false);
-        //TODO: во фрейме тоже отключить менюшки!
+        lifeFrame.setActive(false);
         t.start();
 
     }

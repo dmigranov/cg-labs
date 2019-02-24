@@ -36,6 +36,7 @@ public class LifeFrame extends MainFrame {
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
 
+                controller.setRunning(false);
                 int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if(result == JOptionPane.YES_OPTION) {
                     onSave();
@@ -43,44 +44,46 @@ public class LifeFrame extends MainFrame {
                 }
                 else if(result == JOptionPane.NO_OPTION)
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                else
+                    controller.run();
             }
         });
 
         JMenuItem item;
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuItem("File/New", "New field", KeyEvent.VK_N, "Exit.gif", "onNew");
-        addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "Exit.gif", "onOpen");//
-        addMenuItem("File/Save", "Save a field state", KeyEvent.VK_S, "Exit.gif", "onSave");//
+        addMenuItem("File/New", "New field", KeyEvent.VK_N, "reload.png", "onNew");
+        addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "upload-1.png", "onOpen");//
+        addMenuItem("File/Save", "Save a field state", KeyEvent.VK_S, "download.png", "onSave");//
         item = (JMenuItem)getMenuElement("File/Save");
         item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-        addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "Exit.gif", "onSaveAs");//
+        addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "download-1.png", "onSaveAs");//
 
-        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "Exit.gif", "onExit");
+        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "logout.png", "onExit");
 
         addSubMenu("Edit", KeyEvent.VK_E);
         JMenu editMenu = (JMenu)getMenuElement("Edit");
         ButtonGroup group = new ButtonGroup();
-        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "About.gif", group, true, "onReplace");
-        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "XOR.gif", group, false, "onXOR");
+        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "edit.png", group, true, "onReplace");
+        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "shuffle.png", group, false, "onXOR");
         addToolBarToggleButton("Edit/Replace");
         addToolBarToggleButton("Edit/XOR");
         addMenuSeparator("Edit");
-        addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "Exit.gif", "onClear");
+        addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "cancel.png", "onClear");
         addMenuSeparator("Edit");
-        addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "Exit.gif", "onParameters");
+        addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "settings.png", "onParameters");
 
 
         addSubMenu("Game", KeyEvent.VK_G);
         JMenu gameMenu = (JMenu)getMenuElement("Game");
-        addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "About.gif", "onStep");
-        addCheckBoxMenuItem(gameMenu, "Run", "Run step-by-step execution", KeyEvent.VK_R, "About.gif", false, "onRun");
+        addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "next.png", "onStep");
+        addCheckBoxMenuItem(gameMenu, "Run", "Run step-by-step execution", KeyEvent.VK_R, "next-1.png", false, "onRun");
 
         addSubMenu("View", KeyEvent.VK_V);
         JMenu viewMenu = (JMenu)getMenuElement("View");
-        addCheckBoxMenuItem(viewMenu, "Show impacts", "Indicates whether impacts should be shown", KeyEvent.VK_I, "About.gif", false, "onShowImpacts");
+        addCheckBoxMenuItem(viewMenu, "Show impacts", "Indicates whether impacts should be shown", KeyEvent.VK_I, "magnifying-glass.png", false, "onShowImpacts");
 
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "About.gif", "onAbout");
+        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout");
 
         addToolBarButton("File/New");
         addToolBarButton("Game/Step");
@@ -115,6 +118,7 @@ public class LifeFrame extends MainFrame {
 
     public void onExit()
     {
+        controller.setRunning(false);
         int result = JOptionPane.showConfirmDialog(LifeFrame.this, "Do you want to save the current state of field?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(result == JOptionPane.YES_OPTION) {
             onSave();
@@ -122,6 +126,8 @@ public class LifeFrame extends MainFrame {
         }
         else if(result == JOptionPane.NO_OPTION)
             System.exit(0);
+        else
+            controller.run();
 
     }
 
@@ -304,6 +310,12 @@ public class LifeFrame extends MainFrame {
 
     public void setActive(boolean isActive)
     {
-
+        ((JMenuItem)getMenuElement("File/New")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("File/Save")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("File/Open")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("File/Save As")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("Game/Step")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("Edit/Clear")).setEnabled(isActive);
+        ((JMenuItem)getMenuElement("Edit/Parameters")).setEnabled(isActive);
     }
 }
