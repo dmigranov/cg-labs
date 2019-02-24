@@ -180,8 +180,8 @@ public class FieldPanel extends JPanel {
     }
 
     @Override
-    //public void paintComponent(Graphics g) {
-    public void paint(Graphics g)
+    public void paintComponent(Graphics g)
+    //public void paint(Graphics g)
     {
         super.paintComponent(g);
         //System.out.println("Updated");

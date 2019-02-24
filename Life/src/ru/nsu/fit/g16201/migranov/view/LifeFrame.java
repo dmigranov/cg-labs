@@ -20,7 +20,7 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 public class LifeFrame extends MainFrame {
     private FieldPanel fieldPanel;
     private Controller controller;
-         JLabel statusLabel;
+    private JLabel statusLabel;
     private File currentFile = null;
 
     private JButton clearButton, parametersButton, stepButton;
@@ -104,8 +104,6 @@ public class LifeFrame extends MainFrame {
         fieldPanel = new FieldPanel(20, 4, this, middlePanel);
         controller = new Controller(fieldPanel, this);
         middlePanel.add(fieldPanel);
-        middlePanel.addMouseListener(new StatusLabelMouseAdapter());
-        fieldPanel.addMouseListener(new StatusLabelMouseAdapter());
 
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JScrollPane scrollPane = new JScrollPane(middlePanel);
@@ -113,7 +111,6 @@ public class LifeFrame extends MainFrame {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
-        addMouseListener(new StatusLabelMouseAdapter());
 
 
         JPanel statusPanel = new JPanel();
@@ -363,13 +360,7 @@ public class LifeFrame extends MainFrame {
         item.setToolTipText(tooltip);
 
         if(label != null) {
-            item.addMouseMotionListener(new MouseMotionAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    super.mouseMoved(e);
-                    label.setText(item.getToolTipText());
-                }
-            });
+            item.addMouseListener(new StatusTitleListener(label));
         }
 
         final Method method = getClass().getMethod(actionMethod);
@@ -398,13 +389,7 @@ public class LifeFrame extends MainFrame {
         item.setToolTipText(tooltip);
 
         if(label != null) {
-            item.addMouseMotionListener(new MouseMotionAdapter() {
-                @Override
-                public void mouseMoved(MouseEvent e) {
-                    super.mouseMoved(e);
-                    label.setText(item.getToolTipText());
-                }
-            });
+            item.addMouseListener(new StatusTitleListener(label));
         }
 
         final Method method = getClass().getMethod(actionMethod);
@@ -422,7 +407,7 @@ public class LifeFrame extends MainFrame {
         parent.add(item);
     }
 
-    public JToggleButton createToolBarToggleButton(JMenuItem item)
+    private JToggleButton createToolBarToggleButton(JMenuItem item)
     {
         JToggleButton button = new JToggleButton(item.getIcon());
         /*for(ActionListener listener: item.getActionListeners())
@@ -432,7 +417,7 @@ public class LifeFrame extends MainFrame {
         return button;
     }
 
-    public JToggleButton createToolBarToggleButton(String menuPath)
+    private JToggleButton createToolBarToggleButton(String menuPath)
     {
         JMenuItem item = (JMenuItem)getMenuElement(menuPath);
         if(item == null)
@@ -459,12 +444,4 @@ public class LifeFrame extends MainFrame {
         stepButton.setEnabled(isActive);
     }
 
-    public class StatusLabelMouseAdapter extends MouseAdapter
-    {
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            super.mouseEntered(e);
-            statusLabel.setText("");
-        }
-    }
 }

@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.view.frametemplate;
 
+import ru.nsu.fit.g16201.migranov.view.StatusTitleListener;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -160,13 +162,7 @@ public class MainFrame extends JFrame {
 			throw new InvalidParameterException("Menu path not found: "+title);
 		JMenuItem item = createMenuItem(getMenuPathName(title), tooltip, mnemonic, icon, actionMethod);
 		if(label != null) {
-			item.addMouseMotionListener(new MouseMotionAdapter() {
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					super.mouseMoved(e);
-					label.setText(item.getToolTipText());
-				}
-			});
+			item.addMouseListener(new StatusTitleListener(label));
 		}
 		if(element instanceof JMenu)
 			((JMenu)element).add(item);

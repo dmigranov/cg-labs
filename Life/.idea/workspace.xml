@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ab4219b-4b58-4aee-a2bf-fd04d200df5e" name="Default Changelist" comment="">
+    <list default="true" id="0ab4219b-4b58-4aee-a2bf-fd04d200df5e" name="Default Changelist" comment="added status bar!">
+      <change afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java" afterDir="false" />
     </list>
@@ -37,27 +39,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="115" column="54" selection-start-line="115" selection-start-column="54" selection-end-line="115" selection-end-column="54" />
+            <state relative-caret-position="131">
+              <caret line="419" column="11" selection-start-line="419" selection-start-column="11" selection-end-line="419" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#13029#13030#0" expanded="true" />
-                <element signature="e#13104#13105#0" expanded="true" />
-                <element signature="e#13174#13175#0" expanded="true" />
-                <element signature="e#13259#13260#0" expanded="true" />
-                <element signature="e#13331#13332#0" expanded="true" />
-                <element signature="e#13929#14167#0" expanded="true" />
-                <element signature="e#14166#14167#0" expanded="true" />
-                <element signature="e#15214#15452#0" expanded="true" />
-                <element signature="e#15451#15452#0" expanded="true" />
+                <element signature="e#12852#12853#0" expanded="true" />
+                <element signature="e#12927#12928#0" expanded="true" />
+                <element signature="e#12997#12998#0" expanded="true" />
+                <element signature="e#13082#13083#0" expanded="true" />
+                <element signature="e#13154#13155#0" expanded="true" />
                 <element signature="method#createToolBarToggleButton#0;class#LifeFrame#0" />
                 <element signature="method#createToolBarToggleButton#1;class#LifeFrame#0" />
                 <element signature="e#13362#13427#1" />
-                <element signature="e#16911#16912#0" expanded="true" />
+                <element signature="e#16308#16309#0" expanded="true" />
                 <element signature="method#setActive#0;class#LifeFrame#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#236#237#0" expanded="true" />
+                <element signature="e#270#271#0" expanded="true" />
+                <element signature="e#518#519#0" expanded="true" />
+                <element signature="e#538#539#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -66,7 +80,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-886">
+            <state relative-caret-position="-526">
               <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -98,15 +112,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1214">
-              <caret line="187" column="18" selection-start-line="187" selection-start-column="10" selection-end-line="187" selection-end-column="18" />
+            <state relative-caret-position="160">
+              <caret line="182" column="42" lean-forward="true" selection-start-line="182" selection-start-column="42" selection-end-line="182" selection-end-column="42" />
               <folding>
                 <element signature="method#spanFill#0;class#FieldPanel#0" />
-                <element signature="e#14464#14465#0" expanded="true" />
-                <element signature="e#14512#14513#0" expanded="true" />
-                <element signature="e#14590#14591#0" expanded="true" />
+                <element signature="e#14462#14463#0" expanded="true" />
+                <element signature="e#14510#14511#0" expanded="true" />
+                <element signature="e#14588#14589#0" expanded="true" />
                 <element signature="class#Span#0;class#FieldPanel#0" />
-                <element signature="e#16450#16451#0" expanded="true" />
+                <element signature="e#16448#16449#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,7 +129,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-99">
+            <state relative-caret-position="141">
               <caret line="135" selection-start-line="135" selection-end-line="135" />
               <folding>
                 <element signature="method#getFirstCount#0;class#Field#0" />
@@ -157,16 +171,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1380">
-              <caret line="119" selection-start-line="119" selection-end-line="119" />
+            <state relative-caret-position="142">
+              <caret line="309" column="19" selection-start-line="309" selection-start-column="19" selection-end-line="309" selection-end-column="19" />
               <folding>
-                <element signature="e#6258#6421#0" expanded="true" />
-                <element signature="e#6420#6421#0" expanded="true" />
-                <element signature="e#10823#10824#0" expanded="true" />
-                <element signature="e#10935#10936#0" expanded="true" />
+                <element signature="e#10745#10746#0" expanded="true" />
+                <element signature="e#10857#10858#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -212,8 +224,8 @@
       <find>draw</find>
       <find>pri</find>
       <find>print</find>
-      <find>label</find>
       <find>drawImag</find>
+      <find>label</find>
     </findStrings>
     <replaceStrings>
       <replace>j</replace>
@@ -237,8 +249,9 @@
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IntegerTextFieldKeyListener.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IntegerTextFieldKeyListenerWithSlider.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java" />
-        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java" />
         <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java" />
       </list>
     </option>
@@ -487,14 +500,7 @@
       <workItem from="1550755267540" duration="5372000" />
       <workItem from="1550839845220" duration="8591000" />
       <workItem from="1550912217945" duration="26505000" />
-      <workItem from="1550983485585" duration="21603000" />
-    </task>
-    <task id="LOCAL-00040" summary="по крайней мере, двойных линий не наблюдается. но всё равно надо будет перепроверить">
-      <created>1550414763606</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1550414763606</updated>
+      <workItem from="1550983485585" duration="23577000" />
     </task>
     <task id="LOCAL-00041" summary="not bad!">
       <created>1550415288341</created>
@@ -832,7 +838,14 @@
       <option name="project" value="LOCAL" />
       <updated>1551014945341</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="not bad status bar but gonna remade it!">
+      <created>1551016909586</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1551016909586</updated>
+    </task>
+    <option name="localTasksCounter" value="90" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -868,7 +881,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140426000" />
+    <option name="totallyTimeSpent" value="142400000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -881,27 +894,26 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7583548" visible="true" weight="0.2557047" />
-      <window_info id="Structure" order="1" sideWeight="0.24164525" side_tool="true" visible="true" weight="0.2557047" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7589454" visible="true" weight="0.2557047" />
+      <window_info id="Structure" order="1" sideWeight="0.24105461" side_tool="true" visible="true" weight="0.2557047" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Duplicate detector" order="0" sideWeight="0.49798658" weight="0.3286119" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49798658" weight="0.3286119" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" sideWeight="0.42013422" visible="true" weight="0.4490085" />
-      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.47516778" weight="0.45609066" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.41879195" weight="0.4490085" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.47449663" weight="0.45609066" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.48456377" weight="0.3186969" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.44563758" weight="0.24787535" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" sideWeight="0.44362417" visible="true" weight="0.24787535" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49932885" weight="0.3286119" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.57986575" side_tool="true" visible="true" weight="0.4490085" />
-      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.4919463" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.55637586" side_tool="true" visible="true" weight="0.24787535" />
+      <window_info anchor="bottom" id="Messages" order="13" sideWeight="0.490604" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -916,8 +928,6 @@
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="some impact drawing" />
-    <MESSAGE value="gonna change impacts" />
     <MESSAGE value="looks like impact drawing is done..." />
     <MESSAGE value="somethung" />
     <MESSAGE value="right and left mouse buttons done" />
@@ -941,7 +951,9 @@
     <MESSAGE value="неплохо, но есть моменты..." />
     <MESSAGE value="something" />
     <MESSAGE value="gonna do some changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="gonna do some changes" />
+    <MESSAGE value="not bad status bar but gonna remade it!" />
+    <MESSAGE value="added status bar!" />
+    <option name="LAST_COMMIT_MESSAGE" value="added status bar!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1133,33 +1145,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99">
-          <caret line="135" selection-start-line="135" selection-end-line="135" />
-          <folding>
-            <element signature="method#getFirstCount#0;class#Field#0" />
-            <element signature="method#getSecondCount#0;class#Field#0" />
-            <element signature="e#4060#4061#0" expanded="true" />
-            <element signature="method#printField#0;class#Field#0" />
-            <element signature="method#printImpactField#0;class#Field#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1380">
-          <caret line="119" selection-start-line="119" selection-end-line="119" />
-          <folding>
-            <element signature="e#6258#6421#0" expanded="true" />
-            <element signature="e#6420#6421#0" expanded="true" />
-            <element signature="e#10823#10824#0" expanded="true" />
-            <element signature="e#10935#10936#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IntegerTextFieldKeyListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -1170,24 +1155,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1214">
-          <caret line="187" column="18" selection-start-line="187" selection-start-column="10" selection-end-line="187" selection-end-column="18" />
-          <folding>
-            <element signature="method#spanFill#0;class#FieldPanel#0" />
-            <element signature="e#14464#14465#0" expanded="true" />
-            <element signature="e#14512#14513#0" expanded="true" />
-            <element signature="e#14590#14591#0" expanded="true" />
-            <element signature="class#Span#0;class#FieldPanel#0" />
-            <element signature="e#16450#16451#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-886">
+        <state relative-caret-position="-526">
           <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1203,26 +1173,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Field.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="115" column="54" selection-start-line="115" selection-start-column="54" selection-end-line="115" selection-end-column="54" />
+        <state relative-caret-position="141">
+          <caret line="135" selection-start-line="135" selection-end-line="135" />
+          <folding>
+            <element signature="method#getFirstCount#0;class#Field#0" />
+            <element signature="method#getSecondCount#0;class#Field#0" />
+            <element signature="e#4060#4061#0" expanded="true" />
+            <element signature="method#printField#0;class#Field#0" />
+            <element signature="method#printImpactField#0;class#Field#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FieldPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="182" column="42" lean-forward="true" selection-start-line="182" selection-start-column="42" selection-end-line="182" selection-end-column="42" />
+          <folding>
+            <element signature="method#spanFill#0;class#FieldPanel#0" />
+            <element signature="e#14462#14463#0" expanded="true" />
+            <element signature="e#14510#14511#0" expanded="true" />
+            <element signature="e#14588#14589#0" expanded="true" />
+            <element signature="class#Span#0;class#FieldPanel#0" />
+            <element signature="e#16448#16449#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#13029#13030#0" expanded="true" />
-            <element signature="e#13104#13105#0" expanded="true" />
-            <element signature="e#13174#13175#0" expanded="true" />
-            <element signature="e#13259#13260#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
-            <element signature="e#13929#14167#0" expanded="true" />
-            <element signature="e#14166#14167#0" expanded="true" />
-            <element signature="e#15214#15452#0" expanded="true" />
-            <element signature="e#15451#15452#0" expanded="true" />
+            <element signature="e#236#237#0" expanded="true" />
+            <element signature="e#270#271#0" expanded="true" />
+            <element signature="e#518#519#0" expanded="true" />
+            <element signature="e#538#539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LifeFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="419" column="11" selection-start-line="419" selection-start-column="11" selection-end-line="419" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12852#12853#0" expanded="true" />
+            <element signature="e#12927#12928#0" expanded="true" />
+            <element signature="e#12997#12998#0" expanded="true" />
+            <element signature="e#13082#13083#0" expanded="true" />
+            <element signature="e#13154#13155#0" expanded="true" />
             <element signature="method#createToolBarToggleButton#0;class#LifeFrame#0" />
             <element signature="method#createToolBarToggleButton#1;class#LifeFrame#0" />
             <element signature="e#13362#13427#1" />
-            <element signature="e#16911#16912#0" expanded="true" />
+            <element signature="e#16308#16309#0" expanded="true" />
             <element signature="method#setActive#0;class#LifeFrame#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/MainFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="309" column="19" selection-start-line="309" selection-start-column="19" selection-end-line="309" selection-end-column="19" />
+          <folding>
+            <element signature="e#10745#10746#0" expanded="true" />
+            <element signature="e#10857#10858#0" expanded="true" />
           </folding>
         </state>
       </provider>
