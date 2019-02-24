@@ -3,6 +3,8 @@ package ru.nsu.fit.g16201.migranov.view.frametemplate;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
@@ -67,32 +69,11 @@ public class MainFrame extends JFrame {
 	 * @throws NoSuchMethodException - when actionMethod method not found
 	 * @throws SecurityException - when actionMethod method is inaccessible
 	 */
-	public JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
+	public JMenuItem createMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException
 	{
 		JMenuItem item = new JMenuItem(title);
 		item.setMnemonic(mnemonic);
 		item.setToolTipText(tooltip);
-		item.addMenuDragMouseListener(new MenuDragMouseListener() {
-			@Override
-			public void menuDragMouseEntered(MenuDragMouseEvent e) {
-
-			}
-
-			@Override
-			public void menuDragMouseExited(MenuDragMouseEvent e) {
-
-			}
-
-			@Override
-			public void menuDragMouseDragged(MenuDragMouseEvent e) {
-
-			}
-
-			@Override
-			public void menuDragMouseReleased(MenuDragMouseEvent e) {
-
-			}
-		});
 		if(icon != null)
 			item.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
 		final Method method = getClass().getMethod(actionMethod);
@@ -172,12 +153,21 @@ public class MainFrame extends JFrame {
 	 * @throws SecurityException - when actionMethod method is inaccessible
 	 * @throws InvalidParameterException - when specified menu location not found
 	 */
-	public void addMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod) throws SecurityException, NoSuchMethodException
+	public void addMenuItem(String title, String tooltip, int mnemonic, String icon, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
 	{
 		MenuElement element = getParentMenuElement(title);
 		if(element == null)
 			throw new InvalidParameterException("Menu path not found: "+title);
 		JMenuItem item = createMenuItem(getMenuPathName(title), tooltip, mnemonic, icon, actionMethod);
+		if(label != null) {
+			item.addMouseMotionListener(new MouseMotionAdapter() {
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					super.mouseMoved(e);
+					label.setText(item.getToolTipText());
+				}
+			});
+		}
 		if(element instanceof JMenu)
 			((JMenu)element).add(item);
 		else if(element instanceof JPopupMenu)
@@ -196,9 +186,9 @@ public class MainFrame extends JFrame {
 	 * @throws SecurityException - when actionMethod method is inaccessible
 	 * @throws InvalidParameterException - when specified menu location not found
 	 */
-	public void addMenuItem(String title, String tooltip, int mnemonic, String actionMethod) throws SecurityException, NoSuchMethodException
+	public void addMenuItem(String title, String tooltip, int mnemonic, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
 	{
-		addMenuItem(title, tooltip, mnemonic, null, actionMethod);
+		addMenuItem(title, tooltip, mnemonic, null, actionMethod, label);
 	}
 	
 	/**

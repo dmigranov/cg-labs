@@ -33,6 +33,7 @@ public class LifeFrame extends MainFrame {
     private LifeFrame() throws Exception {
         //инициализация
         super(800, 600, "Untitled | Denis Migranov, 16201");
+        statusLabel = new JLabel("");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -54,27 +55,27 @@ public class LifeFrame extends MainFrame {
 
         JMenuItem item;
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuItem("File/New", "New field", KeyEvent.VK_N, "reload.png", "onNew");
-        addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "upload-1.png", "onOpen");//
-        addMenuItem("File/Save", "Save a field state", KeyEvent.VK_S, "download.png", "onSave");//
+        addMenuItem("File/New", "New field", KeyEvent.VK_N, "reload.png", "onNew", statusLabel);
+        addMenuItem("File/Open", "Open a field description file", KeyEvent.VK_O, "upload-1.png", "onOpen", statusLabel);//
+        addMenuItem("File/Save", "Save a field state", KeyEvent.VK_S, "download.png", "onSave", statusLabel);//
         item = (JMenuItem)getMenuElement("File/Save");
         item.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-        addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "download-1.png", "onSaveAs");//
-        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "logout.png", "onExit");
+        addMenuItem("File/Save As", "Save a field state as", KeyEvent.VK_A, "download-1.png", "onSaveAs", statusLabel);//
+        addMenuItem("File/Exit", "Exit application", KeyEvent.VK_X, "logout.png", "onExit", statusLabel);
 
         addSubMenu("Edit", KeyEvent.VK_E);
         JMenu editMenu = (JMenu)getMenuElement("Edit");
         ButtonGroup group = new ButtonGroup();
-        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "edit.png", group, true, "onReplace");
-        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "shuffle.png", group, false, "onXOR");
+        addRadioButtonMenuItem(editMenu, "Replace", "Replace mode", KeyEvent.VK_R, "edit.png", group, true, "onReplace", statusLabel);
+        addRadioButtonMenuItem(editMenu,"XOR", "XOR mode", KeyEvent.VK_X, "shuffle.png", group, false, "onXOR", statusLabel);
         addToolBarToggleButton("Edit/Replace");
         addToolBarToggleButton("Edit/XOR");
         addMenuSeparator("Edit");
-        addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "cancel.png", "onClear");
+        addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "cancel.png", "onClear", statusLabel);
         clearButton = createToolBarButton("Edit/Clear");
         toolBar.add(clearButton);
         addMenuSeparator("Edit");
-        addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "settings.png", "onParameters");
+        addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "settings.png", "onParameters", statusLabel);
 
         addToolBarSeparator();
         parametersButton = createToolBarButton("Edit/Parameters");
@@ -82,15 +83,15 @@ public class LifeFrame extends MainFrame {
 
         addSubMenu("Game", KeyEvent.VK_G);
         JMenu gameMenu = (JMenu)getMenuElement("Game");
-        addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "next.png", "onStep");
-        addCheckBoxMenuItem(gameMenu, "Run", "Run step-by-step execution", KeyEvent.VK_R, "next-1.png", false, "onRun");
+        addMenuItem("Game/Step", "Next step", KeyEvent.VK_S, "next.png", "onStep", statusLabel);
+        addCheckBoxMenuItem(gameMenu, "Run", "Run step-by-step execution", KeyEvent.VK_R, "next-1.png", false, "onRun", statusLabel);
 
         addSubMenu("View", KeyEvent.VK_V);
         JMenu viewMenu = (JMenu)getMenuElement("View");
-        addCheckBoxMenuItem(viewMenu, "Show impacts", "Indicates whether impacts should be shown", KeyEvent.VK_I, "magnifying-glass.png", false, "onShowImpacts");
+        addCheckBoxMenuItem(viewMenu, "Show impacts", "Indicates whether impacts should be shown", KeyEvent.VK_I, "magnifying-glass.png", false, "onShowImpacts", statusLabel);
 
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout");
+        addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout", statusLabel);
 
         addToolBarSeparator();
         stepButton = createToolBarButton("Game/Step");
@@ -103,19 +104,22 @@ public class LifeFrame extends MainFrame {
         fieldPanel = new FieldPanel(20, 4, this, middlePanel);
         controller = new Controller(fieldPanel, this);
         middlePanel.add(fieldPanel);
+        middlePanel.addMouseListener(new StatusLabelMouseAdapter());
+        fieldPanel.addMouseListener(new StatusLabelMouseAdapter());
+
         middlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JScrollPane scrollPane = new JScrollPane(middlePanel);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
+        addMouseListener(new StatusLabelMouseAdapter());
 
-        //TODO: статусбар
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
         statusPanel.setPreferredSize(new Dimension(getWidth(), 16));
-        statusLabel = new JLabel("status");
+
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
         statusPanel.add(statusLabel);
@@ -349,7 +353,7 @@ public class LifeFrame extends MainFrame {
         }
     }
 
-    private void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
+    private void addRadioButtonMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, ButtonGroup group, boolean state, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
     {
         JRadioButtonMenuItem item = new JRadioButtonMenuItem(title, state);//icons description etc
         if(icon != null)
@@ -357,6 +361,16 @@ public class LifeFrame extends MainFrame {
 
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
+
+        if(label != null) {
+            item.addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    super.mouseMoved(e);
+                    label.setText(item.getToolTipText());
+                }
+            });
+        }
 
         final Method method = getClass().getMethod(actionMethod);
         item.addActionListener(new ActionListener() {
@@ -374,7 +388,7 @@ public class LifeFrame extends MainFrame {
         group.add(item);
     }
 
-    private void addCheckBoxMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, boolean state, String actionMethod) throws SecurityException, NoSuchMethodException
+    private void addCheckBoxMenuItem(JMenu parent, String title, String tooltip, int mnemonic, String icon, boolean state, String actionMethod, JLabel label) throws SecurityException, NoSuchMethodException
     {
         JCheckBoxMenuItem item = new JCheckBoxMenuItem(title, state);//icons description etc
         if(icon != null)
@@ -382,6 +396,16 @@ public class LifeFrame extends MainFrame {
 
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
+
+        if(label != null) {
+            item.addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    super.mouseMoved(e);
+                    label.setText(item.getToolTipText());
+                }
+            });
+        }
 
         final Method method = getClass().getMethod(actionMethod);
         item.addActionListener(new ActionListener() {
@@ -433,5 +457,14 @@ public class LifeFrame extends MainFrame {
         clearButton.setEnabled(isActive);
         parametersButton.setEnabled(isActive);
         stepButton.setEnabled(isActive);
+    }
+
+    public class StatusLabelMouseAdapter extends MouseAdapter
+    {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            super.mouseEntered(e);
+            statusLabel.setText("");
+        }
     }
 }
