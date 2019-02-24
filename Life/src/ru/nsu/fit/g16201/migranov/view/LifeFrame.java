@@ -1,13 +1,11 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
-import java.text.NumberFormat;
 
 import ru.nsu.fit.g16201.migranov.controller.Controller;
 
@@ -21,6 +19,8 @@ public class LifeFrame extends MainFrame {
     private Controller controller;
 
     private File currentFile = null;
+
+    private JButton clearButton, parametersButton, stepButton;
 
     public static void main(String[] args) throws Exception
     {
@@ -68,11 +68,14 @@ public class LifeFrame extends MainFrame {
         addToolBarToggleButton("Edit/XOR");
         addMenuSeparator("Edit");
         addMenuItem("Edit/Clear", "Clear the field", KeyEvent.VK_C, "cancel.png", "onClear");
-        addToolBarButton("Edit/Clear");
+        clearButton = createToolBarButton("Edit/Clear");
+        toolBar.add(clearButton);
         addMenuSeparator("Edit");
         addMenuItem("Edit/Parameters", "Change the field parameters", KeyEvent.VK_P, "settings.png", "onParameters");
+
         addToolBarSeparator();
-        addToolBarButton("Edit/Parameters");
+        parametersButton = createToolBarButton("Edit/Parameters");
+        toolBar.add(parametersButton);
 
         addSubMenu("Game", KeyEvent.VK_G);
         JMenu gameMenu = (JMenu)getMenuElement("Game");
@@ -87,7 +90,8 @@ public class LifeFrame extends MainFrame {
         addMenuItem("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout");
 
         addToolBarSeparator();
-        addToolBarButton("Game/Step");
+        stepButton = createToolBarButton("Game/Step");
+        toolBar.add(stepButton);
         addToolBarToggleButton("Game/Run");
         addToolBarSeparator();
         addToolBarToggleButton("Help/About");
@@ -116,7 +120,12 @@ public class LifeFrame extends MainFrame {
 
     public void onAbout()
     {
-        JOptionPane.showMessageDialog(this, "group 16201", "About Init", JOptionPane.INFORMATION_MESSAGE);
+        JPanel aboutPanel = new JPanel();
+        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
+        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
+        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
+        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection"));
+        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Life", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void onExit()
@@ -320,6 +329,8 @@ public class LifeFrame extends MainFrame {
         ((JMenuItem)getMenuElement("Game/Step")).setEnabled(isActive);
         ((JMenuItem)getMenuElement("Edit/Clear")).setEnabled(isActive);
         ((JMenuItem)getMenuElement("Edit/Parameters")).setEnabled(isActive);
-        get
+        clearButton.setEnabled(isActive);
+        parametersButton.setEnabled(isActive);
+        stepButton.setEnabled(isActive);
     }
 }
