@@ -5,11 +5,15 @@ import ru.nsu.fit.g16201.migranov.view.StatusTitleListener;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
 import javax.swing.*;
+import javax.swing.event.MenuDragMouseEvent;
+import javax.swing.event.MenuDragMouseListener;
 
 /**
  * MainFrame - main application frame
@@ -285,9 +289,12 @@ public class MainFrame extends JFrame {
 	 * Creates toolbar button which will behave exactly like specified menuitem and adds it to the toolbar
 	 * @param menuPath - path to menu item to create toolbar button from
 	 */
-	public void addToolBarButton(String menuPath)
+	public void addToolBarButton(String menuPath, JLabel label)
 	{
-		toolBar.add(createToolBarButton(menuPath));
+		JButton button = createToolBarButton(menuPath);
+		if(label != null)
+			button.addMouseListener(new StatusTitleListener(label));
+		toolBar.add(button);
 	}
 
 	/**

@@ -88,4 +88,17 @@ public class FileUtils {
 		}
 		return null;
 	}
+
+	public static File getOpenFileName(JFrame parent)
+	{
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(getDataDirectory());
+		if(fileChooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION)
+		{
+			File f = fileChooser.getSelectedFile();
+
+			return f;
+		}
+		return null;
+	}
 }

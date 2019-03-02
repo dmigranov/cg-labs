@@ -13,7 +13,7 @@ public class StatusTitleListener extends MouseAdapter {
     @Override
     public void mouseEntered(MouseEvent e)
     {
-        JMenuItem item = (JMenuItem)e.getSource();
+        JComponent item = (JComponent)e.getSource();
         label.setText(item.getToolTipText());
     }
 

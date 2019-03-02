@@ -1,15 +1,25 @@
 package ru.nsu.fit.g16201.migranov.view;
 
+import ru.nsu.fit.g16201.migranov.controller.Controller;
+import ru.nsu.fit.g16201.migranov.view.frametemplate.FileUtils;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.security.InvalidParameterException;
 
 public class FilterFrame extends MainFrame {
-    private JPanel originalImagePanel = new JPanel(), modifiableImagePanel = new JPanel(), modifiedImagePanel = new JPanel();
+    private ImagePanel originalImagePanel = new ImagePanel(), modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel();
     private JLabel statusLabel = new JLabel("");
+    private Controller controller;
     public static void main(String[] args) throws Exception {
         new FilterFrame();
     }
@@ -32,6 +42,7 @@ public class FilterFrame extends MainFrame {
         mainPanel.add(originalImagePanel);
         mainPanel.add(modifiableImagePanel);
         mainPanel.add(modifiedImagePanel);
+        controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
 
         addMenus();
 
@@ -60,18 +71,67 @@ public class FilterFrame extends MainFrame {
 
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuItem("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew", statusLabel);
+        //addMenuItem("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew", statusLabel);
         //addToolBarButton("File/New", statusLabel);
+        addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
+        addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
+
 
     }
 
-    private void addMenuAndToolBarButton(String title, String tooltip, int mnemonic, String icon, String actionMethod)
+    private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod) throws NoSuchMethodException
     {
+        //todo: нужны ли менюшкам иконки? подумоть...
+        MenuElement element = getParentMenuElement(path);
+        if(element == null)
+            throw new InvalidParameterException("Menu path not found: " + path);
+        String title = getMenuPathName(path);
+        JMenuItem item = new JMenuItem(title);
+        item.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+        item.addMouseListener(new StatusTitleListener(statusLabel));
+        final Method method = getClass().getMethod(actionMethod);
+        item.addActionListener(evt -> {
+            try {
+                method.invoke(FilterFrame.this);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
+        if(element instanceof JMenu)
+            ((JMenu)element).add(item);
+        else if(element instanceof JPopupMenu)
+            ((JPopupMenu)element).add(item);
+        else
+            throw new InvalidParameterException("Invalid menu path: " + path);
+
+        JButton button = new JButton();
+        if(icon != null)
+            button.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
+        for(ActionListener listener: item.getActionListeners())
+            button.addActionListener(listener);
+        button.setToolTipText(tooltip);
+        button.addMouseListener(new StatusTitleListener(statusLabel));
+        toolBar.add(button);
+    }
+
+    public File getOpenFileName()
+    {
+        return FileUtils.getOpenFileName(this);
     }
 
     public void onNew()
     {
 
+    }
+
+    public void onOpen()
+    {
+        File file = getOpenFileName();
+        if(file != null) {
+            setTitle(file.getName() + " | Denis Migranov, 16201");
+            controller.openImage(file);
+        }
     }
 }
