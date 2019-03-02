@@ -5,29 +5,36 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class FilterFrame extends MainFrame {
-    JPanel originalImagePanel = new JPanel(), modifiableImagePanel = new JPanel(), modifiedImagePanel = new JPanel();
-
+    private JPanel originalImagePanel = new JPanel(), modifiableImagePanel = new JPanel(), modifiedImagePanel = new JPanel();
+    private JLabel statusLabel = new JLabel("");
     public static void main(String[] args) throws Exception {
         new FilterFrame();
     }
 
     private FilterFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
-        JLabel statusLabel = new JLabel("");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);     //насколько понимаю, спрашивать не нужно ничего
 
-        JPanel mainPanel = new JPanel(new GridLayout(1, 3, 10, 0));
-        mainPanel.setPreferredSize(new Dimension(1200, 500));  //расчитать
+        //панельки
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+        mainPanel.revalidate();
         originalImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
         originalImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        modifiableImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        modifiedImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         mainPanel.add(originalImagePanel);
         mainPanel.add(modifiableImagePanel);
         mainPanel.add(modifiedImagePanel);
+
+        addMenus();
+
 
 
         JScrollPane scrollPane = new JScrollPane(mainPanel);
@@ -49,5 +56,22 @@ public class FilterFrame extends MainFrame {
 
 
         setVisible(true);
+    }
+
+    private void addMenus() throws NoSuchMethodException {
+        addSubMenu("File", KeyEvent.VK_F);
+        addMenuItem("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew", statusLabel);
+        //addToolBarButton("File/New", statusLabel);
+
+    }
+
+    private void addMenuAndToolBarButton(String title, String tooltip, int mnemonic, String icon, String actionMethod)
+    {
+
+    }
+
+    public void onNew()
+    {
+
     }
 }
