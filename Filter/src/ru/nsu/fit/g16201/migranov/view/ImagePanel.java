@@ -7,8 +7,9 @@ public class ImagePanel extends JPanel {
     private BufferedImage image = null;
     public void setImage(BufferedImage image)
     {
-        int w = image.getWidth();
-        int h = image.getHeight();
+        int realWidth = image.getWidth();
+        int realHeight = image.getHeight();
+        //todo stack overflow how to resize the buffered image graphics 2d
     }
 
 }

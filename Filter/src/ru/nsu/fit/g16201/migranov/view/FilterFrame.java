@@ -4,15 +4,12 @@ import ru.nsu.fit.g16201.migranov.controller.Controller;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.FileUtils;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
@@ -46,8 +43,6 @@ public class FilterFrame extends MainFrame {
 
         addMenus();
 
-
-
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -65,14 +60,11 @@ public class FilterFrame extends MainFrame {
         setMinimumSize(new Dimension(800, 600));
         setLocationRelativeTo(null);
 
-
         setVisible(true);
     }
 
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
-        //addMenuItem("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew", statusLabel);
-        //addToolBarButton("File/New", statusLabel);
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
 
