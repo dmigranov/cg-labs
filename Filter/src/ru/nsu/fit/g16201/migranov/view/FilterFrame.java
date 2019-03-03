@@ -71,6 +71,9 @@ public class FilterFrame extends MainFrame {
         addSubMenu("Edit", KeyEvent.VK_F);
         addMenuAndToolBarButton("Edit/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
         addMenuAndToolBarButton("Edit/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
+        addMenuAndToolBarButton("Edit/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither");
+        addMenuAndToolBarButton("Edit/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg");
+
 
     }
 
@@ -138,5 +141,22 @@ public class FilterFrame extends MainFrame {
     public void onDesaturate()
     {
         controller.desaturate();
+    }
+
+    public void onOrderedDither()
+    {
+        controller.doOrderedDithering();
+    }
+
+    public void onFloydSteinberg()
+    {
+        //todo: на самом деле здесь не нужна связка слайдера и филда
+        JPanel parametersPanel = new JPanel();
+        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(15, 25, 20, "Value: ");
+        parametersPanel.add(panel);
+
+        JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION);
+
     }
 }
