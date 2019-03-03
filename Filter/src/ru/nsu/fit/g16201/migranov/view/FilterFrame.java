@@ -68,8 +68,9 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
 
-        //addSubMenu("Edit", KeyEvent.VK_F);
-        //addMenuAndToolBarButton("Edit/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
+        addSubMenu("Edit", KeyEvent.VK_F);
+        addMenuAndToolBarButton("Edit/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
+        addMenuAndToolBarButton("Edit/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
 
     }
 
@@ -132,5 +133,10 @@ public class FilterFrame extends MainFrame {
     public void onNegative()
     {
         controller.invert();
+    }
+
+    public void onDesaturate()
+    {
+        controller.desaturate();
     }
 }

@@ -6,8 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class ImagePanel extends JPanel {
     private BufferedImage image = null;
-    //private int width, height;
-
+    private int width, height;
 
     public void setImage(BufferedImage newImage)
     {
@@ -34,11 +33,19 @@ public class ImagePanel extends JPanel {
             g.dispose();
 
 
-            //width = desiredWidth;
-            //height = desiredHeight;
+            width = desiredWidth;
+            height = desiredHeight;
         }
 
 
+        repaint();
+    }
+
+    public void setEmptyImage(int width, int height) {
+        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+        g.fillRect(0, 0, width, height);//поставит другой цвет
+        g.dispose();
         repaint();
     }
 
@@ -50,7 +57,7 @@ public class ImagePanel extends JPanel {
             g.drawImage(image, 1, 1, image.getWidth(), image.getHeight(), null);
     }
 
-    /*public int getColor(int x, int y)
+    public int getColor(int x, int y)
     {
         //image.getRGB([])  - можно сразу много получать?? а можно сразу весь массив спросить!
         return image.getRGB(x ,y);
@@ -59,15 +66,15 @@ public class ImagePanel extends JPanel {
     public void setColor(int x, int y, int color)
     {
         //image.setRGB([])  - можно сразу много получать?? а можно сразу весь массив спросить!
-        image.setRGB(x ,y, color);
+        image.setRGB(x, y, color);
     }
 
-    @Override
-    public int getWidth() {
+    public int getImageWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public int getImageHeight() {
         return height;
-    }*/
+    }
+
 }
