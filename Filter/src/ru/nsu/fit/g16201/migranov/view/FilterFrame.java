@@ -30,12 +30,12 @@ public class FilterFrame extends MainFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         mainPanel.revalidate();
-        originalImagePanel.setPreferredSize(new Dimension(350, 350));
-        modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
-        modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
         originalImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiableImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiedImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        originalImagePanel.setPreferredSize(new Dimension(352, 352));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
+        modifiableImagePanel.setPreferredSize(new Dimension(352, 352));
+        modifiedImagePanel.setPreferredSize(new Dimension(352, 352));
         mainPanel.add(originalImagePanel);
         mainPanel.add(modifiableImagePanel);
         mainPanel.add(modifiedImagePanel);
@@ -68,6 +68,8 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
 
+        //addSubMenu("Edit", KeyEvent.VK_F);
+        //addMenuAndToolBarButton("Edit/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
 
     }
 
@@ -125,5 +127,10 @@ public class FilterFrame extends MainFrame {
             setTitle(file.getName() + " | Denis Migranov, 16201");
             controller.openImage(file);
         }
+    }
+
+    public void onNegative()
+    {
+        controller.invert();
     }
 }
