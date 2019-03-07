@@ -77,4 +77,9 @@ public class ImagePanel extends JPanel {
         return height;
     }
 
+    public BufferedImage getImage()
+    {
+        return image;
+    }
+
 }

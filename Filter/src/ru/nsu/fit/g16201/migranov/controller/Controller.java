@@ -12,6 +12,7 @@ public class Controller {
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
+    private static double[][] sharpnessMatrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -76,8 +77,14 @@ public class Controller {
 
     public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы
     {
+        //todo: исправить! цвета и т.д
+        int matrixSize = 4;
+        double[][] orderedDitherDoubleMatrix = new double[4][4];
+        for(int i  = 0; i < matrixSize; i++)
+            for(int j  = 0; j < matrixSize; j++)
+                orderedDitherDoubleMatrix[i][j] = 1.0 * orderedDitherMatrix[i][j]/(matrixSize * matrixSize);
+
         int rCount = 256/rLevel, gCount = 256/gLevel, bCount = 256/bLevel;
-        //cs.princeton.edu
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
             int j = y % 4;
@@ -93,7 +100,9 @@ public class Controller {
                 //blue >>= 6;
                 //int threshold = orderedDitherMatrix[j][i] * 255 / 16;
 
-                int addition = orderedDitherMatrix[j][i]; //-1/2, r wiki
+                //int addition = (int)((256.0/(4 - 1))*(orderedDitherDoubleMatrix[j][i]/(4.0 * 4.0) - 0.5)); //-1/2, r wiki
+                int addition = orderedDitherMatrix[j][i];
+
 
                 nred = red + addition;
                 ngreen = green + addition;
@@ -110,4 +119,48 @@ public class Controller {
         modifiedImagePanel.repaint();
     }
 
+    private void applyConvolutionMatrix(double[][] convolutionMatrix)
+    {
+        int fy = convolutionMatrix.length;
+        int fx = convolutionMatrix[0].length;
+
+
+        BufferedImage image = modifiableImagePanel.getImage();
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        for(int y = 0; y < height; y++)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                double rsum = 0, gsum = 0, bsum = 0;
+                for (int i = -fy/2; i < fy/2 + 1; i++)
+                {
+                    for (int j = -fx/2; j < fx/2 + 1; j++)
+                    {
+                        if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
+                        {
+                            double convolutionMatrixValue = convolutionMatrix[i + fy/2][j + fy/2];
+                            int color = image.getRGB(j + x, i + y);
+                            int red = (color & 0xFF0000) >> 16;
+                            int green = (color & 0x00FF00) >> 8;
+                            int blue = color & 0x0000FF;
+                            rsum += red * convolutionMatrixValue;
+                            gsum += green * convolutionMatrixValue;
+                            bsum += blue * convolutionMatrixValue;
+                        }
+                    }
+                }
+                int r = (int)Math.round(rsum);
+                int g = (int)Math.round(gsum);
+                int b = (int)Math.round(bsum);
+
+                modifiedImagePanel.setColor(x, y, b + (g << 8) + (r << 16));
+            }
+        }
+    }
+
+    public void applySharpnessFilter() {
+        applyConvolutionMatrix(sharpnessMatrix);
+    }
 }

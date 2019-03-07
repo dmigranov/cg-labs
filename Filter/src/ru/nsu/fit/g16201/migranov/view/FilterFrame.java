@@ -68,11 +68,16 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
 
-        addSubMenu("Edit", KeyEvent.VK_F);
-        addMenuAndToolBarButton("Edit/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
-        addMenuAndToolBarButton("Edit/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
-        addMenuAndToolBarButton("Edit/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither");
-        addMenuAndToolBarButton("Edit/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg");
+        addSubMenu("Pixel operations", KeyEvent.VK_P);
+        addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
+        addMenuAndToolBarButton("Pixel operations/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
+
+        addSubMenu("Dithering", KeyEvent.VK_D);
+        addMenuAndToolBarButton("Dithering/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither");
+        addMenuAndToolBarButton("Dithering/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg");
+
+        addSubMenu("Filters", KeyEvent.VK_F);
+        addMenuAndToolBarButton("Filters/Sharpness filter", "Apply sharpness filter", KeyEvent.VK_F, "reload.png", "onSharpness");
 
 
     }
@@ -173,7 +178,7 @@ public class FilterFrame extends MainFrame {
                 int rLevel = Integer.parseInt(rText);
                 int gLevel = Integer.parseInt(gText);
                 int bLevel = Integer.parseInt(bText);
-                if(rLevel == 0 || gLevel == 0 || bLevel == 0)
+                if(rLevel == 0 || gLevel == 0 || bLevel == 0) //<=1?
                     throw new NumberFormatException();
                 controller.doOrderedDithering(rLevel, gLevel, bLevel);
             }
@@ -196,5 +201,10 @@ public class FilterFrame extends MainFrame {
 
         JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION);
 
+    }
+
+    public void onSharpness()
+    {
+        controller.applySharpnessFilter();
     }
 }
