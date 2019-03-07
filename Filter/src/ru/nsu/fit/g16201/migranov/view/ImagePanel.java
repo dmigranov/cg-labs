@@ -27,7 +27,7 @@ public class ImagePanel extends JPanel {
             image = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = image.createGraphics();
             //stack overflow how to resize buffered image
-            //почему он так плохо ресайзит? TODO: спросить, самому ли реализовывать интерполяцию при загрузке
+            //почему он так плохо ресайзит? сжатие можно делать стнадартными методами (как я и сделал, собственно)
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(newImage, 0, 0, desiredWidth, desiredHeight, null);
             g.dispose();

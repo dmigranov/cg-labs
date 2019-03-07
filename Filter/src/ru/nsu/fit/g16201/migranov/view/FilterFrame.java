@@ -145,7 +145,45 @@ public class FilterFrame extends MainFrame {
 
     public void onOrderedDither()
     {
-        controller.doOrderedDithering();
+        JPanel parametersPanel = new JPanel();
+        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
+        JTextField rLevelField = new JTextField(3);
+        JTextField gLevelField = new JTextField(3);
+        JTextField bLevelField = new JTextField(3);
+
+        rLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+        gLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+        bLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+
+        parametersPanel.add(new JLabel("Number of levels of red:   "));
+        parametersPanel.add(rLevelField);
+        parametersPanel.add(new JLabel("Number of levels of green: "));
+        parametersPanel.add(gLevelField);
+        parametersPanel.add(new JLabel("Number of levels of blue:  "));
+        parametersPanel.add(bLevelField);
+
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            String rText = rLevelField.getText();
+            String gText = gLevelField.getText();
+            String bText = bLevelField.getText();
+
+            try
+            {
+                int rLevel = Integer.parseInt(rText);
+                int gLevel = Integer.parseInt(gText);
+                int bLevel = Integer.parseInt(bText);
+                if(rLevel == 0 || gLevel == 0 || bLevel == 0)
+                    throw new NumberFormatException();
+                controller.doOrderedDithering(rLevel, gLevel, bLevel);
+            }
+            catch(NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(this, "Wrong m or n; no new field was created", "Wrong m or n", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+
     }
 
     public void onFloydSteinberg()

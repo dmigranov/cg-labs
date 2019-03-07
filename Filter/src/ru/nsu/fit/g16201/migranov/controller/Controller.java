@@ -57,7 +57,7 @@ public class Controller {
                 int blue = color & 0x0000FF;
                 int Y = (int)(0.299 * red + 0.587 * green + 0.114 * blue);
                 Y = saturate(Y);
-                int newColor = Y + (Y << 8) + (Y << 16);
+                int newColor = Y + (Y << 8) + (Y << 16);    //todo: |
 
                 modifiedImagePanel.setColor(x, y, newColor);
             }
@@ -74,8 +74,10 @@ public class Controller {
         return v;
     }
 
-    public void doOrderedDithering() {
-        //todo: исправить
+    public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы
+    {
+        int rCount = 256/rLevel, gCount = 256/gLevel, bCount = 256/bLevel;
+        //cs.princeton.edu
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
             int j = y % 4;
@@ -89,16 +91,17 @@ public class Controller {
                 //red >>= 5; //оставляем три старших бит
                 //green >>= 5;
                 //blue >>= 6;
-                //int threshold = orderedDitherMatrix[j][i];
+                //int threshold = orderedDitherMatrix[j][i] * 255 / 16;
 
-                int threshold = orderedDitherMatrix[j][i] * 255 / 16;
+                int addition = orderedDitherMatrix[j][i]; //-1/2, r wiki
 
-                if(red > threshold / 2)
-                    nred = 255;
-                if(green > threshold / 2)
-                    ngreen = 255;
-                if(blue > threshold / 4)
-                    nblue = 255;
+                nred = red + addition;
+                ngreen = green + addition;
+                nblue = blue + addition;
+
+                nred = nred/rCount*rCount;
+                ngreen = ngreen/gCount*gCount;
+                nblue = nblue/ bCount*bCount;
 
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
@@ -106,4 +109,5 @@ public class Controller {
         }
         modifiedImagePanel.repaint();
     }
+
 }
