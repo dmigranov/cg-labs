@@ -77,7 +77,10 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("Dithering/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg");
 
         addSubMenu("Filters", KeyEvent.VK_F);
-        addMenuAndToolBarButton("Filters/Sharpness filter", "Apply sharpness filter", KeyEvent.VK_F, "reload.png", "onSharpness");
+        addMenuAndToolBarButton("Filters/Sharpness filter", "Apply sharpness filter", KeyEvent.VK_S, "reload.png", "onSharpness");
+        addMenuAndToolBarButton("Filters/Simple blur filter", "Apply simple blur filter", KeyEvent.VK_B, "reload.png", "onSimpleBlur");
+        addMenuAndToolBarButton("Filters/Embossing filter", "Apply embossing filter", KeyEvent.VK_E, "reload.png", "onEmboss");
+        addMenuAndToolBarButton("Filters/Watercolor filter", "Apply watercolor filter", KeyEvent.VK_W, "reload.png", "onWatercolor");
 
 
     }
@@ -207,4 +210,20 @@ public class FilterFrame extends MainFrame {
     {
         controller.applySharpnessFilter();
     }
+
+    public void onSimpleBlur()
+    {
+        controller.applySimpleBlur();
+    }
+
+    public void onEmboss()
+    {
+        controller.applyEmbossing();
+    }
+
+    public void onWatercolor()
+    {
+        controller.applyWatercolor();
+    }
+
 }
