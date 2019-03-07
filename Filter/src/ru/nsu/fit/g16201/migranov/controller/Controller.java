@@ -127,10 +127,11 @@ public class Controller {
 
     private void applyConvolutionMatrix(double[][] convolutionMatrix, BufferedImage source)
     {
+        //todo: не раюотает акварель потому что мы изменяем и читаем одну матрицу! надо клонировать!!!!!!
         int fy = convolutionMatrix.length;
         int fx = convolutionMatrix[0].length;
 
-        BufferedImage image = source;
+        BufferedImage image = source;   //вот тут надо клон а не оригинал
         int height = image.getHeight();
         int width = image.getWidth();
 
@@ -227,5 +228,7 @@ public class Controller {
                 modifiedImagePanel.setColor(x, y, neighbours.get(neighbours.size() / 2));
             }
         }
+        applyConvolutionMatrix(sharpnessMatrix, modifiedImagePanel.getImage());
+        modifiedImagePanel.repaint();
     }
 }
