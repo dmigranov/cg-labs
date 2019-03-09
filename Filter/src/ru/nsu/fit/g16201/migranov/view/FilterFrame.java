@@ -207,7 +207,7 @@ public class FilterFrame extends MainFrame {
     {
         JPanel parametersPanel = new JPanel();
         parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
-        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 100, 50, "Value: ");   //todo; подумать сколько!
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 500, 50, "Value: ");   //todo; подумать сколько!
         parametersPanel.add(panel);
 
         if(JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)

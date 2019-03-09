@@ -22,7 +22,7 @@ public class Controller {
     private static double[][] sharpnessMatrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
     private static double[][] simpleBlurMatrix = {{0, 1/6.0, 0}, {1/6.0, 1/3.0, 1/6.0}, {0, 1/6.0, 0}};
     private static double[][] embossingMatrix = {{0, 1, 0}, {-1, 0, 1}, {0, -1, 0}};
-    private static double[][] sobelXMatrix = {{-1,0,1}, {-2.0,2}, {-1,0,1}};
+    private static double[][] sobelXMatrix = {{-1,0,1}, {-2,0,2}, {-1,0,1}};
     private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
 
@@ -306,16 +306,42 @@ public class Controller {
                 double gyv = 0;
                 for (int i = -1; i < 2; i++) {
                     for (int j = -1; j < 2; j++) {
+                        int Y;
                         if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
                         {
-                            int Y = image.getRGB(x + j, y + i) & 0x0000FF;
-                            gxv += Y * sobelXMatrix[y + 1][x + 1];
-                            gyv += Y * sobelYMatrix[y + 1][x + 1];
+                            Y = image.getRGB(x + j, y + i) & 0x0000FF;
                         }
+                        else
+                        {
+                            int nx = x + j, ny = y + i;
+                            if(nx < 0)
+                                nx = 0;
+                            else if (nx >= width)
+                                nx = width - 1;
+                            if(ny < 0)
+                                ny = 0;
+                            else if (ny >= height)
+                                ny = height - 1;
+                            Y = image.getRGB(nx, ny) & 0x0000FF;
+                        }
+//                        try {
+                            gxv += Y * sobelXMatrix[i + 1][j + 1];
+                            gyv += Y * sobelYMatrix[i + 1][j + 1];
+/*                        }
+                        catch (IndexOutOfBoundsException e)
+                        {
+                            System.out.println();
+                        }*/
                     }
                 }
+                if(Math.sqrt(gxv*gxv + gyv*gyv) > threshold)
+                    modifiedImagePanel.setColor(x, y, 0xFFFFFFFF);
+                else
+                    modifiedImagePanel.setColor(x, y, 0);
+
             }
         }
+        modifiedImagePanel.repaint();
     }
 }
 
