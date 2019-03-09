@@ -125,13 +125,13 @@ public class Controller {
         modifiedImagePanel.repaint();
     }
 
+    //source != modifiedImage!
     private void applyConvolutionMatrix(double[][] convolutionMatrix, BufferedImage source)
     {
-        //todo: не раюотает акварель потому что мы изменяем и читаем одну матрицу! надо клонировать!!!!!!
         int fy = convolutionMatrix.length;
         int fx = convolutionMatrix[0].length;
 
-        BufferedImage image = source;   //вот тут надо клон а не оригинал
+        BufferedImage image = source;
         int height = image.getHeight();
         int width = image.getWidth();
 
@@ -150,7 +150,19 @@ public class Controller {
                         if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
                             color = image.getRGB(j + x, i + y);
                         else
-                            continue; //todo: возможно, продлить изображение по краям. сейчас по сути по нулям. можно оптимизировать
+                        {
+                            int nx = x + j, ny = y + i;
+                            if(nx < 0)
+                                nx = 0;
+                            else if (nx >= width)
+                                nx = width - 1;
+                            if(ny < 0)
+                                ny = 0;
+                            else if (ny >= height)
+                                ny = height - 1;
+
+                            color = image.getRGB(nx, ny);
+                        }
                         int red = (color & 0xFF0000) >> 16;
                         int green = (color & 0x00FF00) >> 8;
                         int blue = color & 0x0000FF;
@@ -203,10 +215,11 @@ public class Controller {
 
     public void applyWatercolor()
     {
-        applyMedianFilter(modifiableImagePanel.getImage());
+        applyConvolutionMatrix(sharpnessMatrix, applyMedianFilter(modifiableImagePanel.getImage()));
+        modifiedImagePanel.repaint();
     }
 
-    private void applyMedianFilter(BufferedImage source)
+    private BufferedImage applyMedianFilter(BufferedImage source)
     {
         int fy = 5;
         int fx = 5;
@@ -214,6 +227,7 @@ public class Controller {
         BufferedImage image = source;
         int height = image.getHeight();
         int width = image.getWidth();
+        BufferedImage returnImage = new BufferedImage(width, height, image.getType());
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -225,10 +239,9 @@ public class Controller {
                     }
                 }
                 Collections.sort(neighbours);
-                modifiedImagePanel.setColor(x, y, neighbours.get(neighbours.size() / 2));
+                returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
             }
         }
-        applyConvolutionMatrix(sharpnessMatrix, modifiedImagePanel.getImage());
-        modifiedImagePanel.repaint();
+        return returnImage;
     }
 }
