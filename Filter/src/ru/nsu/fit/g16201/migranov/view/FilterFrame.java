@@ -81,6 +81,8 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("Filters/Simple blur filter", "Apply simple blur filter", KeyEvent.VK_B, "reload.png", "onSimpleBlur");
         addMenuAndToolBarButton("Filters/Embossing filter", "Apply embossing filter", KeyEvent.VK_E, "reload.png", "onEmboss");
         addMenuAndToolBarButton("Filters/Watercolor filter", "Apply watercolor filter", KeyEvent.VK_W, "reload.png", "onWatercolor");
+        addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_S, "reload.png", "onSobel");
+
 
 
     }
@@ -197,13 +199,22 @@ public class FilterFrame extends MainFrame {
     public void onFloydSteinberg()
     {
         //todo: на самом деле здесь не нужна связка слайдера и филда
+
+
+    }
+
+    public void onSobel()
+    {
         JPanel parametersPanel = new JPanel();
         parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
-        SliderTextFieldPanel panel = new SliderTextFieldPanel(15, 25, 20, "Value: ");
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 100, 50, "Value: ");   //todo; подумать сколько!
         parametersPanel.add(panel);
 
-        JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION);
-
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            int threshold = panel.getValue();
+            controller.applySobelFilter(threshold);
+        }
     }
 
     public void onSharpness()

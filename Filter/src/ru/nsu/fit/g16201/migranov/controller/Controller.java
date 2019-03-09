@@ -3,6 +3,9 @@ package ru.nsu.fit.g16201.migranov.controller;
 import ru.nsu.fit.g16201.migranov.view.ImagePanel;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,24 +15,47 @@ import java.util.List;
 
 public class Controller {
     private ImagePanel originalImagePanel, modifiableImagePanel, modifiedImagePanel;
+    private JPanel selectBox;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
     private static double[][] sharpnessMatrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
     private static double[][] simpleBlurMatrix = {{0, 1/6.0, 0}, {1/6.0, 1/3.0, 1/6.0}, {0, 1/6.0, 0}};
     private static double[][] embossingMatrix = {{0, 1, 0}, {-1, 0, 1}, {0, -1, 0}};
+    private static double[][] sobelXMatrix = {{-1,0,1}, {-2.0,2}, {-1,0,1}};
+    private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
+
 
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
+
+        originalImagePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
     }
 
     public void openImage(File file)
     {
         try {
             BufferedImage image = ImageIO.read(file);
+            if(image == null)
+                throw new IOException();
             this.originalImage = image;
             originalImagePanel.setImage(image);
             modifiableImagePanel.setImage(image);   //todo: потом изменить на выбор квадратом
@@ -37,7 +63,8 @@ public class Controller {
         }
         catch (IOException e)
         {
-            //todo диалог
+            JOptionPane.showMessageDialog(null, "Could not read this file", "Error", JOptionPane.ERROR_MESSAGE);
+            //todo: возможно, стоить снова поставить Untitled Заголовок окошка
         }
 
     }
@@ -64,9 +91,8 @@ public class Controller {
                 int blue = color & 0x0000FF;
                 int Y = (int)(0.299 * red + 0.587 * green + 0.114 * blue);
                 Y = saturate(Y);
-                int newColor = Y + (Y << 8) + (Y << 16);    //todo: |
-
-                modifiedImagePanel.setColor(x, y, newColor);
+                //int newColor = Y + (Y << 8) + (Y << 16);
+                modifiedImagePanel.setColor(x, y, getColor(Y, Y, Y));
             }
         }
         modifiedImagePanel.repaint();
@@ -174,8 +200,8 @@ public class Controller {
                 int r = saturate((int)Math.round(rsum));
                 int g = saturate((int)Math.round(gsum));
                 int b = saturate((int)Math.round(bsum));
-                //System.out.println(x + " " + y + " " + r + " " + g + " " + b);
-                modifiedImagePanel.setColor(x, y, b + (g << 8) + (r << 16));
+                //modifiedImagePanel.setColor(x, y, b + (g << 8) + (r << 16));
+                modifiedImagePanel.setColor(x, y, getColor(r, g, b));
             }
         }
     }
@@ -205,9 +231,8 @@ public class Controller {
                 red = saturate(red + 128);
                 green = saturate(green + 128);
                 blue = saturate(blue + 128);
-
-                int newColor = blue + (green << 8) + (red << 16);   //todo: |
-                image.setRGB(x, y, newColor);
+                //int newColor = blue + (green << 8) + (red << 16);   //todo: |
+                image.setRGB(x, y, getColor(red, green, blue));
             }
         }
         modifiedImagePanel.repaint();
@@ -250,12 +275,30 @@ public class Controller {
                 Collections.sort(bneighbours);
                 int median = rneighbours.size() / 2;
 
-                int newColor = bneighbours.get(median) + (gneighbours.get(median) << 8) + (rneighbours.get(median) << 16);   //todo: |
+                //int newColor = bneighbours.get(median) + (gneighbours.get(median) << 8) + (rneighbours.get(median) << 16);   //todo: |
 
                 //returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
-                returnImage.setRGB(x, y, newColor);
+                returnImage.setRGB(x, y, getColor(rneighbours.get(median), gneighbours.get(median), bneighbours.get(median)));
             }
         }
         return returnImage;
     }
+
+    private int getColor(int r, int g, int b)
+    {
+        return (r << 16) | (g << 8) | b;    //255 <<24? (альфа)
+    }
+
+    public void applySobelFilter(int threshold)
+    {
+        BufferedImage image = modifiableImagePanel.getImage();
+        int height = image.getHeight();
+        int width = image.getWidth();
+        for(int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+
+            }
+        }
+    }
 }
+
