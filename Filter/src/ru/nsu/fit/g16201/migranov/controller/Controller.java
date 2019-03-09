@@ -215,6 +215,7 @@ public class Controller {
 
     public void applyWatercolor()
     {
+        //applyMedianFilter(modifiableImagePanel.getImage()         //just median filter
         applyConvolutionMatrix(sharpnessMatrix, applyMedianFilter(modifiableImagePanel.getImage()));
         modifiedImagePanel.repaint();
     }
@@ -231,15 +232,28 @@ public class Controller {
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                List<Integer> neighbours = new ArrayList<>();
+                //List<Integer> neighbours = new ArrayList<>();
+                List<Integer> rneighbours = new ArrayList<>(), gneighbours = new ArrayList<>(), bneighbours = new ArrayList<>();
                 for (int i = -fy / 2; i < fy / 2 + 1; i++) {
                     for (int j = -fx / 2; j < fx / 2 + 1; j++) {
-                        if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
-                            neighbours.add(image.getRGB(x + j, y + i));
+                        if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height) {
+                            //neighbours.add(image.getRGB(x + j, y + i));
+                            int color = image.getRGB(x + j, y + i);
+                            rneighbours.add((color & 0xFF0000) >> 16);
+                            gneighbours.add((color & 0x00FF00) >> 8);
+                            bneighbours.add(color & 0x0000FF);
+                        }
                     }
                 }
-                Collections.sort(neighbours);
-                returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
+                Collections.sort(rneighbours);
+                Collections.sort(gneighbours);
+                Collections.sort(bneighbours);
+                int median = rneighbours.size() / 2;
+
+                int newColor = bneighbours.get(median) + (gneighbours.get(median) << 8) + (rneighbours.get(median) << 16);   //todo: |
+
+                //returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
+                returnImage.setRGB(x, y, newColor);
             }
         }
         return returnImage;
