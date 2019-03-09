@@ -98,7 +98,7 @@ public class Controller {
                 int Y = (int)(0.299 * red + 0.587 * green + 0.114 * blue);
                 Y = saturate(Y);
                 //int newColor = Y + (Y << 8) + (Y << 16);
-                returnImage.setRGB(x, y, getColor(Y, Y, Y));
+                returnImage.setRGB(x, y, getColorFromComponents(Y, Y, Y));
             }
         }
         return returnImage;
@@ -192,7 +192,6 @@ public class Controller {
                                 ny = 0;
                             else if (ny >= height)
                                 ny = height - 1;
-
                             color = image.getRGB(nx, ny);
                         }
                         int red = (color & 0xFF0000) >> 16;
@@ -207,7 +206,7 @@ public class Controller {
                 int g = saturate((int)Math.round(gsum));
                 int b = saturate((int)Math.round(bsum));
                 //modifiedImagePanel.setColor(x, y, b + (g << 8) + (r << 16));
-                modifiedImagePanel.setColor(x, y, getColor(r, g, b));
+                modifiedImagePanel.setColor(x, y, getColorFromComponents(r, g, b));
             }
         }
     }
@@ -237,8 +236,8 @@ public class Controller {
                 red = saturate(red + 128);
                 green = saturate(green + 128);
                 blue = saturate(blue + 128);
-                //int newColor = blue + (green << 8) + (red << 16);   //todo: |
-                image.setRGB(x, y, getColor(red, green, blue));
+                //int newColor = blue + (green << 8) + (red << 16);
+                image.setRGB(x, y, getColorFromComponents(red, green, blue));
             }
         }
         modifiedImagePanel.repaint();
@@ -284,13 +283,13 @@ public class Controller {
                 //int newColor = bneighbours.get(median) + (gneighbours.get(median) << 8) + (rneighbours.get(median) << 16);   //todo: |
 
                 //returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
-                returnImage.setRGB(x, y, getColor(rneighbours.get(median), gneighbours.get(median), bneighbours.get(median)));
+                returnImage.setRGB(x, y, getColorFromComponents(rneighbours.get(median), gneighbours.get(median), bneighbours.get(median)));
             }
         }
         return returnImage;
     }
 
-    private int getColor(int r, int g, int b)
+    private int getColorFromComponents(int r, int g, int b)
     {
         return (r << 16) | (g << 8) | b;    //255 <<24? (альфа) todo: alpha!!
     }
@@ -324,14 +323,9 @@ public class Controller {
                                 ny = height - 1;
                             Y = image.getRGB(nx, ny) & 0x0000FF;
                         }
-//                        try {
-                            gxv += Y * sobelXMatrix[i + 1][j + 1];
-                            gyv += Y * sobelYMatrix[i + 1][j + 1];
-/*                        }
-                        catch (IndexOutOfBoundsException e)
-                        {
-                            System.out.println();
-                        }*/
+
+                        gxv += Y * sobelXMatrix[i + 1][j + 1];
+                        gyv += Y * sobelYMatrix[i + 1][j + 1];
                     }
                 }
                 if(Math.sqrt(gxv*gxv + gyv*gyv) > threshold)
@@ -342,6 +336,11 @@ public class Controller {
             }
         }
         modifiedImagePanel.repaint();
+    }
+
+    public void applyRobertsFilter(int threshold)
+    {
+
     }
 }
 
