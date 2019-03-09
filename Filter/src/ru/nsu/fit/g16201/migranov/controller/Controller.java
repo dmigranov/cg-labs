@@ -81,21 +81,27 @@ public class Controller {
     }
 
     public void desaturate() {
-        for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
+        modifiedImagePanel.setImage(getDesaturatedImage(modifiableImagePanel.getImage()));
+    }
+
+    private BufferedImage getDesaturatedImage(BufferedImage source)
+    {
+        BufferedImage returnImage = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+        for(int y = 0; y < source.getHeight(); y++)
         {
-            for(int x = 0; x < modifiableImagePanel.getImageWidth(); x++)
+            for(int x = 0; x < source.getWidth(); x++)
             {
-                int color = modifiableImagePanel.getColor(x, y);
+                int color = source.getRGB(x, y);
                 int red = (color & 0xFF0000) >> 16;
                 int green = (color & 0x00FF00) >> 8;
                 int blue = color & 0x0000FF;
                 int Y = (int)(0.299 * red + 0.587 * green + 0.114 * blue);
                 Y = saturate(Y);
                 //int newColor = Y + (Y << 8) + (Y << 16);
-                modifiedImagePanel.setColor(x, y, getColor(Y, Y, Y));
+                returnImage.setRGB(x, y, getColor(Y, Y, Y));
             }
         }
-        modifiedImagePanel.repaint();
+        return returnImage;
     }
 
     private int saturate(int v)
@@ -286,17 +292,28 @@ public class Controller {
 
     private int getColor(int r, int g, int b)
     {
-        return (r << 16) | (g << 8) | b;    //255 <<24? (альфа)
+        return (r << 16) | (g << 8) | b;    //255 <<24? (альфа) todo: alpha!!
     }
 
     public void applySobelFilter(int threshold)
     {
-        BufferedImage image = modifiableImagePanel.getImage();
+        BufferedImage image = getDesaturatedImage(modifiableImagePanel.getImage());
         int height = image.getHeight();
         int width = image.getWidth();
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-
+                double gxv = 0;
+                double gyv = 0;
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
+                        {
+                            int Y = image.getRGB(x + j, y + i) & 0x0000FF;
+                            gxv += Y * sobelXMatrix[y + 1][x + 1];
+                            gyv += Y * sobelYMatrix[y + 1][x + 1];
+                        }
+                    }
+                }
             }
         }
     }
