@@ -163,7 +163,8 @@ public class FilterFrame extends MainFrame {
 
     public void onOrderedDither()
     {
-        //3 цвета у меня - это 2 цвета в примерах
+        //3 цвета у меня - это 2 цвета в примерах xxx
+        //теперь уже нет. может, стоить сдвигать на единицу, чтоб как раньеш?
         DitheringParametersPanel ditheringParametersPanel = new DitheringParametersPanel();
 
         if(JOptionPane.showConfirmDialog(this, ditheringParametersPanel, "Ordered dithering algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)

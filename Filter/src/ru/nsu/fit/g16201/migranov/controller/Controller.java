@@ -156,7 +156,7 @@ public class Controller {
             for(int j  = 0; j < matrixSize; j++)
                 orderedDitherDoubleMatrix[i][j] = 1.0 * orderedDitherMatrix[i][j]/(matrixSize * matrixSize);
 
-        int rCount = 256/rLevel, gCount = 256/gLevel, bCount = 256/bLevel;
+        //int rCount = 256/rLevel, gCount = 256/gLevel, bCount = 256/bLevel;
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
             int j = y % 4;
@@ -173,17 +173,19 @@ public class Controller {
                 //int threshold = orderedDitherMatrix[j][i] * 255 / 16;
 
                 //int addition = (int)((256.0/(4 - 1))*(orderedDitherDoubleMatrix[j][i]/(4.0 * 4.0) - 0.5)); //-1/2, r wiki
-                int addition = orderedDitherMatrix[j][i];
 
+                //int addition = (int)(256/rLevel*(orderedDitherMatrix[j][i] - 0.5));
+
+                int addition = 0;
 
                 nred = red + addition;
                 ngreen = green + addition;
                 nblue = blue + addition;
 
-                //непраивльно: см 254 и 3
-                nred = nred/rCount*rCount;
-                ngreen = ngreen/gCount*gCount;
-                nblue = nblue/ bCount*bCount;
+
+                nred = getClosestColor(nred, rLevel);
+                ngreen = getClosestColor(ngreen, gLevel);
+                nblue = getClosestColor(nblue, bLevel);
 
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
