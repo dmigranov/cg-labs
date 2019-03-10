@@ -4,6 +4,7 @@ import ru.nsu.fit.g16201.migranov.view.ImagePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -62,6 +63,22 @@ public class Controller {
             originalImagePanel.setImage(image);
             modifiableImagePanel.setImage(image);   //todo: потом изменить на выбор квадратом
             modifiedImagePanel.setEmptyImage(modifiableImagePanel.getWidth(), modifiableImagePanel.getHeight());
+
+
+            int realWidth = image.getWidth();
+            int realHeight = image.getHeight();
+
+            int selectBoxWidth = 350/(realWidth/350);
+            int selectBoxHeight = 350/(realHeight/350);
+
+            originalImagePanel.setLayout(new FlowLayout());
+            selectBox = new JPanel();
+            selectBox.setSize(new Dimension(selectBoxWidth, selectBoxHeight));
+            selectBox.setBackground(new Color(0,0,0,0));
+            selectBox.setLocation(0, 0);
+            originalImagePanel.add(selectBox);
+            selectBox.setBorder(BorderFactory.createDashedBorder(Color.gray, 3, 1));
+
         }
         catch (IOException e)
         {

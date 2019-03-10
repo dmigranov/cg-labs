@@ -87,6 +87,8 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_D, "reload.png", "onSobel");
         addMenuAndToolBarButton("Filters/Roberts filter", "Apply Roberts edge detection filter", KeyEvent.VK_R, "reload.png", "onRoberts");
 
+        addSubMenu("Rotation and zoom", KeyEvent.VK_R);
+        addMenuAndToolBarButton("Rotation and zoom/Rotate", "Rotate the image", KeyEvent.VK_R, "reload.png", "onRotate");
 
 
     }
@@ -278,6 +280,11 @@ public class FilterFrame extends MainFrame {
                 JOptionPane.showMessageDialog(this, "Please type in a valid floating point number from 0.01 to 20", "Wrong number", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    public void onRotate()
+    {
+
     }
 
 }
