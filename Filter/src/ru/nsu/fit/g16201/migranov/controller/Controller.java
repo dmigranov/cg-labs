@@ -193,25 +193,35 @@ public class Controller {
     }
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
-        BufferedImage image = modifiableImagePanel.getImage();
+        BufferedImage originalImage = modifiableImagePanel.getImage();
+        BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
+
         int levels[] = {rLevel, gLevel, bLevel};
 
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
             for(int x = 0; x < modifiableImagePanel.getImageWidth(); x++)
             {
-                int oldColor = image.getRGB(x, y);
+                int oldRGBColor = image.getRGB(x, y);
 
                 int colors[] = new int[3];
-                colors[0] = ((oldColor & 0xFF0000) >> 16);
-                colors[1] = ((oldColor & 0x00FF00) >> 8);
-                colors[2] = (oldColor & 0x0000FF);
+                colors[0] = ((oldRGBColor & 0xFF0000) >> 16);
+                colors[1] = ((oldRGBColor & 0x00FF00) >> 8);
+                colors[2] = (oldRGBColor & 0x0000FF);
 
                 for(int i = 0; i < 3; i++)
                 {
-                    int old = colors[i];
-                    getClosestColor(old, levels[i]);
+                    int oldColor = colors[i];
+                    int newColor = getClosestColor(oldColor, levels[i]);
+                    int error = oldColor - newColor;
+                    //распрсстрание ошибки:
+                    if(y < image.getWidth() - 1)
+                    {
+                        image.setRGB(x, y + 1, error*3/16);
+                        //if
+                    }
                 }
+                //собрать из newCOlor
             }
         }
 
@@ -459,16 +469,16 @@ public class Controller {
     //видимо всё-таки будет как в примерах: на один больше
     public int getClosestColor(int color, int colorCount)
     {
-        int levels[] = new int[colorCount + 1];
+        //int levels[] = new int[colorCount + 1];
+        int current;
         int sum = 0;
+        int addition = (int)Math.round(255.0 / colorCount);
         for (int i = 0; i < colorCount; i++) {
-            levels[i] = sum;
-            sum += Math.round(255.0 / colorCount);
+            if(Math.abs(sum - color) < addition)
+                return sum;
+            sum += addition;
         }
-        levels[colorCount] = 255;
-
-        double fColor = color / 255.0;
-        return 0;
+        return 255;
     }
 }
 
