@@ -65,7 +65,7 @@ public class ImagePanel extends JPanel {
 
     public void setColor(int x, int y, int color)
     {
-        //image.setRGB([])  - можно сразу много получать?? а можно сразу весь массив спросить!
+        //image.setRGB([])
         image.setRGB(x, y, color);
     }
 
@@ -81,5 +81,6 @@ public class ImagePanel extends JPanel {
     {
         return image;
     }
+
 
 }

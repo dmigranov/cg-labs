@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class Controller {
     private static double[][] sobelXMatrix = {{-1,0,1}, {-2,0,2}, {-1,0,1}};
     private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
-
+    private boolean startedMoving = false;
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -39,16 +40,30 @@ public class Controller {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
+                startedMoving = false;
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+            }
+        });
+
+        originalImagePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+                int x = e.getX();
+                int y = e.getY();
+
+                if(!startedMoving && (x >= originalImagePanel.getWidth() || y >= originalImagePanel.getHeight() || x < 0 || y < 0))
+                    return;
+                else {
+                    startedMoving = true;
+                    System.out.println("here");
+                }
+
             }
         });
     }
@@ -68,15 +83,15 @@ public class Controller {
             int realWidth = image.getWidth();
             int realHeight = image.getHeight();
 
-            int selectBoxWidth = 350/(realWidth/350);
-            int selectBoxHeight = 350/(realHeight/350);
+            int selectBoxWidth = (int)(350/(realWidth/350.0));
+            int selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально!
 
-            originalImagePanel.setLayout(new FlowLayout());
+            originalImagePanel.setLayout(new SpringLayout());
             selectBox = new JPanel();
-            selectBox.setSize(new Dimension(selectBoxWidth, selectBoxHeight));
-            selectBox.setBackground(new Color(0,0,0,0));
-            selectBox.setLocation(0, 0);
             originalImagePanel.add(selectBox);
+            selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
+            selectBox.setBackground(new Color(0,0,0,0));
+            selectBox.setLocation(1, 1);        //0,0? дабы учесть границы;; а само подизображение берём с ззахлёстом: то, что под границами тоже входит
             selectBox.setBorder(BorderFactory.createDashedBorder(Color.gray, 3, 1));
 
         }
@@ -132,7 +147,7 @@ public class Controller {
         return v;
     }
 
-    public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы
+    public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы возможно
     {
         //todo: исправить! цвета и т.д
         int matrixSize = 4;
@@ -413,6 +428,10 @@ public class Controller {
             }
         }
         modifiedImagePanel.repaint();
+    }
+
+    public void doFloydSteinberg(int rLevel, int gLevel, int bLevel) {
+        System.out.println(rLevel);
     }
 }
 

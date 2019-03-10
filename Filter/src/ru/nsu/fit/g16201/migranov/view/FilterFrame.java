@@ -65,6 +65,8 @@ public class FilterFrame extends MainFrame {
         setVisible(true);
     }
 
+
+
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
@@ -161,29 +163,14 @@ public class FilterFrame extends MainFrame {
 
     public void onOrderedDither()
     {
-        JPanel parametersPanel = new JPanel();
-        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
-        JTextField rLevelField = new JTextField(3);
-        JTextField gLevelField = new JTextField(3);
-        JTextField bLevelField = new JTextField(3);
+        //3 цвета у меня - это 2 цвета в примерах
+        DitheringParametersPanel ditheringParametersPanel = new DitheringParametersPanel();
 
-        rLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
-        gLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
-        bLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
-
-        parametersPanel.add(new JLabel("Number of levels of red:   "));
-        parametersPanel.add(rLevelField);
-        parametersPanel.add(new JLabel("Number of levels of green: "));
-        parametersPanel.add(gLevelField);
-        parametersPanel.add(new JLabel("Number of levels of blue:  "));
-        parametersPanel.add(bLevelField);
-
-        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if(JOptionPane.showConfirmDialog(this, ditheringParametersPanel, "Ordered dithering algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
-            String rText = rLevelField.getText();
-            String gText = gLevelField.getText();
-            String bText = bLevelField.getText();
-
+            String rText = ditheringParametersPanel.getRText();
+            String gText = ditheringParametersPanel.getGText();
+            String bText = ditheringParametersPanel.getBText();
             try
             {
                 int rLevel = Integer.parseInt(rText);
@@ -193,20 +180,34 @@ public class FilterFrame extends MainFrame {
                     throw new NumberFormatException();
                 controller.doOrderedDithering(rLevel, gLevel, bLevel);
             }
-            catch(NumberFormatException e)
-            {
-                JOptionPane.showMessageDialog(this, "Wrong m or n; no new field was created", "Wrong m or n", JOptionPane.ERROR_MESSAGE);
+            catch(NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Wrong threshold values", "Wrong input", JOptionPane.ERROR_MESSAGE);
             }
-
         }
-
     }
 
     public void onFloydSteinberg()
     {
-        //todo: на самом деле здесь не нужна связка слайдера и филда
+        DitheringParametersPanel ditheringParametersPanel = new DitheringParametersPanel();
 
-
+        if(JOptionPane.showConfirmDialog(this, ditheringParametersPanel, "Floyd-Steinberg algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            String rText = ditheringParametersPanel.getRText();
+            String gText = ditheringParametersPanel.getGText();
+            String bText = ditheringParametersPanel.getBText();
+            try
+            {
+                int rLevel = Integer.parseInt(rText);
+                int gLevel = Integer.parseInt(gText);
+                int bLevel = Integer.parseInt(bText);
+                if(rLevel == 0 || gLevel == 0 || bLevel == 0) //<=1?
+                    throw new NumberFormatException();
+                controller.doFloydSteinberg(rLevel, gLevel, bLevel);
+            }
+            catch(NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Wrong threshold values", "Wrong input", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     public void onSobel()
@@ -285,6 +286,42 @@ public class FilterFrame extends MainFrame {
     public void onRotate()
     {
 
+    }
+
+    private class DitheringParametersPanel extends JPanel
+    {
+        JTextField rLevelField = new JTextField("2", 3);
+        JTextField gLevelField = new JTextField("2", 3);
+        JTextField bLevelField = new JTextField("2", 3);
+
+        public DitheringParametersPanel()
+        {
+            super();
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            rLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+            gLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+            bLevelField.addKeyListener(new IntegerTextFieldKeyListener(2));
+            add(new JLabel("Number of levels of red:   "));
+            add(rLevelField);
+            add(new JLabel("Number of levels of green: "));
+            add(gLevelField);
+            add(new JLabel("Number of levels of blue:  "));
+            add(bLevelField);
+        }
+
+        public String getRText()
+        {
+            return rLevelField.getText();
+        }
+        public String getGText()
+        {
+            return gLevelField.getText();
+        }
+        public String getBText()
+        {
+            return bLevelField.getText();
+        }
     }
 
 }
