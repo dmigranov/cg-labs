@@ -202,7 +202,7 @@ public class FilterFrame extends MainFrame {
                 int bLevel = Integer.parseInt(bText);
                 if(rLevel == 0 || gLevel == 0 || bLevel == 0) //<=1?
                     throw new NumberFormatException();
-                controller.doFloydSteinberg(rLevel, gLevel, bLevel);
+                controller.doFloydSteinbergDithering(rLevel, gLevel, bLevel);
             }
             catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Wrong threshold values", "Wrong input", JOptionPane.ERROR_MESSAGE);

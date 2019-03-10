@@ -191,6 +191,29 @@ public class Controller {
         modifiedImagePanel.repaint();
     }
 
+    public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
+        BufferedImage image = modifiableImagePanel.getImage();
+
+        for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
+        {
+            for(int x = 0; x < modifiableImagePanel.getImageWidth(); x++)
+            {
+                int oldColor = image.getRGB(x, y);
+
+                double colors[] = new double[3];
+                colors[0] = ((oldColor & 0xFF0000) >> 16)/255.0;
+                colors[1] = ((oldColor & 0x00FF00) >> 8)/255.0;
+                colors[2] = (oldColor & 0x0000FF)/255.0;
+
+                for(int i = 0; i < 3; i++)
+                {
+                    double old = colors[i];
+                }
+            }
+        }
+
+    }
+
     //source != modifiedImage!
     private void applyConvolutionMatrix(double[][] convolutionMatrix, BufferedImage source)
     {
@@ -428,10 +451,6 @@ public class Controller {
             }
         }
         modifiedImagePanel.repaint();
-    }
-
-    public void doFloydSteinberg(int rLevel, int gLevel, int bLevel) {
-        System.out.println(rLevel);
     }
 }
 
