@@ -353,7 +353,7 @@ public class Controller {
                 {
                     f = abs(Y - getY(image, x+1, y+1)) + abs(getY(image, x, y+1) - getY(image, x+1, y));
                 }
-                else        //считаем то что за границей нулями, т.к. продление привело бы к занулению разностей
+                else        //считаем то что за границей нулями, т.к. продление привело бы к занулению разностей. может, тоже продлевать?? (чтобы не было белых полос снизу и справа, хотя понятна причина их поялвения)
                 {
                     if(x + 1 == width && y + 1 != height)
                         f = Y + getY(image, x, y+1);
@@ -376,6 +376,26 @@ public class Controller {
     private int getY(BufferedImage image, int x, int y)
     {
         return image.getRGB(x, y) & 0x0000FF;
+    }
+
+    public void applyGammaCorrection(double gamma)
+    {
+        BufferedImage image = modifiableImagePanel.getImage();
+        for(int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                int color = image.getRGB(x, y);
+                int r = (color & 0xFF0000) >> 16;
+                int g = (color & 0x00FF00) >> 8;
+                int b = color & 0x0000FF;
+
+                int nr = (int)(255*Math.pow(r/255.0, gamma));
+                int ng = (int)(255*Math.pow(g/255.0, gamma));
+                int nb = (int)(255*Math.pow(b/255.0, gamma));
+                modifiedImagePanel.setColor(x, y, getColorFromComponents(nr, ng, nb));  //может, чуть выгоднее будет заранне взять Image и менять непосре.его?
+
+            }
+        }
+        modifiedImagePanel.repaint();
     }
 }
 

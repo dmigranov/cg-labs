@@ -43,7 +43,9 @@ public class FilterFrame extends MainFrame {
 
         addMenus();
 
+        //todo: сказал вообще избавиться от скролла
         JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setDoubleBuffered(true);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -71,6 +73,7 @@ public class FilterFrame extends MainFrame {
         addSubMenu("Pixel operations", KeyEvent.VK_P);
         addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
         addMenuAndToolBarButton("Pixel operations/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
+        addMenuAndToolBarButton("Pixel operations/Gamma", "Gamma correction of the image", KeyEvent.VK_G, "reload.png", "onGamma");
 
         addSubMenu("Dithering", KeyEvent.VK_D);
         addMenuAndToolBarButton("Dithering/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither");
@@ -250,6 +253,31 @@ public class FilterFrame extends MainFrame {
     public void onWatercolor()
     {
         controller.applyWatercolor();
+    }
+
+    public void onGamma()
+    {
+        JPanel parametersPanel = new JPanel();
+        JTextField field = new JTextField("1",5);
+        parametersPanel.add(new JLabel("Gamma (0.01-20): "));
+        add(Box.createHorizontalStrut(10));
+        parametersPanel.add(field);
+        field.addKeyListener(new FloatTextFieldKeyListener());
+
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Gamma correction", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            String str = field.getText();
+            try {
+                double gamma = Double.parseDouble(str);
+                if(gamma > 20 || gamma < 0.01)
+                    throw new NumberFormatException();
+                controller.applyGammaCorrection(gamma);
+            }
+            catch(NumberFormatException e)
+            {
+                JOptionPane.showMessageDialog(this, "Please type in a valid floating point number from 0.01 to 20", "Wrong number", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
 }
