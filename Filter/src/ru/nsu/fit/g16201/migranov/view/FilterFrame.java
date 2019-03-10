@@ -81,7 +81,8 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("Filters/Simple blur filter", "Apply simple blur filter", KeyEvent.VK_B, "reload.png", "onSimpleBlur");
         addMenuAndToolBarButton("Filters/Embossing filter", "Apply embossing filter", KeyEvent.VK_E, "reload.png", "onEmboss");
         addMenuAndToolBarButton("Filters/Watercolor filter", "Apply watercolor filter", KeyEvent.VK_W, "reload.png", "onWatercolor");
-        addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_S, "reload.png", "onSobel");
+        addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_D, "reload.png", "onSobel");
+        addMenuAndToolBarButton("Filters/Roberts filter", "Apply Roberts edge detection filter", KeyEvent.VK_R, "reload.png", "onRoberts");
 
 
 
@@ -207,13 +208,27 @@ public class FilterFrame extends MainFrame {
     {
         JPanel parametersPanel = new JPanel();
         parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
-        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 500, 50, "Value: ");   //todo; подумать сколько!
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 500, 100, "Threshold: ");   //todo; подумать сколько!
         parametersPanel.add(panel);
 
-        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Field and visualisation parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Sobel filter threshold", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             int threshold = panel.getValue();
             controller.applySobelFilter(threshold);
+        }
+    }
+
+    public void onRoberts()
+    {
+        JPanel parametersPanel = new JPanel();
+        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 300, 100, "Threshold: ");
+        parametersPanel.add(panel);
+
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Roberts filter threshold", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            int threshold = panel.getValue();
+            controller.applyRobertsFilter(threshold);
         }
     }
 

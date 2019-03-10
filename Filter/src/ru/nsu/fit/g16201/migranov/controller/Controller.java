@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class Controller {
     private ImagePanel originalImagePanel, modifiableImagePanel, modifiedImagePanel;
     private JPanel selectBox;
@@ -340,7 +342,40 @@ public class Controller {
 
     public void applyRobertsFilter(int threshold)
     {
+        BufferedImage image = getDesaturatedImage(modifiableImagePanel.getImage());
+        int height = image.getHeight();
+        int width = image.getWidth();
+        for(int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int f;
+                int Y = getY(image, x, y);
+                if(x < width - 1 && y < height - 1)
+                {
+                    f = abs(Y - getY(image, x+1, y+1)) + abs(getY(image, x, y+1) - getY(image, x+1, y));
+                }
+                else        //считаем то что за границей нулями, т.к. продление привело бы к занулению разностей
+                {
+                    if(x + 1 == width && y + 1 != height)
+                        f = Y + getY(image, x, y+1);
+                    else if(x + 1 != width && y + 1 == height)
+                        f = Y +  getY(image, x+1, y);
+                    else
+                        f = Y;
+                }
 
+                if(f > threshold)
+                    modifiedImagePanel.setColor(x, y, 0xFFFFFFFF);
+                else
+                    modifiedImagePanel.setColor(x, y, 0);
+            }
+        }
+        modifiedImagePanel.repaint();
+    }
+
+    //image should be in grayscale, so all components are equal
+    private int getY(BufferedImage image, int x, int y)
+    {
+        return image.getRGB(x, y) & 0x0000FF;
     }
 }
 
