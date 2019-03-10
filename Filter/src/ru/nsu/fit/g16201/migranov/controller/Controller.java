@@ -180,6 +180,7 @@ public class Controller {
                 ngreen = green + addition;
                 nblue = blue + addition;
 
+                //непраивльно: см 254 и 3
                 nred = nred/rCount*rCount;
                 ngreen = ngreen/gCount*gCount;
                 nblue = nblue/ bCount*bCount;
@@ -193,6 +194,7 @@ public class Controller {
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
         BufferedImage image = modifiableImagePanel.getImage();
+        int levels[] = {rLevel, gLevel, bLevel};
 
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
@@ -200,14 +202,15 @@ public class Controller {
             {
                 int oldColor = image.getRGB(x, y);
 
-                double colors[] = new double[3];
-                colors[0] = ((oldColor & 0xFF0000) >> 16)/255.0;
-                colors[1] = ((oldColor & 0x00FF00) >> 8)/255.0;
-                colors[2] = (oldColor & 0x0000FF)/255.0;
+                int colors[] = new int[3];
+                colors[0] = ((oldColor & 0xFF0000) >> 16);
+                colors[1] = ((oldColor & 0x00FF00) >> 8);
+                colors[2] = (oldColor & 0x0000FF);
 
                 for(int i = 0; i < 3; i++)
                 {
-                    double old = colors[i];
+                    int old = colors[i];
+                    getClosestColor(old, levels[i]);
                 }
             }
         }
@@ -451,6 +454,21 @@ public class Controller {
             }
         }
         modifiedImagePanel.repaint();
+    }
+
+    //видимо всё-таки будет как в примерах: на один больше
+    public int getClosestColor(int color, int colorCount)
+    {
+        int levels[] = new int[colorCount + 1];
+        int sum = 0;
+        for (int i = 0; i < colorCount; i++) {
+            levels[i] = sum;
+            sum += Math.round(255.0 / colorCount);
+        }
+        levels[colorCount] = 255;
+
+        double fColor = color / 255.0;
+        return 0;
     }
 }
 
