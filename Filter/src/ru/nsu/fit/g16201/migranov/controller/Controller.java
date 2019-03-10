@@ -186,6 +186,7 @@ public class Controller {
                 nred = getClosestColor(nred, rLevel);
                 ngreen = getClosestColor(ngreen, gLevel);
                 nblue = getClosestColor(nblue, bLevel);
+                System.out.println(nred);
 
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
@@ -471,12 +472,11 @@ public class Controller {
     //видимо всё-таки будет как в примерах: на один больше
     public int getClosestColor(int color, int colorCount)
     {
-        //int levels[] = new int[colorCount + 1];
-        int current;
+        //это не правильно: всегда округляет в меньую сторону
         int sum = 0;
         int addition = (int)Math.round(255.0 / colorCount);
         for (int i = 0; i < colorCount; i++) {
-            if(Math.abs(sum - color) < addition)
+            if(color < sum + addition)
                 return sum;
             sum += addition;
         }
