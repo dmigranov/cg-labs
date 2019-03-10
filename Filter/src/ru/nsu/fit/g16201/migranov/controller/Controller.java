@@ -176,17 +176,15 @@ public class Controller {
 
                 //int addition = (int)(256/rLevel*(orderedDitherMatrix[j][i] - 0.5));
 
-                int addition = 0;
+                int addition = orderedDitherMatrix[j][i];
 
                 nred = red + addition;
                 ngreen = green + addition;
                 nblue = blue + addition;
-
-
                 nred = getClosestColor(nred, rLevel);
                 ngreen = getClosestColor(ngreen, gLevel);
                 nblue = getClosestColor(nblue, bLevel);
-                System.out.println(nred);
+                //System.out.println(nred + " " + ngreen + " " + nblue );
 
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
@@ -474,13 +472,20 @@ public class Controller {
     {
         //это не правильно: всегда округляет в меньую сторону
         int sum = 0;
+        int minDiff = 255, minSum = 255;
         int addition = (int)Math.round(255.0 / colorCount);
         for (int i = 0; i < colorCount; i++) {
-            if(color < sum + addition)
-                return sum;
+            if(Math.abs(sum - color) < minDiff) {
+                minDiff = Math.abs(sum - color);
+                minSum = sum;
+            }
             sum += addition;
         }
-        return 255;
+
+        if(Math.abs(255 - color) < minDiff)
+            return 255;
+        else
+            return minSum;
     }
 }
 
