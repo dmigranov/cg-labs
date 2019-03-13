@@ -91,6 +91,7 @@ public class FilterFrame extends MainFrame {
 
         addSubMenu("Rotation and zoom", KeyEvent.VK_R);
         addMenuAndToolBarButton("Rotation and zoom/Rotate", "Rotate the image", KeyEvent.VK_R, "reload.png", "onRotate");
+        addMenuAndToolBarButton("Rotation and zoom/Zoom X2", "Double the image", KeyEvent.VK_Z, "reload.png", "onZoom");
 
 
     }
@@ -287,6 +288,11 @@ public class FilterFrame extends MainFrame {
     public void onRotate()
     {
 
+    }
+
+    public void onZoom()
+    {
+        controller.zoom();
     }
 
     private class DitheringParametersPanel extends JPanel

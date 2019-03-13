@@ -25,7 +25,7 @@ public class Controller {
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
     private static double[][] sharpnessMatrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
     private static double[][] simpleBlurMatrix = {{0, 1/6.0, 0}, {1/6.0, 1/3.0, 1/6.0}, {0, 1/6.0, 0}};
-    private static double[][] embossingMatrix = {{0, 1, 0}, {-1, 0, 1}, {0, -1, 0}};
+    private static int[][] embossingMatrix = {{0, 1, 0}, {-1, 0, 1}, {0, -1, 0}};
     private static double[][] sobelXMatrix = {{-1,0,1}, {-2,0,2}, {-1,0,1}};
     private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
@@ -149,7 +149,7 @@ public class Controller {
 
     public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы возможно
     {
-        //todo: исправить! цвета и т.д
+        //todo: нормировать как в тетрпдке
         int matrixSize = 4;
         double[][] orderedDitherDoubleMatrix = new double[4][4];
         for(int i  = 0; i < matrixSize; i++)
@@ -210,22 +210,25 @@ public class Controller {
                 colors[1] = ((oldRGBColor & 0x00FF00) >> 8);
                 colors[2] = (oldRGBColor & 0x0000FF);
 
+                int newColors[] = new int[3];
                 for(int i = 0; i < 3; i++)
                 {
                     int oldColor = colors[i];
-                    int newColor = getClosestColor(oldColor, levels[i]);
-                    int error = oldColor - newColor;
+                    newColors[i] = getClosestColor(oldColor, levels[i]);    //+0.5?
+                    int error = oldColor - newColors[i];
                     //распрсстрание ошибки:
-                    if(y < image.getWidth() - 1)
+                    if(y < image.getHeight() - 1)
                     {
-                        image.setRGB(x, y + 1, error*3/16);
-                        //if
+                        image.setRGB(x, y + 1, image.getRGB(x, y+1) + error*5/16);
+                        if(x > 0) image.setRGB(x - 1, y + 1, image.getRGB(x-1, y+1) + error*3/16);
+                        if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1, image.getRGB(x+1, y+1) + error/16);
                     }
+                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, image.getRGB(x+1, y)+error - error*5/16 - error*3/16 - error/16);
                 }
-                //собрать из newCOlor
+                modifiedImagePanel.setColor(x,y, getColorFromComponents(newColors[0], newColors[1], newColors[2]));
             }
         }
-
+    modifiedImagePanel.repaint();
     }
 
     //source != modifiedImage!
@@ -293,22 +296,48 @@ public class Controller {
     }
 
     public void applyEmbossing() {
-        //todo: как правильно?
-        applyConvolutionMatrix(embossingMatrix, modifiableImagePanel.getImage());
-        BufferedImage image = modifiedImagePanel.getImage();
-        for(int y = 0; y < image.getHeight(); y++)
+        BufferedImage image = modifiableImagePanel.getImage();
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        for(int y = 0; y < height; y++)
         {
-            for (int x = 0; x < image.getWidth(); x++)
+            for(int x = 0; x < width; x++)
             {
-                int color = image.getRGB(x, y);
-                int red = (color & 0xFF0000) >> 16;
-                int green = (color & 0x00FF00) >> 8;
-                int blue = color & 0x0000FF;
-                red = saturate(red + 128);
-                green = saturate(green + 128);
-                blue = saturate(blue + 128);
-                //int newColor = blue + (green << 8) + (red << 16);
-                image.setRGB(x, y, getColorFromComponents(red, green, blue));
+                int rsum = 0, gsum = 0, bsum = 0;
+                for (int i = -1; i < 2; i++)
+                {
+                    for (int j = -1; j < 2; j++)
+                    {
+                        int convolutionMatrixValue = embossingMatrix[i + 1][j + 1];
+                        int color;
+                        if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height)
+                            color = image.getRGB(j + x, i + y);
+                        else
+                        {
+                            int nx = x + j, ny = y + i;
+                            if(nx < 0)
+                                nx = 0;
+                            else if (nx >= width)
+                                nx = width - 1;
+                            if(ny < 0)
+                                ny = 0;
+                            else if (ny >= height)
+                                ny = height - 1;
+                            color = image.getRGB(nx, ny);
+                        }
+                        int red = (color & 0xFF0000) >> 16;
+                        int green = (color & 0x00FF00) >> 8;
+                        int blue = color & 0x0000FF;
+                        rsum += red * convolutionMatrixValue;
+                        gsum += green * convolutionMatrixValue;
+                        bsum += blue * convolutionMatrixValue;
+                    }
+                }
+                int r = saturate(rsum + 128);
+                int g = saturate(gsum + 128);
+                int b = saturate(bsum + 128);
+                modifiedImagePanel.setColor(x, y, getColorFromComponents(r, g, b));
             }
         }
         modifiedImagePanel.repaint();
@@ -470,7 +499,6 @@ public class Controller {
     //видимо всё-таки будет как в примерах: на один больше
     public int getClosestColor(int color, int colorCount)
     {
-        //это не правильно: всегда округляет в меньую сторону
         int sum = 0;
         int minDiff = 255, minSum = 255;
         int addition = (int)Math.round(255.0 / colorCount);
@@ -486,6 +514,10 @@ public class Controller {
             return 255;
         else
             return minSum;
+    }
+
+    public void zoom() {
+
     }
 }
 
