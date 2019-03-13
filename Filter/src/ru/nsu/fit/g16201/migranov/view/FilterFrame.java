@@ -30,15 +30,37 @@ public class FilterFrame extends MainFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         mainPanel.revalidate();
-        originalImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        modifiableImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        modifiedImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        originalImagePanel.setPreferredSize(new Dimension(352, 352));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
-        modifiableImagePanel.setPreferredSize(new Dimension(352, 352));
-        modifiedImagePanel.setPreferredSize(new Dimension(352, 352));
-        mainPanel.add(originalImagePanel);
-        mainPanel.add(modifiableImagePanel);
-        mainPanel.add(modifiedImagePanel);
+        //originalImagePanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5), BorderFactory.createEmptyBorder(5,5,5,5)));
+        originalImagePanel.setPreferredSize(new Dimension(350, 350));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
+        modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
+        modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
+        JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
+
+        //originalImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        //modifiableImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        //modifiedImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        //mainPanel.add(originalImagePanel);
+        //mainPanel.add(modifiableImagePanel);
+        //mainPanel.add(modifiedImagePanel);
+
+        originalBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        modifiableBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        modifiedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        originalBorderPanel.add(originalImagePanel);
+        modifiableBorderPanel.add(modifiableImagePanel);
+        modifiedBorderPanel.add(modifiedImagePanel);
+        originalBorderPanel.setPreferredSize(new Dimension(352, 352));
+        modifiableBorderPanel.setPreferredSize(new Dimension(352, 352));
+        modifiedBorderPanel.setPreferredSize(new Dimension(352, 352));
+        originalBorderPanel.setLayout(new SpringLayout());
+        modifiableBorderPanel.setLayout(new SpringLayout());
+        modifiedBorderPanel.setLayout(new SpringLayout());
+        mainPanel.add(originalBorderPanel);
+        mainPanel.add(modifiableBorderPanel);
+        mainPanel.add(modifiedBorderPanel);
+        originalBorderPanel.revalidate();
+
+
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
 
         addMenus();

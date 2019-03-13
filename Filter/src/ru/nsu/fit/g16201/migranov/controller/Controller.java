@@ -93,12 +93,12 @@ public class Controller {
 
 
             originalImagePanel.setLayout(new SpringLayout());
-            selectBox = new JPanel();
+            /*selectBox = new JPanel();
             originalImagePanel.add(selectBox);
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
             selectBox.setBackground(new Color(0,0,0,0));
             selectBox.setLocation(1, 1);        //0,0? дабы учесть границы;; а само подизображение берём с ззахлёстом: то, что под границами тоже входит
-            selectBox.setBorder(BorderFactory.createDashedBorder(Color.gray, 3, 1));
+            selectBox.setBorder(BorderFactory.createDashedBorder(Color.gray, 3, 1));*/
 
         }
         catch (IOException e)

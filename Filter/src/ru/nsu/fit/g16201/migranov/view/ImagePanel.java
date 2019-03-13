@@ -54,7 +54,9 @@ public class ImagePanel extends JPanel {
     {
         super.paintComponent(g);
         if(image != null)
-            g.drawImage(image, 1, 1, image.getWidth(), image.getHeight(), null);
+            //g.drawImage(image, 1, 1, image.getWidth(), image.getHeight(), null);
+            g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
+
     }
 
     public int getColor(int x, int y)
