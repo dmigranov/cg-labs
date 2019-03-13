@@ -84,7 +84,13 @@ public class Controller {
             int realHeight = image.getHeight();
 
             int selectBoxWidth = (int)(350/(realWidth/350.0));
-            int selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально!
+            int selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально (min)!
+
+            if(realWidth <= 350 && realHeight <= 350) {
+                selectBoxWidth = realWidth;
+                selectBoxHeight = realHeight;
+            }
+
 
             originalImagePanel.setLayout(new SpringLayout());
             selectBox = new JPanel();
