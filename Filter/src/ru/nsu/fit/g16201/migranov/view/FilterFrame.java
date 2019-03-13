@@ -36,13 +36,6 @@ public class FilterFrame extends MainFrame {
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
         JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
 
-        //originalImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        //modifiableImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        //modifiedImagePanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        //mainPanel.add(originalImagePanel);
-        //mainPanel.add(modifiableImagePanel);
-        //mainPanel.add(modifiedImagePanel);
-
         originalBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiableBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
@@ -60,12 +53,11 @@ public class FilterFrame extends MainFrame {
         mainPanel.add(modifiedBorderPanel);
         originalBorderPanel.revalidate();
 
-
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
 
         addMenus();
 
-        //todo: сказал вообще избавиться от скролла
+        //todo: teacher сказал вообще избавиться от скролла
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setDoubleBuffered(true);
         scrollPane.setWheelScrollingEnabled(true);

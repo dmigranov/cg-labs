@@ -19,7 +19,6 @@ import static java.lang.Math.abs;
 
 public class Controller {
     private ImagePanel originalImagePanel, modifiableImagePanel, modifiedImagePanel;
-    private JPanel selectBox;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
@@ -30,6 +29,8 @@ public class Controller {
     private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
     private boolean startedMoving = false;
+    private JPanel selectBox;
+    int selectBoxWidth, selectBoxHeight;
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -61,6 +62,9 @@ public class Controller {
                     return;
                 else {
                     startedMoving = true;
+
+                    selectBox.setLocation(x - selectBoxWidth/2, y - selectBoxHeight/2);
+
                     System.out.println("here");
                 }
 
@@ -83,8 +87,8 @@ public class Controller {
             int realWidth = image.getWidth();
             int realHeight = image.getHeight();
 
-            int selectBoxWidth = (int)(350/(realWidth/350.0));
-            int selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально (min)!
+            selectBoxWidth = (int)(350/(realWidth/350.0));
+            selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально (min)!
 
             if(realWidth <= 350 && realHeight <= 350) {
                 selectBoxWidth = realWidth;
@@ -93,12 +97,12 @@ public class Controller {
 
 
             originalImagePanel.setLayout(new SpringLayout());
-            /*selectBox = new JPanel();
+            selectBox = new JPanel();
             originalImagePanel.add(selectBox);
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
             selectBox.setBackground(new Color(0,0,0,0));
-            selectBox.setLocation(1, 1);        //0,0? дабы учесть границы;; а само подизображение берём с ззахлёстом: то, что под границами тоже входит
-            selectBox.setBorder(BorderFactory.createDashedBorder(Color.gray, 3, 1));*/
+            selectBox.setLocation(0, 0);
+            selectBox.setBorder(BorderFactory.createDashedBorder(Color.green, 2, 4));       //todo:xor?
 
         }
         catch (IOException e)
