@@ -120,7 +120,7 @@ public class FilterFrame extends MainFrame {
         JMenuItem item = new JMenuItem(title);
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
-        item.addMouseListener(new StatusTitleListener(statusLabel));
+        //item.addMouseListener(new StatusTitleListener(statusLabel));
         final Method method = getClass().getMethod(actionMethod);
         item.addActionListener(evt -> {
             try {
@@ -143,7 +143,7 @@ public class FilterFrame extends MainFrame {
         for(ActionListener listener: item.getActionListeners())
             button.addActionListener(listener);
         button.setToolTipText(tooltip);
-        button.addMouseListener(new StatusTitleListener(statusLabel));
+        //button.addMouseListener(new StatusTitleListener(statusLabel));
         toolBar.add(button);
     }
 

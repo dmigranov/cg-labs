@@ -40,12 +40,15 @@ public class Controller {
         selectBox = new JPanel();
         originalImagePanel.add(selectBox);
         selectBox.setVisible(false);
+        selectBox.setBackground(new Color(0,0,0,0));
+        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 4));       //todo:xor?
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 startedMoving = false;
+                selectBox.setVisible(false);
             }
 
             @Override
@@ -67,6 +70,7 @@ public class Controller {
 
                 //todo: учесть четность
                 startedMoving = true;
+                selectBox.setVisible(true);
                 int newX=0, newY=0;
                 if(selectBoxHeight % 2 == 1)
                     newY = y - selectBoxHeight/2;
@@ -92,8 +96,7 @@ public class Controller {
 
                 System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
             }
-            }
-        );
+            });
     }
 
     public void openImage(File file)
@@ -121,12 +124,11 @@ public class Controller {
 
             originalImagePanel.setLayout(null);
 
-            selectBox.setVisible(true);
+            //selectBox.setVisible(true);
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
-            selectBox.setBackground(new Color(0,0,0,0));
+
             selectBox.setLocation(0, 0);
             selectBox.setBounds(0, 0, selectBoxWidth, selectBoxHeight);
-            selectBox.setBorder(BorderFactory.createDashedBorder(Color.green, 2, 4));       //todo:xor?
 
         }
         catch (IOException e)
