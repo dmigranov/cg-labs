@@ -18,8 +18,7 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class Controller {
-    private ImagePanel modifiableImagePanel, modifiedImagePanel;
-    private ImagePanel originalImagePanel;
+    private ImagePanel modifiableImagePanel, modifiedImagePanel, originalImagePanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
@@ -55,6 +54,7 @@ public class Controller {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                //todo: по клику
                 super.mouseClicked(e);
             }
         });
@@ -68,6 +68,8 @@ public class Controller {
                 int y = e.getY();
 
                 if(!startedMoving && (x >= originalImagePanel.getWidth() || y >= originalImagePanel.getHeight() || x < 0 || y < 0))
+                    return;
+                if(originalImage == null)
                     return;
 
                 //todo: учесть четность
@@ -109,8 +111,8 @@ public class Controller {
                 throw new IOException();
             this.originalImage = image;
             originalImagePanel.setImage(image);
-            modifiableImagePanel.setImage(image);   //todo: потом изменить на выбор квадратом
-            modifiedImagePanel.setEmptyImage(modifiableImagePanel.getWidth(), modifiableImagePanel.getHeight());
+            modifiableImagePanel.setEmptyImage(350, 350);   //todo: предусмотреть случаи когда менье
+            modifiedImagePanel.setEmptyImage(350, 350);
 
 
             int realWidth = image.getWidth();
@@ -233,7 +235,10 @@ public class Controller {
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
         BufferedImage originalImage = modifiableImagePanel.getImage();
-        BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
+        //тут незнамо почему ломается. вообще нужно оно? просто перенести изобрпжение на третью панель и там менять
+        //BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
+        BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        image.getGraphics().drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight() ,null);
 
         int levels[] = {rLevel, gLevel, bLevel};
 
@@ -429,7 +434,7 @@ public class Controller {
 
     private int getColorFromComponents(int r, int g, int b)
     {
-        return (r << 16) | (g << 8) | b;    //255 <<24? (альфа) todo: alpha!!
+        return 0xFF000000 | (r << 16) | (g << 8) | b;    //255 <<24? (альфа) todo: alpha!!
     }
 
     public void applySobelFilter(int threshold)

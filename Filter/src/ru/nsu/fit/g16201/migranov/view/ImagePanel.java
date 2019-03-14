@@ -16,18 +16,19 @@ public class ImagePanel extends JPanel {
         int desiredWidth = 350;
         int desiredHeight = 350;
 
-        if(realWidth <= desiredWidth && realHeight <= desiredHeight)
+        if(realWidth <= desiredWidth && realHeight <= desiredHeight) {
             image = newImage;
+            this.width = realWidth;
+            this.height = realHeight;
+        }
         else
         {
             if (realWidth * desiredHeight < realHeight * desiredWidth)
                 desiredWidth = realWidth * desiredHeight / realHeight;
             else
                 desiredHeight = realHeight * desiredWidth / realWidth;
-            image = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_RGB);
+            image = new BufferedImage(desiredWidth, desiredHeight, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = image.createGraphics();
-            //stack overflow how to resize buffered image
-            //почему он так плохо ресайзит? сжатие можно делать стнадартными методами (как я и сделал, собственно)
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(newImage, 0, 0, desiredWidth, desiredHeight, null);
             g.dispose();
@@ -43,6 +44,8 @@ public class ImagePanel extends JPanel {
 
     public void setEmptyImage(int width, int height) {
         image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        this.width = width;
+        this.height = height;
         Graphics2D g = image.createGraphics();
         g.fillRect(0, 0, width, height);//поставит другой цвет
         g.dispose();
