@@ -550,6 +550,7 @@ public class Controller {
     }
 
     public void zoom() {
+        //чаще всего 360, но не обязано
         int width = modifiableImagePanel.getImageWidth(), height = modifiableImagePanel.getImageHeight();
         int startX=0, endX=0, startY=0, endY=0;
         int windowWidth=0, windowHeight=0;
@@ -559,16 +560,24 @@ public class Controller {
             endX = width/2 + width/4;
             windowWidth = width/2;
         }
+        else {
+            windowWidth = width/2 + 1;
+            startX = width/2 - width/4;
+            endX = width/2 + width/4 + 1;
+        }
 
         if(height % 2 == 0)
         {
             startY = height/2 - height/4;
             endY = height/2 + height/4;
             windowHeight = height/2;
-
+        }
+        else{
+            windowHeight = height/2 + 1;
+            startY = height/2 - height/4;
+            endY = height/2 + height/4 + 1;
         }
 
-        //int c = (int)((modifiableImagePanel.getColor(x, y)*0.5 + modifiableImagePanel.getColor(x+1, y)*0.5) * 0.5 + (modifiableImagePanel.getColor(x, y+1)*0.5 + modifiableImagePanel.getColor(x+1, y+1)*0.5));
 
         for(int y = 0; y < 350; y++)
         {
@@ -577,11 +586,9 @@ public class Controller {
             double alphaY = oy - j;
             for(int x = 0; x < 350; x++)
             {
-                //0.5? а где еще взять углы
                 double ox = startX + x/350.0* windowWidth;
                 int i = (int)Math.floor(ox);
                 double alphaX = ox - i;
-
 
                 int oldColors[] = new int[4]; //нумерация как в четвертях компл плоскости
                 int oldRGB[][] = new int[4][3];
@@ -591,11 +598,13 @@ public class Controller {
                 oldColors[2] = modifiableImagePanel.getColor(i, j + 1);
                 oldColors[3] = modifiableImagePanel.getColor(i + 1, j + 1);
 
-                for(int k = 0; k < 3; k++) {
-                    double c1 = getColorComponent(oldColors[1], k) * (1 - alphaX) + getColorComponent(oldColors[0], k) * alphaX;
-                    double c2 = getColorComponent(oldColors[2], k) * (1 - alphaX) + getColorComponent(oldColors[3], k) * alphaX;
-                    //modifiedImagePanel.setColor(x, y, saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)));
-                    newColor |= ((saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)) << (16 - k * 8)));
+                for(int k = 0; k < 24; k+=8) {
+                    //double c1 = getColorComponent(oldColors[1], k) * (1 - alphaX) + getColorComponent(oldColors[0], k) * alphaX;
+                    //double c2 = getColorComponent(oldColors[2], k) * (1 - alphaX) + getColorComponent(oldColors[3], k) * alphaX;
+                    //newColor |= ((saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)) << (16 - k * 8)));
+                    double c1 = (oldColors[1] >> k & 0x000000FF) * (1 - alphaX) + (oldColors[0] >> k & 0x000000FF) * alphaX;
+                    double c2 = (oldColors[2] >> k & 0x000000FF) * (1 - alphaX) + (oldColors[3] >> k & 0x000000FF) * alphaX;
+                    newColor |= ((saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)) << k));
                 }
                 modifiedImagePanel.setColor(x, y, newColor);
             }
