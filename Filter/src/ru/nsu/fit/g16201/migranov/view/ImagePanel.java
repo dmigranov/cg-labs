@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ImagePanel extends JPanel {
-    private BufferedImage image = null;
-    private int width, height;
+    protected BufferedImage image = null;
+    protected int width, height;
 
     public void setImage(BufferedImage newImage)
     {

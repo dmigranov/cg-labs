@@ -64,28 +64,28 @@ public class Controller {
 
                 if(!startedMoving && (x >= originalImagePanel.getWidth() || y >= originalImagePanel.getHeight() || x < 0 || y < 0))
                     return;
-                else
-                    //todo: учесть четность
-                    startedMoving = true;
-                    int newX=0, newY=0;
-                    if(selectBoxHeight % 2 == 1)
-                        newY = y - selectBoxHeight/2;
-                    else
-                        ;
-                    if(selectBoxWidth % 2 == 1)
-                        newX = x - selectBoxWidth/2;
-                    else
-                        ;
 
-                   if(newX < 0)
-                        newX = 0;
-                   if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
-                        newX = originalImagePanel.getImageWidth() - selectBoxWidth;
-                    if(newY < 0)
-                        newY = 0;
-                    if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
-                        newY = originalImagePanel.getImageHeight() - selectBoxHeight;
-                    //todo: на лене работает неплохо, но наведение на кнопки/меню приводит к смещению в начало!! что???
+                //todo: учесть четность
+                startedMoving = true;
+                int newX=0, newY=0;
+                if(selectBoxHeight % 2 == 1)
+                    newY = y - selectBoxHeight/2;
+                else
+                    ;
+                if(selectBoxWidth % 2 == 1)
+                    newX = x - selectBoxWidth/2;
+                else
+                    ;
+
+                if(newX < 0)
+                    newX = 0;
+                if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
+                    newX = originalImagePanel.getImageWidth() - selectBoxWidth;
+                if(newY < 0)
+                    newY = 0;
+                if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
+                    newY = originalImagePanel.getImageHeight() - selectBoxHeight;
+                //todo: на лене работает неплохо но размеры
 
                 selectBox.setLocation(newX, newY);
                 modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / 350,newY * originalImage.getHeight()/350 , 350, 350  ));   //todo;исправить (ghtlecv dct ckexfb)
