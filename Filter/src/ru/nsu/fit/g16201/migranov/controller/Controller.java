@@ -30,7 +30,7 @@ public class Controller {
 
     private boolean startedMoving = false;
     private JPanel selectBox;
-    int selectBoxWidth, selectBoxHeight;
+    private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -79,11 +79,11 @@ public class Controller {
                 if(selectBoxHeight % 2 == 1)
                     newY = y - selectBoxHeight/2;
                 else
-                    ;
+                    newY = y - selectBoxHeight/2;
                 if(selectBoxWidth % 2 == 1)
                     newX = x - selectBoxWidth/2;
                 else
-                    ;
+                    newX = x - selectBoxWidth/2; //todo: четность!!
 
                 if(newX < 0)
                     newX = 0;
@@ -96,7 +96,7 @@ public class Controller {
                 //todo: на лене работает неплохо но размеры
 
                 selectBox.setLocation(newX, newY);
-                modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / 350,newY * originalImage.getHeight()/350 , 350, 350  ));   //todo;исправить (ghtlecv dct ckexfb)
+                modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / realSelectBoxWidth,newY * originalImage.getHeight()/realSelectBoxHeight , realSelectBoxWidth, realSelectBoxHeight  ));   //todo;исправить (ghtlecv dct ckexfb)
 
                 //System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
             }
@@ -124,6 +124,13 @@ public class Controller {
             if(realWidth <= 350 && realHeight <= 350) {
                 selectBoxWidth = realWidth;
                 selectBoxHeight = realHeight;
+                realSelectBoxWidth = realWidth;
+                realSelectBoxHeight = realHeight;
+            }
+            else
+            {
+                realSelectBoxWidth = 350;
+                realSelectBoxHeight = 350; //todo: на самом деле нет: если x < 350, а y >, то нет. Надо учесть!!
             }
 
             originalImagePanel.setLayout(null);
@@ -555,29 +562,14 @@ public class Controller {
         int startX=0, endX=0, startY=0, endY=0;
         int windowWidth=0, windowHeight=0;
 
-        if(width % 2 == 0){
-            startX = width/2 - width/4;
-            endX = width/2 + width/4;
-            windowWidth = width/2;
-        }
-        else {
-            windowWidth = width/2 + 1;
-            startX = width/2 - width/4;
-            endX = width/2 + width/4 + 1;
-        }
+        startX = width/2 - width/4 + width % 2;
+        endX = width/2 + width/4;
+        windowWidth = width/2 + width % 2;
 
-        if(height % 2 == 0)
-        {
-            startY = height/2 - height/4;
-            endY = height/2 + height/4;
-            windowHeight = height/2;
-        }
-        else{
-            windowHeight = height/2 + 1;
-            startY = height/2 - height/4;
-            endY = height/2 + height/4 + 1;
-        }
-
+        //todo: проверить (для нечетных длины и ширины)
+        startY = height/2 - height/4 + height % 2;
+        endY = height/2 + height/4;
+        windowHeight = height/2 + height % 2;
 
         for(int y = 0; y < 350; y++)
         {
@@ -609,7 +601,6 @@ public class Controller {
                 modifiedImagePanel.setColor(x, y, newColor);
             }
         }
-
         modifiedImagePanel.repaint();
     }
 
