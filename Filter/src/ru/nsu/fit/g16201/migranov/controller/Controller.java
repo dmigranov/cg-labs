@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.view.ImagePanel;
+import ru.nsu.fit.g16201.migranov.view.OriginalImagePanel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,7 +19,8 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class Controller {
-    private ImagePanel originalImagePanel, modifiableImagePanel, modifiedImagePanel;
+    private ImagePanel modifiableImagePanel, modifiedImagePanel;
+    private OriginalImagePanel originalImagePanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
@@ -32,10 +34,12 @@ public class Controller {
     private JPanel selectBox;
     int selectBoxWidth, selectBoxHeight;
 
-    public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
+    public Controller(OriginalImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
+
+        originalImagePanel.setSelectBox(selectBox);
 
         selectBox = new JPanel();
         originalImagePanel.add(selectBox);

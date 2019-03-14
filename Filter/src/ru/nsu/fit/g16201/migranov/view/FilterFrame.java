@@ -14,7 +14,8 @@ import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 
 public class FilterFrame extends MainFrame {
-    private ImagePanel originalImagePanel = new ImagePanel(), modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel();
+    private ImagePanel modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel();
+    private OriginalImagePanel originalImagePanel = new OriginalImagePanel();
     private JLabel statusLabel = new JLabel("");
     private Controller controller;
     public static void main(String[] args) throws Exception {
