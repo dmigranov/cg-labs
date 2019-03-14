@@ -552,29 +552,40 @@ public class Controller {
     public void zoom() {
         int width = modifiableImagePanel.getImageWidth(), height = modifiableImagePanel.getImageHeight();
         int startX=0, endX=0, startY=0, endY=0;
+        int windowWidth=0, windowHeight=0;
 
         if(width % 2 == 0){
             startX = width/2 - width/4;
             endX = width/2 + width/4;
+            windowWidth = width/2;
         }
 
         if(height % 2 == 0)
         {
             startY = height/2 - height/4;
             endY = height/2 + height/4;
-
+            windowHeight = height/2;
 
         }
-        System.out.println(endX- startX);
 
+        //int c = (int)((modifiableImagePanel.getColor(x, y)*0.5 + modifiableImagePanel.getColor(x+1, y)*0.5) * 0.5 + (modifiableImagePanel.getColor(x, y+1)*0.5 + modifiableImagePanel.getColor(x+1, y+1)*0.5));
 
-        for(int y = startY; y < endY; y++)
+        for(int y = 0; y < 350; y++)
         {
-            for(int x = startX; x < endY; x++)
+            double oy = startY + y/350.0* windowWidth;
+            int j = (int)Math.floor(oy);
+            double alphaY = oy - j;
+            for(int x = 0; x < 350; x++)
             {
                 //0.5? а где еще взять углы
-                int c = (int)((modifiableImagePanel.getColor(x, y)*0.5 + modifiableImagePanel.getColor(x+1, y)*0.5) * 0.5 + (modifiableImagePanel.getColor(x, y+1)*0.5 + modifiableImagePanel.getColor(x+1, y+1)*0.5));
-                modifiedImagePanel.setColor(x-startX, y-startY, saturate(c));
+                double ox = startX + x/350.0* windowWidth;
+                int i = (int)Math.floor(ox);
+                double alphaX = ox - i;
+
+                double c1 = modifiableImagePanel.getColor(i, j)*(1-alphaX) + modifiableImagePanel.getColor(i+1, j)*alphaX;
+                double c2 = modifiableImagePanel.getColor(i, j + 1)*(1-alphaX) + modifiableImagePanel.getColor(i+1, j+1)*alphaX;
+                System.out.println(alphaX + " " + c1);
+                modifiedImagePanel.setColor(x, y, saturate((int)(c1 * (1 -alphaY) + c2 * alphaY)));
             }
         }
 
