@@ -30,7 +30,7 @@ public class Controller {
 
     private boolean startedMoving = false;
     private JPanel selectBox;
-    private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;
+    private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;   //последние два совпадают с размером выделенной области во второй панелм
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -571,14 +571,14 @@ public class Controller {
         endY = height/2 + height/4;
         windowHeight = height/2 + height % 2;
 
-        for(int y = 0; y < 350; y++)
+        for(int y = 0; y < realSelectBoxHeight; y++)
         {
-            double oy = startY + y/350.0* windowWidth;
+            double oy = startY + 1.0*y/realSelectBoxHeight* windowWidth;
             int j = (int)Math.floor(oy);
             double alphaY = oy - j;
-            for(int x = 0; x < 350; x++)
+            for(int x = 0; x < realSelectBoxWidth; x++)
             {
-                double ox = startX + x/350.0* windowWidth;
+                double ox = startX + 1.0*x/realSelectBoxWidth* windowWidth;
                 int i = (int)Math.floor(ox);
                 double alphaX = ox - i;
 
