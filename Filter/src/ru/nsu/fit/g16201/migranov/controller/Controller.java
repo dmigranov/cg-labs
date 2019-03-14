@@ -54,8 +54,8 @@ public class Controller {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                //todo: по клику
                 super.mouseClicked(e);
+                //todo: по клику (копипаст из дрэга)
             }
         });
 
@@ -187,10 +187,10 @@ public class Controller {
         return v;
     }
 
-    public void doOrderedDithering(int rLevel, int gLevel, int bLevel)  //todo: добавить размер матрицы возможно
+    public void doOrderedDithering(int rLevel, int gLevel, int bLevel, int matrixSize)
     {
         //todo: нормировать как в тетрпдке
-        int matrixSize = 4;
+        matrixSize = 4;  //todo: добавить размер матрицы возможно
         double[][] orderedDitherDoubleMatrix = new double[4][4];
         for(int i  = 0; i < matrixSize; i++)
             for(int j  = 0; j < matrixSize; j++)
@@ -207,24 +207,24 @@ public class Controller {
                 int red = (color & 0xFF0000) >> 16, green = (color & 0x00FF00) >> 8, blue = color & 0x0000FF;
                 int nred = 0, ngreen = 0, nblue = 0;
 
-                //red >>= 5; //оставляем три старших бит
-                //green >>= 5;
-                //blue >>= 6;
                 //int threshold = orderedDitherMatrix[j][i] * 255 / 16;
 
                 //int addition = (int)((256.0/(4 - 1))*(orderedDitherDoubleMatrix[j][i]/(4.0 * 4.0) - 0.5)); //-1/2, r wiki
 
-                //int addition = (int)(256/rLevel*(orderedDitherMatrix[j][i] - 0.5));
+                //int addition = orderedDitherMatrix[j][i] * 16 - 127;
+                double addition = orderedDitherDoubleMatrix[j][i] - 0.5;
 
-                int addition = orderedDitherMatrix[j][i];
-
-                nred = red + addition;
+                /*nred = red + addition;
                 ngreen = green + addition;
                 nblue = blue + addition;
                 nred = getClosestColor(nred, rLevel);
                 ngreen = getClosestColor(ngreen, gLevel);
-                nblue = getClosestColor(nblue, bLevel);
-                //System.out.println(nred + " " + ngreen + " " + nblue );
+                nblue = getClosestColor(nblue, bLevel);*/
+
+                nred = getClosestColor((int)((red + addition*255/rLevel)), rLevel);
+                nblue = getClosestColor((int)((blue + addition*255/bLevel)), bLevel);
+                ngreen = getClosestColor((int)((green + addition*255/gLevel)), gLevel);
+                System.out.println((nred + addition*255/rLevel) + " " + ngreen + " " + nblue );
 
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
@@ -235,7 +235,6 @@ public class Controller {
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
         BufferedImage originalImage = modifiableImagePanel.getImage();
-        //тут незнамо почему ломается. вообще нужно оно? просто перенести изобрпжение на третью панель и там менять
         //BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
         BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         image.getGraphics().drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight() ,null);
@@ -405,7 +404,6 @@ public class Controller {
 
         for(int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                //List<Integer> neighbours = new ArrayList<>();
                 List<Integer> rneighbours = new ArrayList<>(), gneighbours = new ArrayList<>(), bneighbours = new ArrayList<>();
                 for (int i = -fy / 2; i < fy / 2 + 1; i++) {
                     for (int j = -fx / 2; j < fx / 2 + 1; j++) {

@@ -182,6 +182,8 @@ public class FilterFrame extends MainFrame {
         //теперь уже нет. может, стоить сдвигать на единицу, чтоб как раньеш?
         DitheringParametersPanel ditheringParametersPanel = new DitheringParametersPanel();
 
+        //todo сделать выбор матрицы радиобаттон
+
         if(JOptionPane.showConfirmDialog(this, ditheringParametersPanel, "Ordered dithering algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String rText = ditheringParametersPanel.getRText();
@@ -194,7 +196,7 @@ public class FilterFrame extends MainFrame {
                 int bLevel = Integer.parseInt(bText);
                 if(rLevel == 0 || gLevel == 0 || bLevel == 0) //<=1?
                     throw new NumberFormatException();
-                controller.doOrderedDithering(rLevel, gLevel, bLevel);
+                controller.doOrderedDithering(rLevel, gLevel, bLevel, 4);
             }
             catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Wrong threshold values", "Wrong input", JOptionPane.ERROR_MESSAGE);
