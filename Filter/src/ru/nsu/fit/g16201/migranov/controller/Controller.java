@@ -98,7 +98,7 @@ public class Controller {
                 selectBox.setLocation(newX, newY);
                 modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / 350,newY * originalImage.getHeight()/350 , 350, 350  ));   //todo;исправить (ghtlecv dct ckexfb)
 
-                System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
+                //System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
             }
             });
     }
@@ -212,20 +212,12 @@ public class Controller {
                 //int addition = (int)((256.0/(4 - 1))*(orderedDitherDoubleMatrix[j][i]/(4.0 * 4.0) - 0.5)); //-1/2, r wiki
 
                 //int addition = orderedDitherMatrix[j][i] * 16 - 127;
+
                 double addition = orderedDitherDoubleMatrix[j][i] - 0.5;
-
-                /*nred = red + addition;
-                ngreen = green + addition;
-                nblue = blue + addition;
-                nred = getClosestColor(nred, rLevel);
-                ngreen = getClosestColor(ngreen, gLevel);
-                nblue = getClosestColor(nblue, bLevel);*/
-
                 nred = getClosestColor((int)((red + addition*255/rLevel)), rLevel);
                 nblue = getClosestColor((int)((blue + addition*255/bLevel)), bLevel);
                 ngreen = getClosestColor((int)((green + addition*255/gLevel)), gLevel);
-                System.out.println((nred + addition*255/rLevel) + " " + ngreen + " " + nblue );
-
+                System.out.println(nred);
                 int newColor = nblue + (ngreen << 8) + (nred << 16);
                 modifiedImagePanel.setColor(x, y, newColor);
             }
@@ -558,7 +550,35 @@ public class Controller {
     }
 
     public void zoom() {
+        int width = modifiableImagePanel.getImageWidth(), height = modifiableImagePanel.getImageHeight();
+        int startX=0, endX=0, startY=0, endY=0;
 
+        if(width % 2 == 0){
+            startX = width/2 - width/4;
+            endX = width/2 + width/4;
+        }
+
+        if(height % 2 == 0)
+        {
+            startY = height/2 - height/4;
+            endY = height/2 + height/4;
+
+
+        }
+        System.out.println(endX- startX);
+
+
+        for(int y = startY; y < endY; y++)
+        {
+            for(int x = startX; x < endY; x++)
+            {
+                //0.5? а где еще взять углы
+                int c = (int)((modifiableImagePanel.getColor(x, y)*0.5 + modifiableImagePanel.getColor(x+1, y)*0.5) * 0.5 + (modifiableImagePanel.getColor(x, y+1)*0.5 + modifiableImagePanel.getColor(x+1, y+1)*0.5));
+                modifiedImagePanel.setColor(x-startX, y-startY, saturate(c));
+            }
+        }
+
+        modifiedImagePanel.repaint();
     }
 }
 
