@@ -582,14 +582,32 @@ public class Controller {
                 int i = (int)Math.floor(ox);
                 double alphaX = ox - i;
 
-                double c1 = modifiableImagePanel.getColor(i, j)*(1-alphaX) + modifiableImagePanel.getColor(i+1, j)*alphaX;
-                double c2 = modifiableImagePanel.getColor(i, j + 1)*(1-alphaX) + modifiableImagePanel.getColor(i+1, j+1)*alphaX;
-                System.out.println(alphaX + " " + c1);
-                modifiedImagePanel.setColor(x, y, saturate((int)(c1 * (1 -alphaY) + c2 * alphaY)));
+
+                int oldColors[] = new int[4]; //нумерация как в четвертях компл плоскости
+                int oldRGB[][] = new int[4][3];
+                int newColor = 0;
+                oldColors[0] = modifiableImagePanel.getColor(i + 1, j);
+                oldColors[1] = modifiableImagePanel.getColor(i, j);
+                oldColors[2] = modifiableImagePanel.getColor(i, j + 1);
+                oldColors[3] = modifiableImagePanel.getColor(i + 1, j + 1);
+
+                for(int k = 0; k < 3; k++) {
+                    double c1 = getColorComponent(oldColors[1], k) * (1 - alphaX) + getColorComponent(oldColors[0], k) * alphaX;
+                    double c2 = getColorComponent(oldColors[2], k) * (1 - alphaX) + getColorComponent(oldColors[3], k) * alphaX;
+                    //modifiedImagePanel.setColor(x, y, saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)));
+                    newColor |= ((saturate((int) (c1 * (1 - alphaY) + c2 * alphaY)) << (16 - k * 8)));
+                }
+                modifiedImagePanel.setColor(x, y, newColor);
             }
         }
 
         modifiedImagePanel.repaint();
+    }
+
+    int getColorComponent(int color, int component)
+    {
+        //int shift = (16-component*8);
+        return (color >> (16-component*8)) & (0x000000FF);
     }
 }
 
