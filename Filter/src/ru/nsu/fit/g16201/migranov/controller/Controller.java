@@ -18,7 +18,8 @@ import java.util.List;
 import static java.lang.Math.abs;
 
 public class Controller {
-    private ImagePanel originalImagePanel, modifiableImagePanel, modifiedImagePanel;
+    private ImagePanel modifiableImagePanel, modifiedImagePanel;
+    private ImagePanel originalImagePanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
@@ -36,6 +37,7 @@ public class Controller {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
+
 
         selectBox = new JPanel();
         originalImagePanel.add(selectBox);
