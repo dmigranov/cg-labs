@@ -37,6 +37,10 @@ public class Controller {
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
 
+        selectBox = new JPanel();
+        originalImagePanel.add(selectBox);
+        selectBox.setVisible(false);
+
         originalImagePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -75,17 +79,19 @@ public class Controller {
 
                    if(newX < 0)
                         newX = 0;
-                   if(newX + selectBoxWidth >= originalImagePanel.getImageWidth())
+                   if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
                         newX = originalImagePanel.getImageWidth() - selectBoxWidth;
                     if(newY < 0)
                         newY = 0;
-                    if(newY + selectBoxHeight >= originalImagePanel.getImageHeight())
+                    if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
                         newY = originalImagePanel.getImageHeight() - selectBoxHeight;
                     //todo: на лене работает неплохо, но наведение на кнопки/меню приводит к смещению в начало!! что???
 
                 selectBox.setLocation(newX, newY);
                 modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / 350,newY * originalImage.getHeight()/350 , 350, 350  ));   //todo;исправить (ghtlecv dct ckexfb)
-                }
+
+                System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
+            }
             }
         );
     }
@@ -113,13 +119,13 @@ public class Controller {
                 selectBoxHeight = realHeight;
             }
 
+            originalImagePanel.setLayout(null);
 
-            originalImagePanel.setLayout(new SpringLayout());
-            selectBox = new JPanel();
-            originalImagePanel.add(selectBox);
+            selectBox.setVisible(true);
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
             selectBox.setBackground(new Color(0,0,0,0));
             selectBox.setLocation(0, 0);
+            selectBox.setBounds(0, 0, selectBoxWidth, selectBoxHeight);
             selectBox.setBorder(BorderFactory.createDashedBorder(Color.green, 2, 4));       //todo:xor?
 
         }
