@@ -9,7 +9,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +33,8 @@ public class Controller {
     private boolean startedMoving = false;
     private JPanel selectBox;
     private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;   //последние два совпадают с размером выделенной области во второй панелм
+
+    private VolumeRenderer renderer = new VolumeRenderer();
 
     public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
         this.originalImagePanel = originalImagePanel;
@@ -93,11 +97,10 @@ public class Controller {
                     newY = 0;
                 if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
                     newY = originalImagePanel.getImageHeight() - selectBoxHeight;
-                //todo: на лене работает неплохо но размеры
+                //todo: размеры!!
 
                 selectBox.setLocation(newX, newY);
-                modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / realSelectBoxWidth,newY * originalImage.getHeight()/realSelectBoxHeight , realSelectBoxWidth, realSelectBoxHeight  ));   //todo;исправить (ghtlecv dct ckexfb)
-
+                modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / realSelectBoxWidth,newY * originalImage.getHeight()/realSelectBoxHeight , realSelectBoxWidth, realSelectBoxHeight  ));
                 //System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
             }
             });
@@ -238,7 +241,7 @@ public class Controller {
         BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         image.getGraphics().drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight() ,null);
 
-        int levels[] = {rLevel, gLevel, bLevel};
+        int[] levels = {rLevel, gLevel, bLevel};
 
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
@@ -246,12 +249,12 @@ public class Controller {
             {
                 int oldRGBColor = image.getRGB(x, y);
 
-                int colors[] = new int[3];
+                int[] colors = new int[3];
                 colors[0] = ((oldRGBColor & 0xFF0000) >> 16);
                 colors[1] = ((oldRGBColor & 0x00FF00) >> 8);
                 colors[2] = (oldRGBColor & 0x0000FF);
 
-                int newColors[] = new int[3];
+                int[] newColors = new int[3];
                 for(int i = 0; i < 3; i++)
                 {
                     int oldColor = colors[i];
@@ -431,7 +434,7 @@ public class Controller {
 
     private int getColorFromComponents(int r, int g, int b)
     {
-        return 0xFF000000 | (r << 16) | (g << 8) | b;    //255 <<24? (альфа) todo: alpha!!
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
     public void applySobelFilter(int threshold)
@@ -537,7 +540,7 @@ public class Controller {
     }
 
     //видимо всё-таки будет как в примерах: на один больше
-    public int getClosestColor(int color, int colorCount)
+    private int getClosestColor(int color, int colorCount)
     {
         int sum = 0;
         int minDiff = 255, minSum = 255;
@@ -566,11 +569,11 @@ public class Controller {
         endX = width/2 + width/4;
         windowWidth = width/2 + width % 2;
 
-        //todo: проверить (для нечетных длины и ширины)
         startY = height/2 - height/4 + height % 2;
         endY = height/2 + height/4;
         windowHeight = height/2 + height % 2;
 
+        //todo: возможно, стоит сделать как в примерах, чтобы он растягивался на все 350*350. Впрочем, мне и свой вариант кажется логичным
         for(int y = 0; y < realSelectBoxHeight; y++)
         {
             double oy = startY + 1.0*y/realSelectBoxHeight* windowWidth;
@@ -582,8 +585,7 @@ public class Controller {
                 int i = (int)Math.floor(ox);
                 double alphaX = ox - i;
 
-                int oldColors[] = new int[4]; //нумерация как в четвертях компл плоскости
-                int oldRGB[][] = new int[4][3];
+                int[] oldColors = new int[4]; //нумерация как в четвертях компл плоскости
                 int newColor = 0;
                 oldColors[0] = modifiableImagePanel.getColor(i + 1, j);
                 oldColors[1] = modifiableImagePanel.getColor(i, j);
@@ -606,8 +608,12 @@ public class Controller {
 
     int getColorComponent(int color, int component)
     {
-        //int shift = (16-component*8);
         return (color >> (16-component*8)) & (0x000000FF);
+    }
+
+    public void openConfigurationFile(File file)
+    {
+        renderer.openConfigurationFile(file);
     }
 }
 
