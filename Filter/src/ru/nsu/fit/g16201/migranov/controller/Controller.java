@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.Timer;
 
 import static java.lang.Math.abs;
 
@@ -31,6 +32,7 @@ public class Controller {
 
     private boolean startedMoving = false;
     private JPanel selectBox;
+    private Timer timer = new Timer(500, event -> selectBox.setVisible(false));
     private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;   //последние два совпадают с размером выделенной области во второй панелм
 
     private VolumeRenderer renderer = new VolumeRenderer();
@@ -40,11 +42,13 @@ public class Controller {
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
 
+        timer.setRepeats(false);
         selectBox = new JPanel();
         originalImagePanel.add(selectBox);
         selectBox.setVisible(false);
         selectBox.setBackground(new Color(0,0,0,0));
-        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 4));       //todo:xor?
+        //todo:xor!
+        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 4));
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -57,11 +61,20 @@ public class Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                //timer.stop();
                 int x = e.getX();
                 int y = e.getY();
 
                 if(originalImage == null)
                     return;
+
+                moveSelectBox(x, y);
+                selectBox.setVisible(false);
+
+                //timer = new Timer(500, event -> selectBox.setVisible(false));
+
+                //timer.start();
+
             }
         });
 
@@ -69,7 +82,7 @@ public class Controller {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-
+                //timer.stop();
                 int x = e.getX();
                 int y = e.getY();
                 if(!startedMoving && (x >= originalImagePanel.getWidth() || y >= originalImagePanel.getHeight() || x < 0 || y < 0))
@@ -79,34 +92,35 @@ public class Controller {
 
                 startedMoving = true;
 
-                int newX = 0, newY = 0;
-                newY = y - selectBoxHeight/2;
-                newX = x - selectBoxWidth/2;
-
-                if(newX < 0)
-                    newX = 0;
-                else if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
-                    newX = originalImagePanel.getImageWidth() - selectBoxWidth;
-                if(newY < 0)
-                    newY = 0;
-                else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
-                    newY = originalImagePanel.getImageHeight() - selectBoxHeight;
-
-                selectBox.setLocation(newX, newY);
-                selectBox.setVisible(true);
-                int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
-                if(pictureX + realSelectBoxWidth > originalImage.getWidth())
-                    pictureX = originalImage.getWidth() - realSelectBoxWidth;
-                if(pictureY + realSelectBoxHeight > originalImage.getHeight())
-                    pictureY = originalImage.getHeight() - realSelectBoxHeight;
-                modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
+                moveSelectBox(x, y);
             }
             });
     }
 
-    public void moveSelectBox(int x, int y)
+    private void moveSelectBox(int x, int y)
     {
+        int newX = 0, newY = 0;
+        newY = y - selectBoxHeight/2;
+        newX = x - selectBoxWidth/2;
 
+        if(newX < 0)
+            newX = 0;
+        else if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
+            newX = originalImagePanel.getImageWidth() - selectBoxWidth;
+        if(newY < 0)
+            newY = 0;
+        else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
+            newY = originalImagePanel.getImageHeight() - selectBoxHeight;
+
+        selectBox.setLocation(newX, newY);
+        selectBox.setVisible(true);
+
+        int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
+        if(pictureX + realSelectBoxWidth > originalImage.getWidth())
+            pictureX = originalImage.getWidth() - realSelectBoxWidth;
+        if(pictureY + realSelectBoxHeight > originalImage.getHeight())
+            pictureY = originalImage.getHeight() - realSelectBoxHeight;
+        modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
     }
 
     public void openImage(File file)
