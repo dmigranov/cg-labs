@@ -107,6 +107,11 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("Rotation and zoom/Rotate", "Rotate the image", KeyEvent.VK_R, "reload.png", "onRotate");
         addMenuAndToolBarButton("Rotation and zoom/Zoom X2", "Double the image", KeyEvent.VK_Z, "reload.png", "onZoom");
 
+        addSubMenu("Volume rendering", KeyEvent.VK_V);
+        addMenuAndToolBarButton("Volume rendering/Open configuration", "Open configuration file", KeyEvent.VK_O, "reload.png", "onOpenConfiguration");
+
+        addSubMenu("Help", KeyEvent.VK_H);
+        addMenuAndToolBarButton("Help/About", "About the program", KeyEvent.VK_A, "book.png", "onAbout");
 
     }
 
@@ -356,4 +361,16 @@ public class FilterFrame extends MainFrame {
         }
     }
 
+    public void onOpenConfiguration()
+    {
+        File file = getOpenFileName("txt", "A volume rendering description file");
+        if(file != null) {
+            controller.openConfigurationFile(file);
+        }
+    }
+
+    public void onAbout()
+    {
+        //todo
+    }
 }
