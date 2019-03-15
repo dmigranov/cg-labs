@@ -653,7 +653,7 @@ public class Controller {
         double sin = Math.sin(Math.toRadians(angle));
         double cos = Math.cos(Math.toRadians(angle));
 
-        //todo: четность?
+        //todo: четность!! ( смотри dither кратинку)
         for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
         {
             for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
@@ -662,14 +662,6 @@ public class Controller {
                 double xo = cos*x + sin * y;
                 double yo = -sin*x + cos*y;
 
-                /*if(Math.round(xo) >= realSelectBoxWidth/2)
-                    xo = realSelectBoxWidth/2 - 1;
-                else if (Math.round(xo) < -realSelectBoxWidth/2)
-                    xo = -realSelectBoxWidth/2;
-                if(Math.round(yo) >= realSelectBoxHeight/2)
-                    yo = realSelectBoxHeight/2 - 1;
-                else if (Math.round(yo) < -realSelectBoxHeight/2)
-                    yo = -realSelectBoxHeight/2;*/
 
                 if(Math.round(xo) >= realSelectBoxWidth/2 || Math.round(xo) < -realSelectBoxWidth/2 || Math.round(yo) >= realSelectBoxHeight/2 || Math.round(yo) < -realSelectBoxHeight/2)
                 {
@@ -677,7 +669,6 @@ public class Controller {
                     continue;
                 }
 
-                System.out.println(xo + " " + yo);
                 try {
                     modifiedImagePanel.setColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2, modifiableImagePanel.getColor((int) round(xo) + realSelectBoxWidth/2, (int) round(yo) + realSelectBoxHeight/2));
                 }
@@ -688,32 +679,6 @@ public class Controller {
             }
         }
 
-        /*for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
-        {
-            for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
-            {
-
-                double xn = cos*x - sin * y;
-                double yn = sin*x + cos*y;
-
-                if(Math.round(xn) >= realSelectBoxWidth/2)
-                    xn = realSelectBoxWidth/2 - 1;
-                else if (Math.round(xn) < -realSelectBoxWidth/2)
-                    xn = -realSelectBoxWidth/2;
-                if(Math.round(yn) >= realSelectBoxHeight/2)
-                    yn = realSelectBoxHeight/2 - 1;
-                else if (Math.round(yn) < -realSelectBoxHeight/2)
-                    yn = -realSelectBoxHeight/2;
-                System.out.println(xn + " " + yn);
-                try {
-                    modifiedImagePanel.setColor((int)Math.round(xn) + realSelectBoxWidth/2, (int)Math.round(yn) + realSelectBoxHeight/2, modifiableImagePanel.getColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2));
-                }
-                catch(IndexOutOfBoundsException e)
-                {
-                    System.out.println();
-                }
-            }
-        }*/
 
         modifiedImagePanel.repaint();
     }
