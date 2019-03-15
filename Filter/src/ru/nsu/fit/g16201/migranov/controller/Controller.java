@@ -9,9 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
+import java.awt.image.RasterFormatException;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +39,6 @@ public class Controller {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
-
 
         selectBox = new JPanel();
         originalImagePanel.add(selectBox);
@@ -80,15 +78,11 @@ public class Controller {
                 startedMoving = true;
                 selectBox.setVisible(true);
                 int newX=0, newY=0;
-                if(selectBoxHeight % 2 == 1)
-                    newY = y - selectBoxHeight/2;
-                else
-                    newY = y - selectBoxHeight/2;
-                if(selectBoxWidth % 2 == 1)
-                    newX = x - selectBoxWidth/2;
-                else
-                    newX = x - selectBoxWidth/2; //todo: четность!!
 
+                newY = y - selectBoxHeight/2;
+                newX = x - selectBoxWidth/2;
+
+                //todo: четность должна быть тту
                 if(newX < 0)
                     newX = 0;
                 if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
@@ -100,8 +94,17 @@ public class Controller {
                 //todo: размеры!!
 
                 selectBox.setLocation(newX, newY);
-                modifiableImagePanel.setImage(originalImage.getSubimage(newX * originalImage.getWidth() / realSelectBoxWidth,newY * originalImage.getHeight()/realSelectBoxHeight , realSelectBoxWidth, realSelectBoxHeight  ));
-                //System.out.println(newX * originalImage.getWidth() / 350 + " " + (newX+1) * originalImage.getWidth() / 350);
+                int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
+                if(pictureX + realSelectBoxWidth > originalImage.getWidth())
+                    pictureX = originalImage.getWidth() - realSelectBoxWidth;
+                if(pictureY + realSelectBoxHeight > originalImage.getHeight())
+                    pictureY = originalImage.getHeight() - realSelectBoxHeight;
+                modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
+
+                //catch (RasterFormatException r)
+                //{
+                 //   System.out.println(newX * originalImage.getWidth() / realSelectBoxWidth + " " + newY * originalImage.getHeight() / realSelectBoxHeight + " ");
+
             }
             });
     }
@@ -121,9 +124,6 @@ public class Controller {
             int realWidth = image.getWidth();
             int realHeight = image.getHeight();
 
-            selectBoxWidth = (int)(350/(realWidth/350.0));
-            selectBoxHeight = (int)(350/(realHeight/350.0));        //todo: поменять, чтобы всё было пропорционально (min)!
-
             if(realWidth <= 350 && realHeight <= 350) {
                 selectBoxWidth = realWidth;
                 selectBoxHeight = realHeight;
@@ -132,9 +132,31 @@ public class Controller {
             }
             else
             {
-                realSelectBoxWidth = 350;
-                realSelectBoxHeight = 350; //todo: на самом деле нет: если x < 350, а y >, то нет. Надо учесть!!
+                if(realHeight <= 350 && realWidth > 350)
+                {
+                    selectBoxHeight = originalImagePanel.getImageHeight();
+                    realSelectBoxHeight = realHeight;
+                    selectBoxWidth = (int)(350/(realWidth/350.0));
+                    realSelectBoxWidth = 350;
+                }
+                else if (realWidth <= 350 && realHeight > 350)
+                {
+                    selectBoxWidth = originalImagePanel.getImageWidth();
+                    realSelectBoxWidth = realWidth;
+                    selectBoxHeight = (int)(350/(realHeight/350.0));
+                    realSelectBoxHeight = 350;
+                }
+                else {
+                    //todo: поменять, чтобы всё было пропорционально (min)!
+                    selectBoxWidth = 350*350/realWidth;
+                    selectBoxHeight = 350*350/realHeight;
+                    selectBoxHeight = selectBoxHeight < selectBoxWidth? selectBoxHeight : selectBoxWidth;
+                    selectBoxWidth = selectBoxHeight;
+                    realSelectBoxWidth = 350;
+                    realSelectBoxHeight = 350;
+                }
             }
+            System.out.println(selectBoxWidth + " " + selectBoxHeight);
 
             originalImagePanel.setLayout(null);
 
