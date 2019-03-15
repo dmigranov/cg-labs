@@ -74,7 +74,6 @@ public class Controller {
                 if(originalImage == null)
                     return;
 
-                //todo: учесть четность
                 startedMoving = true;
                 selectBox.setVisible(true);
                 int newX=0, newY=0;
@@ -82,7 +81,6 @@ public class Controller {
                 newY = y - selectBoxHeight/2;
                 newX = x - selectBoxWidth/2;
 
-                //todo: четность должна быть тту
                 if(newX < 0)
                     newX = 0;
                 if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
@@ -91,7 +89,6 @@ public class Controller {
                     newY = 0;
                 if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
                     newY = originalImagePanel.getImageHeight() - selectBoxHeight;
-                //todo: размеры!!
 
                 selectBox.setLocation(newX, newY);
                 int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
@@ -100,11 +97,6 @@ public class Controller {
                 if(pictureY + realSelectBoxHeight > originalImage.getHeight())
                     pictureY = originalImage.getHeight() - realSelectBoxHeight;
                 modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
-
-                //catch (RasterFormatException r)
-                //{
-                 //   System.out.println(newX * originalImage.getWidth() / realSelectBoxWidth + " " + newY * originalImage.getHeight() / realSelectBoxHeight + " ");
-
             }
             });
     }
@@ -117,7 +109,7 @@ public class Controller {
                 throw new IOException();
             this.originalImage = image;
             originalImagePanel.setImage(image);
-            modifiableImagePanel.setEmptyImage(350, 350);   //todo: предусмотреть случаи когда менье
+            modifiableImagePanel.setEmptyImage(350, 350);
             modifiedImagePanel.setEmptyImage(350, 350);
 
 
