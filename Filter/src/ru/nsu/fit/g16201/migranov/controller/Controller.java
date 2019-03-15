@@ -57,7 +57,11 @@ public class Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //todo: по клику (копипаст из дрэга)
+                int x = e.getX();
+                int y = e.getY();
+
+                if(originalImage == null)
+                    return;
             }
         });
 
@@ -68,29 +72,28 @@ public class Controller {
 
                 int x = e.getX();
                 int y = e.getY();
-
                 if(!startedMoving && (x >= originalImagePanel.getWidth() || y >= originalImagePanel.getHeight() || x < 0 || y < 0))
                     return;
                 if(originalImage == null)
                     return;
 
                 startedMoving = true;
-                selectBox.setVisible(true);
-                int newX=0, newY=0;
 
+                int newX = 0, newY = 0;
                 newY = y - selectBoxHeight/2;
                 newX = x - selectBoxWidth/2;
 
                 if(newX < 0)
                     newX = 0;
-                if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
+                else if(newX + selectBoxWidth > originalImagePanel.getImageWidth())
                     newX = originalImagePanel.getImageWidth() - selectBoxWidth;
                 if(newY < 0)
                     newY = 0;
-                if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
+                else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
                     newY = originalImagePanel.getImageHeight() - selectBoxHeight;
 
                 selectBox.setLocation(newX, newY);
+                selectBox.setVisible(true);
                 int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
                 if(pictureX + realSelectBoxWidth > originalImage.getWidth())
                     pictureX = originalImage.getWidth() - realSelectBoxWidth;
@@ -99,6 +102,11 @@ public class Controller {
                 modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
             }
             });
+    }
+
+    public void moveSelectBox(int x, int y)
+    {
+
     }
 
     public void openImage(File file)
