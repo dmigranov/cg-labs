@@ -654,7 +654,7 @@ public class Controller {
         double cos = Math.cos(angle);
 
         //todo: четность?
-        for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
+        /*for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
         {
             for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
             {
@@ -679,7 +679,35 @@ public class Controller {
                     System.out.println();
                 }
             }
+        }*/
+
+        for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
+        {
+            for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
+            {
+
+                double xn = cos*x - sin * y;
+                double yn = sin*x + cos*y;
+
+                if(Math.round(xn) >= realSelectBoxWidth/2)
+                    xn = realSelectBoxWidth/2 - 1;
+                else if (Math.round(xn) < -realSelectBoxWidth/2)
+                    xn = -realSelectBoxWidth/2;
+                if(Math.round(yn) >= realSelectBoxHeight/2)
+                    yn = realSelectBoxHeight/2 - 1;
+                else if (Math.round(yn) < -realSelectBoxHeight/2)
+                    yn = -realSelectBoxHeight/2;
+                System.out.println(xn + " " + yn);
+                try {
+                    modifiedImagePanel.setColor((int)Math.round(xn) + realSelectBoxWidth/2, (int)Math.round(yn) + realSelectBoxHeight/2, modifiableImagePanel.getColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2));
+                }
+                catch(IndexOutOfBoundsException e)
+                {
+                    System.out.println();
+                }
+            }
         }
+
         modifiedImagePanel.repaint();
     }
 }
