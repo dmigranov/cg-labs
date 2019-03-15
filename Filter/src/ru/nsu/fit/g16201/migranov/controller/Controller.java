@@ -654,6 +654,7 @@ public class Controller {
         double cos = Math.cos(Math.toRadians(angle));
 
         //раньше тут был поворот относительно realSelectBoxHeight и realSelectBoxWidth вместо rotateHeight и rotateWidth. Но поворот всеё области показался мне более красивым.
+        //манипуляциями с прибавленим в getColor можно добиться ещё и центрированя (+rotateHeight и Width можно взять как минимум rsbH и rsbW)
         int rotateHeight = 350, rotateWidth = rotateHeight;
         for(int y = -rotateHeight/2; y < rotateHeight/2 + rotateHeight%2; y++)
         {
@@ -662,11 +663,11 @@ public class Controller {
                 double xo = cos*x + sin * y;
                 double yo = -sin*x + cos*y;
 
-                if(Math.round(xo) >= realSelectBoxWidth/2 + realSelectBoxWidth%2 || Math.round(xo) < -realSelectBoxWidth/2 || Math.round(yo) >= realSelectBoxHeight/2 + realSelectBoxHeight%2 || Math.round(yo) < -realSelectBoxHeight/2)
+                if(Math.round(xo) >= rotateWidth/2 + rotateWidth%2 || Math.round(xo) < -rotateWidth/2 || Math.round(yo) >= rotateHeight/2 + rotateHeight%2 || Math.round(yo) < -rotateHeight/2)
                 {
-                    if(realSelectBoxWidth %2 == 0 && Math.round(xo) == realSelectBoxWidth/2)    //связано с тем, что например при width = 350 -175 при угле 90 отобразится в 175, а такого как бы нет (и-за несимметрии относительно нуля в чётном случае)
+                    if(rotateWidth %2 == 0 && Math.round(xo) == rotateWidth/2)    //связано с тем, что например при width = 350 -175 при угле 90 отобразится в 175, а такого как бы нет (и-за несимметрии относительно нуля в чётном случае)
                         xo--;
-                    else if(realSelectBoxHeight %2 == 0 && Math.round(yo) == realSelectBoxHeight/2)
+                    else if(rotateHeight %2 == 0 && Math.round(yo) == rotateHeight/2)
                         yo--;
                     else
                     {
@@ -675,7 +676,7 @@ public class Controller {
                     }
                 }
                 try {
-                    modifiedImagePanel.setColor(x + rotateWidth / 2, y + rotateHeight / 2, modifiableImagePanel.getColor((int) round(xo) + realSelectBoxWidth / 2, (int) round(yo) + realSelectBoxHeight / 2));
+                    modifiedImagePanel.setColor(x + rotateWidth / 2, y + rotateHeight / 2, modifiableImagePanel.getColor((int) round(xo) + rotateWidth / 2, (int) round(yo) + rotateHeight / 2));
                 }
                 catch (IndexOutOfBoundsException e)
                 {
