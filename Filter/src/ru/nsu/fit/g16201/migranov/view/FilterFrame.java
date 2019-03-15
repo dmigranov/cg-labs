@@ -303,7 +303,16 @@ public class FilterFrame extends MainFrame {
 
     public void onRotate()
     {
+        JPanel parametersPanel = new JPanel();
+        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
+        NegativeSliderTextFieldPanel panel = new NegativeSliderTextFieldPanel(-180, 180, 0, "Angle: ");
+        parametersPanel.add(panel);
 
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Sobel filter threshold", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            int angle = panel.getValue();
+            controller.rotate(angle);
+        }
     }
 
     public void onZoom()

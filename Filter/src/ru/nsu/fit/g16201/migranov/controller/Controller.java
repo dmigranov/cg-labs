@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.Timer;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.round;
 
 public class Controller {
     private ImagePanel modifiableImagePanel, modifiedImagePanel, originalImagePanel;
@@ -70,9 +71,6 @@ public class Controller {
                     return;
 
                 moveSelectBox(x, y);
-                //selectBox.setVisible(false);
-
-                //timer = new Timer(500, event -> selectBox.setVisible(false));
 
                 timer.start();
 
@@ -113,8 +111,7 @@ public class Controller {
         else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
             newY = originalImagePanel.getImageHeight() - selectBoxHeight;
 
-        //selectBox.setLocation(newX, newY);
-        selectBox.setBounds(newX, newY, selectBoxWidth, selectBoxHeight);
+        selectBox.setLocation(newX, newY);
 
         int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
         if(pictureX + realSelectBoxWidth > originalImage.getWidth())
@@ -136,7 +133,6 @@ public class Controller {
             originalImagePanel.setImage(image);
             modifiableImagePanel.setEmptyImage(350, 350);
             modifiedImagePanel.setEmptyImage(350, 350);
-
 
             int realWidth = image.getWidth();
             int realHeight = image.getHeight();
@@ -164,7 +160,6 @@ public class Controller {
                     realSelectBoxHeight = 350;
                 }
                 else {
-                    //todo: поменять, чтобы всё было пропорционально (min)!
                     selectBoxWidth = 350*350/realWidth;
                     selectBoxHeight = 350*350/realHeight;
                     selectBoxHeight = selectBoxHeight < selectBoxWidth? selectBoxHeight : selectBoxWidth;
@@ -173,7 +168,7 @@ public class Controller {
                     realSelectBoxHeight = 350;
                 }
             }
-            System.out.println(selectBoxWidth + " " + selectBoxHeight);
+            //System.out.println(selectBoxWidth + " " + selectBoxHeight);
 
             originalImagePanel.setLayout(null);
 
@@ -652,6 +647,40 @@ public class Controller {
     public void openConfigurationFile(File file)
     {
         renderer.openConfigurationFile(file);
+    }
+
+    public void rotate(int angle) {
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+
+        //todo: четность?
+        for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
+        {
+            for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
+            {
+
+                double xo = cos*x + sin * y;
+                double yo = -sin*x + cos*y;
+
+                if(Math.round(xo) >= realSelectBoxWidth/2)
+                    xo = realSelectBoxWidth/2 - 1;
+                else if (Math.round(xo) < -realSelectBoxWidth/2)
+                    xo = -realSelectBoxWidth/2;
+                if(Math.round(yo) >= realSelectBoxHeight/2)
+                    yo = realSelectBoxHeight/2 - 1;
+                else if (Math.round(yo) < -realSelectBoxHeight/2)
+                    yo = -realSelectBoxHeight/2;
+                System.out.println(xo + " " + yo);
+                try {
+                    modifiedImagePanel.setColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2, modifiableImagePanel.getColor((int) round(xo) + realSelectBoxWidth/2, (int) round(yo) + realSelectBoxHeight/2));
+                }
+                catch(IndexOutOfBoundsException e)
+                {
+                    System.out.println();
+                }
+            }
+        }
+        modifiedImagePanel.repaint();
     }
 }
 
