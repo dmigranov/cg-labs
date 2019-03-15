@@ -98,7 +98,7 @@ public class Controller {
 
     private void moveSelectBox(int x, int y)
     {
-        int newX = 0, newY = 0;
+        int newX, newY;
         newY = y - selectBoxHeight/2;
         newX = x - selectBoxWidth/2;
 
@@ -232,14 +232,13 @@ public class Controller {
 
     public void doOrderedDithering(int rLevel, int gLevel, int bLevel, int matrixSize)
     {
-        //todo: нормировать как в тетрпдке
-        matrixSize = 4;  //todo: добавить размер матрицы возможно
+        //todo: ИСПРАВИТЬ: нормировать как в тетрпдке
+        matrixSize = 4;  //todo: добавить размер матрицы
         double[][] orderedDitherDoubleMatrix = new double[4][4];
         for(int i  = 0; i < matrixSize; i++)
             for(int j  = 0; j < matrixSize; j++)
                 orderedDitherDoubleMatrix[i][j] = 1.0 * orderedDitherMatrix[i][j]/(matrixSize * matrixSize);
 
-        //int rCount = 256/rLevel, gCount = 256/gLevel, bCount = 256/bLevel;
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
             int j = y % 4;
@@ -269,6 +268,7 @@ public class Controller {
     }
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
+        //TODO: ИСПРАВИТЬ
         BufferedImage originalImage = modifiableImagePanel.getImage();
         //BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
         BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -443,7 +443,6 @@ public class Controller {
                 for (int i = -fy / 2; i < fy / 2 + 1; i++) {
                     for (int j = -fx / 2; j < fx / 2 + 1; j++) {
                         if (j + x >= 0 && j + x < width && i + y >= 0 && i + y < height) {
-                            //neighbours.add(image.getRGB(x + j, y + i));
                             int color = image.getRGB(x + j, y + i);
                             rneighbours.add((color & 0xFF0000) >> 16);
                             gneighbours.add((color & 0x00FF00) >> 8);
@@ -456,9 +455,6 @@ public class Controller {
                 Collections.sort(bneighbours);
                 int median = rneighbours.size() / 2;
 
-                //int newColor = bneighbours.get(median) + (gneighbours.get(median) << 8) + (rneighbours.get(median) << 16);   //todo: |
-
-                //returnImage.setRGB(x, y, neighbours.get(neighbours.size() / 2));
                 returnImage.setRGB(x, y, getColorFromComponents(rneighbours.get(median), gneighbours.get(median), bneighbours.get(median)));
             }
         }
@@ -606,7 +602,6 @@ public class Controller {
         endY = height/2 + height/4;
         windowHeight = height/2 + height % 2;
 
-        //todo: возможно, стоит сделать как в примерах, чтобы он растягивался на все 350*350. Впрочем, мне и свой вариант кажется логичным
         for(int y = 0; y < realSelectBoxHeight; y++)
         {
             double oy = startY + 1.0*y/realSelectBoxHeight* windowWidth;

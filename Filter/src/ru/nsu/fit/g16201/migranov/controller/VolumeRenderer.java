@@ -18,13 +18,12 @@ class VolumeRenderer {
 
     private BufferedReader br;
 
-    public void openConfigurationFile(File file)
+    void openConfigurationFile(File file)
     {
 
         try
         {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            this.br = br;
+            br = new BufferedReader(new FileReader(file));
 
             String[] substrings;
 
@@ -42,8 +41,8 @@ class VolumeRenderer {
             }
 
             substrings = readLineAndSplit();
-            int с = Integer.parseInt(substrings[0]);    //число вершин в каждом графике эмиссии среды
-            while(с > 0)
+            int c = Integer.parseInt(substrings[0]);    //число вершин в каждом графике эмиссии среды
+            while(c > 0)
             {
                 substrings = readLineAndSplit();
                 int n = Integer.parseInt(substrings[0]);
@@ -54,9 +53,24 @@ class VolumeRenderer {
                 if (n < 0 || n > 100 || r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
                     throw new Exception("Wrong emission constants");
                 emission.add(new SimpleEntry<>(n, 0xFF000000 | (r << 16) | (g << 8) | b)); //так? или лучше Color? Или лучше тройку хранить?
-                с--;
+                c--;
             }
 
+            substrings = readLineAndSplit();
+            int nq = Integer.parseInt(substrings[0]);    //число зарядов
+            while(nq > 0)
+            {
+                substrings = readLineAndSplit();
+                double x = Double.parseDouble(substrings[0]);
+                double y = Double.parseDouble(substrings[1]);
+                double z = Double.parseDouble(substrings[2]);
+                double q = Double.parseDouble(substrings[3]);
+
+                //if () //todo: какие условия?
+                //    throw new Exception("Wrong emission constants");
+                charges.add(new SimpleEntry<>(new Point3D(x,y,z), q)); //так? или лучше Color? Или лучше тройку хранить?
+                nq--;
+            }
 
 
 

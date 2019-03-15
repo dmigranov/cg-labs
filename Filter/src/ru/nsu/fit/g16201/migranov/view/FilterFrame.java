@@ -30,11 +30,12 @@ public class FilterFrame extends MainFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         mainPanel.revalidate();
-        //originalImagePanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5), BorderFactory.createEmptyBorder(5,5,5,5)));
         originalImagePanel.setPreferredSize(new Dimension(350, 350));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
         JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
+
+        //todo: добавить панели для графиков
 
         originalBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiableBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
@@ -152,7 +153,7 @@ public class FilterFrame extends MainFrame {
         toolBar.add(button);
     }
 
-    public File getOpenFileName()
+    private File getOpenFileName()
     {
         return FileUtils.getOpenFileName(this);
     }
@@ -331,7 +332,7 @@ public class FilterFrame extends MainFrame {
         JTextField gLevelField = new JTextField("2", 3);
         JTextField bLevelField = new JTextField("2", 3);
 
-        public DitheringParametersPanel()
+        DitheringParametersPanel()
         {
             super();
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -347,15 +348,15 @@ public class FilterFrame extends MainFrame {
             add(bLevelField);
         }
 
-        public String getRText()
+        String getRText()
         {
             return rLevelField.getText();
         }
-        public String getGText()
+        String getGText()
         {
             return gLevelField.getText();
         }
-        public String getBText()
+        String getBText()
         {
             return bLevelField.getText();
         }
