@@ -34,7 +34,7 @@ public class Controller {
     private boolean startedMoving = false;
     private JPanel selectBox;
     private Timer timer = new Timer(100, event -> selectBox.setVisible(false));
-    private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;   //последние два совпадают с размером выделенной области во второй панелм
+    private int selectBoxWidth, selectBoxHeight, rotateWidth, rotateHeight;   //последние два совпадают с размером выделенной области во второй панелм
 
     private VolumeRenderer renderer = new VolumeRenderer();
 
@@ -113,12 +113,12 @@ public class Controller {
 
         selectBox.setLocation(newX, newY);
 
-        int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
-        if(pictureX + realSelectBoxWidth > originalImage.getWidth())
-            pictureX = originalImage.getWidth() - realSelectBoxWidth;
-        if(pictureY + realSelectBoxHeight > originalImage.getHeight())
-            pictureY = originalImage.getHeight() - realSelectBoxHeight;
-        modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
+        int pictureX = newX * originalImage.getWidth() / rotateWidth, pictureY = newY * originalImage.getHeight() / rotateHeight;
+        if(pictureX + rotateWidth > originalImage.getWidth())
+            pictureX = originalImage.getWidth() - rotateWidth;
+        if(pictureY + rotateHeight > originalImage.getHeight())
+            pictureY = originalImage.getHeight() - rotateHeight;
+        modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, rotateWidth, rotateHeight));
         selectBox.setVisible(true);
         originalImagePanel.repaint();
     }
@@ -140,32 +140,32 @@ public class Controller {
             if(realWidth <= 350 && realHeight <= 350) {
                 selectBoxWidth = realWidth;
                 selectBoxHeight = realHeight;
-                realSelectBoxWidth = realWidth;
-                realSelectBoxHeight = realHeight;
+                rotateWidth = realWidth;
+                rotateHeight = realHeight;
             }
             else
             {
                 if(realHeight <= 350 && realWidth > 350)
                 {
                     selectBoxHeight = originalImagePanel.getImageHeight();
-                    realSelectBoxHeight = realHeight;
+                    rotateHeight = realHeight;
                     selectBoxWidth = (int)(350/(realWidth/350.0));
-                    realSelectBoxWidth = 350;
+                    rotateWidth = 350;
                 }
                 else if (realWidth <= 350 && realHeight > 350)
                 {
                     selectBoxWidth = originalImagePanel.getImageWidth();
-                    realSelectBoxWidth = realWidth;
+                    rotateWidth = realWidth;
                     selectBoxHeight = (int)(350/(realHeight/350.0));
-                    realSelectBoxHeight = 350;
+                    rotateHeight = 350;
                 }
                 else {
                     selectBoxWidth = 350*350/realWidth;
                     selectBoxHeight = 350*350/realHeight;
                     selectBoxHeight = selectBoxHeight < selectBoxWidth? selectBoxHeight : selectBoxWidth;
                     selectBoxWidth = selectBoxHeight;
-                    realSelectBoxWidth = 350;
-                    realSelectBoxHeight = 350;
+                    rotateWidth = 350;
+                    rotateHeight = 350;
                 }
             }
             //System.out.println(selectBoxWidth + " " + selectBoxHeight);
@@ -607,14 +607,14 @@ public class Controller {
         windowHeight = height/2 + height % 2;
 
         //todo: возможно, стоит сделать как в примерах, чтобы он растягивался на все 350*350. Впрочем, мне и свой вариант кажется логичным
-        for(int y = 0; y < realSelectBoxHeight; y++)
+        for(int y = 0; y < rotateHeight; y++)
         {
-            double oy = startY + 1.0*y/realSelectBoxHeight* windowWidth;
+            double oy = startY + 1.0*y/rotateHeight* windowWidth;
             int j = (int)Math.floor(oy);
             double alphaY = oy - j;
-            for(int x = 0; x < realSelectBoxWidth; x++)
+            for(int x = 0; x < rotateWidth; x++)
             {
-                double ox = startX + 1.0*x/realSelectBoxWidth* windowWidth;
+                double ox = startX + 1.0*x/rotateWidth* windowWidth;
                 int i = (int)Math.floor(ox);
                 double alphaX = ox - i;
 
@@ -653,28 +653,34 @@ public class Controller {
         double sin = Math.sin(Math.toRadians(angle));
         double cos = Math.cos(Math.toRadians(angle));
 
-        //todo: четность!! ( смотри dither кратинку)
-        for(int y = -realSelectBoxHeight/2; y < realSelectBoxHeight/2; y++)
+        //раньше тут был поворот относительно rotateHeight и rotateWidth вместо rotateHeight и rotateWidth. Но поворот всеё области показался мне более красивым.
+        int rotateHeight = 350, rotateWidth = 350;
+        for(int y = -rotateHeight/2; y < rotateHeight/2 + rotateHeight%2; y++)
         {
-            for(int x = -realSelectBoxWidth/2; x < realSelectBoxWidth/2; x++)
+            for(int x = -rotateWidth/2; x < rotateWidth/2 + rotateWidth%2; x++)
             {
-
                 double xo = cos*x + sin * y;
                 double yo = -sin*x + cos*y;
 
-
-                if(Math.round(xo) >= realSelectBoxWidth/2 || Math.round(xo) < -realSelectBoxWidth/2 || Math.round(yo) >= realSelectBoxHeight/2 || Math.round(yo) < -realSelectBoxHeight/2)
+                if(Math.round(xo) >= rotateWidth/2 + rotateWidth%2 || Math.round(xo) < -rotateWidth/2 || Math.round(yo) >= rotateHeight/2 + rotateHeight%2 || Math.round(yo) < -rotateHeight/2)
                 {
-                    modifiedImagePanel.setColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2, 0xFFFFFFFF);
-                    continue;
+                    if(rotateWidth %2 == 0 && Math.round(xo) == rotateWidth/2)    //связано с тем, что например при width = 350 -175 при угле 90 отобразится в 175, а такого как бы нет (и-за несимметрии относительно нуля в чётном случае)
+                        xo--;
+                    else if(rotateHeight %2 == 0 && Math.round(yo) == rotateHeight/2)
+                        yo--;
+                    else
+                    {
+                        modifiedImagePanel.setColor(x + rotateWidth/2, y + rotateHeight/2, 0xFFFFFFFF);
+                        continue;
+                    }
                 }
 
                 try {
-                    modifiedImagePanel.setColor(x + realSelectBoxWidth/2, y + realSelectBoxHeight/2, modifiableImagePanel.getColor((int) round(xo) + realSelectBoxWidth/2, (int) round(yo) + realSelectBoxHeight/2));
+                    modifiedImagePanel.setColor(x + rotateWidth/2, y + rotateHeight/2, modifiableImagePanel.getColor((int) round(xo) + rotateWidth/2, (int) round(yo) + rotateHeight/2));
                 }
-                catch(IndexOutOfBoundsException e)
+                catch (IndexOutOfBoundsException e)
                 {
-                    System.out.println();
+                    modifiedImagePanel.setColor(x + rotateWidth/2, y + rotateHeight/2, modifiableImagePanel.getColor((int) round(xo) + rotateWidth/2, (int) round(yo) + rotateHeight/2));
                 }
             }
         }
