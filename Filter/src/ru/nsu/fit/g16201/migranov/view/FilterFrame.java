@@ -24,8 +24,7 @@ public class FilterFrame extends MainFrame {
 
     private FilterFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);     //насколько понимаю, спрашивать не нужно ничего
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //панельки
         JPanel mainPanel = new JPanel(), imagesPanel = new JPanel(), graphicsPanel = new JPanel();
@@ -33,14 +32,14 @@ public class FilterFrame extends MainFrame {
         imagesPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         graphicsPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 132, 10));
         imagesPanel.revalidate();
-        originalImagePanel.setPreferredSize(new Dimension(350, 350));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
+        originalImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
 
         emissionPanel.setPreferredSize(new Dimension(350, 200));
         absorptionPanel.setPreferredSize(new Dimension(350, 200));
         emissionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5)); //todo: только снизу справа
+        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5)); //todo: только снизу и справа!
 
         emissionPanel.setVisible(false);
         absorptionPanel.setVisible(false);
@@ -104,7 +103,8 @@ public class FilterFrame extends MainFrame {
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
         addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave");
-
+        addMenuAndToolBarButton("File/C to B", "Move the modified image to the second zone", KeyEvent.VK_M, "logout.png", "onMove");
+        addMenuAndToolBarButton("File/Exit", "Exit the aplication", KeyEvent.VK_E, "logout.png", "onExit");
 
         addSubMenu("Pixel operations", KeyEvent.VK_P);
         addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
@@ -178,7 +178,7 @@ public class FilterFrame extends MainFrame {
 
     public void onNew()
     {
-
+        //todo
     }
 
     public void onOpen()
@@ -400,6 +400,16 @@ public class FilterFrame extends MainFrame {
 
     public void onSave()
     {
+        //todo
+    }
 
+    public void onMove()
+    {
+        //todo:
+    }
+
+    public void onExit()
+    {
+        System.exit(0);
     }
 }
