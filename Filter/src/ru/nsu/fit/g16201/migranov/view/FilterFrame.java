@@ -74,7 +74,6 @@ public class FilterFrame extends MainFrame {
 
         addMenus();
 
-        //todo: teacher сказал вообще избавиться от скролла
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setDoubleBuffered(true);
         scrollPane.setWheelScrollingEnabled(true);
@@ -90,7 +89,8 @@ public class FilterFrame extends MainFrame {
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
-        setMinimumSize(new Dimension(800, 600));
+        pack();
+        setResizable(false);
         setLocationRelativeTo(null);
 
         setVisible(true);
