@@ -29,7 +29,7 @@ public class FilterFrame extends MainFrame {
 
         //панельки
         JPanel mainPanel = new JPanel(), imagesPanel = new JPanel(), graphicsPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         imagesPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         graphicsPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 132, 10));
         imagesPanel.revalidate();
@@ -68,7 +68,7 @@ public class FilterFrame extends MainFrame {
 
         imagesPanel.setMaximumSize(new Dimension(1096, 372));
         graphicsPanel.setMaximumSize(new Dimension(1096, 220));
-
+        mainPanel.setMaximumSize(new Dimension(1096, 592));
 
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
 
