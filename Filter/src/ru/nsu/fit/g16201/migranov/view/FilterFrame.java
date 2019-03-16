@@ -86,6 +86,8 @@ public class FilterFrame extends MainFrame {
         addSubMenu("File", KeyEvent.VK_F);
         addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
+        addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave");
+
 
         addSubMenu("Pixel operations", KeyEvent.VK_P);
         addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
@@ -372,6 +374,16 @@ public class FilterFrame extends MainFrame {
 
     public void onAbout()
     {
-        //todo
+        JPanel aboutPanel = new JPanel();
+        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
+        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
+        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
+        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection"));
+        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Filter", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void onSave()
+    {
+
     }
 }

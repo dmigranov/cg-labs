@@ -131,8 +131,7 @@ public class Controller {
                 throw new IOException();
             this.originalImage = image;
             originalImagePanel.setImage(image);
-            modifiableImagePanel.setEmptyImage(350, 350);
-            modifiedImagePanel.setEmptyImage(350, 350);
+
 
             int realWidth = image.getWidth();
             int realHeight = image.getHeight();
@@ -168,6 +167,10 @@ public class Controller {
                     realSelectBoxHeight = 350;
                 }
             }
+
+            modifiableImagePanel.setEmptyImage(realSelectBoxWidth, realSelectBoxHeight);
+            modifiedImagePanel.setEmptyImage(realSelectBoxWidth, realSelectBoxHeight);
+
             //System.out.println(selectBoxWidth + " " + selectBoxHeight);
 
             originalImagePanel.setLayout(null);
