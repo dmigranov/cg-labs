@@ -27,7 +27,7 @@ public class FilterFrame extends MainFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);     //насколько понимаю, спрашивать не нужно ничего
 
         //панельки
-        JPanel mainPanel = new JPanel();
+        JPanel mainPanel = new JPanel(), imagesPanel = new JPanel(), graphicsPanel = new JPanel();
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
         mainPanel.revalidate();
         originalImagePanel.setPreferredSize(new Dimension(350, 350));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
