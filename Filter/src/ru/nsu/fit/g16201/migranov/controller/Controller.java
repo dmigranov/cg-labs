@@ -22,6 +22,7 @@ import static java.lang.Math.round;
 
 public class Controller {
     private ImagePanel modifiableImagePanel, modifiedImagePanel, originalImagePanel;
+    private JPanel absorptionPanel, emissionPanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
@@ -38,10 +39,12 @@ public class Controller {
 
     private VolumeRenderer renderer = new VolumeRenderer();
 
-    public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel) {
+    public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel, JPanel absorptionPanel, JPanel emissionPanel) {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;
+        this.absorptionPanel = absorptionPanel;
+        this.emissionPanel = emissionPanel;
         originalImagePanel.setDoubleBuffered(true);
 
         timer.setRepeats(false);
@@ -645,6 +648,10 @@ public class Controller {
     public void openConfigurationFile(File file)
     {
         renderer.openConfigurationFile(file);
+        renderer.drawAbsorptionGraphic(absorptionPanel);
+        renderer.drawEmissionGraphic(emissionPanel);
+        absorptionPanel.setVisible(true);
+        emissionPanel.setVisible(true);
     }
 
     public void rotate(int angle) {

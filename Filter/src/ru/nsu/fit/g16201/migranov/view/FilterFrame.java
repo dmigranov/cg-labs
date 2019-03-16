@@ -40,7 +40,10 @@ public class FilterFrame extends MainFrame {
         emissionPanel.setPreferredSize(new Dimension(350, 200));
         absorptionPanel.setPreferredSize(new Dimension(350, 200));
         emissionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5)); //todo: только снизу справа
+
+        emissionPanel.setVisible(false);
+        absorptionPanel.setVisible(false);
 
         JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
 
@@ -62,7 +65,6 @@ public class FilterFrame extends MainFrame {
         graphicsPanel.add(absorptionPanel);
         graphicsPanel.add(emissionPanel);
         mainPanel.add(imagesPanel);
-        //mainPanel.add(Box.createRigidArea(new Dimension(imagesPanel.getWidth(), 10)));
         mainPanel.add(graphicsPanel);
         originalBorderPanel.revalidate();
 
@@ -70,7 +72,7 @@ public class FilterFrame extends MainFrame {
         graphicsPanel.setMaximumSize(new Dimension(1096, 220));
         mainPanel.setMaximumSize(new Dimension(1096, 592));
 
-        controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
+        controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel, absorptionPanel, emissionPanel);
 
         addMenus();
 
@@ -90,12 +92,11 @@ public class FilterFrame extends MainFrame {
         add(statusPanel, BorderLayout.SOUTH);
 
         pack();
-        setResizable(false);
+        //setResizable(false);////
         setLocationRelativeTo(null);
 
         setVisible(true);
     }
-
 
 
     private void addMenus() throws NoSuchMethodException {
@@ -136,7 +137,6 @@ public class FilterFrame extends MainFrame {
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod) throws NoSuchMethodException
     {
-        //todo: нужны ли менюшкам иконки? подумоть...
         MenuElement element = getParentMenuElement(path);
         if(element == null)
             throw new InvalidParameterException("Menu path not found: " + path);
@@ -144,7 +144,7 @@ public class FilterFrame extends MainFrame {
         JMenuItem item = new JMenuItem(title);
         item.setMnemonic(mnemonic);
         item.setToolTipText(tooltip);
-        //item.addMouseListener(new StatusTitleListener(statusLabel));
+        item.addMouseListener(new StatusTitleListener(statusLabel));
         final Method method = getClass().getMethod(actionMethod);
         item.addActionListener(evt -> {
             try {
@@ -167,7 +167,7 @@ public class FilterFrame extends MainFrame {
         for(ActionListener listener: item.getActionListeners())
             button.addActionListener(listener);
         button.setToolTipText(tooltip);
-        //button.addMouseListener(new StatusTitleListener(statusLabel));
+        button.addMouseListener(new StatusTitleListener(statusLabel));
         toolBar.add(button);
     }
 
