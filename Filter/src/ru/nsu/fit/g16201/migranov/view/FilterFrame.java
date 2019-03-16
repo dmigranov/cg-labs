@@ -15,6 +15,7 @@ import java.security.InvalidParameterException;
 
 public class FilterFrame extends MainFrame {
     private ImagePanel modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel(), originalImagePanel = new ImagePanel();
+    private JPanel absorptionPanel = new JPanel(), emissionPanel = new JPanel();
     private JLabel statusLabel = new JLabel("");
     private Controller controller;
     public static void main(String[] args) throws Exception {
@@ -28,14 +29,20 @@ public class FilterFrame extends MainFrame {
 
         //панельки
         JPanel mainPanel = new JPanel(), imagesPanel = new JPanel(), graphicsPanel = new JPanel();
-        mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
-        mainPanel.revalidate();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        imagesPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+        graphicsPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 132, 10));
+        imagesPanel.revalidate();
         originalImagePanel.setPreferredSize(new Dimension(350, 350));   //так? и тогда в рисовании смещаемся на 1. это чтобы учесть границы
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
-        JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
 
-        //todo: добавить панели для графиков
+        emissionPanel.setPreferredSize(new Dimension(350, 200));
+        absorptionPanel.setPreferredSize(new Dimension(350, 200));
+        emissionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
+
+        JPanel originalBorderPanel = new JPanel(), modifiableBorderPanel = new JPanel(), modifiedBorderPanel = new JPanel();
 
         originalBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
         modifiableBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
@@ -49,10 +56,19 @@ public class FilterFrame extends MainFrame {
         originalBorderPanel.setLayout(new SpringLayout());
         modifiableBorderPanel.setLayout(new SpringLayout());
         modifiedBorderPanel.setLayout(new SpringLayout());
-        mainPanel.add(originalBorderPanel);
-        mainPanel.add(modifiableBorderPanel);
-        mainPanel.add(modifiedBorderPanel);
+        imagesPanel.add(originalBorderPanel);
+        imagesPanel.add(modifiableBorderPanel);
+        imagesPanel.add(modifiedBorderPanel);
+        graphicsPanel.add(absorptionPanel);
+        graphicsPanel.add(emissionPanel);
+        mainPanel.add(imagesPanel);
+        //mainPanel.add(Box.createRigidArea(new Dimension(imagesPanel.getWidth(), 10)));
+        mainPanel.add(graphicsPanel);
         originalBorderPanel.revalidate();
+
+        imagesPanel.setMaximumSize(new Dimension(1096, 372));
+        graphicsPanel.setMaximumSize(new Dimension(1096, 220));
+
 
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel);
 
