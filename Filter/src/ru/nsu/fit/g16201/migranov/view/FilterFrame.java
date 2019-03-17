@@ -476,11 +476,12 @@ public class FilterFrame extends MainFrame {
 
     public void onAbsorptionEnabled()
     {
-
+        controller.setAbsorptionEnabled(!controller.isAbsorptionEnabled());
     }
 
     public void onEmissionEnabled()
     {
+        controller.setEmissionEnabled(!controller.isEmissionEnabled());
 
     }
 

@@ -739,5 +739,22 @@ public class Controller {
         absorptionPanel.setVisible(false);
         emissionPanel.setVisible(false);
     }
+
+    public boolean isAbsorptionEnabled() {
+        return renderer.isAbsorptionEnabled();
+    }
+
+    public boolean isEmissionEnabled() {
+        return renderer.isEmissionEnabled();
+    }
+
+
+    public void setAbsorptionEnabled(boolean b) {
+        renderer.setAbsorptionEnabled(b);
+    }
+
+    public void setEmissionEnabled(boolean b) {
+        renderer.setEmissionEnabled(b);
+    }
 }
 

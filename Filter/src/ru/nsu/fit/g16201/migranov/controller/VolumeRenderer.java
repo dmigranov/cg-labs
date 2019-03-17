@@ -20,6 +20,7 @@ class VolumeRenderer {
     private List<SimpleEntry<Integer, Double>> absorption; //целочисленная координата от 0 до 100 и значение абсорбции
     private List<SimpleEntry<Integer, Integer>> emission;       //второе число - это ржб; перове - координата (0..100)
 
+    private boolean isAbsorptionEnabled = false, isEmissionEnabled = false;
 
     private BufferedReader br;
 
@@ -135,6 +136,22 @@ class VolumeRenderer {
             }
 
         }
+    }
+
+    public void setAbsorptionEnabled(boolean absorptionEnabled) {
+        isAbsorptionEnabled = absorptionEnabled;
+    }
+
+    public void setEmissionEnabled(boolean emissionEnabled) {
+        isEmissionEnabled = emissionEnabled;
+    }
+
+    public boolean isAbsorptionEnabled() {
+        return isAbsorptionEnabled;
+    }
+
+    public boolean isEmissionEnabled() {
+        return isEmissionEnabled;
     }
 
     class AbsorptionComparator implements Comparator<SimpleEntry<Integer, Double>>
