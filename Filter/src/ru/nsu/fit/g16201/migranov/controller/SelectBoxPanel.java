@@ -32,9 +32,10 @@ public class SelectBoxPanel extends JPanel {
 
         g.setXORMode(Color.WHITE);
 
-        super.paintBorder(g);
+        //super.paintBorder(g);
         //getBorder().paintBorder(this, g, 0, 0, getWidth(), getHeight());
-        //g.setPaintMode();
+        super.paintBorder(g);
+        g.setPaintMode();
 
     }
 

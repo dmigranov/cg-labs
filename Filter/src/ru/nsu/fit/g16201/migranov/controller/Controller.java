@@ -52,8 +52,10 @@ public class Controller {
         originalImagePanel.add(selectBox);
         selectBox.setVisible(false);
         selectBox.setBackground(new Color(0,0,0,0));
+        selectBox.setOpaque(true);
 
-        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 4));
+        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 5, 10, true));
+        //selectBox.create
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -124,6 +126,9 @@ public class Controller {
         modifiableImagePanel.setImage(originalImage.getSubimage(pictureX, pictureY, realSelectBoxWidth, realSelectBoxHeight));
         selectBox.setVisible(true);
         originalImagePanel.repaint();
+        selectBox.repaint();
+
+
     }
 
     public void openImage(File file)
