@@ -204,7 +204,6 @@ class VolumeRenderer {
         }
         long end = System.currentTimeMillis();
         //1266 мс. я думаю, лучше пожертвовать одной секундой, чем 350*350*350*sizeof(double) памяти
-        System.out.println(minT + " "+ maxT);
 
         for(int z = 0; z < nz; z++)
         {
@@ -231,11 +230,11 @@ class VolumeRenderer {
                     double tau = getTau(tnorm);
                     int[] gbgr = getG(tnorm);
                     //System.out.println(tau + " " + gbgr[0]  + " " + gbgr[1]  + " " + gbgr[2]);
-                    int color = out.getRGB(x ,y);
+                    int color = out.getRGB(x*width/nx ,y*height/ny);
                     int r = saturate((int)(((color >> 16) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz));
                     int g = saturate((int)(((color >> 8) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz));
                     int b = saturate((int)(((color) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz));
-                    out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
+                    out.setRGB(x*width/nx, y*height/ny, 0xFF000000 | (r << 16) | (g << 8) | b);
 
                 }
             }
