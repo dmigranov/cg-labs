@@ -398,14 +398,16 @@ public class FilterFrame extends MainFrame {
         JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Filter", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void onSave()
-    {
-        //todo
+    public void onSave() {
+        File file = getSaveFileName("png", "A PNG file");
+        if (file != null) {
+            controller.saveImageToFile(file);
+        }
     }
 
     public void onMove()
     {
-        //todo:
+        controller.moveModifiedToModifiable();
     }
 
     public void onExit()

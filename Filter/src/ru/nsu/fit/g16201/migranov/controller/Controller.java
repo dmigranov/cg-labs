@@ -33,7 +33,7 @@ public class Controller {
     private static double[][] sobelYMatrix = {{-1,-2,-1}, {0,0,0}, {1,2,1}};
 
     private boolean startedMoving = false;
-    private JPanel selectBox;
+    private SelectBoxPanel selectBox;
     private Timer timer = new Timer(100, event -> selectBox.setVisible(false));
     private int selectBoxWidth, selectBoxHeight, realSelectBoxWidth, realSelectBoxHeight;   //последние два совпадают с размером выделенной области во второй панелм
 
@@ -48,11 +48,11 @@ public class Controller {
         originalImagePanel.setDoubleBuffered(true);
 
         timer.setRepeats(false);
-        selectBox = new JPanel();
+        selectBox = new SelectBoxPanel();
         originalImagePanel.add(selectBox);
         selectBox.setVisible(false);
         selectBox.setBackground(new Color(0,0,0,0));
-        //todo:xor!
+
         selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 4));
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
@@ -114,7 +114,7 @@ public class Controller {
         else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
             newY = originalImagePanel.getImageHeight() - selectBoxHeight;
 
-        selectBox.setLocation(newX, newY);
+        selectBox.setBounds(newX, newY, selectBoxWidth, selectBoxHeight);
 
         int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
         if(pictureX + realSelectBoxWidth > originalImage.getWidth())
@@ -176,7 +176,7 @@ public class Controller {
 
             //System.out.println(selectBoxWidth + " " + selectBoxHeight);
 
-            originalImagePanel.setLayout(null);
+            originalImagePanel.setLayout(new FlowLayout());
 
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
 
@@ -695,5 +695,21 @@ public class Controller {
 
         modifiedImagePanel.repaint();
     }
+
+    public void saveImageToFile(File file) {
+        try {
+            ImageIO.write(modifiedImagePanel.getImage(), "png", file);
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Could not save this image", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void moveModifiedToModifiable() {
+        modifiableImagePanel.setImage(modifiedImagePanel.getImage());
+    }
+
+
 }
 
