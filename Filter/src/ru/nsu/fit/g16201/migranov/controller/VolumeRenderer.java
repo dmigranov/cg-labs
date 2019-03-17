@@ -134,7 +134,6 @@ class VolumeRenderer {
                 int color2 = r2 >> k & 0x000000FF;
 
                 emissionPanel.drawLine((int)(x1*3.5) + a,(int)((1 - color1/255.0)*200) + a,(int)(x2*3.5) + a,(int)((1 - color2/255.0)*200) + a, 0x000000FF << k);
-
             }
 
         }
@@ -175,32 +174,31 @@ class VolumeRenderer {
 
         double vx = (double)width/nx; //длина вокселя по оси x
         double vy = (double)height/ny; //длина вокселя
-        double vz = (double)350/nz; //=dz
+        double vz = (double)350/nz;
         double dz = 1.0/350;
 
         long start = System.currentTimeMillis();
         double maxT = Integer.MIN_VALUE, minT = Integer.MAX_VALUE;
         for(int z = 0; z < nz; z++)
         {
-            double cz = vz*(z+0.5);
+            double cz = vz*(z+0.5)/350;
             for(int y = 0; y < ny; y++)
             {
-                double cy = vy*(y+0.5);
+                double cy = vy*(y+0.5)/height;
                 for(int x = 0; x < nx; x++)
                 {
-                    Point3D current = new Point3D((vx * (x + 0.5))/width, cy/height, cz/350);  //cx = vx * 0.5; cx += vx*x
+                    Point3D current = new Point3D((vx * (x + 0.5))/width, cy, cz);  //cx = vx * 0.5; cx += vx*x
                     double t = 0;
                     for (SimpleEntry<Point3D, Double> xyzq : charges)
                     {
                         Point3D charge = xyzq.getKey();
                         double r = Math.sqrt(Math.pow(current.x - charge.x, 2) + Math.pow(current.y - charge.y, 2) + Math.pow(current.z - charge.z, 2));
-                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 100;
+                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 10;
                     }
                     if(t < minT)
                         minT = t;
                     if(t > maxT)
                         maxT = t;
-                    //System.out.println(t);
                 }
             }
         }
@@ -222,20 +220,21 @@ class VolumeRenderer {
                     {
                         Point3D charge = xyzq.getKey();
                         double r = Math.sqrt(Math.pow(current.x - charge.x, 2) + Math.pow(current.y - charge.y, 2) + Math.pow(current.z - charge.z, 2));
-                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 100;
+                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 10;
                     }
 
                     double tnorm = (t-minT)/(maxT-minT)*100;
-                    //System.out.println(tnorm);
+
+                        //System.out.println(tnorm);
 
                     //получаем значения с графиков эмиссии
                     double tau = getTau(tnorm);
                     int[] gbgr = getG(tnorm);
-
+                    //System.out.println(tau + " " + gbgr[0]  + " " + gbgr[1]  + " " + gbgr[2]);
                     int color = out.getRGB(x ,y);
-                    int r = (int)(((color >> 16) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz);
-                    int g = (int)(((color >> 8) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz);
-                    int b = (int)(((color) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz);
+                    int r = saturate((int)(((color >> 16) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz));
+                    int g = saturate((int)(((color >> 8) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz));
+                    int b = saturate((int)(((color) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz));
                     out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
 
                 }
@@ -290,7 +289,16 @@ class VolumeRenderer {
                 continue;
 
         }
-        return -1;
+        return 0;
+    }
+
+    private int saturate(int v)
+    {
+        if (v > 255)
+            return 255;
+        else if (v < 0)
+            return 0;
+        return v;
     }
 }
 
