@@ -664,11 +664,14 @@ public class Controller {
 
     public void openConfigurationFile(File file)
     {
-        renderer.openConfigurationFile(file);
-        renderer.drawAbsorptionGraphic(absorptionPanel);
-        renderer.drawEmissionGraphic(emissionPanel);
-        absorptionPanel.setVisible(true);
-        emissionPanel.setVisible(true);
+        if((renderer.openConfigurationFile(file)) == 0) {
+            renderer.drawAbsorptionGraphic(absorptionPanel);
+            renderer.drawEmissionGraphic(emissionPanel);
+            absorptionPanel.setVisible(true);
+            emissionPanel.setVisible(true);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Wrong file format. Checl order of points", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void rotate(int angle) {
@@ -726,7 +729,6 @@ public class Controller {
     public void moveModifiedToModifiable() {
         modifiableImagePanel.setImage(modifiedImagePanel.getImage());
     }
-
 
     public void clear() {
         originalImagePanel.setEmptyImage(350, 350);

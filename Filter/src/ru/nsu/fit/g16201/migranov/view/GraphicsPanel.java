@@ -8,7 +8,7 @@ public class GraphicsPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics canvasGraphics;
     private int width, height;
-    public GraphicsPanel(int width, int height)
+    GraphicsPanel(int width, int height)
     {
         this.width = width;
         this.height = height;
@@ -26,6 +26,12 @@ public class GraphicsPanel extends JPanel {
 
     public void drawLine(int x1, int y1, int x2, int y2)
     {
+        canvasGraphics.drawLine(x1,y1,x2,y2);
+        repaint();
+    }
+    public void drawLine(int x1, int y1, int x2, int y2, int color)
+    {
+        canvasGraphics.setColor(new Color(color));
         canvasGraphics.drawLine(x1,y1,x2,y2);
         repaint();
     }

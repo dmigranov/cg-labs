@@ -16,18 +16,21 @@ import static java.util.AbstractMap.SimpleEntry;
 
 //todo: он же гооврил, что ращмеры куба фиксирванные?
 class VolumeRenderer {
-    private List<SimpleEntry<Point3D, Double>> charges = new ArrayList<>();
-    private List<SimpleEntry<Integer, Double>> absorption = new ArrayList<>(); //целочисленная координата от 0 до 100 и значение абсорбции
-    private List<SimpleEntry<Integer, Integer>> emission = new ArrayList<>();       //второе число - это ржб; перове - координата (0..100)
+    private List<SimpleEntry<Point3D, Double>> charges;
+    private List<SimpleEntry<Integer, Double>> absorption; //целочисленная координата от 0 до 100 и значение абсорбции
+    private List<SimpleEntry<Integer, Integer>> emission;       //второе число - это ржб; перове - координата (0..100)
 
 
     private BufferedReader br;
 
-    void openConfigurationFile(File file)
+    int openConfigurationFile(File file)
     {
-
         try
         {
+            charges  = new ArrayList<>();
+            absorption  = new ArrayList<>();
+            emission  = new ArrayList<>();
+
             br = new BufferedReader(new FileReader(file));
 
             String[] substrings;
@@ -87,9 +90,9 @@ class VolumeRenderer {
         }
         catch(Exception e)
         {
-            //todo: диалог
-            System.out.println("who is general fault");
+            return -1;
         }
+        return 0;
     }
 
     private String[] readLineAndSplit() throws IOException
@@ -100,7 +103,7 @@ class VolumeRenderer {
         return line.split("\\s+");
     }
 
-    public void drawAbsorptionGraphic(GraphicsPanel absorptionPanel) {
+    void drawAbsorptionGraphic(GraphicsPanel absorptionPanel) {
 
         for(int i = 0; i < absorption.size() - 1; i++)
         {
@@ -111,11 +114,27 @@ class VolumeRenderer {
             double y1 = p1.getValue(), y2 = p2.getValue();
 
             absorptionPanel.drawLine((int)(x1*3.5),(int)((1 - y1)*200),(int)(x2*3.5),(int)((1 - y2)*200));
-
         }
     }
 
-    public void drawEmissionGraphic(GraphicsPanel emissionPanel) {
+    void drawEmissionGraphic(GraphicsPanel emissionPanel) {
+        for(int i = 0; i < emission.size() - 1; i++)
+        {
+            SimpleEntry<Integer, Integer> p1 = emission.get(i);
+            SimpleEntry<Integer, Integer> p2 = emission.get(i + 1);
+
+            int x1 = p1.getKey(), x2 = p2.getKey();
+            int r1 = p1.getValue(), r2 = p2.getValue();
+
+            for(int k = 0, a = -1; k < 24; k+=8, a++) {
+                int color1 = r1 >> k & 0x000000FF;
+                int color2 = r2 >> k & 0x000000FF;
+
+                emissionPanel.drawLine((int)(x1*3.5) + a,(int)((1 - color1/255.0)*200) + a,(int)(x2*3.5) + a,(int)((1 - color2/255.0)*200) + a, 0x000000FF << k);
+
+            }
+
+        }
     }
 
     class AbsorptionComparator implements Comparator<SimpleEntry<Integer, Double>>
