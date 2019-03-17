@@ -15,7 +15,7 @@ import java.security.InvalidParameterException;
 
 public class FilterFrame extends MainFrame {
     private ImagePanel modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel(), originalImagePanel = new ImagePanel();
-    private JPanel absorptionPanel = new JPanel(), emissionPanel = new JPanel();
+    private GraphicsPanel absorptionPanel = new GraphicsPanel(350, 202), emissionPanel = new GraphicsPanel(350, 202);
     private JLabel statusLabel = new JLabel("");
     private Controller controller;
     public static void main(String[] args) throws Exception {
@@ -36,10 +36,10 @@ public class FilterFrame extends MainFrame {
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
 
-        emissionPanel.setPreferredSize(new Dimension(350, 200));
-        absorptionPanel.setPreferredSize(new Dimension(350, 200));
-        emissionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5));
-        absorptionPanel.setBorder(BorderFactory.createDashedBorder(Color.gray, 10, 5)); //todo: только снизу и справа!
+        emissionPanel.setPreferredSize(new Dimension(350, 202));
+        absorptionPanel.setPreferredSize(new Dimension(350, 202));
+        emissionPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.GRAY));
+        absorptionPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.GRAY));
 
         emissionPanel.setVisible(false);
         absorptionPanel.setVisible(false);
@@ -68,8 +68,8 @@ public class FilterFrame extends MainFrame {
         originalBorderPanel.revalidate();
 
         imagesPanel.setMaximumSize(new Dimension(1096, 372));
-        graphicsPanel.setMaximumSize(new Dimension(1096, 220));
-        mainPanel.setMaximumSize(new Dimension(1096, 592));
+        graphicsPanel.setMaximumSize(new Dimension(1096, 224));
+        mainPanel.setMaximumSize(new Dimension(1096, 596));
 
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel, absorptionPanel, emissionPanel);
 

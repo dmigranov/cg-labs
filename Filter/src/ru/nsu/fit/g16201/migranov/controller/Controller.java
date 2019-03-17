@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.view.GraphicsPanel;
 import ru.nsu.fit.g16201.migranov.view.ImagePanel;
 
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ import static java.lang.Math.round;
 
 public class Controller {
     private ImagePanel modifiableImagePanel, modifiedImagePanel, originalImagePanel;
-    private JPanel absorptionPanel, emissionPanel;
+    private GraphicsPanel absorptionPanel, emissionPanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
     private static int[][] orderedDitherMatrix2x2 = {{0, 2}, {3, 1}};
@@ -41,7 +42,7 @@ public class Controller {
 
     private VolumeRenderer renderer = new VolumeRenderer();
 
-    public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel, JPanel absorptionPanel, JPanel emissionPanel) {
+    public Controller(ImagePanel originalImagePanel, ImagePanel modifiableImagePanel, ImagePanel modifiedImagePanel, GraphicsPanel absorptionPanel, GraphicsPanel emissionPanel) {
         this.originalImagePanel = originalImagePanel;
         this.modifiableImagePanel = modifiableImagePanel;
         this.modifiedImagePanel = modifiedImagePanel;

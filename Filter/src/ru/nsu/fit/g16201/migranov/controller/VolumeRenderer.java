@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.view.GraphicsPanel;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -98,11 +100,22 @@ class VolumeRenderer {
         return line.split("\\s+");
     }
 
-    public void drawAbsorptionGraphic(JPanel absorptionPanel) {
-        //for(;;);
+    public void drawAbsorptionGraphic(GraphicsPanel absorptionPanel) {
+
+        for(int i = 0; i < absorption.size() - 1; i++)
+        {
+            SimpleEntry<Integer, Double> p1 = absorption.get(i);
+            SimpleEntry<Integer, Double> p2 = absorption.get(i + 1);
+
+            int x1 = p1.getKey(), x2 = p2.getKey();
+            double y1 = p1.getValue(), y2 = p2.getValue();
+
+            absorptionPanel.drawLine((int)(x1*3.5),(int)((1 - y1)*200),(int)(x2*3.5),(int)((1 - y2)*200));
+
+        }
     }
 
-    public void drawEmissionGraphic(JPanel emissionPanel) {
+    public void drawEmissionGraphic(GraphicsPanel emissionPanel) {
     }
 
     class AbsorptionComparator implements Comparator<SimpleEntry<Integer, Double>>
