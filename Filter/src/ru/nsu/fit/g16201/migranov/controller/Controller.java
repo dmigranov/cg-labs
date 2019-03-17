@@ -54,7 +54,7 @@ public class Controller {
         selectBox.setBackground(new Color(0,0,0,0));
         selectBox.setOpaque(true);
 
-        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 5, 10, true));
+        selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 5, 10, false));
         //selectBox.create
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
@@ -116,7 +116,7 @@ public class Controller {
         else if(newY + selectBoxHeight > originalImagePanel.getImageHeight())
             newY = originalImagePanel.getImageHeight() - selectBoxHeight;
 
-        selectBox.setBounds(newX, newY, selectBoxWidth, selectBoxHeight);
+        selectBox.setBounds(newX,  newY, selectBoxWidth, selectBoxHeight);
 
         int pictureX = newX * originalImage.getWidth() / realSelectBoxWidth, pictureY = newY * originalImage.getHeight() / realSelectBoxHeight;
         if(pictureX + realSelectBoxWidth > originalImage.getWidth())
@@ -181,7 +181,7 @@ public class Controller {
 
             //System.out.println(selectBoxWidth + " " + selectBoxHeight);
 
-            originalImagePanel.setLayout(new FlowLayout());
+            originalImagePanel.setLayout(null);
 
             selectBox.setPreferredSize(new Dimension(selectBoxWidth, selectBoxHeight));
 
