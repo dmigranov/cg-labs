@@ -52,10 +52,8 @@ public class Controller {
         originalImagePanel.add(selectBox);
         selectBox.setVisible(false);
         selectBox.setBackground(new Color(0,0,0,0));
-        selectBox.setOpaque(true);
 
         selectBox.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 2, 5, 10, false));
-        //selectBox.create
 
         originalImagePanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -192,7 +190,6 @@ public class Controller {
         catch (IOException e)
         {
             JOptionPane.showMessageDialog(null, "Could not read this file", "Error", JOptionPane.ERROR_MESSAGE);
-            //todo: возможно, стоить снова поставить Untitled Заголовок окошка
         }
 
     }
