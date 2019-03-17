@@ -17,6 +17,7 @@ import static java.util.AbstractMap.SimpleEntry;
 
 //todo: он же гооврил, что ращмеры куба фиксирванные?
 class VolumeRenderer {
+    private static double epsilon = 1e-9;
     private List<SimpleEntry<Point3D, Double>> charges;
     private List<SimpleEntry<Integer, Double>> absorption; //целочисленная координата от 0 до 100 и значение абсорбции
     private List<SimpleEntry<Integer, Integer>> emission;       //второе число - это ржб; перове - координата (0..100)
@@ -165,17 +166,19 @@ class VolumeRenderer {
     }
 
     public void run(int nx, int ny, int nz, BufferedImage image, BufferedImage out) {
+
         if(charges == null)
             return;
         int width = image.getWidth();
         int height = image.getHeight();
+        out.getGraphics().drawImage(image, 0, 0, width, height,null);
 
         double vx = (double)width/nx; //длина вокселя по оси x
         double vy = (double)height/ny; //длина вокселя
-        double vz = (double)350/nz;
+        double vz = (double)350/nz; //=dz
 
         long start = System.currentTimeMillis();
-        double maxT = Integer.MAX_VALUE, minT = Integer.MIN_VALUE;
+        double maxT = Integer.MIN_VALUE, minT = Integer.MAX_VALUE;
         for(int z = 0; z < nz; z++)
         {
             double cz = vz*(z+0.5);
@@ -191,19 +194,99 @@ class VolumeRenderer {
                         Point3D charge = xyzq.getKey();
                         double r = Math.sqrt(Math.pow(current.x - charge.x, 2) + Math.pow(current.y - charge.y, 2) + Math.pow(current.z - charge.z, 2));
                         t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 100;
-                        if(t < minT)
-                            minT = t;
-                        if(t > maxT)
-                            maxT = t;
                     }
+                    if(t < minT)
+                        minT = t;
+                    if(t > maxT)
+                        maxT = t;
                 }
             }
         }
         long end = System.currentTimeMillis();
         //1266 мс. я думаю, лучше пожертвовать одной секундой, чем 350*350*350*sizeof(double) памяти
 
+        for(int z = 0; z < nz; z++)
+        {
+            double cz = vz*(z+0.5);
+            for(int y = 0; y < ny; y++)
+            {
+                double cy = vy*(y+0.5);
+                for(int x = 0; x < nx; x++)
+                {
+                    Point3D current = new Point3D(vx * (x + 0.5), cy, cz);  //cx = vx * 0.5; cx += vx*x
+                    double t = 0;
+                    for (SimpleEntry<Point3D, Double> xyzq : charges)
+                    {
+                        Point3D charge = xyzq.getKey();
+                        double r = Math.sqrt(Math.pow(current.x - charge.x, 2) + Math.pow(current.y - charge.y, 2) + Math.pow(current.z - charge.z, 2));
+                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 100;
+                    }
+
+                    double tnorm = (t-minT)/(maxT-minT)*100;
+
+                    //получаем значения с графиков эмиссии
+                    double tau = getTau(tnorm);
+                    int[] gbgr = getG(tnorm);
+
+                    int color = out.getRGB(x ,y);
+                    int r = (int)(((color >> 16) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[2] : 0) * vz);
+                    int g = (int)(((color >> 8) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[1] : 0) * vz);
+                    int b = (int)(((color) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[0] : 0) * vz);
+                    out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
+
+                }
+            }
+        }
 
 
+    }
+
+    private int[] getG(double tnorm) {
+        for(int i = 0; i < emission.size() - 1; i++)
+        {
+            SimpleEntry<Integer, Integer> p1 = emission.get(i);
+            SimpleEntry<Integer, Integer> p2 = emission.get(i + 1);
+
+            int x1 = p1.getKey(), x2 = p2.getKey();
+            int c1 = p1.getValue(), c2 = p2.getValue();
+
+            if(x1 == x2 && Math.abs(tnorm - x1) < epsilon)
+                return new int[] {(c2 >> 16) & 0xFF, (c2 >> 8) & 0xFF, c2 & 0xFF};
+            if(tnorm >= x1 && tnorm <= x2) {
+                int[] returnArray = new int[3];
+
+                for (int k = 0; k < 24; k += 8) {
+                    int color1 = c1 >> k & 0x000000FF;
+                    int color2 = c2 >> k & 0x000000FF;
+
+                    returnArray[k/8] = (int) ((color2 - color1) * (tnorm - x1) / (x2 - x1) + color1);
+                }
+                return returnArray;
+            }
+        }
+        return null;
+    }
+
+    private double getTau(double tnorm) {
+        for(int i = 0; i < emission.size() - 1; i++)
+        {
+            SimpleEntry<Integer, Double> p1 = absorption.get(i);
+            SimpleEntry<Integer, Double> p2 = absorption.get(i + 1);
+
+            int x1 = p1.getKey(), x2 = p2.getKey();
+            double y1 = p1.getValue(), y2 = p2.getValue();
+
+            if(x1 == x2 && Math.abs(tnorm - x1) < epsilon)
+                return y2;
+            if(tnorm >= x1 && tnorm <= x2)
+            {
+                return (tnorm - x1)/(x2-x1)*(y2-y1) + y1;
+            }
+            else
+                continue;
+
+        }
+        return -1;
     }
 }
 
