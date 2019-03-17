@@ -3,6 +3,7 @@ package ru.nsu.fit.g16201.migranov.controller;
 import ru.nsu.fit.g16201.migranov.view.GraphicsPanel;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -161,6 +162,48 @@ class VolumeRenderer {
         {
             return a.getKey() < b.getKey() ? -1 : a.getKey() == b.getKey() ? 0 : 1;
         }
+    }
+
+    public void run(int nx, int ny, int nz, BufferedImage image, BufferedImage out) {
+        if(charges == null)
+            return;
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        double vx = (double)width/nx; //длина вокселя по оси x
+        double vy = (double)height/ny; //длина вокселя
+        double vz = (double)350/nz;
+
+        long start = System.currentTimeMillis();
+        double maxT = Integer.MAX_VALUE, minT = Integer.MIN_VALUE;
+        for(int z = 0; z < nz; z++)
+        {
+            double cz = vz*(z+0.5);
+            for(int y = 0; y < ny; y++)
+            {
+                double cy = vy*(y+0.5);
+                for(int x = 0; x < nx; x++)
+                {
+                    Point3D current = new Point3D(vx * (x + 0.5), cy, cz);  //cx = vx * 0.5; cx += vx*x
+                    double t = 0;
+                    for (SimpleEntry<Point3D, Double> xyzq : charges)
+                    {
+                        Point3D charge = xyzq.getKey();
+                        double r = Math.sqrt(Math.pow(current.x - charge.x, 2) + Math.pow(current.y - charge.y, 2) + Math.pow(current.z - charge.z, 2));
+                        t+= (r > 0.1) ? xyzq.getValue() / r : xyzq.getValue() * 100;
+                        if(t < minT)
+                            minT = t;
+                        if(t > maxT)
+                            maxT = t;
+                    }
+                }
+            }
+        }
+        long end = System.currentTimeMillis();
+        //1266 мс. я думаю, лучше пожертвовать одной секундой, чем 350*350*350*sizeof(double) памяти
+
+
+
     }
 }
 

@@ -756,5 +756,9 @@ public class Controller {
     public void setEmissionEnabled(boolean b) {
         renderer.setEmissionEnabled(b);
     }
+
+    public void runRendering(int nx, int ny, int nz) {
+        renderer.run(nx, ny, nz, modifiableImagePanel.getImage(), modifiedImagePanel.getImage());
+    }
 }
 

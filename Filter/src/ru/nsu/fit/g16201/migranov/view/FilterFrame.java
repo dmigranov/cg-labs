@@ -131,7 +131,8 @@ public class FilterFrame extends MainFrame {
         addSubMenu("Volume rendering", KeyEvent.VK_V);
         addMenuAndToolBarButton("Volume rendering/Open configuration", "Open configuration file", KeyEvent.VK_O, "reload.png", "onOpenConfiguration");
         addCheckBoxMenuAndToolBarButton("Volume rendering/Absorption enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onAbsorptionEnabled", false);
-        addCheckBoxMenuAndToolBarButton("Volume rendering/Emission enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onEmissionEnabled", false);
+        addCheckBoxMenuAndToolBarButton("Volume rendering/Emission enabled", "Shows if absorption is enabled", KeyEvent.VK_E, "reload.png", "onEmissionEnabled", false);
+        addMenuAndToolBarButton("Volume rendering/Run rendering", "Run the rendering algorithm", KeyEvent.VK_R, "reload.png", "onRunRendering");
 
         addSubMenu("Help", KeyEvent.VK_H);
     }
@@ -482,7 +483,11 @@ public class FilterFrame extends MainFrame {
     public void onEmissionEnabled()
     {
         controller.setEmissionEnabled(!controller.isEmissionEnabled());
+    }
 
+    public void onRunRendering()
+    {
+        controller.runRendering(350, 350, 350);
     }
 
 }
