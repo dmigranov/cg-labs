@@ -488,6 +488,7 @@ public class FilterFrame extends MainFrame {
     public void onRunRendering()
     {
         //вы говорили, что можно только для разбиения 350x350x350
+        //todo: по z добавить изменение
         controller.runRendering(350, 350, 350);
     }
 

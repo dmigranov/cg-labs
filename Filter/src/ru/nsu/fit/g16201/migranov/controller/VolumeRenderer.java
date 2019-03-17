@@ -16,7 +16,6 @@ import java.util.List;
 
 import static java.util.AbstractMap.SimpleEntry;
 
-//todo: он же гооврил, что ращмеры куба фиксирванные?
 class VolumeRenderer {
     private static double epsilon = 1e-9;
     private List<SimpleEntry<Point3D, Double>> charges;
@@ -53,7 +52,6 @@ class VolumeRenderer {
                 absorption.add(new SimpleEntry<>(m, t));
                 o--;
             }
-            //Collections.sort(absorption, new AbsorptionComparator());
 
             substrings = readLineAndSplit();
             int c = Integer.parseInt(substrings[0]);    //число вершин в каждом графике эмиссии среды
@@ -83,7 +81,7 @@ class VolumeRenderer {
                 double z = Double.parseDouble(substrings[2]);
                 double q = Double.parseDouble(substrings[3]);
 
-                //if () //todo: какие условия?
+                //if ()
                 //    throw new Exception("Wrong emission constants");
                 charges.add(new SimpleEntry<>(new Point3D(x,y,z), q)); //так? или лучше Color? Или лучше тройку хранить?
                 nq--;
@@ -166,7 +164,7 @@ class VolumeRenderer {
     }
 
     public void run(int nx, int ny, int nz, BufferedImage image, ImagePanel outPanel) {
-
+        //изображение 350x350
         if(charges == null || image == null)
             return;
         int width = image.getWidth();
@@ -239,8 +237,6 @@ class VolumeRenderer {
 
                     double tnorm = (t-minT)/(maxT-minT)*100;
 
-                        //System.out.println(tnorm);
-
                     //получаем значения с графиков эмиссии
                     double tau = 0;
                     if(isAbsorptionEnabled)
@@ -258,7 +254,6 @@ class VolumeRenderer {
                     doubleImage[1][y][x] = doubleImage[1][y][x] * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz;;
                     doubleImage[2][y][x] = doubleImage[2][y][x] * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz;
                     //это надо, так как в закоменченном коде прибаляется меньше единицы и при округлении теряется
-
                 }
             }
         }
@@ -273,7 +268,6 @@ class VolumeRenderer {
                 out.setRGB(x, y, color);
             }
         outPanel.setImage(out);
-
 
     }
 
