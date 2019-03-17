@@ -35,4 +35,11 @@ public class GraphicsPanel extends JPanel {
         canvasGraphics.drawLine(x1,y1,x2,y2);
         repaint();
     }
+
+    public void clear()
+    {
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvasGraphics = canvas.getGraphics();
+        canvasGraphics.setColor(Color.BLACK);
+    }
 }

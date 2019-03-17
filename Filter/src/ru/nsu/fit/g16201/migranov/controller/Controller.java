@@ -665,13 +665,15 @@ public class Controller {
     public void openConfigurationFile(File file)
     {
         if((renderer.openConfigurationFile(file)) == 0) {
+            absorptionPanel.clear();
+            emissionPanel.clear();
             renderer.drawAbsorptionGraphic(absorptionPanel);
             renderer.drawEmissionGraphic(emissionPanel);
             absorptionPanel.setVisible(true);
             emissionPanel.setVisible(true);
         }
         else
-            JOptionPane.showMessageDialog(null, "Wrong file format. Checl order of points", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Wrong file format. Check order of points", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public void rotate(int angle) {
