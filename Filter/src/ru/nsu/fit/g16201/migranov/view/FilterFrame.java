@@ -178,7 +178,8 @@ public class FilterFrame extends MainFrame {
 
     public void onNew()
     {
-        //todo
+        setTitle("Untitled | Denis Migranov, 16201");
+        controller.clear();
     }
 
     public void onOpen()

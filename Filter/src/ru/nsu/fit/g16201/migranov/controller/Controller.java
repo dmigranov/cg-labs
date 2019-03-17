@@ -93,7 +93,6 @@ public class Controller {
                 moveSelectBox(x, y);
 
                 timer.start();
-
             }
         });
 
@@ -293,9 +292,8 @@ public class Controller {
     }
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
-        //TODO: ИСПРАВИТЬ
+        //todo: исправить
         BufferedImage originalImage = modifiableImagePanel.getImage();
-        //BufferedImage image = new BufferedImage(originalImage.getColorModel(), originalImage.copyData(null), originalImage.isAlphaPremultiplied(), null);
         BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         image.getGraphics().drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight() ,null);
 
@@ -318,14 +316,13 @@ public class Controller {
                     int oldColor = colors[i];
                     newColors[i] = getClosestColor(oldColor, levels[i]);    //+0.5?
                     int error = oldColor - newColors[i];
-                    //распрсстрание ошибки:
                     if(y < image.getHeight() - 1)
                     {
                         image.setRGB(x, y + 1, image.getRGB(x, y+1) + error*5/16);
                         if(x > 0) image.setRGB(x - 1, y + 1, image.getRGB(x-1, y+1) + error*3/16);
                         if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1, image.getRGB(x+1, y+1) + error/16);
                     }
-                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, image.getRGB(x+1, y)+error - error*5/16 - error*3/16 - error/16);
+                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, image.getRGB(x+1, y)+error*7/16); //+error - error*5/16 - error*3/16 - error/16
                 }
                 modifiedImagePanel.setColor(x,y, getColorFromComponents(newColors[0], newColors[1], newColors[2]));
             }
@@ -730,5 +727,11 @@ public class Controller {
     }
 
 
+    public void clear() {
+        originalImagePanel.setEmptyImage(350, 350);
+        modifiableImagePanel.setEmptyImage(350, 350);
+        modifiedImagePanel.setEmptyImage(350, 350);
+
+    }
 }
 
