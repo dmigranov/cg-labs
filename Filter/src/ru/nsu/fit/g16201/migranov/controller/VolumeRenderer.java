@@ -173,13 +173,25 @@ class VolumeRenderer {
         int height = image.getHeight();
         //out.getGraphics().drawImage(image, 0, 0, width, height,null);
         BufferedImage out = new BufferedImage(350,350, BufferedImage.TYPE_INT_ARGB);
+        out.getGraphics().fillRect(0, 0, width, height);
         out.getGraphics().drawImage(image, 0, 0, width, height,null);
 
         double vx = (double)width/nx; //длина вокселя по оси x
         double vy = (double)height/ny; //длина вокселя
         double vz = (double)350/nz;
         double dz = 1.0/nz;
-        double[][] doubleImage = new double[ny][nx];
+        double[][][] doubleImage = new double[3][ny][nx];   //bgr
+        for(int y = 0; y < ny; y++)
+            for(int x = 0; x < nx; x++)
+            {
+                int color = out.getRGB(x ,y);
+                for (int k = 0; k < 24; k += 8) {
+                    int cc = color >> k & 0x000000FF;
+                    doubleImage[k/8][y][x] = cc;
+                }
+            }
+
+
         long start = System.currentTimeMillis();
         double maxT = Integer.MIN_VALUE, minT = Integer.MAX_VALUE;
         for(int z = 0; z < nz; z++)
@@ -237,17 +249,29 @@ class VolumeRenderer {
                     if(isEmissionEnabled)
                         gbgr= getG(tnorm);
                     //System.out.println(tau + " " + gbgr[0]  + " " + gbgr[1]  + " " + gbgr[2]);
-                    int color = out.getRGB(x ,y);
+                    //int color = out.getRGB(x ,y);
                     //int r = saturate((int)(((color >> 16) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz));
                     //int g = saturate((int)(((color >> 8) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz));
                     //int b = saturate((int)(((color) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz));
                     //out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
-
-
+                    doubleImage[0][y][x] = doubleImage[0][y][x] * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz;
+                    doubleImage[1][y][x] = doubleImage[1][y][x] * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz;;
+                    doubleImage[2][y][x] = doubleImage[2][y][x] * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz;
+                    //это надо, так как в закоменченном коде прибаляется меньше единицы и при округлении теряется
 
                 }
             }
         }
+
+        for(int y = 0; y < ny; y++)
+            for(int x = 0; x < nx; x++)
+            {
+                int b = saturate((int)doubleImage[0][y][x]);
+                int g = saturate((int)doubleImage[1][y][x]);
+                int r = saturate((int)doubleImage[2][y][x]);
+                int color = 0xFF000000 | (r << 16) | (g << 8) | b;
+                out.setRGB(x, y, color);
+            }
         outPanel.setImage(out);
 
 
