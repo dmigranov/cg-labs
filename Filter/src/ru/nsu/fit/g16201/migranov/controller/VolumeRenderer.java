@@ -167,7 +167,7 @@ class VolumeRenderer {
 
     public void run(int nx, int ny, int nz, BufferedImage image, BufferedImage out) {
 
-        if(charges == null)
+        if(charges == null || image == null || out == null)
             return;
         int width = image.getWidth();
         int height = image.getHeight();
@@ -176,6 +176,7 @@ class VolumeRenderer {
         double vx = (double)width/nx; //длина вокселя по оси x
         double vy = (double)height/ny; //длина вокселя
         double vz = (double)350/nz; //=dz
+        double dz = 1.0/350;
 
         long start = System.currentTimeMillis();
         double maxT = Integer.MIN_VALUE, minT = Integer.MAX_VALUE;
@@ -187,7 +188,7 @@ class VolumeRenderer {
                 double cy = vy*(y+0.5);
                 for(int x = 0; x < nx; x++)
                 {
-                    Point3D current = new Point3D(vx * (x + 0.5), cy, cz);  //cx = vx * 0.5; cx += vx*x
+                    Point3D current = new Point3D((vx * (x + 0.5))/width, cy/height, cz/350);  //cx = vx * 0.5; cx += vx*x
                     double t = 0;
                     for (SimpleEntry<Point3D, Double> xyzq : charges)
                     {
@@ -199,11 +200,13 @@ class VolumeRenderer {
                         minT = t;
                     if(t > maxT)
                         maxT = t;
+                    //System.out.println(t);
                 }
             }
         }
         long end = System.currentTimeMillis();
         //1266 мс. я думаю, лучше пожертвовать одной секундой, чем 350*350*350*sizeof(double) памяти
+        System.out.println(minT + " "+ maxT);
 
         for(int z = 0; z < nz; z++)
         {
@@ -213,7 +216,7 @@ class VolumeRenderer {
                 double cy = vy*(y+0.5);
                 for(int x = 0; x < nx; x++)
                 {
-                    Point3D current = new Point3D(vx * (x + 0.5), cy, cz);  //cx = vx * 0.5; cx += vx*x
+                    Point3D current = new Point3D((vx * (x + 0.5))/width, cy/height, cz/350);  //cx = vx * 0.5; cx += vx*x
                     double t = 0;
                     for (SimpleEntry<Point3D, Double> xyzq : charges)
                     {
@@ -223,15 +226,16 @@ class VolumeRenderer {
                     }
 
                     double tnorm = (t-minT)/(maxT-minT)*100;
+                    //System.out.println(tnorm);
 
                     //получаем значения с графиков эмиссии
                     double tau = getTau(tnorm);
                     int[] gbgr = getG(tnorm);
 
                     int color = out.getRGB(x ,y);
-                    int r = (int)(((color >> 16) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[2] : 0) * vz);
-                    int g = (int)(((color >> 8) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[1] : 0) * vz);
-                    int b = (int)(((color) & 0xFF)*Math.exp(-tau*vz) + (gbgr != null ? gbgr[0] : 0) * vz);
+                    int r = (int)(((color >> 16) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz);
+                    int g = (int)(((color >> 8) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz);
+                    int b = (int)(((color) & 0xFF)*Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz);
                     out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
 
                 }
