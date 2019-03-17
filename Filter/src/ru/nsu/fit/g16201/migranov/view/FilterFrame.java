@@ -7,6 +7,7 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -129,10 +130,10 @@ public class FilterFrame extends MainFrame {
 
         addSubMenu("Volume rendering", KeyEvent.VK_V);
         addMenuAndToolBarButton("Volume rendering/Open configuration", "Open configuration file", KeyEvent.VK_O, "reload.png", "onOpenConfiguration");
+        addCheckBoxMenuAndToolBarButton("Volume rendering/Absorption enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onAbsorptionEnabled", false);
+        addCheckBoxMenuAndToolBarButton("Volume rendering/Emission enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onEmissionEnabled", false);
 
         addSubMenu("Help", KeyEvent.VK_H);
-        addMenuAndToolBarButton("Help/About", "About the program", KeyEvent.VK_A, "book.png", "onAbout");
-
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod) throws NoSuchMethodException
@@ -168,6 +169,46 @@ public class FilterFrame extends MainFrame {
             button.addActionListener(listener);
         button.setToolTipText(tooltip);
         button.addMouseListener(new StatusTitleListener(statusLabel));
+        toolBar.add(button);
+    }
+
+    private void addCheckBoxMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean state) throws NoSuchMethodException
+    {
+        MenuElement element = getParentMenuElement(path);
+        if(element == null)
+            throw new InvalidParameterException("Menu path not found: " + path);
+        String title = getMenuPathName(path);
+
+        JCheckBoxMenuItem item = new JCheckBoxMenuItem(title, state);
+
+        item.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+
+        item.addMouseListener(new StatusTitleListener(statusLabel));
+
+        final Method method = getClass().getMethod(actionMethod);
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    method.invoke(FilterFrame.this);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        if(element instanceof JMenu)
+            ((JMenu)element).add(item);
+        else if(element instanceof JPopupMenu)
+            ((JPopupMenu)element).add(item);
+        else
+            throw new InvalidParameterException("Invalid menu path: " + path);
+
+        JToggleButton button = new JToggleButton();
+        if(icon != null)
+            button.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
+        button.setToolTipText(tooltip);
+        button.setModel(item.getModel());   //кнопки повторяют поведение меню, включая "зажатость"
         toolBar.add(button);
     }
 
@@ -432,4 +473,15 @@ public class FilterFrame extends MainFrame {
     {
         System.exit(0);
     }
+
+    public void onAbsorptionEnabled()
+    {
+
+    }
+
+    public void onEmissionEnabled()
+    {
+
+    }
+
 }
