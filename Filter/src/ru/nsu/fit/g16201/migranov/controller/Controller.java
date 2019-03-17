@@ -25,7 +25,9 @@ public class Controller {
     private JPanel absorptionPanel, emissionPanel;
     private BufferedImage originalImage;        //ПОЛНОЕ изображение
 
-    private static int[][] orderedDitherMatrix = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
+    private static int[][] orderedDitherMatrix2x2 = {{0, 2}, {3, 1}};
+    private static int[][] orderedDitherMatrix4x4 = {{0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5}};
+    private static int[][] orderedDitherMatrix8x8 = new int[8][8];
     private static double[][] sharpnessMatrix = {{0, -1, 0}, {-1, 5, -1}, {0, -1, 0}};
     private static double[][] simpleBlurMatrix = {{0, 1/6.0, 0}, {1/6.0, 1/3.0, 1/6.0}, {0, 1/6.0, 0}};
     private static int[][] embossingMatrix = {{0, 1, 0}, {-1, 0, 1}, {0, -1, 0}};
@@ -46,6 +48,21 @@ public class Controller {
         this.absorptionPanel = absorptionPanel;
         this.emissionPanel = emissionPanel;
         originalImagePanel.setDoubleBuffered(true);
+
+        for(int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                orderedDitherMatrix8x8[i][j] = 4*orderedDitherMatrix4x4[i%4][j%4];
+
+                if(i >= 4 && j < 3)
+                    orderedDitherMatrix8x8[i][j] += 3;
+                else if(i < 3 && j >= 4)
+                    orderedDitherMatrix8x8[i][j] += 2;
+                if(i >= 4 && j >= 4)
+                    orderedDitherMatrix8x8[i][j] += 1;
+            }
+        }
 
         timer.setRepeats(false);
         selectBox = new SelectBoxPanel();
@@ -240,35 +257,35 @@ public class Controller {
 
     public void doOrderedDithering(int rLevel, int gLevel, int bLevel, int matrixSize)
     {
-        //todo: ИСПРАВИТЬ: нормировать как в тетрпдке
-        matrixSize = 4;  //todo: добавить размер матрицы
-        double[][] orderedDitherDoubleMatrix = new double[4][4];
+        int[][] orderedDitherMatrix;
+        if(matrixSize == 2)
+            orderedDitherMatrix = orderedDitherMatrix2x2;
+        else if(matrixSize == 4)
+            orderedDitherMatrix = orderedDitherMatrix4x4;
+        else
+            orderedDitherMatrix = orderedDitherMatrix8x8;
+
+        double[][] orderedDitherDoubleMatrix = new double[matrixSize][matrixSize];
         for(int i  = 0; i < matrixSize; i++)
             for(int j  = 0; j < matrixSize; j++)
                 orderedDitherDoubleMatrix[i][j] = 1.0 * orderedDitherMatrix[i][j]/(matrixSize * matrixSize);
 
         for(int y = 0; y < modifiableImagePanel.getImageHeight(); y++)
         {
-            int j = y % 4;
+            int j = y % matrixSize;
             for(int x = 0; x < modifiableImagePanel.getImageWidth(); x++)
             {
-                int i = x % 4;
+                int i = x % matrixSize;
                 int color = modifiableImagePanel.getColor(x, y);
                 int red = (color & 0xFF0000) >> 16, green = (color & 0x00FF00) >> 8, blue = color & 0x0000FF;
                 int nred = 0, ngreen = 0, nblue = 0;
-
-                //int threshold = orderedDitherMatrix[j][i] * 255 / 16;
-
-                //int addition = (int)((256.0/(4 - 1))*(orderedDitherDoubleMatrix[j][i]/(4.0 * 4.0) - 0.5)); //-1/2, r wiki
-
-                //int addition = orderedDitherMatrix[j][i] * 16 - 127;
 
                 double addition = orderedDitherDoubleMatrix[j][i] - 0.5;
                 nred = getClosestColor((int)((red + addition*255/rLevel)), rLevel);
                 nblue = getClosestColor((int)((blue + addition*255/bLevel)), bLevel);
                 ngreen = getClosestColor((int)((green + addition*255/gLevel)), gLevel);
-                System.out.println(nred);
-                int newColor = nblue + (ngreen << 8) + (nred << 16);
+
+                int newColor = getColorFromComponents(nred, ngreen, nblue);
                 modifiedImagePanel.setColor(x, y, newColor);
             }
         }

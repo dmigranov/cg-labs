@@ -202,13 +202,23 @@ public class FilterFrame extends MainFrame {
 
     public void onOrderedDither()
     {
-        //3 цвета у меня - это 2 цвета в примерах xxx
-        //теперь уже нет. может, стоить сдвигать на единицу, чтоб как раньеш?
+
+        JPanel parametersPanel = new JPanel(), radioButtonPanel = new JPanel();
+        parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
         DitheringParametersPanel ditheringParametersPanel = new DitheringParametersPanel();
+        parametersPanel.add(ditheringParametersPanel);
+        parametersPanel.add(radioButtonPanel);
+        JRadioButton b2 = new JRadioButton("2x2"), b4 = new JRadioButton("4x4", true), b8 = new JRadioButton("8x8");
+        ButtonGroup group = new ButtonGroup();
 
-        //todo сделать выбор матрицы радиобаттон
+        group.add(b2);
+        group.add(b4);
+        group.add(b8);
+        radioButtonPanel.add(b2);
+        radioButtonPanel.add(b4);
+        radioButtonPanel.add(b8);
 
-        if(JOptionPane.showConfirmDialog(this, ditheringParametersPanel, "Ordered dithering algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if(JOptionPane.showConfirmDialog(this, parametersPanel, "Ordered dithering algorithm color levels", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             String rText = ditheringParametersPanel.getRText();
             String gText = ditheringParametersPanel.getGText();
@@ -220,7 +230,14 @@ public class FilterFrame extends MainFrame {
                 int bLevel = Integer.parseInt(bText);
                 if(rLevel == 0 || gLevel == 0 || bLevel == 0) //<=1?
                     throw new NumberFormatException();
-                controller.doOrderedDithering(rLevel, gLevel, bLevel, 4);
+                int matrixSize;
+                if(b2.isSelected())
+                    matrixSize = 2;
+                else if(b4.isSelected())
+                    matrixSize = 4;
+                else
+                    matrixSize = 8;
+                controller.doOrderedDithering(rLevel, gLevel, bLevel, matrixSize);
             }
             catch(NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Wrong threshold values", "Wrong input", JOptionPane.ERROR_MESSAGE);
