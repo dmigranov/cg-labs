@@ -15,7 +15,7 @@ import java.security.InvalidParameterException;
 
 public class FilterFrame extends MainFrame {
     private ImagePanel modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel(), originalImagePanel = new ImagePanel();
-    private GraphicsPanel absorptionPanel = new GraphicsPanel(350, 202), emissionPanel = new GraphicsPanel(350, 202);
+    private GraphicsPanel absorptionPanel = new GraphicsPanel(350, 203), emissionPanel = new GraphicsPanel(350, 203);
     private JLabel statusLabel = new JLabel("");
     private Controller controller;
     public static void main(String[] args) throws Exception {
@@ -36,8 +36,8 @@ public class FilterFrame extends MainFrame {
         modifiableImagePanel.setPreferredSize(new Dimension(350, 350));
         modifiedImagePanel.setPreferredSize(new Dimension(350, 350));
 
-        emissionPanel.setPreferredSize(new Dimension(350, 202));
-        absorptionPanel.setPreferredSize(new Dimension(350, 202));
+        emissionPanel.setPreferredSize(new Dimension(350, 203));
+        absorptionPanel.setPreferredSize(new Dimension(350, 203));
         emissionPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.GRAY));
         absorptionPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.GRAY));
 
@@ -68,8 +68,8 @@ public class FilterFrame extends MainFrame {
         originalBorderPanel.revalidate();
 
         imagesPanel.setMaximumSize(new Dimension(1096, 372));
-        graphicsPanel.setMaximumSize(new Dimension(1096, 224));
-        mainPanel.setMaximumSize(new Dimension(1096, 596));
+        graphicsPanel.setMaximumSize(new Dimension(1096, 226));
+        mainPanel.setMaximumSize(new Dimension(1096, 598));
 
         controller = new Controller(originalImagePanel, modifiableImagePanel, modifiedImagePanel, absorptionPanel, emissionPanel);
 

@@ -732,7 +732,8 @@ public class Controller {
         originalImagePanel.setEmptyImage(350, 350);
         modifiableImagePanel.setEmptyImage(350, 350);
         modifiedImagePanel.setEmptyImage(350, 350);
-
+        absorptionPanel.setVisible(false);
+        emissionPanel.setVisible(false);
     }
 }
 
