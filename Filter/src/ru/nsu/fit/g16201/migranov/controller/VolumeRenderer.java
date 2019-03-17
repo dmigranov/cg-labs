@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.view.GraphicsPanel;
+import ru.nsu.fit.g16201.migranov.view.ImagePanel;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -164,19 +165,21 @@ class VolumeRenderer {
         }
     }
 
-    public void run(int nx, int ny, int nz, BufferedImage image, BufferedImage out) {
+    public void run(int nx, int ny, int nz, BufferedImage image, ImagePanel outPanel) {
 
-        if(charges == null || image == null || out == null)
+        if(charges == null || image == null)
             return;
         int width = image.getWidth();
         int height = image.getHeight();
+        //out.getGraphics().drawImage(image, 0, 0, width, height,null);
+        BufferedImage out = new BufferedImage(350,350, BufferedImage.TYPE_INT_ARGB);
         out.getGraphics().drawImage(image, 0, 0, width, height,null);
 
         double vx = (double)width/nx; //длина вокселя по оси x
         double vy = (double)height/ny; //длина вокселя
         double vz = (double)350/nz;
-        double dz = 1.0/350;
-
+        double dz = 1.0/nz;
+        double[][] doubleImage = new double[ny][nx];
         long start = System.currentTimeMillis();
         double maxT = Integer.MIN_VALUE, minT = Integer.MAX_VALUE;
         for(int z = 0; z < nz; z++)
@@ -227,18 +230,25 @@ class VolumeRenderer {
                         //System.out.println(tnorm);
 
                     //получаем значения с графиков эмиссии
-                    double tau = getTau(tnorm);
-                    int[] gbgr = getG(tnorm);
+                    double tau = 0;
+                    if(isAbsorptionEnabled)
+                        tau = getTau(tnorm);
+                    int[] gbgr = {0,0,0};
+                    if(isEmissionEnabled)
+                        gbgr= getG(tnorm);
                     //System.out.println(tau + " " + gbgr[0]  + " " + gbgr[1]  + " " + gbgr[2]);
-                    int color = out.getRGB(x*width/nx ,y*height/ny);
-                    int r = saturate((int)(((color >> 16) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz));
-                    int g = saturate((int)(((color >> 8) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz));
-                    int b = saturate((int)(((color) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz));
-                    out.setRGB(x*width/nx, y*height/ny, 0xFF000000 | (r << 16) | (g << 8) | b);
+                    int color = out.getRGB(x ,y);
+                    //int r = saturate((int)(((color >> 16) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[2] : 0) * dz));
+                    //int g = saturate((int)(((color >> 8) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[1] : 0) * dz));
+                    //int b = saturate((int)(((color) & 0xFF) * Math.exp(-tau*dz) + (gbgr != null ? gbgr[0] : 0) * dz));
+                    //out.setRGB(x, y, 0xFF000000 | (r << 16) | (g << 8) | b);
+
+
 
                 }
             }
         }
+        outPanel.setImage(out);
 
 
     }

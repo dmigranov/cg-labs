@@ -758,7 +758,7 @@ public class Controller {
     }
 
     public void runRendering(int nx, int ny, int nz) {
-        renderer.run(nx, ny, nz, modifiableImagePanel.getImage(), modifiedImagePanel.getImage());
+        renderer.run(nx, ny, nz, modifiableImagePanel.getImage(), modifiedImagePanel);
         modifiedImagePanel.repaint();
     }
 }
