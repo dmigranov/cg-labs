@@ -330,7 +330,7 @@ public class FilterFrame extends MainFrame {
     {
         JPanel parametersPanel = new JPanel();
         parametersPanel.setLayout(new BoxLayout(parametersPanel, BoxLayout.Y_AXIS));
-        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 300, 100, "Threshold: ");
+        SliderTextFieldPanel panel = new SliderTextFieldPanel(1, 300, 50, "Threshold: ");
         parametersPanel.add(panel);
 
         if(JOptionPane.showConfirmDialog(this, parametersPanel, "Roberts filter threshold", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
