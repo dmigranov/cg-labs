@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.awt.image.RasterFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -146,7 +145,7 @@ public class Controller {
 
     }
 
-    public void openImage(File file)
+    public int openImage(File file)
     {
         try {
             BufferedImage image = ImageIO.read(file);
@@ -207,8 +206,10 @@ public class Controller {
         catch (IOException e)
         {
             JOptionPane.showMessageDialog(null, "Could not read this file", "Error", JOptionPane.ERROR_MESSAGE);
+            return -1;
         }
 
+        return 0;
     }
 
     public void invert() {

@@ -13,12 +13,18 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilterFrame extends MainFrame {
     private ImagePanel modifiableImagePanel = new ImagePanel(), modifiedImagePanel = new ImagePanel(), originalImagePanel = new ImagePanel();
     private GraphicsPanel absorptionPanel = new GraphicsPanel(350, 203), emissionPanel = new GraphicsPanel(350, 203);
     private JLabel statusLabel = new JLabel("");
     private Controller controller;
+
+
+    private List<AbstractButton> deactivatedButtons = new ArrayList<>();
+
     public static void main(String[] args) throws Exception {
         new FilterFrame();
     }
@@ -101,43 +107,43 @@ public class FilterFrame extends MainFrame {
 
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew");
-        addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen");
-        addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave");
-        addMenuAndToolBarButton("File/C to B", "Move the modified image to the second zone", KeyEvent.VK_M, "logout.png", "onMove");
-        addMenuAndToolBarButton("File/Exit", "Exit the aplication", KeyEvent.VK_E, "logout.png", "onExit");
+        addMenuAndToolBarButton("File/New", "Start from scratch", KeyEvent.VK_N, "reload.png", "onNew", false);
+        addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
+        addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave", true);
+        addMenuAndToolBarButton("File/C to B", "Move the modified image to the second zone", KeyEvent.VK_M, "logout.png", "onMove", true);
+        addMenuAndToolBarButton("File/Exit", "Exit the aplication", KeyEvent.VK_E, "logout.png", "onExit", false);
 
         addSubMenu("Pixel operations", KeyEvent.VK_P);
-        addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative");
-        addMenuAndToolBarButton("Pixel operations/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate");
-        addMenuAndToolBarButton("Pixel operations/Gamma", "Gamma correction of the image", KeyEvent.VK_G, "reload.png", "onGamma");
+        addMenuAndToolBarButton("Pixel operations/Negative", "Invert the image", KeyEvent.VK_N, "reload.png", "onNegative", true);
+        addMenuAndToolBarButton("Pixel operations/Black and White", "Desaturate the image", KeyEvent.VK_B, "reload.png", "onDesaturate", true);
+        addMenuAndToolBarButton("Pixel operations/Gamma", "Gamma correction of the image", KeyEvent.VK_G, "reload.png", "onGamma", true);
 
         addSubMenu("Dithering", KeyEvent.VK_D);
-        addMenuAndToolBarButton("Dithering/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither");
-        addMenuAndToolBarButton("Dithering/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg");
+        addMenuAndToolBarButton("Dithering/Ordered dithering", "Dithering the image using the ordered dither algorithm", KeyEvent.VK_O, "reload.png", "onOrderedDither", true);
+        addMenuAndToolBarButton("Dithering/Floyd-Steinberg dithering", "Dithering the image using the Floyd-Steinberg dithering algorithm", KeyEvent.VK_F, "reload.png", "onFloydSteinberg", true);
 
         addSubMenu("Filters", KeyEvent.VK_F);
-        addMenuAndToolBarButton("Filters/Sharpness filter", "Apply sharpness filter", KeyEvent.VK_S, "reload.png", "onSharpness");
-        addMenuAndToolBarButton("Filters/Simple blur filter", "Apply simple blur filter", KeyEvent.VK_B, "reload.png", "onSimpleBlur");
-        addMenuAndToolBarButton("Filters/Embossing filter", "Apply embossing filter", KeyEvent.VK_E, "reload.png", "onEmboss");
-        addMenuAndToolBarButton("Filters/Watercolor filter", "Apply watercolor filter", KeyEvent.VK_W, "reload.png", "onWatercolor");
-        addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_D, "reload.png", "onSobel");
-        addMenuAndToolBarButton("Filters/Roberts filter", "Apply Roberts edge detection filter", KeyEvent.VK_R, "reload.png", "onRoberts");
+        addMenuAndToolBarButton("Filters/Sharpness filter", "Apply sharpness filter", KeyEvent.VK_S, "reload.png", "onSharpness", true);
+        addMenuAndToolBarButton("Filters/Simple blur filter", "Apply simple blur filter", KeyEvent.VK_B, "reload.png", "onSimpleBlur", true);
+        addMenuAndToolBarButton("Filters/Embossing filter", "Apply embossing filter", KeyEvent.VK_E, "reload.png", "onEmboss", true);
+        addMenuAndToolBarButton("Filters/Watercolor filter", "Apply watercolor filter", KeyEvent.VK_W, "reload.png", "onWatercolor", true);
+        addMenuAndToolBarButton("Filters/Sobel filter", "Apply Sobel edge detection filter", KeyEvent.VK_D, "reload.png", "onSobel", true);
+        addMenuAndToolBarButton("Filters/Roberts filter", "Apply Roberts edge detection filter", KeyEvent.VK_R, "reload.png", "onRoberts", true);
 
         addSubMenu("Rotation and zoom", KeyEvent.VK_R);
-        addMenuAndToolBarButton("Rotation and zoom/Rotate", "Rotate the image", KeyEvent.VK_R, "reload.png", "onRotate");
-        addMenuAndToolBarButton("Rotation and zoom/Zoom X2", "Double the image", KeyEvent.VK_Z, "reload.png", "onZoom");
+        addMenuAndToolBarButton("Rotation and zoom/Rotate", "Rotate the image", KeyEvent.VK_R, "reload.png", "onRotate", true);
+        addMenuAndToolBarButton("Rotation and zoom/Zoom X2", "Double the image", KeyEvent.VK_Z, "reload.png", "onZoom", true);
 
         addSubMenu("Volume rendering", KeyEvent.VK_V);
-        addMenuAndToolBarButton("Volume rendering/Open configuration", "Open configuration file", KeyEvent.VK_O, "reload.png", "onOpenConfiguration");
-        addCheckBoxMenuAndToolBarButton("Volume rendering/Absorption enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onAbsorptionEnabled", false);
-        addCheckBoxMenuAndToolBarButton("Volume rendering/Emission enabled", "Shows if absorption is enabled", KeyEvent.VK_E, "reload.png", "onEmissionEnabled", false);
-        addMenuAndToolBarButton("Volume rendering/Run rendering", "Run the rendering algorithm", KeyEvent.VK_R, "reload.png", "onRunRendering");
+        addMenuAndToolBarButton("Volume rendering/Open configuration", "Open configuration file", KeyEvent.VK_O, "reload.png", "onOpenConfiguration", true);
+        addCheckBoxMenuAndToolBarButton("Volume rendering/Absorption enabled", "Shows if absorption is enabled", KeyEvent.VK_A, "reload.png", "onAbsorptionEnabled", false, false);
+        addCheckBoxMenuAndToolBarButton("Volume rendering/Emission enabled", "Shows if absorption is enabled", KeyEvent.VK_E, "reload.png", "onEmissionEnabled", false, false);
+        addMenuAndToolBarButton("Volume rendering/Run rendering", "Run the rendering algorithm", KeyEvent.VK_R, "reload.png", "onRunRendering", true);
 
         addSubMenu("Help", KeyEvent.VK_H);
     }
 
-    private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod) throws NoSuchMethodException
+    private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {
         MenuElement element = getParentMenuElement(path);
         if(element == null)
@@ -163,6 +169,7 @@ public class FilterFrame extends MainFrame {
         else
             throw new InvalidParameterException("Invalid menu path: " + path);
 
+
         JButton button = new JButton();
         if(icon != null)
             button.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
@@ -171,9 +178,16 @@ public class FilterFrame extends MainFrame {
         button.setToolTipText(tooltip);
         button.addMouseListener(new StatusTitleListener(statusLabel));
         toolBar.add(button);
+        if(isDeactivated)
+        {
+            item.setEnabled(false);
+            button.setEnabled(false);
+            deactivatedButtons.add(item);
+            deactivatedButtons.add(button);
+        }
     }
 
-    private void addCheckBoxMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean state) throws NoSuchMethodException
+    private void addCheckBoxMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean state, boolean isDeactivated) throws NoSuchMethodException
     {
         MenuElement element = getParentMenuElement(path);
         if(element == null)
@@ -211,6 +225,14 @@ public class FilterFrame extends MainFrame {
         button.setToolTipText(tooltip);
         button.setModel(item.getModel());   //кнопки повторяют поведение меню, включая "зажатость"
         toolBar.add(button);
+
+        if(isDeactivated)
+        {
+            item.setEnabled(false);
+            button.setEnabled(false);
+            deactivatedButtons.add(item);
+            deactivatedButtons.add(button);
+        }
     }
 
     private File getOpenFileName()
@@ -229,7 +251,16 @@ public class FilterFrame extends MainFrame {
         File file = getOpenFileName();
         if(file != null) {
             setTitle(file.getName() + " | Denis Migranov, 16201");
-            controller.openImage(file);
+            int r = controller.openImage(file);
+            if(r == 0)
+            {
+                for (AbstractButton b : deactivatedButtons)
+                {
+                    b.setEnabled(true);
+                }
+            }
+
+
         }
     }
 
