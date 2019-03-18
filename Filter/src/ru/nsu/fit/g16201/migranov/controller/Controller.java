@@ -293,7 +293,6 @@ public class Controller {
     }
 
     public void doFloydSteinbergDithering(int rLevel, int gLevel, int bLevel) {
-        //todo: исправить
         BufferedImage originalImage = modifiableImagePanel.getImage();
         BufferedImage image = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
         image.getGraphics().drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight() ,null);
@@ -307,27 +306,44 @@ public class Controller {
                 int oldRGBColor = image.getRGB(x, y);
 
                 int[] colors = new int[3];
-                colors[0] = ((oldRGBColor & 0xFF0000) >> 16);
-                colors[1] = ((oldRGBColor & 0x00FF00) >> 8);
-                colors[2] = (oldRGBColor & 0x0000FF);
+                colors[0] = ((oldRGBColor & 0xFF0000) >> 16);           //r
+                colors[1] = ((oldRGBColor & 0x00FF00) >> 8);    //g
+                colors[2] = (oldRGBColor & 0x0000FF);   //b
 
                 int[] newColors = new int[3];
+                int[] c1 = new int[3], c2 = new int[3], c3 = new int[3], c4 = new int[3];
+                if(y < image.getHeight() - 1)
+                {
+                    c1 = getRGB(image.getRGB(x, y+1));
+                    if(x > 0) c2 = getRGB(image.getRGB(x-1, y+1));
+                    if(x < image.getWidth() - 1) c3 = getRGB(image.getRGB(x+1, y+1));
+                }
+                if(x < image.getWidth() - 1) c4 = getRGB(image.getRGB(x+1, y));
+
                 for(int i = 0; i < 3; i++)
                 {
                     int oldColor = colors[i];
                     newColors[i] = getClosestColor(oldColor, levels[i]);
                     int error = oldColor - newColors[i];
-                    if(y < image.getHeight() - 1)
-                    {
-                        image.setRGB(x, y + 1, saturate(image.getRGB(x, y+1) + error*5/16));
-                        if(x > 0) image.setRGB(x - 1, y + 1, saturate(image.getRGB(x-1, y+1) + error*3/16));
-                        if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1, saturate(image.getRGB(x+1, y+1) + error/16));
-                    }
-                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, saturate(image.getRGB(x+1, y)+error - error*5/16 - error*3/16 - error/16)); //+error - error*5/16 - error*3/16 - error/16
+                    //error |= (partialError << (16 - 8*i));
+                    c1[i] = saturate(c1[i] + error * 5/16);
+                    c2[i] = saturate(c2[i] + error * 3/16);
+                    c3[i] = saturate(c3[i] + error/16);
+                    c4[i] = saturate(c4[i] + error - error*5/16 - error*3/16 - error/16);
                 }
+
+                if(y < image.getHeight() - 1)
+                {
+                    image.setRGB(x, y + 1, getColorFromComponents(c1[0], c1[1], c1[2]));
+                    if(x > 0) image.setRGB(x - 1, y + 1, getColorFromComponents(c2[0], c2[1], c2[2]));
+                    if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1,getColorFromComponents(c3[0], c3[1], c3[2]));
+                }
+                if(x < image.getWidth() - 1) image.setRGB(x+1, y, getColorFromComponents(c4[0], c4[1], c4[2]));
+
                 modifiedImagePanel.setColor(x,y, getColorFromComponents(newColors[0], newColors[1], newColors[2]));
             }
         }
+
     modifiedImagePanel.repaint();
     }
 
@@ -657,6 +673,7 @@ public class Controller {
         modifiedImagePanel.repaint();
     }
 
+    //0 - r, 1 - g, 2 - b
     int getColorComponent(int color, int component)
     {
         return (color >> (16-component*8)) & (0x000000FF);
@@ -760,6 +777,11 @@ public class Controller {
     public void runRendering(int nx, int ny, int nz) {
         renderer.run(nx, ny, nz, modifiableImagePanel.getImage(), modifiedImagePanel);
         modifiedImagePanel.repaint();
+    }
+
+    private int[] getRGB(int color)
+    {
+        return new int[] { (color & 0xFF0000) >> 16, (color & 0x00FF00) >> 8, color & 0x0000FF };
     }
 }
 
