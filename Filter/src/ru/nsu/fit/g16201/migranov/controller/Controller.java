@@ -315,15 +315,15 @@ public class Controller {
                 for(int i = 0; i < 3; i++)
                 {
                     int oldColor = colors[i];
-                    newColors[i] = getClosestColor(oldColor, levels[i]);    //+0.5?
+                    newColors[i] = getClosestColor(oldColor, levels[i]);
                     int error = oldColor - newColors[i];
                     if(y < image.getHeight() - 1)
                     {
-                        image.setRGB(x, y + 1, image.getRGB(x, y+1) + error*5/16);
-                        if(x > 0) image.setRGB(x - 1, y + 1, image.getRGB(x-1, y+1) + error*3/16);
-                        if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1, image.getRGB(x+1, y+1) + error/16);
+                        image.setRGB(x, y + 1, saturate(image.getRGB(x, y+1) + error*5/16));
+                        if(x > 0) image.setRGB(x - 1, y + 1, saturate(image.getRGB(x-1, y+1) + error*3/16));
+                        if(x < image.getWidth() - 1) image.setRGB(x + 1, y + 1, saturate(image.getRGB(x+1, y+1) + error/16));
                     }
-                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, image.getRGB(x+1, y)+error*7/16); //+error - error*5/16 - error*3/16 - error/16
+                    if(x < image.getWidth() - 1) image.setRGB(x+1, y, saturate(image.getRGB(x+1, y)+error - error*5/16 - error*3/16 - error/16)); //+error - error*5/16 - error*3/16 - error/16
                 }
                 modifiedImagePanel.setColor(x,y, getColorFromComponents(newColors[0], newColors[1], newColors[2]));
             }
