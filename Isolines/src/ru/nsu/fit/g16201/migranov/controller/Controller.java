@@ -84,5 +84,20 @@ public class Controller {
 
     public void drawLegend() {
         //todo: сделать для случая с интерполяцией!
+
+        //неинтерполировано:
+
+        double min = model.getMinValue();
+        double max = model.getMaxValue();
+        double addition = (double)legendPanel.getLegendWidth()/(n+1), sum = addition;
+        for(int i = 1; i <= n; i++)
+        {
+            legendPanel.drawVerticalLine((int)Math.round(sum));
+            legendPanel.spanFill((int)Math.round(sum + 1), 1, legendColors.get(i).getRGB());
+            sum+=addition;
+        }
+        legendPanel.spanFill(1, 1, legendColors.get(0).getRGB());
+        legendPanel.repaint();
+
     }
 }

@@ -38,31 +38,28 @@ public class IsolinesFrame extends MainFrame {
         //mainPanel.setMaximumSize(new Dimension(500, 660));
 
         MapPanel mapPanel = new MapPanel();
-        LegendPanel legendPanel = new LegendPanel();
+        LegendPanel legendPanel = new LegendPanel(500, 150);
         controller = new Controller(mapPanel, legendPanel);
 
         legendBox.add(Box.createHorizontalStrut(10));
         legendBox.add(legendPanel);
         legendBox.add(Box.createHorizontalGlue());
-        legendBox.setPreferredSize(new Dimension(500, 150));
-        legendBox.setMaximumSize(new Dimension(500, 150));
+        legendBox.setPreferredSize(new Dimension(510, 150));
+        legendBox.setMaximumSize(new Dimension(510, 150));
         legendBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         mapBox.add(Box.createHorizontalStrut(10));
         mapBox.add(mapPanel);
         mapBox.add(Box.createHorizontalGlue());
-        mapBox.setPreferredSize(new Dimension(500, 500));
-        mapBox.setMaximumSize(new Dimension(500, 500));
+        mapBox.setPreferredSize(new Dimension(510, 500));
+        mapBox.setMaximumSize(new Dimension(510, 500));
         mapBox.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         mapPanel.setPreferredSize(new Dimension(500, 500)); //todo: ?
-        mapPanel.setMaximumSize(new Dimension(500, 500));
 
         legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        legendPanel.setPreferredSize(new Dimension(500, 150));
-        legendPanel.setMaximumSize(new Dimension(500, 150));
-
+        legendPanel.setPreferredSize(new Dimension(500, 100));
 
         mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(mapBox);
