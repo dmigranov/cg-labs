@@ -96,6 +96,12 @@ public class IsolinesFrame extends MainFrame {
         addMenuAndToolBarButton("File/Open", "Open a file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Exit", "Exit the aplication", KeyEvent.VK_E, "logout.png", "onExit", false);
 
+
+        addSubMenu("Options", KeyEvent.VK_O);
+        addCheckBoxMenuAndToolBarButton("Options/Interpolation on", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", "onInterpolationEnabled", false, false);
+        addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", false);
+        addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
+
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
@@ -220,5 +226,18 @@ public class IsolinesFrame extends MainFrame {
         System.exit(0);
     }
 
+    public  void onInterpolationEnabled()
+    {
+        //todo
+    }
 
+    public  void onParameters()
+    {
+        //todo
+    }
+
+    public  void onIsolinesEnabled()
+    {
+        //todo
+    }
 }

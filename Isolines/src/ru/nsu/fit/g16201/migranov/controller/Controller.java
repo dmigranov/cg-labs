@@ -15,7 +15,7 @@ public class Controller {
     private BufferedReader br;
     private List<Color> legendColors = new ArrayList<>();
     private Color isolineColor;
-    private Model model;
+    private Model mapModel, legendModel;
     private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
@@ -35,7 +35,7 @@ public class Controller {
             int m = Integer.parseInt(substrings[1]);    //число значений сетки по y
             if(k <= 0 || m <= 0)
                 throw new NumberFormatException();
-            model = new Model(k, m);
+            mapModel = new Model(k, m);
 
             substrings = readLineAndSplit();
             int n = Integer.parseInt(substrings[0]);    //число уровней
@@ -53,6 +53,8 @@ public class Controller {
                 legendColors.add(new Color(r, g, b));
                 n--;
             }
+            //"линейная функция"
+            legendModel = new Model(this.n + 2, 1, (x,y)->x, 0, legendPanel.getLegendWidth(), 0, legendPanel.getLegendHeight());    //todo: проверить! (+1?)
 
             substrings = readLineAndSplit();
             int r = Integer.parseInt(substrings[0]);
@@ -87,9 +89,9 @@ public class Controller {
 
         //неинтерполировано:
 
-        double min = model.getMinValue();
-        double max = model.getMaxValue();
-        double addition = (double)legendPanel.getLegendWidth()/(n+1), sum = addition;
+        double min = mapModel.getMinValue();
+        double max = mapModel.getMaxValue();
+        /*double addition = (double)legendPanel.getLegendWidth()/(n+1), sum = addition;
         for(int i = 1; i <= n; i++)
         {
             legendPanel.drawVerticalLine((int)Math.round(sum));
@@ -97,7 +99,14 @@ public class Controller {
             sum+=addition;
         }
         legendPanel.spanFill(1, 1, legendColors.get(0).getRGB());
-        legendPanel.repaint();
+        legendPanel.repaint();*/
+
+        for(int j = 0; j <= n; j++)
+        {
+            System.out.println(legendModel.getValue(j, 0));
+            legendPanel.drawVerticalLine((int)Math.round(legendModel.getValue(j, 0)));
+            legendPanel.spanFill(1 + (int)Math.round(legendModel.getValue(j, 0)), 1, legendColors.get(j).getRGB());
+        }
 
     }
 }

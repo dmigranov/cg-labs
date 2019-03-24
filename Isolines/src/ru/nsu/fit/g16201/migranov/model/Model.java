@@ -18,12 +18,27 @@ public class Model {
         calculateGrid();
     }
 
+    public Model(int k, int m, BiFunction<Double, Double, Double> function, double a, double b, double c, double d)  //k - число значений сетки по x, m - по y
+    {
+        this.function = function;
+        this.m = m;
+        this.k = k;
+        grid = new double[m][k];
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+
+
+        calculateGrid();
+    }
+
     private void calculateGrid() {
         for(int i = 0; i < m; i++)
             for(int j = 0; j < k; j++)
             {
-                double y = c + i*(d - c)/(m - 1);
-                double x = a + j*(b - a)/(k - 1);
+                double y = m > 1 ? c + i*(d - c)/(m - 1) : (d - c)/2;
+                double x = k > 1 ? a + j*(b - a)/(k - 1) : (b - a)/2;
                 double value = function.apply(x, y);
                 grid[i][j] = value;
                 if(value < minValue)
@@ -76,5 +91,10 @@ public class Model {
         return maxValue;
     }
 
+    //yi xj
+    public double getValue(int j, int i)
+    {
+        return grid[i][j];
+    }
 
 }

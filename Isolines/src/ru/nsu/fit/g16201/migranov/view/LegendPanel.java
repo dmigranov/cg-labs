@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+//TODO: легенда —это как бы отдельная функция, равномерно возрастающая по горизонтали, плюс подписи; будет красиво, если вы отобразите легенду с помощью того же кода, что и основную картинку, просто подсунув в этот код другую функцию
+
 public class LegendPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics canvasGraphics;
@@ -35,6 +37,10 @@ public class LegendPanel extends JPanel {
 
     public int getLegendWidth() {
         return width;
+    }
+
+    public int getLegendHeight() {
+        return height;
     }
 
 
