@@ -88,22 +88,11 @@ public class Controller {
         //todo: сделать для случая с интерполяцией!
 
         //неинтерполировано:
-
         double min = mapModel.getMinValue();
         double max = mapModel.getMaxValue();
-        /*double addition = (double)legendPanel.getLegendWidth()/(n+1), sum = addition;
-        for(int i = 1; i <= n; i++)
-        {
-            legendPanel.drawVerticalLine((int)Math.round(sum));
-            legendPanel.spanFill((int)Math.round(sum + 1), 1, legendColors.get(i).getRGB());
-            sum+=addition;
-        }
-        legendPanel.spanFill(1, 1, legendColors.get(0).getRGB());
-        legendPanel.repaint();*/
 
         for(int j = 0; j <= n; j++)
         {
-            System.out.println(legendModel.getValue(j, 0));
             legendPanel.drawVerticalLine((int)Math.round(legendModel.getValue(j, 0)));
             legendPanel.spanFill(1 + (int)Math.round(legendModel.getValue(j, 0)), 1, legendColors.get(j).getRGB());
         }

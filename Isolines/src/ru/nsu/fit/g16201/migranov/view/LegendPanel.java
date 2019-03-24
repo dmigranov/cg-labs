@@ -8,6 +8,8 @@ import java.util.Deque;
 
 //TODO: легенда —это как бы отдельная функция, равномерно возрастающая по горизонтали, плюс подписи; будет красиво, если вы отобразите легенду с помощью того же кода, что и основную картинку, просто подсунув в этот код другую функцию
 
+//todo: как надо сделать: legendPanel содержит экземпляр MapPanel, куда собственно идёт рисование (интерполяция/нет), а снаружи = текст etc!
+
 public class LegendPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics canvasGraphics;
