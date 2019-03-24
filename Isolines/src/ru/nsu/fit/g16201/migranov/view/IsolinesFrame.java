@@ -28,10 +28,14 @@ public class IsolinesFrame extends MainFrame {
     private IsolinesFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        controller = new Controller();
         JPanel mainPanel = new JPanel();
-
+        MapPanel mapPanel = new MapPanel();
+        LegendPanel legendPanel = new LegendPanel();
+        controller = new Controller(mapPanel, legendPanel);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(mapPanel);
+        //todo: распорка
+        mainPanel.add(legendPanel);
 
         addMenus();
 

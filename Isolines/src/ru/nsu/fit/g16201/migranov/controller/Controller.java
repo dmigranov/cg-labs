@@ -1,6 +1,8 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Model;
+import ru.nsu.fit.g16201.migranov.view.LegendPanel;
+import ru.nsu.fit.g16201.migranov.view.MapPanel;
 
 import java.awt.*;
 import java.io.*;
@@ -8,10 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    private final MapPanel mapPanel;
+    private final LegendPanel legendPanel;
     private BufferedReader br;
     private List<Color> legendColors = new ArrayList<>();
     private Color isolineColor;
     private Model model;
+
+    public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
+        this.mapPanel = mapPanel;
+        this.legendPanel = legendPanel;
+    }
 
     public int loadFile(File file) {
 

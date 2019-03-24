@@ -7,6 +7,7 @@ public class Model {
     private double a = -200, b = 200, c = -200, d = 200;  //область определения
     private int k, m;
     private double[][] grid;
+    private double minValue = Double.MAX_VALUE, maxValue = Double.MIN_VALUE;
     private BiFunction<Double, Double, Double> function = (x, y) -> x * y;
 
     public Model(int k, int m)  //k - число значений сетки по x, m - по y
@@ -23,7 +24,12 @@ public class Model {
             {
                 double y = c + i*(d - c)/(m - 1);
                 double x = a + j*(b - a)/(k - 1);
-                grid[i][j] = function.apply(x, y);
+                double value = function.apply(x, y);
+                grid[i][j] = value;
+                if(value < minValue)
+                    minValue = value;
+                if(value > maxValue)
+                    maxValue = value;
             }
     }
 
@@ -59,4 +65,16 @@ public class Model {
     public void setD(double d) {
         this.d = d;
     }
+
+    public double getMinValue()
+    {
+        return minValue;
+    }
+
+    public double getMaxValue()
+    {
+        return maxValue;
+    }
+
+
 }
