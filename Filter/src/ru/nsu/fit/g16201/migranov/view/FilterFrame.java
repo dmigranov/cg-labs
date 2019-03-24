@@ -259,8 +259,6 @@ public class FilterFrame extends MainFrame {
                     b.setEnabled(true);
                 }
             }
-
-
         }
     }
 

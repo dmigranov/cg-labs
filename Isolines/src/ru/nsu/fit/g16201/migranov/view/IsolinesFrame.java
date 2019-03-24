@@ -4,6 +4,8 @@ import ru.nsu.fit.g16201.migranov.controller.Controller;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,10 +29,26 @@ public class IsolinesFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         controller = new Controller();
+        JPanel mainPanel = new JPanel();
 
-
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         addMenus();
+
+        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane.setDoubleBuffered(true);
+        scrollPane.setWheelScrollingEnabled(true);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        add(scrollPane);
+
+        JPanel statusPanel = new JPanel();
+        statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        statusPanel.setPreferredSize(new Dimension(getWidth(), 16));
+        statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+        statusPanel.add(statusLabel);
+        add(statusPanel, BorderLayout.SOUTH);
 
 
         setVisible(true);
@@ -144,10 +162,14 @@ public class IsolinesFrame extends MainFrame {
             int r = controller.loadFile(file);
             if(r == 0)
             {
-                for (AbstractButton b : deactivatedButtons)
+                /*for (AbstractButton b : deactivatedButtons)
                 {
                     b.setEnabled(true);
-                }
+                }*/
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
