@@ -16,6 +16,7 @@ public class Controller {
     private List<Color> legendColors = new ArrayList<>();
     private Color isolineColor;
     private Model model;
+    private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
@@ -38,6 +39,7 @@ public class Controller {
 
             substrings = readLineAndSplit();
             int n = Integer.parseInt(substrings[0]);    //число уровней
+            this.n = n;
             n++;    //т.к. от 0 до n
             while (n > 0)
             {
@@ -75,5 +77,12 @@ public class Controller {
         line = br.readLine();
         line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
         return line.split("\\s+");
+    }
+
+    public void drawMap() {
+    }
+
+    public void drawLegend() {
+        //todo: сделать для случая с интерполяцией!
     }
 }

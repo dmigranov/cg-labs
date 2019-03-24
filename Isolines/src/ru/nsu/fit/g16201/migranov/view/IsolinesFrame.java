@@ -5,6 +5,7 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,15 +27,26 @@ public class IsolinesFrame extends MainFrame {
     }
 
     private IsolinesFrame() throws Exception {
+        //todo: u0v0 и u1v1 фиксированные? спросить
         super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         MapPanel mapPanel = new MapPanel();
         LegendPanel legendPanel = new LegendPanel();
         controller = new Controller(mapPanel, legendPanel);
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        mapPanel.setPreferredSize(new Dimension(500, 500)); //todo: ?
+        mapPanel.setMaximumSize(new Dimension(500, 500));
+        mapPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        legendPanel.setPreferredSize(new Dimension(500, 150));
+        legendPanel.setMaximumSize(new Dimension(500, 150));
+        legendPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         mainPanel.add(mapPanel);
         //todo: распорка
+        mainPanel.add(Box.createVerticalStrut(10));
         mainPanel.add(legendPanel);
 
         addMenus();
@@ -54,7 +66,9 @@ public class IsolinesFrame extends MainFrame {
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
-
+        revalidate();
+        setMinimumSize(new Dimension(800, 600));
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -170,6 +184,9 @@ public class IsolinesFrame extends MainFrame {
                 {
                     b.setEnabled(true);
                 }*/
+                controller.drawMap();
+                controller.drawLegend();
+                //revalidate?
 
             }
             else
