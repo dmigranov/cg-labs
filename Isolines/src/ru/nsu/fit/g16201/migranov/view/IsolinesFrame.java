@@ -32,8 +32,21 @@ public class IsolinesFrame extends MainFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        Box legendBox = Box.createHorizontalBox();
+        Box mapBox = Box.createHorizontalBox();
+        mainPanel.setPreferredSize(new Dimension(500, 660));
+        mainPanel.setMaximumSize(new Dimension(500, 660));
         MapPanel mapPanel = new MapPanel();
         LegendPanel legendPanel = new LegendPanel();
+        legendBox.add(Box.createHorizontalStrut(10));
+        legendBox.add(legendPanel);
+        legendBox.add(Box.createHorizontalGlue());
+        legendBox.setPreferredSize(new Dimension(500, 150));
+        mapBox.add(Box.createHorizontalStrut(10));
+        mapBox.add(mapPanel);
+        mapBox.add(Box.createHorizontalGlue());
+        mapBox.setPreferredSize(new Dimension(500, 500));
+
         controller = new Controller(mapPanel, legendPanel);
         legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -44,10 +57,10 @@ public class IsolinesFrame extends MainFrame {
         legendPanel.setMaximumSize(new Dimension(500, 150));
         legendPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        mainPanel.add(mapPanel);
-        //todo: распорка
-        mainPanel.add(Box.createVerticalStrut(10));
-        mainPanel.add(legendPanel);
+
+        mainPanel.add(mapBox);
+        mainPanel.add(Box.createRigidArea(new Dimension(350, 10)));
+        mainPanel.add(legendBox);
 
         addMenus();
 
