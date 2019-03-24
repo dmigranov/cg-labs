@@ -166,6 +166,7 @@ public class IsolinesFrame extends MainFrame {
                 {
                     b.setEnabled(true);
                 }*/
+
             }
             else
             {

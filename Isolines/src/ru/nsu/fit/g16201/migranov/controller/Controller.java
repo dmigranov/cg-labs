@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.model.Model;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ public class Controller {
     private BufferedReader br;
     private List<Color> legendColors = new ArrayList<>();
     private Color isolineColor;
+    private Model model;
 
     public int loadFile(File file) {
 
@@ -22,6 +25,7 @@ public class Controller {
             int m = Integer.parseInt(substrings[1]);    //число значений сетки по y
             if(k <= 0 || m <= 0)
                 throw new NumberFormatException();
+            model = new Model(k, m);
 
             substrings = readLineAndSplit();
             int n = Integer.parseInt(substrings[0]);    //число уровней
