@@ -132,7 +132,7 @@ public class Controller {
                     else if(f1 > z && z > f2)
                     {
                         //todo: проверить
-                        points.add(new Point2D.Double(f2p.getX() + (f1p.getX() - f2p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
+                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
                     }
 
                     if(f3 < z && z < f4)
@@ -141,7 +141,7 @@ public class Controller {
                     }
                     else if(f1 > z && z > f2)
                     {
-                        points.add(new Point2D.Double(f4p.getX() + (f3p.getX() - f4p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
+                        points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
                     }
 
 
