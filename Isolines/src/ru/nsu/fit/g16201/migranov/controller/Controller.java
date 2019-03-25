@@ -19,6 +19,8 @@ public class Controller {
     private Model mapModel, legendModel;
     private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
 
+    private boolean isGridEnabled = false;
+
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
         this.legendPanel = legendPanel;
@@ -122,7 +124,6 @@ public class Controller {
 
                 for(int l = 1; l <= n; l++)     //так?
                 {
-                    System.out.println(legendModel.getValue(l, 0));
                     List<Point2D> points = new ArrayList<>();
                     //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
@@ -163,6 +164,7 @@ public class Controller {
                         points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2)/(f4 -f2))));
                     }
 
+                    //todo: остальные случаи
 
                     if(points.size() == 2)
                     {
@@ -184,4 +186,12 @@ public class Controller {
     }
 
 
+    public boolean isGridEnabled() {
+        return isGridEnabled;
+    }
+
+    public void setGridEnabled(boolean gridEnabled) {
+        isGridEnabled = gridEnabled;
+        //todo: repaint
+    }
 }
