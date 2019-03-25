@@ -47,6 +47,11 @@ public class LegendPanel extends JPanel {
         return height;
     }
 
+    public MapPanel getLegendMap() {
+        return legendMap;
+    }
+
+
 
     class Span
     {

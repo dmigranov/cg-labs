@@ -1,6 +1,8 @@
 package ru.nsu.fit.g16201.migranov.model;
 
 
+import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.function.BiFunction;
 
 public class Model {
@@ -8,7 +10,7 @@ public class Model {
     private int k, m;
     private double[][] grid;
     private double minValue = Double.MAX_VALUE, maxValue = Double.MIN_VALUE;
-    private BiFunction<Double, Double, Double> function = (x, y) -> x * y;
+    private BiFunction<Double, Double, Double> function = (x, y) -> x*x + y*y;
 
     public Model(int k, int m)  //k - число значений сетки по x, m - по y
     {
@@ -104,6 +106,12 @@ public class Model {
     public double getValue(int j, int i)
     {
         return grid[i][j];
+    }
+
+    public Point2D getPoint(int j, int i) {
+        double y = m > 1 ? c + i*(d - c)/(m - 1) : (d - c)/2;
+        double x = k > 1 ? a + j*(b - a)/(k - 1) : (b - a)/2;
+        return new Point2D.Double(x, y);
     }
 
 }
