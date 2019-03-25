@@ -127,7 +127,7 @@ public class Controller {
                     //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
 
-                    if(f1 < z && z < f2)
+                    /*if(f1 < z && z < f2)
                     {
                         points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1)/(f2 -f1), f1p.getY()));
                     }
@@ -143,15 +143,24 @@ public class Controller {
                     else if(f3 > z && z > f4)
                     {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
-                    }
+                    }*/
 
                     if(f1 < z && z < f3)
                     {
-                        points.add(new Point2D.Double(f1p.getX(), f1p.getY() + (f3p.getY() - f1p.getY()) * (z - f1)/(f3 -f1)));
+                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f1)/(f3 -f1)));
                     }
-                    else if(f1 > z && z > f2)
+                    else if(f1 > z && z > f3)
                     {
-                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
+                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f3)/(f1 -f3))));
+                    }
+
+                    if(f2 < z && z < f4)
+                    {
+                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f2)/(f4 -f2)));
+                    }
+                    else if(f2 > z && z > f4)
+                    {
+                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f4)/(f2 -f4))));
                     }
 
 
