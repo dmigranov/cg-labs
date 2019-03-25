@@ -120,10 +120,12 @@ public class Controller {
                 Point2D f4p = model.getPoint(j + 1, i);
 
 
-                for(int l = 0; l <= n; l++) //по всем цветовым уровням
+                for(int l = 1; l <= n; l++)     //так?
                 {
+                    System.out.println(legendModel.getValue(l, 0));
                     List<Point2D> points = new ArrayList<>();
-                    double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
+                    //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
+                    double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
 
                     if(f1 < z && z < f2)
                     {
@@ -131,7 +133,6 @@ public class Controller {
                     }
                     else if(f1 > z && z > f2)
                     {
-                        //todo: проверить
                         points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
                     }
 
@@ -144,19 +145,27 @@ public class Controller {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
                     }
 
+                    if(f1 < z && z < f3)
+                    {
+                        points.add(new Point2D.Double(f1p.getX(), f1p.getY() + (f3p.getY() - f1p.getY()) * (z - f1)/(f3 -f1)));
+                    }
+                    else if(f1 > z && z > f2)
+                    {
+                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
+                    }
+
 
                     if(points.size() == 2)
                     {
                         Point2D p1 = points.get(0);
                         Point2D p2 = points.get(1);
                         double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-                        System.out.println(x1 + " " +  y1 + " " + x2 + " " + y2);
+                        //System.out.println(x1 + " " +  y1 + " " + x2 + " " + y2);
                         int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
                         int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
 
                         int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
                         int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
-                       //ystem.out.println(u1 + " " +  v1 + " " + u2 + " " + v2);
                         mapPanel.drawLine(u1, v1, u2, v2);
                     }
 
