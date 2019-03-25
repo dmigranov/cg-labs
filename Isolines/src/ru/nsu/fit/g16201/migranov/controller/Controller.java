@@ -82,6 +82,25 @@ public class Controller {
     }
 
     public void drawMap() {
+        drawMap(mapPanel, mapModel);
+    }
+
+    public void drawMap(MapPanel mapPanel, Model model)
+    {
+        for(int i = 0; i < model.getM() - 1; i++)
+        {      //y - i
+            for (int j = 0; j < model.getK() - 1; j++) {     //x - j (а в лекциях соответствие обратное)
+                double f1 = model.getValue(j, i + 1);
+                double f2 = model.getValue(j + 1, i + 1);
+                double f3 = model.getValue(j, i);
+                double f4 = model.getValue(j + 1, i);
+
+                for(int l = 0; l <= n; l++) //по всем цветовым уровням
+                {
+
+                }
+            }
+        }
     }
 
     public void drawLegend() {

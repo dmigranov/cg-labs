@@ -91,6 +91,15 @@ public class Model {
         return maxValue;
     }
 
+    public double getM() {
+        return m;
+    }
+
+    public double getK() {
+        return k;
+    }
+
+
     //yi xj
     public double getValue(int j, int i)
     {
