@@ -139,7 +139,7 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3)/(f4 -f3), f3p.getY()));
                     }
-                    else if(f1 > z && z > f2)
+                    else if(f3 > z && z > f4)
                     {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
                     }
