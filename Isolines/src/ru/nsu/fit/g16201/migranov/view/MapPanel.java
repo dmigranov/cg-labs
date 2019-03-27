@@ -11,6 +11,7 @@ public class MapPanel extends JPanel {
 
     MapPanel(int width, int height)
     {
+        setLayout(new FlowLayout());
         this.width = width;
         this.height = height;
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
