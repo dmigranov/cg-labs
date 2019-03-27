@@ -56,6 +56,8 @@ public class LegendPanel extends JPanel {
         return legendMap;
     }
 
+    public void drawText(int n, double minValue, double maxValue) {
+    }
 
 
     class Span

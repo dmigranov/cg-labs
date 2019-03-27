@@ -235,7 +235,17 @@ public class IsolinesFrame extends MainFrame {
 
     public  void onParameters()
     {
-        //todo
+        JPanel optionsPanel = new JPanel();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
+
+        //abcd
+        double[] constList = controller.getRegionSizes();
+        List<JTextField> regionSizesFields = new ArrayList<>();
+        for(int i = 0; i < constList.length; i++) {
+            regionSizesFields.add(new JTextField("" + constList[i]));
+            regionSizesFields.get(i).addKeyListener(new FloatTextFieldKeyListener());
+        }
     }
 
     public  void onIsolinesEnabled()

@@ -104,6 +104,7 @@ public class Controller {
         }*/
 
         drawMap(legendPanel.getLegendMap(), legendModel);
+        legendPanel.drawText(n, mapModel.getMinValue(), mapModel.getMaxValue());
 
     }
 
@@ -204,13 +205,16 @@ public class Controller {
                         int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
                         mapPanel.drawLine(u1, v1, u2, v2);
                     }
+                    else if(points.size() == 4)
+                    {
+                        double f = (f1+f2+f3+f4)/4;
+                    }
+
 
                 }
             }
         }
     }
-
-
 
 
     public boolean isGridEnabled() {
@@ -221,15 +225,18 @@ public class Controller {
         isGridEnabled = gridEnabled;
         if(isGridEnabled) {
             drawGrid(mapPanel, mapModel);
+            drawGrid(legendPanel.getLegendMap(), legendModel);
         }
-        else
+        else {
             mapPanel.clearGrid();
+            legendPanel.getLegendMap().clearGrid();
+        }
         mapPanel.repaint();
+        legendPanel.getLegendMap().repaint();
 
     }
 
     private void drawGrid(MapPanel mapPanel, Model model) {
-        //todo: а для legendpanel?
         for(int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++) {
                 //Point2D x1y2 = model.getPoint(j, i + 1);
@@ -255,5 +262,10 @@ public class Controller {
 
             }
         }
+    }
+
+    public double[] getRegionSizes()
+    {
+        return new double[]{mapModel.getA(), mapModel.getB(), mapModel.getC(), mapModel.getD()};
     }
 }
