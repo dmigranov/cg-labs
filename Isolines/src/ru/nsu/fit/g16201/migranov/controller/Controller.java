@@ -58,7 +58,7 @@ public class Controller {
             }
             //"линейная функция"
             //legendModel = new Model(this.n + 2, 1, (x,y)->x, 0, legendPanel.getLegendWidth(), 0, legendPanel.getLegendHeight());    //todo: проверить! (+1?)
-            legendModel = new Model(this.n + 2, 1, (x,y)->x, 0, 1, 0, 1);    //отнормировал
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал
 
 
             substrings = readLineAndSplit();
@@ -94,20 +94,20 @@ public class Controller {
         //todo: сделать для случая с интерполяцией!
 
         //неинтерполировано:
-        double min = mapModel.getMinValue();
+        /*double min = mapModel.getMinValue();
         double max = mapModel.getMaxValue();
 
         for(int j = 0; j <= n; j++)
         {
             legendPanel.drawVerticalLine((int)Math.round(legendModel.getValue(j, 0)));
             legendPanel.spanFill(1 + (int)Math.round(legendModel.getValue(j, 0)), 1, legendColors.get(j).getRGB());
-        }
+        }*/
 
-        //drawMap(legendPanel.getLegendMap(), legendModel);
+        drawMap(legendPanel.getLegendMap(), legendModel);
 
     }
 
-    public void drawMap(MapPanel mapPanel, Model model)
+    private void drawMap(MapPanel mapPanel, Model model)
     {
         for(int i = 0; i < model.getM() - 1; i++)
         {      //y - i
@@ -136,6 +136,11 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
                     }
+                    else if(f1 == z && f2 == z)
+                    {
+                        points.add(new Point2D.Double(f1p.getX(), f1p.getY()));
+                        points.add(new Point2D.Double(f2p.getX(), f2p.getY()));
+                    }
 
                     if(f3 < z && z < f4)
                     {
@@ -145,6 +150,13 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
                     }
+                    else if(f3 == z && f4 == z)
+                    {
+                        points.add(new Point2D.Double(f3p.getX(), f3p.getY()));
+                        points.add(new Point2D.Double(f4p.getX(), f4p.getY()));
+
+                    }
+
 
                     if(f1 > z && z > f3)
                     {
@@ -154,6 +166,12 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1)/(f3 -f1))));
                     }
+                    else if(f1 == z && f3 == z)
+                    {
+                        points.add(new Point2D.Double(f1p.getX(), f1p.getY()));
+                        points.add(new Point2D.Double(f3p.getX(), f3p.getY()));
+                    }
+
 
                     if(f2 > z && z > f4)
                     {
@@ -163,6 +181,13 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2)/(f4 -f2))));
                     }
+                    else if(f2 == z && f4 == z)
+                    {
+                        points.add(new Point2D.Double(f2p.getX(), f2p.getY()));
+                        points.add(new Point2D.Double(f4p.getX(), f4p.getY()));
+
+                    }
+
 
                     //todo: остальные случаи
 
