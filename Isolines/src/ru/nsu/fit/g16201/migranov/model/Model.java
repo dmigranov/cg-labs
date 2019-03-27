@@ -102,7 +102,7 @@ public class Model {
     }
 
 
-    //yi xj
+    //xj yi
     public double getValue(int j, int i)
     {
         return grid[i][j];

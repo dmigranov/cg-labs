@@ -211,12 +211,31 @@ public class Controller {
     }
 
 
+
+
     public boolean isGridEnabled() {
         return isGridEnabled;
     }
 
     public void setGridEnabled(boolean gridEnabled) {
         isGridEnabled = gridEnabled;
-        //todo: repaint
+        drawGrid();
+    }
+
+    private void drawGrid(MapPanel mapPanel, Model model) {
+        //todo: а для legendpanel?
+        for(int i = 0; i < model.getM() - 1; i++) {
+            for (int j = 0; j < model.getK() - 1; j++) {
+                //Point2D x1y2 = model.getPoint(j, i + 1);
+                Point2D x2y2 = model.getPoint(j + 1, i + 1);
+                Point2D x1y1 = model.getPoint(j, i);
+                //Point2D x2y1 = model.getPoint(j + 1, i);
+                double x1 = x1y1.getX();
+                double y1 = x1y1.getY();
+                double x2 = x2y2.getX();
+                double y2 = x2y2.getY();
+
+            }
+        }
     }
 }
