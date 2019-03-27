@@ -219,7 +219,13 @@ public class Controller {
 
     public void setGridEnabled(boolean gridEnabled) {
         isGridEnabled = gridEnabled;
-        drawGrid();
+        if(isGridEnabled) {
+            drawGrid(mapPanel, mapModel);
+        }
+        else
+            mapPanel.clearGrid();
+        mapPanel.repaint();
+
     }
 
     private void drawGrid(MapPanel mapPanel, Model model) {
@@ -234,6 +240,18 @@ public class Controller {
                 double y1 = x1y1.getY();
                 double x2 = x2y2.getX();
                 double y2 = x2y2.getY();
+
+                int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
+                int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
+                int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
+                int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
+
+                mapPanel.drawGridLine(u1, v1, u1, v2);
+                mapPanel.drawGridLine(u1, v1, u2, v1);
+                mapPanel.drawGridLine(u2, v2, u2, v1);
+                mapPanel.drawGridLine(u2, v2, u1, v2);
+
+
 
             }
         }

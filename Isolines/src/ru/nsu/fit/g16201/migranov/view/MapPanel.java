@@ -32,12 +32,24 @@ public class MapPanel extends JPanel {
     {
         super.paintComponent(g);
         g.drawImage(canvas, 0, 0, width, height, null);
+        g.drawImage(gridCanvas, 0, 0, width, height, null);
     }
 
     public void drawLine(int x1, int y1, int x2, int y2)
     {
         canvasGraphics.drawLine(x1,y1,x2,y2);
         repaint();
+    }
+
+    public void drawGridLine(int x1, int y1, int x2, int y2)
+    {
+        gridGraphics.drawLine(x1,y1,x2,y2);
+        repaint();
+    }
+
+    public void clearGrid()
+    {
+        gridGraphics.clearRect(0, 0, gridCanvas.getWidth(), gridCanvas.getHeight());
     }
 
 
