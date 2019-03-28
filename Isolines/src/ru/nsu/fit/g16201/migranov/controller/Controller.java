@@ -36,6 +36,7 @@ public class Controller {
             {
                 if(mapModel != null && legendModel != null) {
                     mapPanel.updateSize();
+                    legendPanel.getLegendMap().updateSize();
                     drawMap();
                     drawLegend();
                 }

@@ -14,17 +14,17 @@ public class LegendPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics canvasGraphics;
     private int width, height;
-    LegendPanel(int width, int height)
+    LegendPanel(int legendPanelHeight, int legendMapHeight)
     {
-        this.width = width;
-        this.height = height;
+        this.height = legendPanelHeight;
+        this.width = 1;
+        setPreferredSize(new Dimension(width, legendMapHeight));
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.getGraphics();
         canvasGraphics.setColor(Color.BLACK);
-        //todo: как надо сделать: legendPanel содержит экземпляр MapPanel, куда собственно идёт рисование (интерполяция/нет), а снаружи = текст etc!
-        //todo: -30 - для текста. проверитЬ!
+
         legendMap = new MapPanel();
-        legendMap.setPreferredSize(new Dimension(width, height-30));
+        legendMap.setPreferredSize(new Dimension(width, legendMapHeight));
         legendMap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(legendMap);
 
