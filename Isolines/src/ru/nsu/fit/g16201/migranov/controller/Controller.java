@@ -70,36 +70,30 @@ public class Controller {
                 int b = Integer.parseInt(substrings[2]);
                 if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
                     throw new NumberFormatException("Wrong colors");
-
                 legendColors.add(new Color(r, g, b));
                 n--;
             }
             //"линейная функция"
-            //legendModel = new Model(this.n + 2, 1, (x,y)->x, 0, legendPanel.getLegendWidth(), 0, legendPanel.getLegendHeight());    //todo: проверить! (+1?)
             legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал
-
 
             substrings = readLineAndSplit();
             int r = Integer.parseInt(substrings[0]);
             int g = Integer.parseInt(substrings[1]);
             int b = Integer.parseInt(substrings[2]);
-
             isolineColor = new Color(r, g, b);
+
             mapPanel.updateSize();
             legendPanel.updateSize();
             mapPanel.clear();
             legendPanel.getLegendMap().clear();
             mapPanel.clearGrid();
             legendPanel.getLegendMap().clearGrid();
-
             mapPanel.setColor(isolineColor);
-
         }
         catch (Exception e)
         {
             return -1;
         }
-
         return 0;
     }
 
@@ -120,9 +114,6 @@ public class Controller {
     }
 
     public void drawLegend() {
-        //todo: сделать для случая с интерполяцией!
-
-        //неинтерполировано:
         /*double min = mapModel.getMinValue();
         double max = mapModel.getMaxValue();
 
@@ -142,9 +133,11 @@ public class Controller {
 
     private void drawMap(MapPanel mapPanel, Model model)
     {
+        //todo: сделать для случая с интерполяцией!
+
         for(int i = 0; i < model.getM() - 1; i++)
-        {      //y - i
-            for (int j = 0; j < model.getK() - 1; j++) {     //x - j (а в лекциях соответствие обратное)
+        {
+            for (int j = 0; j < model.getK() - 1; j++) {     //y - i, x - j (а в лекциях соответствие обратное)
                 double f1 = model.getValue(j, i + 1);
                 double f2 = model.getValue(j + 1, i + 1);
                 double f3 = model.getValue(j, i);
@@ -160,9 +153,9 @@ public class Controller {
                     List<Point2D> points = new ArrayList<>();
                     Point2D lesserColorSeed;
 
-                    //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
 
+                    //todo?
                     if(f1 == z)
                         f1 += epsilon;
                     if(f2 == z)
@@ -204,7 +197,6 @@ public class Controller {
                         points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1)/(f3 -f1))));
                     }
 
-
                     if(f2 > z && z > f4)
                     {
                         points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4)/(f2 -f4)));
@@ -220,7 +212,6 @@ public class Controller {
                         Point2D p1 = points.get(0);
                         Point2D p2 = points.get(1);
                         double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-                        //System.out.println(x1 + " " +  y1 + " " + x2 + " " + y2);
                         int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
                         int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
                         int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
@@ -238,13 +229,12 @@ public class Controller {
                             vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
                             vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
 
-
                             vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
                             vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
-                            try {
+                            //try {
                                 if (f1 > f2) {
                                     mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
                                     mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
@@ -252,29 +242,19 @@ public class Controller {
                                     mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
                                     mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
                                 }
-                            }
+                            /*}
                             catch(IndexOutOfBoundsException e)
                             {
-                            }
+                            }*/
                         }
-
-
-
-
-                        /*try {
-                            mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
-                            mapPanel.spanFill(us2, vs2, biggerColor.getRGB());    //в будущем я расмотрю для все хслучаев
-                        }
-                        catch(IndexOutOfBoundsException e)
-                        {
-                            int o = 5;
-                        }*/
 
 
                     }
                     else if(points.size() == 4)
                     {
                         double f = (f1+f2+f3+f4)/4;
+
+                        //todo:
                     }
 
 
@@ -306,10 +286,8 @@ public class Controller {
     private void drawGrid(MapPanel mapPanel, Model model) {
         for(int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++) {
-                //Point2D x1y2 = model.getPoint(j, i + 1);
                 Point2D x2y2 = model.getPoint(j + 1, i + 1);
                 Point2D x1y1 = model.getPoint(j, i);
-                //Point2D x2y1 = model.getPoint(j + 1, i);
                 double x1 = x1y1.getX();
                 double y1 = x1y1.getY();
                 double x2 = x2y2.getX();
@@ -324,8 +302,6 @@ public class Controller {
                 mapPanel.drawGridLine(u1, v1, u2, v1);
                 mapPanel.drawGridLine(u2, v2, u2, v1);
                 mapPanel.drawGridLine(u2, v2, u1, v2);
-
-
 
             }
         }

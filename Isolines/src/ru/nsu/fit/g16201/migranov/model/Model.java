@@ -101,7 +101,6 @@ public class Model {
         return k;
     }
 
-
     //xj yi
     public double getValue(int j, int i)
     {

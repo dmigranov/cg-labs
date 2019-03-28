@@ -12,6 +12,7 @@ public class MapPanel extends JPanel {
     private BufferedImage gridCanvas;
     private Graphics2D gridGraphics;
     private int width, height;
+    private Color isolineColor;
 
     MapPanel(int width, int height)
     {
@@ -22,7 +23,6 @@ public class MapPanel extends JPanel {
         this.height = 1;
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
-        canvasGraphics.setColor(Color.BLACK);
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
@@ -64,6 +64,7 @@ public class MapPanel extends JPanel {
     }
 
     public void setColor(Color isolineColor) {
+        this.isolineColor = isolineColor;
         canvasGraphics.setColor(isolineColor);
     }
 
@@ -74,7 +75,7 @@ public class MapPanel extends JPanel {
 
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
-        canvasGraphics.setColor(Color.BLACK);
+        canvasGraphics.setColor(isolineColor);
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();

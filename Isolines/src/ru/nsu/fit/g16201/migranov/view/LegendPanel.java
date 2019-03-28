@@ -69,7 +69,6 @@ public class LegendPanel extends JPanel {
 
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
-        canvasGraphics.setColor(Color.BLACK);
 
         legendMap.updateSize();
     }
