@@ -13,7 +13,7 @@ public class MapPanel extends JPanel {
     private Graphics2D gridGraphics;
     private int width, height;
 
-    MapPanel()
+    MapPanel(int width, int height)
     {
         super();
         setDoubleBuffered(true);

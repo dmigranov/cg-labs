@@ -3,8 +3,6 @@ package ru.nsu.fit.g16201.migranov.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayDeque;
-import java.util.Deque;
 
 //TODO: легенда —это как бы отдельная функция, равномерно возрастающая по горизонтали, плюс подписи; будет красиво, если вы отобразите легенду с помощью того же кода, что и основную картинку, просто подсунув в этот код другую функцию
 
@@ -14,18 +12,25 @@ public class LegendPanel extends JPanel {
     private BufferedImage canvas;
     private Graphics canvasGraphics;
     private int width, height;
-    LegendPanel(int legendPanelHeight, int legendMapHeight)
+    LegendPanel(int width, int legendPanelHeight, int legendMapHeight)
     {
+        setLayout(new BorderLayout());
         this.height = legendPanelHeight;
-        this.width = 500;
+
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.getGraphics();
         canvasGraphics.setColor(Color.BLACK);
 
-        legendMap = new MapPanel();
+        JPanel middlePanel = new JPanel(new BorderLayout());
+        legendMap = new MapPanel(width, legendMapHeight);
         legendMap.setPreferredSize(new Dimension(width, legendMapHeight));
         legendMap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        add(legendMap);
+        middlePanel.setPreferredSize(new Dimension(width, legendMapHeight));
+        middlePanel.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
+        middlePanel.add(legendMap, BorderLayout.CENTER);
+        middlePanel.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
+        add(middlePanel, BorderLayout.NORTH);
+        revalidate();
 
     }
 

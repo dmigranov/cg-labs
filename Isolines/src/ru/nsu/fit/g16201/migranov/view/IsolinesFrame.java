@@ -36,10 +36,14 @@ public class IsolinesFrame extends MainFrame {
         //mainPanel.setPreferredSize(new Dimension(500, 660));
         //mainPanel.setMaximumSize(new Dimension(500, 660));
 
-        MapPanel mapPanel = new MapPanel();
-        //todo: исправить конструкторы
-        LegendPanel legendPanel = new LegendPanel(150, 100);
+        MapPanel mapPanel = new MapPanel(500, 500);
+        LegendPanel legendPanel = new LegendPanel(500, 150, 100);
         controller = new Controller(mapPanel, legendPanel);
+
+        mainPanel.setDoubleBuffered(true);
+        mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        mapPanel.setPreferredSize(new Dimension(500, 500));
+        legendPanel.setPreferredSize(new Dimension(500, 150));
 
         /*legendBox.add(Box.createHorizontalStrut(10));
         legendBox.add(legendPanel);
@@ -55,13 +59,6 @@ public class IsolinesFrame extends MainFrame {
         mapBox.setMaximumSize(new Dimension(510, 500));
         mapBox.setAlignmentX(Component.LEFT_ALIGNMENT);*/
 
-        mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        mapPanel.setPreferredSize(new Dimension(500, 500));
-        legendPanel.setPreferredSize(new Dimension(500, 150));
-
-
-        //legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        //legendPanel.setPreferredSize(new Dimension(500, 150));
 
         mainPanel.add(mapPanel, BorderLayout.CENTER);
         mainPanel.add(legendPanel, BorderLayout.SOUTH);
