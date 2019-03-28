@@ -37,6 +37,7 @@ public class IsolinesFrame extends MainFrame {
         //mainPanel.setPreferredSize(new Dimension(500, 660));
         //mainPanel.setMaximumSize(new Dimension(500, 660));
 
+        //todo: исправить конструкторы
         MapPanel mapPanel = new MapPanel(500, 500);
         LegendPanel legendPanel = new LegendPanel(500, 150);
         controller = new Controller(mapPanel, legendPanel);
