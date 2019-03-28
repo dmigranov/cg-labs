@@ -227,22 +227,22 @@ public class Controller {
                             }
                             else if (f2 > f1)
                             {
-                                //mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
-                                //mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
+                                mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
+                                mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
                             }
                         }
 
 
 
 
-                        try {
+                        /*try {
                             mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
                             mapPanel.spanFill(us2, vs2, biggerColor.getRGB());    //в будущем я расмотрю для все хслучаев
                         }
                         catch(IndexOutOfBoundsException e)
                         {
                             int o = 5;
-                        }
+                        }*/
 
 
                     }
