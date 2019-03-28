@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
+    private static double epsilon = 1e-3;
     private final MapPanel mapPanel;
     private final LegendPanel legendPanel;
     private BufferedReader br;
@@ -66,7 +67,10 @@ public class Controller {
             int g = Integer.parseInt(substrings[1]);
             int b = Integer.parseInt(substrings[2]);
             isolineColor = new Color(r, g, b);
-
+            mapPanel.clear();
+            legendPanel.getLegendMap().clear();
+            mapPanel.clearGrid();
+            legendPanel.getLegendMap().clearGrid();
 
         }
         catch (Exception e)
@@ -88,6 +92,9 @@ public class Controller {
 
     public void drawMap() {
         drawMap(mapPanel, mapModel);
+        if(isGridEnabled) {
+            drawGrid(mapPanel, mapModel);
+        }
     }
 
     public void drawLegend() {
@@ -104,6 +111,9 @@ public class Controller {
         }*/
 
         drawMap(legendPanel.getLegendMap(), legendModel);
+        if(isGridEnabled) {
+            drawGrid(legendPanel.getLegendMap(), legendModel);
+        }
         legendPanel.drawText(n, mapModel.getMinValue(), mapModel.getMaxValue());
 
     }
@@ -126,8 +136,19 @@ public class Controller {
                 for(int l = 1; l <= n; l++)     //так?
                 {
                     List<Point2D> points = new ArrayList<>();
+                    List<Point2D> seeds = new ArrayList<>();
+
                     //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
+
+                    if(f1 == z)
+                        f1 += epsilon;
+                    if(f2 == z)
+                        f2 += epsilon;
+                    if(f3 == z)
+                        f3 += epsilon;
+                    if(f4 == z)
+                        f4 += epsilon;
 
                     if(f1 < z && z < f2)
                     {
@@ -137,11 +158,11 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
                     }
-                    else if(f1 == z && f2 == z)
+                    /*else if(f1 == z && f2 == z)
                     {
                         points.add(new Point2D.Double(f1p.getX(), f1p.getY()));
                         points.add(new Point2D.Double(f2p.getX(), f2p.getY()));
-                    }
+                    }*/ //прибавляю epsilon
 
                     if(f3 < z && z < f4)
                     {
@@ -151,13 +172,6 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
                     }
-                    else if(f3 == z && f4 == z)
-                    {
-                        points.add(new Point2D.Double(f3p.getX(), f3p.getY()));
-                        points.add(new Point2D.Double(f4p.getX(), f4p.getY()));
-
-                    }
-
 
                     if(f1 > z && z > f3)
                     {
@@ -166,11 +180,6 @@ public class Controller {
                     else if(f1 < z && z < f3)
                     {
                         points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1)/(f3 -f1))));
-                    }
-                    else if(f1 == z && f3 == z)
-                    {
-                        points.add(new Point2D.Double(f1p.getX(), f1p.getY()));
-                        points.add(new Point2D.Double(f3p.getX(), f3p.getY()));
                     }
 
 
@@ -182,12 +191,7 @@ public class Controller {
                     {
                         points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2)/(f4 -f2))));
                     }
-                    else if(f2 == z && f4 == z)
-                    {
-                        points.add(new Point2D.Double(f2p.getX(), f2p.getY()));
-                        points.add(new Point2D.Double(f4p.getX(), f4p.getY()));
 
-                    }
 
 
                     //todo: остальные случаи

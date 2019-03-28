@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class MapPanel extends JPanel {
     private BufferedImage canvas;
-    private Graphics canvasGraphics;
+    private Graphics2D canvasGraphics;
     private BufferedImage gridCanvas;
     private Graphics2D gridGraphics;
     private int width, height;
@@ -17,7 +17,7 @@ public class MapPanel extends JPanel {
         this.width = width;
         this.height = height;
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        canvasGraphics = canvas.getGraphics();
+        canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -53,4 +53,9 @@ public class MapPanel extends JPanel {
     }
 
 
+    public void clear() {
+        canvasGraphics.setBackground(new Color(0,0,0,0));
+
+        canvasGraphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
 }
