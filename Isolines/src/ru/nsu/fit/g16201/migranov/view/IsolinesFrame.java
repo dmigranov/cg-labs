@@ -27,7 +27,6 @@ public class IsolinesFrame extends MainFrame {
     }
 
     private IsolinesFrame() throws Exception {
-        //todo: u0v0 и u1v1 фиксированные? спросить
         super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
@@ -37,8 +36,8 @@ public class IsolinesFrame extends MainFrame {
         //mainPanel.setPreferredSize(new Dimension(500, 660));
         //mainPanel.setMaximumSize(new Dimension(500, 660));
 
+        MapPanel mapPanel = new MapPanel();
         //todo: исправить конструкторы
-        MapPanel mapPanel = new MapPanel(500, 500);
         LegendPanel legendPanel = new LegendPanel(500, 150);
         controller = new Controller(mapPanel, legendPanel);
 
@@ -65,16 +64,11 @@ public class IsolinesFrame extends MainFrame {
         mainPanel.add(mapPanel, BorderLayout.CENTER);
         mainPanel.add(legendPanel, BorderLayout.SOUTH);
 
-
+        mainPanel.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
+        mainPanel.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
 
         addMenus();
 
-        /*JScrollPane scrollPane = new JScrollPane(mainPanel);
-        scrollPane.setDoubleBuffered(true);
-        scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        add(scrollPane);*/
         add(mainPanel);
 
         JPanel statusPanel = new JPanel();
@@ -86,7 +80,7 @@ public class IsolinesFrame extends MainFrame {
         add(statusPanel, BorderLayout.SOUTH);
 
         revalidate();
-        setMinimumSize(new Dimension(800, 600));
+        setMinimumSize(new Dimension(600, 600));
         setLocationRelativeTo(null);
         setVisible(true);
     }

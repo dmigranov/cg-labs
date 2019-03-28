@@ -35,6 +35,7 @@ public class Controller {
             public void componentResized(ComponentEvent e)
             {
                 if(mapModel != null && legendModel != null) {
+                    mapPanel.updateSize();
                     drawMap();
                     drawLegend();
                 }
@@ -81,11 +82,14 @@ public class Controller {
             int r = Integer.parseInt(substrings[0]);
             int g = Integer.parseInt(substrings[1]);
             int b = Integer.parseInt(substrings[2]);
+
             isolineColor = new Color(r, g, b);
+            mapPanel.updateSize();
             mapPanel.clear();
             legendPanel.getLegendMap().clear();
             mapPanel.clearGrid();
             legendPanel.getLegendMap().clearGrid();
+
             mapPanel.setColor(isolineColor);
 
         }
@@ -238,15 +242,18 @@ public class Controller {
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
-                            /*if(f1 > f2) {
-                                mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
-                                mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
+                            try {
+                                if (f1 > f2) {
+                                    mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
+                                    mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
+                                } else if (f2 > f1) {
+                                    mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
+                                    mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
+                                }
                             }
-                            else if (f2 > f1)
+                            catch(IndexOutOfBoundsException e)
                             {
-                                mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
-                                mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
-                            }*/
+                            }
                         }
 
 

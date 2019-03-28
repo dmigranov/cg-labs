@@ -23,7 +23,7 @@ public class LegendPanel extends JPanel {
         canvasGraphics.setColor(Color.BLACK);
         //todo: как надо сделать: legendPanel содержит экземпляр MapPanel, куда собственно идёт рисование (интерполяция/нет), а снаружи = текст etc!
         //todo: -30 - для текста. проверитЬ!
-        legendMap = new MapPanel(width, height-30);
+        legendMap = new MapPanel();
         legendMap.setPreferredSize(new Dimension(width, height-30));
         legendMap.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(legendMap);

@@ -13,11 +13,13 @@ public class MapPanel extends JPanel {
     private Graphics2D gridGraphics;
     private int width, height;
 
-    MapPanel(int width, int height)
+    MapPanel()
     {
+        super();
+        setDoubleBuffered(true);
         setLayout(new FlowLayout());
-        this.width = width;
-        this.height = height;
+        this.width = 1;
+        this.height = 1;
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
@@ -63,6 +65,21 @@ public class MapPanel extends JPanel {
 
     public void setColor(Color isolineColor) {
         canvasGraphics.setColor(isolineColor);
+    }
+
+    public void updateSize() {
+        //todo: или лучше рисовать на Grphics?
+        this.width = getWidth();
+        this.height = getHeight();
+
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvasGraphics = canvas.createGraphics();
+        canvasGraphics.setColor(Color.BLACK);
+
+        gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        gridGraphics = gridCanvas.createGraphics();
+        gridGraphics.setColor(Color.BLACK);
+        gridGraphics.setBackground(new Color(0,0,0,0));
     }
 
 
