@@ -243,7 +243,7 @@ public class Controller {
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
-                            try {
+                            //try {
                                 if (f1 > f2) {
                                     mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
                                     mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
@@ -251,10 +251,10 @@ public class Controller {
                                     mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
                                     mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
                                 }
-                            }
+                            /*}
                             catch(IndexOutOfBoundsException e)
                             {
-                            }
+                            }*/
                         }
 
 
