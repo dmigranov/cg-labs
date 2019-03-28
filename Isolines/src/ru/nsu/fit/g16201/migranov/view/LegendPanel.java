@@ -17,8 +17,7 @@ public class LegendPanel extends JPanel {
     LegendPanel(int legendPanelHeight, int legendMapHeight)
     {
         this.height = legendPanelHeight;
-        this.width = 1;
-        setPreferredSize(new Dimension(width, legendMapHeight));
+        this.width = 500;
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.getGraphics();
         canvasGraphics.setColor(Color.BLACK);
@@ -59,6 +58,16 @@ public class LegendPanel extends JPanel {
     public void drawText(int n, double minValue, double maxValue) {
     }
 
+    public void updateSize() {
+        this.width = getWidth();
+        this.height = getHeight();
+
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvasGraphics = canvas.createGraphics();
+        canvasGraphics.setColor(Color.BLACK);
+
+        legendMap.updateSize();
+    }
 
 
 }

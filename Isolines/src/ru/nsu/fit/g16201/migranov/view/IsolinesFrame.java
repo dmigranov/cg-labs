@@ -57,6 +57,8 @@ public class IsolinesFrame extends MainFrame {
 
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         mapPanel.setPreferredSize(new Dimension(500, 500));
+        legendPanel.setPreferredSize(new Dimension(500, 100));
+
 
         //legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //legendPanel.setPreferredSize(new Dimension(500, 150));
