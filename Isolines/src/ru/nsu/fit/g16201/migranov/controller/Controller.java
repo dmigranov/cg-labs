@@ -136,7 +136,7 @@ public class Controller {
                 for(int l = 1; l <= n; l++)     //так?
                 {
                     List<Point2D> points = new ArrayList<>();
-                    List<Point2D> seeds = new ArrayList<>();
+                    Point2D lesserColorSeed;
 
                     //double z = legendModel.getValue(l, 0) * (model.getMaxValue() - model.getMinValue()) + model.getMinValue();
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
@@ -193,9 +193,6 @@ public class Controller {
                     }
 
 
-
-                    //todo: остальные случаи
-
                     if(points.size() == 2)
                     {
                         Point2D p1 = points.get(0);
@@ -204,10 +201,50 @@ public class Controller {
                         //System.out.println(x1 + " " +  y1 + " " + x2 + " " + y2);
                         int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
                         int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
-
                         int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
                         int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
                         mapPanel.drawLine(u1, v1, u2, v2);
+
+                        Color lesserColor = legendColors.get(l - 1);
+                        Color biggerColor = legendColors.get(l);
+                        int us1=0, us2=0, vs1=0, vs2=0;
+                        if(f1 > f2 || f1 < f2)
+                        {
+                            us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
+                            us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
+                            vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
+                            vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
+
+
+                            vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
+                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
+
+                            if(f1 > f2) {
+                                mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
+                                mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
+                            }
+                            else if (f2 > f1)
+                            {
+                                //mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
+                                //mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
+                            }
+                        }
+
+
+
+
+                        try {
+                            mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
+                            mapPanel.spanFill(us2, vs2, biggerColor.getRGB());    //в будущем я расмотрю для все хслучаев
+                        }
+                        catch(IndexOutOfBoundsException e)
+                        {
+                            int o = 5;
+                        }
+
+
                     }
                     else if(points.size() == 4)
                     {
