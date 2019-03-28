@@ -31,9 +31,9 @@ public class IsolinesFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        Box legendBox = Box.createHorizontalBox();
-        Box mapBox = Box.createHorizontalBox();
+        mainPanel.setLayout(new BorderLayout());
+        //Box legendBox = Box.createHorizontalBox();
+        //Box mapBox = Box.createHorizontalBox();
         //mainPanel.setPreferredSize(new Dimension(500, 660));
         //mainPanel.setMaximumSize(new Dimension(500, 660));
 
@@ -41,19 +41,19 @@ public class IsolinesFrame extends MainFrame {
         LegendPanel legendPanel = new LegendPanel(500, 150);
         controller = new Controller(mapPanel, legendPanel);
 
-        legendBox.add(Box.createHorizontalStrut(10));
+        /*legendBox.add(Box.createHorizontalStrut(10));
         legendBox.add(legendPanel);
         legendBox.add(Box.createHorizontalGlue());
         legendBox.setPreferredSize(new Dimension(510, 150));
         legendBox.setMaximumSize(new Dimension(510, 150));
-        legendBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        legendBox.setAlignmentX(Component.LEFT_ALIGNMENT);*/
 
-        mapBox.add(Box.createHorizontalStrut(10));
+        /*mapBox.add(Box.createHorizontalStrut(10));
         mapBox.add(mapPanel);
         mapBox.add(Box.createHorizontalGlue());
         mapBox.setPreferredSize(new Dimension(510, 500));
         mapBox.setMaximumSize(new Dimension(510, 500));
-        mapBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+        mapBox.setAlignmentX(Component.LEFT_ALIGNMENT);*/
 
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         mapPanel.setPreferredSize(new Dimension(500, 500)); //todo: ?
@@ -61,21 +61,20 @@ public class IsolinesFrame extends MainFrame {
         //legendPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         legendPanel.setPreferredSize(new Dimension(500, 150));
 
-        mainPanel.add(Box.createVerticalStrut(10));
-        mainPanel.add(mapBox);
-        mainPanel.add(Box.createVerticalStrut(10));
-        mainPanel.add(legendBox);
+        mainPanel.add(mapPanel, BorderLayout.CENTER);
+        mainPanel.add(legendPanel, BorderLayout.SOUTH);
 
 
 
         addMenus();
 
-        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        /*JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setDoubleBuffered(true);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        add(scrollPane);
+        add(scrollPane);*/
+        add(mainPanel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));

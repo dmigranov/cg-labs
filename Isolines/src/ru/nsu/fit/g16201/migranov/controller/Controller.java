@@ -5,6 +5,9 @@ import ru.nsu.fit.g16201.migranov.view.LegendPanel;
 import ru.nsu.fit.g16201.migranov.view.MapPanel;
 
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
@@ -26,6 +29,17 @@ public class Controller {
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
         this.legendPanel = legendPanel;
+
+        mapPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                if(mapModel != null && legendModel != null) {
+                    drawMap();
+                    drawLegend();
+                }
+            }
+        });
     }
 
     public int loadFile(File file) {
@@ -224,7 +238,7 @@ public class Controller {
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
-                            if(f1 > f2) {
+                            /*if(f1 > f2) {
                                 mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
                                 mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
                             }
@@ -232,7 +246,7 @@ public class Controller {
                             {
                                 mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
                                 mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
-                            }
+                            }*/
                         }
 
 
