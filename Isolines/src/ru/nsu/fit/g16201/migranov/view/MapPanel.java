@@ -61,6 +61,10 @@ public class MapPanel extends JPanel {
         canvasGraphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+    public void setColor(Color isolineColor) {
+        canvasGraphics.setColor(isolineColor);
+    }
+
 
     class Span
     {
@@ -100,7 +104,6 @@ public class MapPanel extends JPanel {
                     Span newSpan = getSpan(i, y - 1, oldValue);
                     if (newSpan == null)
                         continue;
-                    //i += (newSpan.rx - newSpan.lx);   //это неправильно, смотри в тетрадке на первой. исправил чтобы учитывать этот случай
                     i += (newSpan.rx - (newSpan.lx > span.lx ? newSpan.lx : span.lx));
                     spanStack.push(newSpan);
                 }

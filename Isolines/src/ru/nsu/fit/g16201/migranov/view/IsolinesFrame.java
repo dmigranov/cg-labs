@@ -250,7 +250,7 @@ public class IsolinesFrame extends MainFrame {
 
     public  void onIsolinesEnabled()
     {
-        //todo
+        controller.setIsolinesEnabled(!controller.areIsolinesEnabled());
     }
 
     public void onGridEnabled()

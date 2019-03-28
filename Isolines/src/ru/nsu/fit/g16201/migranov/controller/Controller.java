@@ -21,6 +21,7 @@ public class Controller {
     private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
 
     private boolean isGridEnabled = false;
+    private boolean areIsolinesEnabled;
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
@@ -71,6 +72,7 @@ public class Controller {
             legendPanel.getLegendMap().clear();
             mapPanel.clearGrid();
             legendPanel.getLegendMap().clearGrid();
+            mapPanel.setColor(isolineColor);
 
         }
         catch (Exception e)
@@ -210,6 +212,7 @@ public class Controller {
                         int us1=0, us2=0, vs1=0, vs2=0;
                         if(f1 > f2 || f1 < f2)
                         {
+                            //todo
                             us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
                             us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
                             vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
@@ -309,4 +312,13 @@ public class Controller {
     {
         return new double[]{mapModel.getA(), mapModel.getB(), mapModel.getC(), mapModel.getD()};
     }
+
+    public boolean areIsolinesEnabled() {
+        return areIsolinesEnabled;
+    }
+
+    public void setIsolinesEnabled(boolean isolinesEnabled) {
+        this.areIsolinesEnabled = isolinesEnabled;
+    }
+
 }
