@@ -268,6 +268,12 @@ public class Controller {
         }
     }
 
+    //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
+    public void recalculateMap()
+    {
+
+    }
+
 
     public boolean isGridEnabled() {
         return isGridEnabled;
