@@ -91,8 +91,8 @@ public class IsolinesFrame extends MainFrame {
 
 
         addSubMenu("Options", KeyEvent.VK_O);
+        addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", true);
         addCheckBoxMenuAndToolBarButton("Options/Interpolation on", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", "onInterpolationEnabled", false, false);
-        addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", false);
         addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
     }
@@ -198,13 +198,12 @@ public class IsolinesFrame extends MainFrame {
             int r = controller.loadFile(file);
             if(r == 0)
             {
-                /*for (AbstractButton b : deactivatedButtons)
+                for (AbstractButton b : deactivatedButtons)
                 {
                     b.setEnabled(true);
-                }*/
+                }
                 controller.drawMap();
                 controller.drawLegend();
-                //revalidate?
 
             }
             else
@@ -229,6 +228,18 @@ public class IsolinesFrame extends MainFrame {
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
+        //km
+        optionsPanel.setLayout(new GridLayout(6, 2));
+        JTextField kField = new JTextField(controller.getK() + "",4);
+        kField.addKeyListener(new IntegerTextFieldKeyListener());
+        JTextField mField = new JTextField(controller.getM() + "",4);
+        mField.addKeyListener(new IntegerTextFieldKeyListener());
+
+        optionsPanel.add(new JLabel("k: "));
+        optionsPanel.add(kField);
+        optionsPanel.add(new JLabel("m: "));
+        optionsPanel.add(mField);
+
 
         //abcd
         double[] constList = controller.getRegionSizes();
@@ -237,6 +248,21 @@ public class IsolinesFrame extends MainFrame {
             regionSizesFields.add(new JTextField("" + constList[i]));
             regionSizesFields.get(i).addKeyListener(new FloatTextFieldKeyListener());
         }
+
+        optionsPanel.add(new JLabel("a: "));
+        optionsPanel.add(regionSizesFields.get(0));
+        optionsPanel.add(new JLabel("b: "));
+        optionsPanel.add(regionSizesFields.get(1));
+        optionsPanel.add(new JLabel("c: "));
+        optionsPanel.add(regionSizesFields.get(2));
+        optionsPanel.add(new JLabel("d: "));
+        optionsPanel.add(regionSizesFields.get(3));
+
+        if(JOptionPane.showConfirmDialog(this, optionsPanel, "Region and marching squares parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+
+        }
+
     }
 
     public  void onIsolinesEnabled()

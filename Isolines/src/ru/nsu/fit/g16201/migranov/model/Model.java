@@ -93,11 +93,11 @@ public class Model {
         return maxValue;
     }
 
-    public double getM() {
+    public int getM() {
         return m;
     }
 
-    public double getK() {
+    public int getK() {
         return k;
     }
 
