@@ -7,12 +7,18 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class MapPanel extends JPanel {
-    private BufferedImage canvas;
-    private Graphics2D canvasGraphics;
+    private BufferedImage lineCanvas;
+    private Graphics2D lineGraphics;
+
     private BufferedImage gridCanvas;
     private Graphics2D gridGraphics;
+
+    private BufferedImage colorCanvas;
+    private Graphics2D colorGraphics;
+
     private int width, height;
     private Color isolineColor;
+    private int isolineRGB;
 
     MapPanel(int width, int height)
     {
@@ -21,8 +27,11 @@ public class MapPanel extends JPanel {
         setLayout(new FlowLayout());
         this.width = 1;
         this.height = 1;
-        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        canvasGraphics = canvas.createGraphics();
+        lineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        lineGraphics = lineCanvas.createGraphics();
+
+        colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        colorGraphics = colorCanvas.createGraphics();
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
@@ -35,13 +44,14 @@ public class MapPanel extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(canvas, 0, 0, width, height, null);
+        g.drawImage(colorCanvas, 0, 0, width, height, null);
+        g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
     }
 
     public void drawLine(int x1, int y1, int x2, int y2)
     {
-        canvasGraphics.drawLine(x1,y1,x2,y2);
+        lineGraphics.drawLine(x1,y1,x2,y2);
         repaint();
     }
 
@@ -58,14 +68,15 @@ public class MapPanel extends JPanel {
 
 
     public void clear() {
-        canvasGraphics.setBackground(new Color(0,0,0,0));
+        lineGraphics.setBackground(new Color(0,0,0,0));
 
-        canvasGraphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        lineGraphics.clearRect(0, 0, lineCanvas.getWidth(), lineCanvas.getHeight());
     }
 
     public void setColor(Color isolineColor) {
         this.isolineColor = isolineColor;
-        canvasGraphics.setColor(isolineColor);
+        isolineRGB = isolineColor.getRGB();
+        lineGraphics.setColor(isolineColor);
     }
 
     public void updateSize() {
@@ -73,9 +84,12 @@ public class MapPanel extends JPanel {
         this.width = getWidth();
         this.height = getHeight();
 
-        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        canvasGraphics = canvas.createGraphics();
-        canvasGraphics.setColor(isolineColor);
+        lineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        lineGraphics = lineCanvas.createGraphics();
+        lineGraphics.setColor(isolineColor);
+
+        colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        colorGraphics = colorCanvas.createGraphics();
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
@@ -99,7 +113,7 @@ public class MapPanel extends JPanel {
 
     public void spanFill(int x, int y, int newValue)
     {
-        int oldValue = canvas.getRGB(x, y);
+        int oldValue = colorCanvas.getRGB(x, y);
         if(oldValue == newValue)
             return;
 
@@ -113,7 +127,7 @@ public class MapPanel extends JPanel {
             span = spanStack.pop();
             y = span.y;
             for(int i = span.lx; i <= span.rx; i++) {
-                canvas.setRGB(i, y, newValue);
+                colorCanvas.setRGB(i, y, newValue);
             }
             if(y > 0)
             {
@@ -126,7 +140,7 @@ public class MapPanel extends JPanel {
                     spanStack.push(newSpan);
                 }
             }
-            if(y < canvas.getHeight() - 1)
+            if(y < colorCanvas.getHeight() - 1)
             {
                 for(int i = span.lx; i <= span.rx; i+=2)
                 {
@@ -142,11 +156,13 @@ public class MapPanel extends JPanel {
 
     private Span getSpan(int x, int y, int color)
     {
-        if(canvas.getRGB(x, y) != color)
+        if(colorCanvas.getRGB(x, y) != color)
             return null;
         int lx = x, rx = x;
-        while(lx > 0 && canvas.getRGB(--lx, y) == color);
-        while(rx < width - 1 && canvas.getRGB(++rx, y) == color);
+        while(lx > 0 && colorCanvas.getRGB(lx, y) == color && lineCanvas.getRGB(lx, y) != isolineRGB) --lx;
+        while(rx < width - 1 && colorCanvas.getRGB(rx, y) == color && lineCanvas.getRGB(rx, y) != isolineRGB) ++rx;
+        if(lx == rx)
+            return null;
         lx++;
         rx--; //возвращаемся на один, т.к. зашли на границу
         return new Span(lx, rx, y);

@@ -26,6 +26,10 @@ public class Controller {
     private boolean isGridEnabled = false;
     private boolean areIsolinesEnabled;
 
+    private List<Point2D> lines;        //l1p1 l1p2 l2p1 l2p2
+    private List<Point2D> seeds;
+
+
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
         this.legendPanel = legendPanel;
@@ -89,6 +93,7 @@ public class Controller {
             mapPanel.clearGrid();
             legendPanel.getLegendMap().clearGrid();
             mapPanel.setColor(isolineColor);
+            lines = new ArrayList<>();
         }
         catch (Exception e)
         {
