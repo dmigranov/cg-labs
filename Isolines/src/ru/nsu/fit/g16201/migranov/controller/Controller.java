@@ -335,4 +335,10 @@ public class Controller {
     public int getM() {
         return mapModel.getM();
     }
+
+    public void setModelConstants(int k, int m, double a, double b, double c, double d) {
+        mapModel = new Model(k, m, a, b, c, d);
+        //todo: repaint/recalculate
+
+    }
 }

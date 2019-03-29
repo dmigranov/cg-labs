@@ -20,6 +20,11 @@ public class Model {
         calculateGrid();
     }
 
+    public Model(int k, int m, double a, double b, double c, double d)  //k - число значений сетки по x, m - по y
+    {
+        this(k, m, (x, y) -> x*x + y*y, a, b, c, d);
+    }
+
     public Model(int k, int m, BiFunction<Double, Double, Double> function, double a, double b, double c, double d)  //k - число значений сетки по x, m - по y
     {
         this.function = function;
@@ -30,7 +35,6 @@ public class Model {
         this.b = b;
         this.c = c;
         this.d = d;
-
 
         calculateGrid();
     }

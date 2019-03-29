@@ -240,8 +240,6 @@ public class IsolinesFrame extends MainFrame {
         optionsPanel.add(new JLabel("m: "));
         optionsPanel.add(mField);
 
-
-        //abcd
         double[] constList = controller.getRegionSizes();
         List<JTextField> regionSizesFields = new ArrayList<>();
         for(int i = 0; i < constList.length; i++) {
@@ -260,7 +258,21 @@ public class IsolinesFrame extends MainFrame {
 
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Region and marching squares parameters", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
+            try
+            {
+                int k, m;
+                double a, b, c, d;
+                k = Integer.parseInt(kField.getText());
+                m = Integer.parseInt(mField.getText());
+                a = Double.parseDouble(regionSizesFields.get(0).getText());
+                b = Double.parseDouble(regionSizesFields.get(1).getText());
+                c = Double.parseDouble(regionSizesFields.get(2).getText());
+                d = Double.parseDouble(regionSizesFields.get(3).getText());
 
+                controller.setModelConstants(k, m, a, b, c, d);
+            }
+            catch (NumberFormatException e)
+            {}
         }
 
     }
