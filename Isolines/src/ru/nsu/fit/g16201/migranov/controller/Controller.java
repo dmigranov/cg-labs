@@ -229,7 +229,7 @@ public class Controller {
                         if(f1 > f2 || f1 < f2)
                         {
                             //todo
-                            us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
+                            /*us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
                             us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
                             vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
                             vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
@@ -237,15 +237,20 @@ public class Controller {
                             vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
                             vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
-                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
+                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;*/
+                            /*v1 = v1 <mapPanel.getHeight()?v1:mapPanel.getHeight()-1;
+                            v2 = v2 <mapPanel.getHeight()?v2:mapPanel.getHeight()-1;
+                            u1 = u1 < mapPanel.getWidth()? u1 : mapPanel.getWidth()-1;
+                            u2 = u2 < mapPanel.getWidth()? u2 : mapPanel.getWidth()-1;*/
+
 
                             //try {
                                 if (f1 > f2) {
-                                    mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
-                                    mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
+                                    mapPanel.spanFill(u1+1, v1, lesserColor.getRGB());
+                                    mapPanel.spanFill(u1-1, v2, biggerColor.getRGB());
                                 } else if (f2 > f1) {
-                                    mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
-                                    mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
+                                    mapPanel.spanFill(u1+1, v1, biggerColor.getRGB());
+                                    mapPanel.spanFill(u1-1, v2, lesserColor.getRGB());
                                 }
                             /*}
                             catch(IndexOutOfBoundsException e)
