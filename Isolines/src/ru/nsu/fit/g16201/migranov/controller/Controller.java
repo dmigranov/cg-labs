@@ -7,7 +7,6 @@ import ru.nsu.fit.g16201.migranov.view.MapPanel;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class Controller {
                 n--;
             }
             //"линейная функция"
-            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
 
             substrings = readLineAndSplit();
             int r = Integer.parseInt(substrings[0]);
@@ -122,7 +121,6 @@ public class Controller {
     public void drawLegend() {
         /*double min = mapModel.getMinValue();
         double max = mapModel.getMaxValue();
-
         for(int j = 0; j <= n; j++)
         {
             legendPanel.drawVerticalLine((int)Math.round(legendModel.getValue(j, 0)));
@@ -152,7 +150,6 @@ public class Controller {
                 Point2D f2p = model.getPoint(j + 1, i + 1);
                 Point2D f3p = model.getPoint(j, i);
                 Point2D f4p = model.getPoint(j + 1, i);
-
 
                 for(int l = 1; l <= n; l++)     //так?
                 {
@@ -310,7 +307,6 @@ public class Controller {
                 mapPanel.drawGridLine(u1, v1, u2, v1);
                 mapPanel.drawGridLine(u2, v2, u2, v1);
                 mapPanel.drawGridLine(u2, v2, u1, v2);
-
             }
         }
     }

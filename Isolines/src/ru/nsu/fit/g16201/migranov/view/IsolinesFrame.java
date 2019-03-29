@@ -5,7 +5,6 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,8 +32,6 @@ public class IsolinesFrame extends MainFrame {
         mainPanel.setLayout(new BorderLayout());
         //Box legendBox = Box.createHorizontalBox();
         //Box mapBox = Box.createHorizontalBox();
-        //mainPanel.setPreferredSize(new Dimension(500, 660));
-        //mainPanel.setMaximumSize(new Dimension(500, 660));
 
         MapPanel mapPanel = new MapPanel(500, 500);
         LegendPanel legendPanel = new LegendPanel(500, 150, 100);
@@ -45,30 +42,13 @@ public class IsolinesFrame extends MainFrame {
         mapPanel.setPreferredSize(new Dimension(500, 500));
         legendPanel.setPreferredSize(new Dimension(500, 150));
 
-        /*legendBox.add(Box.createHorizontalStrut(10));
-        legendBox.add(legendPanel);
-        legendBox.add(Box.createHorizontalGlue());
-        legendBox.setPreferredSize(new Dimension(510, 150));
-        legendBox.setMaximumSize(new Dimension(510, 150));
-        legendBox.setAlignmentX(Component.LEFT_ALIGNMENT);*/
-
-        /*mapBox.add(Box.createHorizontalStrut(10));
-        mapBox.add(mapPanel);
-        mapBox.add(Box.createHorizontalGlue());
-        mapBox.setPreferredSize(new Dimension(510, 500));
-        mapBox.setMaximumSize(new Dimension(510, 500));
-        mapBox.setAlignmentX(Component.LEFT_ALIGNMENT);*/
-
-
         mainPanel.add(mapPanel, BorderLayout.CENTER);
         mainPanel.add(legendPanel, BorderLayout.SOUTH);
-
         mainPanel.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
         mainPanel.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
+        add(mainPanel);
 
         addMenus();
-
-        add(mainPanel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -228,7 +208,6 @@ public class IsolinesFrame extends MainFrame {
         JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
-        //km
         optionsPanel.setLayout(new GridLayout(6, 2));
         JTextField kField = new JTextField(controller.getK() + "",4);
         kField.addKeyListener(new IntegerTextFieldKeyListener());
@@ -272,9 +251,10 @@ public class IsolinesFrame extends MainFrame {
                 controller.setModelConstants(k, m, a, b, c, d);
             }
             catch (NumberFormatException e)
-            {}
+            {
+                //todo: диалог
+            }
         }
-
     }
 
     public  void onIsolinesEnabled()
