@@ -95,6 +95,8 @@ public class Controller {
             legendPanel.getLegendMap().setColor(isolineColor);
             lines = new ArrayList<>();
             seeds = new ArrayList<>();
+            drawMap();
+            drawLegend();
         }
         catch (Exception e)
         {
@@ -271,7 +273,23 @@ public class Controller {
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
     private void recalculateMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
     {
+        double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
+        for(int i = 0; i < lines.size(); i+=2)
+        {
+            Point2D p1 = lines.get(i);
+            Point2D p2 = lines.get(i+1);
 
+            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
+            int u1 = (int)(mapPanel.getWidth() * (x1 - a)/(b - a) + 0.5);
+            int u2 = (int)(mapPanel.getWidth() * (x2 - a)/(b - a) + 0.5);
+            int v1 = (int)(mapPanel.getHeight() * (y1 - c)/(d - c) + 0.5);
+            int v2 = (int)(mapPanel.getHeight() * (y2 - c)/(d - c) + 0.5);
+
+            mapPanel.drawLine(u1, v1, u2, v2);
+
+        }
+
+        //раскраска
     }
 
     //первый раз только при загрузке файла. в пространстве xy

@@ -182,8 +182,7 @@ public class IsolinesFrame extends MainFrame {
                 {
                     b.setEnabled(true);
                 }
-                controller.drawMap();
-                controller.drawLegend();
+
 
             }
             else
