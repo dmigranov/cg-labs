@@ -26,7 +26,7 @@ public class Controller {
     private boolean areIsolinesEnabled;
 
     private List<Point2D> lines;        //l1p1 l1p2 l2p1 l2p2
-    private List<Point2D> seeds;
+    private List<Seed> seeds;
 
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
@@ -94,6 +94,7 @@ public class Controller {
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
             lines = new ArrayList<>();
+            seeds = new ArrayList<>();
         }
         catch (Exception e)
         {
