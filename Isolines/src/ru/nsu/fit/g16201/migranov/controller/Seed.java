@@ -4,10 +4,10 @@ import java.awt.*;
 
 public class Seed {
     public Color color;
-    public int x;
-    public int y;
+    public double x;
+    public double y;
 
-    public Seed(Color color, int x, int y)
+    public Seed(Color color, double x, double y)
     {
         this.color = color;
         this.x = x; this.y = y;

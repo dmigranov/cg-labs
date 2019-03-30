@@ -155,7 +155,6 @@ public class Controller {
                 for(int l = 1; l <= n; l++)     //так?
                 {
                     List<Point2D> points = new ArrayList<>();
-                    Point2D lesserColorSeed;
 
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
 
@@ -270,9 +269,125 @@ public class Controller {
     }
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
-    public void recalculateMap()
+    private void recalculateMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
     {
 
+    }
+
+    //первый раз только при загрузке файла. в пространстве xy
+    public void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
+    {
+        for(int i = 0; i < model.getM() - 1; i++)
+        {
+            for (int j = 0; j < model.getK() - 1; j++) {     //y - i, x - j (а в лекциях соответствие обратное)
+                double f1 = model.getValue(j, i + 1);
+                double f2 = model.getValue(j + 1, i + 1);
+                double f3 = model.getValue(j, i);
+                double f4 = model.getValue(j + 1, i);
+                Point2D f1p = model.getPoint(j, i + 1);
+                Point2D f2p = model.getPoint(j + 1, i + 1);
+                Point2D f3p = model.getPoint(j, i);
+                Point2D f4p = model.getPoint(j + 1, i);
+
+                for(int l = 1; l <= n; l++)     //так?
+                {
+                    List<Point2D> points = new ArrayList<>();
+
+                    double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
+
+                    //todo?
+                    if(f1 == z)
+                        f1 += epsilon;
+                    if(f2 == z)
+                        f2 += epsilon;
+                    if(f3 == z)
+                        f3 += epsilon;
+                    if(f4 == z)
+                        f4 += epsilon;
+
+                    if(f1 < z && z < f2)
+                    {
+                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1)/(f2 -f1), f1p.getY()));
+                    }
+                    else if(f1 > z && z > f2)
+                    {
+                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
+                    }
+
+                    if(f3 < z && z < f4)
+                    {
+                        points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3)/(f4 -f3), f3p.getY()));
+                    }
+                    else if(f3 > z && z > f4)
+                    {
+                        points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
+                    }
+
+                    if(f1 > z && z > f3)
+                    {
+                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3)/(f1 -f3)));
+                    }
+                    else if(f1 < z && z < f3)
+                    {
+                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1)/(f3 -f1))));
+                    }
+
+                    if(f2 > z && z > f4)
+                    {
+                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4)/(f2 -f4)));
+                    }
+                    else if(f2 < z && z < f4)
+                    {
+                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2)/(f4 -f2))));
+                    }
+
+
+                    if(points.size() == 2)
+                    {
+                        Point2D p1 = points.get(0);
+                        Point2D p2 = points.get(1);
+                        lines.add(p1);
+                        lines.add(p2);
+
+                        Color lesserColor = legendColors.get(l - 1);
+                        Color biggerColor = legendColors.get(l);
+                        int us1=0, us2=0, vs1=0, vs2=0;
+                        if(f1 > f2 || f1 < f2)
+                        {
+                            //todo
+                            us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
+                            us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
+                            vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
+                            vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
+
+                            vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
+                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
+
+                            //todo: понимаю, в чём корень проблемы с легендой. во-первых, там сетка не совпадает с изолиниями полностью (из-за прибаления?(
+                            // но проблема в том, что иногда совпадает! и если не совпадает, то там личния в два пикселя и закрашивания не проиходит
+                            if (f1 > f2) {
+                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
+                                seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
+                            } else if (f2 > f1) {
+                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
+                                seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
+                            }
+
+                        }
+                    }
+                    else if(points.size() == 4)
+                    {
+                        double f = (f1+f2+f3+f4)/4;
+
+                        //todo:
+                    }
+
+
+                }
+            }
+        }
     }
 
 
