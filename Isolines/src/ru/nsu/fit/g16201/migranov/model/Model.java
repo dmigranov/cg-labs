@@ -4,11 +4,12 @@ import java.awt.geom.Point2D;
 import java.util.function.BiFunction;
 
 public class Model {
+    private static final BiFunction<Double, Double, Double> standardFunction = (x, y) -> x*x + y*y;
     private double a = -200, b = 200, c = -200, d = 200;  //область определения
     private int k, m;
     private double[][] grid;
     private double minValue = Double.MAX_VALUE, maxValue = Double.MIN_VALUE;
-    private BiFunction<Double, Double, Double> function = (x, y) -> x*x + y*y;
+    private BiFunction<Double, Double, Double> function = standardFunction;
 
     public Model(int k, int m)  //k - число значений сетки по x, m - по y
     {
@@ -20,7 +21,7 @@ public class Model {
 
     public Model(int k, int m, double a, double b, double c, double d)  //k - число значений сетки по x, m - по y
     {
-        this(k, m, (x, y) -> x*x + y*y, a, b, c, d);
+        this(k, m, standardFunction, a, b, c, d);
     }
 
     public Model(int k, int m, BiFunction<Double, Double, Double> function, double a, double b, double c, double d)  //k - число значений сетки по x, m - по y

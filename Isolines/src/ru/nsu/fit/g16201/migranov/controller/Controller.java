@@ -453,12 +453,7 @@ public class Controller {
                 int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
                 int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
                 int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
-
-                /*mapPanel.drawGridLine(u1, v1, u1, v2);
-                mapPanel.drawGridLine(u1, v1, u2, v1);
-                mapPanel.drawGridLine(u2, v2, u2, v1);
-                mapPanel.drawGridLine(u2, v2, u1, v2);*/
-
+                
                 mapPanel.drawGridRect(u1, v1, u2, v2);
             }
         }

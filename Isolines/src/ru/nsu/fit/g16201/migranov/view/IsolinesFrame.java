@@ -222,6 +222,7 @@ public class IsolinesFrame extends MainFrame {
         List<JTextField> regionSizesFields = new ArrayList<>();
         for(int i = 0; i < constList.length; i++) {
             regionSizesFields.add(new JTextField("" + constList[i]));
+            //todo: сделать их отрицательными! + проверка на то что b больше a etc
             regionSizesFields.get(i).addKeyListener(new FloatTextFieldKeyListener());
         }
 
