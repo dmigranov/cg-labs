@@ -52,13 +52,11 @@ public class MapPanel extends JPanel {
     public void drawLine(int x1, int y1, int x2, int y2)
     {
         lineGraphics.drawLine(x1,y1,x2,y2);
-        repaint();
     }
 
     public void drawGridLine(int x1, int y1, int x2, int y2)
     {
         gridGraphics.drawLine(x1,y1,x2,y2);
-        repaint();
     }
 
     public void clearGrid()
@@ -95,6 +93,10 @@ public class MapPanel extends JPanel {
         gridGraphics = gridCanvas.createGraphics();
         gridGraphics.setColor(Color.BLACK);
         gridGraphics.setBackground(new Color(0,0,0,0));
+    }
+
+    public void drawGridRect(int u1, int v1, int u2, int v2) {
+        gridGraphics.drawRect(u1, v1, u2 - u1, v2 - v1);
     }
 
 

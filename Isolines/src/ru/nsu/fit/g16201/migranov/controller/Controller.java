@@ -25,8 +25,8 @@ public class Controller {
     private boolean isGridEnabled = false;
     private boolean areIsolinesEnabled;
 
-    private List<Point2D> lines;        //l1p1 l1p2 l2p1 l2p2
-    private List<Seed> seeds;
+    private List<Point2D> mapLines, legendLines;        //l1p1 l1p2 l2p1 l2p2
+    private List<Seed> mapSeeds, legendSeeds;
 
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
@@ -42,6 +42,8 @@ public class Controller {
                     legendPanel.updateSize();
                     drawMap();
                     drawLegend();
+                    mapPanel.repaint();
+                    legendPanel.repaint();
                 }
             }
         });
@@ -93,10 +95,14 @@ public class Controller {
             legendPanel.getLegendMap().clearGrid();
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
-            lines = new ArrayList<>();
-            seeds = new ArrayList<>();
+            mapLines = new ArrayList<>();
+            mapSeeds = new ArrayList<>();
+            legendLines = new ArrayList<>();
+            legendSeeds = new ArrayList<>();
             drawMap();
             drawLegend();
+            mapPanel.repaint();
+            legendPanel.repaint();
         }
         catch (Exception e)
         {
@@ -443,10 +449,12 @@ public class Controller {
                 int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
                 int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
 
-                mapPanel.drawGridLine(u1, v1, u1, v2);
+                /*mapPanel.drawGridLine(u1, v1, u1, v2);
                 mapPanel.drawGridLine(u1, v1, u2, v1);
                 mapPanel.drawGridLine(u2, v2, u2, v1);
-                mapPanel.drawGridLine(u2, v2, u1, v2);
+                mapPanel.drawGridLine(u2, v2, u1, v2);*/
+
+                mapPanel.drawGridRect(u1, v1, u2, v2);
             }
         }
     }
