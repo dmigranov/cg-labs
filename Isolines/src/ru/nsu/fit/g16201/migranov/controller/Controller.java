@@ -99,7 +99,9 @@ public class Controller {
             mapSeeds = new ArrayList<>();
             legendLines = new ArrayList<>();
             legendSeeds = new ArrayList<>();
+            calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
+            calculateMap(legendModel, legendLines, legendSeeds);
             drawLegend();
             mapPanel.repaint();
             legendPanel.repaint();
@@ -121,10 +123,12 @@ public class Controller {
     }
 
     public void drawMap() {
-        drawMap(mapPanel, mapModel);
+        //drawMap(mapPanel, mapModel);
+        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         if(isGridEnabled) {
             drawGrid(mapPanel, mapModel);
         }
+
     }
 
     public void drawLegend() {
@@ -136,7 +140,9 @@ public class Controller {
             legendPanel.spanFill(1 + (int)Math.round(legendModel.getValue(j, 0)), 1, legendColors.get(j).getRGB());
         }*/
 
-        drawMap(legendPanel.getLegendMap(), legendModel);
+        //drawMap(legendPanel.getLegendMap(), legendModel);
+        recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
+
         if(isGridEnabled) {
             drawGrid(legendPanel.getLegendMap(), legendModel);
         }
@@ -277,7 +283,7 @@ public class Controller {
     }
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
-    private void recalculateMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
+    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
     {
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
         for(int i = 0; i < lines.size(); i+=2)
