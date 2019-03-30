@@ -69,7 +69,6 @@ public class IsolinesFrame extends MainFrame {
         addMenuAndToolBarButton("File/Open", "Open a file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Exit", "Exit the aplication", KeyEvent.VK_E, "logout.png", "onExit", false);
 
-
         addSubMenu("Options", KeyEvent.VK_O);
         addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", true);
         addCheckBoxMenuAndToolBarButton("Options/Interpolation on", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", "onInterpolationEnabled", false, false);
@@ -141,7 +140,7 @@ public class IsolinesFrame extends MainFrame {
                 try {
                     method.invoke(IsolinesFrame.this);
                 } catch (Exception e) {
-                    //throw new RuntimeException(e);
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -182,12 +181,10 @@ public class IsolinesFrame extends MainFrame {
                 {
                     b.setEnabled(true);
                 }
-
-
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -222,7 +219,6 @@ public class IsolinesFrame extends MainFrame {
         List<JTextField> regionSizesFields = new ArrayList<>();
         for(int i = 0; i < constList.length; i++) {
             regionSizesFields.add(new JTextField("" + constList[i]));
-            //todo: сделать их отрицательными! + проверка на то что b больше a etc
             regionSizesFields.get(i).addKeyListener(new FloatTextFieldKeyListener());
         }
 
@@ -248,11 +244,14 @@ public class IsolinesFrame extends MainFrame {
                 c = Double.parseDouble(regionSizesFields.get(2).getText());
                 d = Double.parseDouble(regionSizesFields.get(3).getText());
 
+                if(a >= b || c >= d)
+                    throw new NumberFormatException();
+
                 controller.setModelConstants(k, m, a, b, c, d);
             }
             catch (NumberFormatException e)
             {
-                //todo: диалог
+                JOptionPane.showMessageDialog(this, "Wrong constants", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

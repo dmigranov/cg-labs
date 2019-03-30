@@ -47,6 +47,8 @@ public class Controller {
                 }
             }
         });
+
+        //todo: mouse listener который следит за положением мыши на mapPanel и высичтывает координаты и значение функции
     }
 
     public int loadFile(File file) {
@@ -121,7 +123,7 @@ public class Controller {
         return line.split("\\s+");
     }
 
-    public void drawMap() {
+    private void drawMap() {
         //drawMap(mapPanel, mapModel);
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         if(isGridEnabled) {
@@ -130,7 +132,7 @@ public class Controller {
 
     }
 
-    public void drawLegend() {
+    private void drawLegend() {
         /*double min = mapModel.getMinValue();
         double max = mapModel.getMaxValue();
         for(int j = 0; j <= n; j++)
@@ -246,7 +248,7 @@ public class Controller {
                             vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
 
                             vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
-                            vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            vs2 = vs2 <mapPanel.getHeight()?vs2:mapPanel.getHeight()-1;
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
@@ -300,11 +302,15 @@ public class Controller {
 
         }
 
-        //раскраска
+        for(Seed s : seeds)
+        {
+            //mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
+
+        }
     }
 
     //первый раз только при загрузке файла. в пространстве xy
-    public void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
+    private void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
     {
         for(int i = 0; i < model.getM() - 1; i++)
         {
@@ -390,7 +396,7 @@ public class Controller {
                             vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
 
                             vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
-                            vs2 = vs2 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
+                            vs2 = vs2 <mapPanel.getHeight()?vs2:mapPanel.getHeight()-1;
                             us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
                             us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
 
@@ -440,6 +446,9 @@ public class Controller {
     }
 
     private void drawGrid(MapPanel mapPanel, Model model) {
+        int width = mapPanel.getWidth(), height = mapPanel.getHeight();
+        double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
+
         for(int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++) {
                 Point2D x2y2 = model.getPoint(j + 1, i + 1);
@@ -449,11 +458,11 @@ public class Controller {
                 double x2 = x2y2.getX();
                 double y2 = x2y2.getY();
 
-                int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
-                int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
-                int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
-                int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
-                
+                int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
+                int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
+                int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
+                int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+
                 mapPanel.drawGridRect(u1, v1, u2, v2);
             }
         }

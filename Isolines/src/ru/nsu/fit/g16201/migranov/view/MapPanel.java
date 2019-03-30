@@ -78,7 +78,6 @@ public class MapPanel extends JPanel {
     }
 
     public void updateSize() {
-        //todo: или лучше рисовать одну и ту же картинку на Grphics новых размеров? а то пересоздавать каждый раз..
         this.width = getWidth();
         this.height = getHeight();
 

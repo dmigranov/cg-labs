@@ -44,7 +44,6 @@ public class LegendPanel extends JPanel {
     }
 
     public void drawVerticalLine(int x) {
-        //todo: рисовать на меньшей обалсти
         canvasGraphics.drawLine(x,0,x,height - 1);
     }
 
