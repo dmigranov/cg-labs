@@ -78,14 +78,13 @@ public class Controller {
                 legendColors.add(new Color(r, g, b));
                 n--;
             }
-            //"линейная функция"
-            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
-
             substrings = readLineAndSplit();
             int r = Integer.parseInt(substrings[0]);
             int g = Integer.parseInt(substrings[1]);
             int b = Integer.parseInt(substrings[2]);
             isolineColor = new Color(r, g, b);
+
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
 
             mapPanel.updateSize();
             legendPanel.updateSize();
@@ -488,7 +487,23 @@ public class Controller {
 
     public void setModelConstants(int k, int m, double a, double b, double c, double d) {
         mapModel = new Model(k, m, a, b, c, d);
-        //todo: repaint/recalculate
+        //todo: legendModel
 
+        mapPanel.clear();
+        legendPanel.getLegendMap().clear();
+        mapPanel.clearGrid();
+        legendPanel.getLegendMap().clearGrid();
+        mapPanel.setColor(isolineColor);
+        legendPanel.getLegendMap().setColor(isolineColor);
+        mapLines = new ArrayList<>();
+        mapSeeds = new ArrayList<>();
+        legendLines = new ArrayList<>();
+        legendSeeds = new ArrayList<>();
+        calculateMap(mapModel, mapLines, mapSeeds);
+        drawMap();
+        calculateMap(legendModel, legendLines, legendSeeds);
+        drawLegend();
+        mapPanel.repaint();
+        legendPanel.repaint();
     }
 }
