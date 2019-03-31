@@ -151,7 +151,7 @@ public class Controller {
             legendPanel.updateSize();
 
             //legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
-            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, mapPanel.getWidth(), 0, mapPanel.getHeight());
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, mapPanel.getHeight());
 
 
             mapPanel.clear();
@@ -189,7 +189,6 @@ public class Controller {
     }
 
     private void drawMap() {
-        //drawMap(mapPanel, mapModel);
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         if(isGridEnabled) {
             drawGrid(mapPanel, mapModel);
@@ -198,16 +197,15 @@ public class Controller {
     }
 
     private void drawLegend() {
-        /*double min = mapModel.getMinValue();
-        double max = mapModel.getMaxValue();
+        MapPanel legendMap = legendPanel.getLegendMap();
         for(int j = 0; j <= n; j++)
         {
-            legendPanel.drawVerticalLine((int)Math.round(legendModel.getValue(j, 0)));
-            legendPanel.spanFill(1 + (int)Math.round(legendModel.getValue(j, 0)), 1, legendColors.get(j).getRGB());
-        }*/
+            int x = (int)Math.round(legendMap.getWidth() * legendModel.getValue(j, 0));
+            legendMap.drawLine(x, 0, x, legendMap.getHeight());
+            legendMap.spanFill(1 + x, 1, legendColors.get(j).getRGB());
+        }
 
-        //drawMap(legendPanel.getLegendMap(), legendModel);
-        recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
+        //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
 
         if(isGridEnabled) {
             drawGrid(legendPanel.getLegendMap(), legendModel);
@@ -289,7 +287,7 @@ public class Controller {
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
 
         double epsilon = (b-a)/(mapPanel.getWidth());
-        double epsilon2 = Controller.epsilon;
+        //double epsilon2 = Controller.epsilon;
 
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
@@ -308,13 +306,13 @@ public class Controller {
 
 
                 if (f1 == z)
-                    f1 += epsilon2;
+                    f1 += epsilon;
                 if (f2 == z)
-                    f2 += epsilon2;
+                    f2 += epsilon;
                 if (f3 == z)
-                    f3 += epsilon2;
+                    f3 += epsilon;
                 if (f4 == z)
-                    f4 += epsilon2;
+                    f4 += epsilon;
 
 
                 if (f1 < z && z < f2) {
@@ -376,7 +374,7 @@ public class Controller {
                         //seeds.addAll(tempSeeds);
 
                         if (f1 > z && z > f2 || f1 < z && z < f2) {
-=                            if (f2 < f1) {
+                           if (f2 < f1) {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
                             } else if (f2 > f1) {
