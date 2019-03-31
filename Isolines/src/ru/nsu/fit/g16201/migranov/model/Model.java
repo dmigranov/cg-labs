@@ -116,4 +116,8 @@ public class Model {
         return new Point2D.Double(x, y);
     }
 
+    public double applyFunction(double x, double y)
+    {
+        return function.apply(x, y);
+    }
 }

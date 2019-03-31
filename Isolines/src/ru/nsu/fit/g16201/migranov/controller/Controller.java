@@ -57,9 +57,14 @@ public class Controller {
                 super.mouseMoved(e);
 
                 int x = e.getX(), y = e.getY();
-                if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight())
+                if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
-                statusLabel.setText(x + " " + y);
+                //int mx = (int)(mapPanel.getWidth() * (x - mapModel.getA())/(mapModel.getB() - mapModel.getA()) + 0.5);
+                double mx = ((mapModel.getB() - mapModel.getA()) * x/mapPanel.getWidth() + mapModel.getA());
+                double my = ((mapModel.getD() - mapModel.getC()) * y/mapPanel.getHeight() + mapModel.getC());
+                double f = mapModel.applyFunction(mx, my);
+
+                statusLabel.setText(String.format("x = %.3f", mx) + ", " + String.format("y = %.3f", my) + "; " + String.format("f(x, y) = %.3f", f));
 
             }
         });
