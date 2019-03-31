@@ -251,10 +251,17 @@ public class MapPanel extends JPanel {
         return new Span(lx, rx, y);
     }
 
-    public void paintPixel(int x, int y, int color)
+    public void paintPixelInterpolated(int x, int y, int color)
     {
         //interpolatedCanvas.setRGB(x, y, color);   //пчему не работает???
         interpolatedGraphics.setColor(new Color(color));
         interpolatedGraphics.drawLine(x,y,x,y);
+    }
+
+    public void paintPixel(int x, int y, int color)
+    {
+        colorCanvas.setRGB(x, y, color);   //пчему не работает???
+        /*interpolatedGraphics.setColor(new Color(color));
+        interpolatedGraphics.drawLine(x,y,x,y);*/
     }
 }

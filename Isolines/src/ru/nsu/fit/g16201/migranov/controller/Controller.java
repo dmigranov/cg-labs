@@ -172,7 +172,7 @@ public class Controller {
             mapPanel.repaint();
             legendPanel.repaint();
         }
-        catch (Exception e)
+        catch (IOException e)
         {
             return -1;
         }
@@ -237,9 +237,30 @@ public class Controller {
                 mapPanel.drawGridPoint(u2, v2);
             }
         }
+        for(int v = 0; v < height; v++) {
+            double y = (d-c)*v/height + c;
+            for (int u = 0; u < width; u++) {
+                double x = (b-a)*u/width + a;
 
+                double f = mapModel.applyFunction(x, y);
 
-            for (Seed s : seeds) {
+                int l;
+                for(l = 0; l < n; l++)
+                {
+                    double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue()) / (n + 1);
+                    if(f < z)
+                    {
+                        //l--;
+                        break;
+                    }
+                }
+                System.out.println(l);
+                mapPanel.paintPixel(u, v, legendColors.get(l).getRGB());
+
+            }
+        }
+
+            /*for (Seed s : seeds) {
                 double x = s.x, y = s.y;
                 int color = s.color;
 
@@ -253,7 +274,9 @@ public class Controller {
                     mapPanel.spanFill(us, vs, color);
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
-            }
+            }*/
+
+
 
         if(interpolationEnabled)
         {
@@ -302,7 +325,7 @@ public class Controller {
                         newColor |= (ccxx << k);
                     }
                     //System.out.println();
-                    mapPanel.paintPixel(u, v, newColor);
+                    mapPanel.paintPixelInterpolated(u, v, newColor);
                 }
             }
             System.out.println();
