@@ -210,30 +210,35 @@ public class Controller {
             double wk = (double)mapPanel.getWidth() / (n + 1); //размер ячейки
 
             System.out.println(legendMap.getWidth());
-            for(int u = 0; u < legendMap.getWidth() - wk; u++)
+            for(int u = 0; u < legendMap.getWidth(); u++)
             {
                 int j = (int)(u / wk);
                 int u0 = (int)(wk*j + wk/2);
                 int u1 = (int)(wk*(j+1) +wk/2);
 
-                int c0 = legendMap.getRGB(u0,1);
-                int c1 = legendMap.getRGB(u1,1);
+                if(u1 < legendMap.getWidth()) {
+                    int c0 = legendMap.getRGB(u0, 1);
+                    int c1 = legendMap.getRGB(u1, 1);
 
-                int newColor = 0;
-                for(int k = 0; k < 24; k+=8) {
-                    int cc0 = c0 >> k & 0x000000FF;
-                    int cc1 = c1 >> k & 0x000000FF;
+                    int newColor = 0;
+                    for (int k = 0; k < 24; k += 8) {
+                        int cc0 = c0 >> k & 0x000000FF;
+                        int cc1 = c1 >> k & 0x000000FF;
 
-
-                    int ccxx = cc0 * (u1 - u)/(u1 - u0) + cc1 * (u - u0)/(u1 - u0);
-                    if(ccxx < 0)
-                        ccxx = 0;
-                    if(ccxx > 255)
-                        ccxx = 255;
-                    newColor |= (ccxx << k);
+                        int ccxx = cc0 * (u1 - u) / (u1 - u0) + cc1 * (u - u0) / (u1 - u0);
+                        if (ccxx < 0)
+                            ccxx = 0;
+                        if (ccxx > 255)
+                            ccxx = 255;
+                        newColor |= (ccxx << k);
+                    }
+                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
                 }
-                legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
+                else
+                {
+                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendMap.getRGB(u0, 1));
 
+                }
             }
         }
 
