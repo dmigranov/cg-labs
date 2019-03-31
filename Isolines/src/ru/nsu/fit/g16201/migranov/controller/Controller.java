@@ -209,14 +209,19 @@ public class Controller {
         {
             double wk = (double)mapPanel.getWidth() / (n + 1); //размер ячейки
 
-            System.out.println(legendMap.getWidth());
-            for(int u = 0; u < legendMap.getWidth(); u++)
-            {
-                int j = (int)(u / wk);
-                int u0 = (int)(wk*j + wk/2);
-                int u1 = (int)(wk*(j+1) +wk/2);
 
-                if(u1 < legendMap.getWidth()) {
+            double[] colors = new double[n+1];
+            for(int i = 0; i <= n; i++)
+            {
+                colors[i] = wk*i + wk/2;
+            }
+            for(int u = 0; u < legendMap.getWidth()-wk/2; u++)
+            {
+                int j = (int)((u) / wk);
+                int u0 = (int)(wk*j - wk/2);
+                int u1 = (int)(wk*(j+1)-wk/2);
+
+                if(u0 > 0) {
                     int c0 = legendMap.getRGB(u0, 1);
                     int c1 = legendMap.getRGB(u1, 1);
 
@@ -234,11 +239,10 @@ public class Controller {
                     }
                     legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
                 }
-                else
+                /*else
                 {
                     legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendMap.getRGB(u0, 1));
-
-                }
+                }*/
             }
         }
 
