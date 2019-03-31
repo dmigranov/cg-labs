@@ -151,8 +151,7 @@ public class Controller {
             mapPanel.updateSize();
             legendPanel.updateSize();
 
-            //legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
-            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, mapPanel.getHeight());
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);
 
 
             mapPanel.clear();
@@ -265,7 +264,6 @@ public class Controller {
                 for (int u = 0; u < mapPanel.getWidth(); u++) {
                     int j =  (int)(u / wk);
                     int i =  (int)(v / vm);
-                    System.out.println(i + " " + j);
 
                     int u0 = (int)wk*j, v0 = (int)vm*i;
                     if(i == 0)
@@ -275,6 +273,9 @@ public class Controller {
                     int u1 = (int)wk*(j+1), v1 = (int)vm*(i+1);
                     u1 = u1 < mapPanel.getWidth() ? u1 : mapPanel.getWidth() - 1;
                     v1 = v1 < mapPanel.getHeight() ? v1 : mapPanel.getHeight() - 1;
+
+                    System.out.println(u0 + " " + u + " " + u1 + "; " + v0 + " " + v + " " + v1);
+
 
                     int c00 = mapPanel.getRGB(u0, v0);
                     int c10 = mapPanel.getRGB(u1, v0);
@@ -334,7 +335,6 @@ public class Controller {
 
         double epsilonx = (b-a)/(mapPanel.getWidth());
         double epsilony = (d-c)/(mapPanel.getHeight());
-        //double epsilon2 = Controller.epsilon;
 
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
@@ -417,7 +417,7 @@ public class Controller {
 
 
                     if(seeds != null) {
-                        //seeds.addAll(tempSeeds);
+                        seeds.addAll(tempSeeds);
 
                         if (f1 > z && z > f2 || f1 < z && z < f2) {
                            if (f2 < f1) {
