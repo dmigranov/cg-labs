@@ -381,11 +381,12 @@ public class Controller {
 
                 for(int l = 1; l <= n; l++)     //так?
                 {
-                    List<Point2D> points = new ArrayList<>();
-
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
 
-                    //todo?
+                    calculateMapForLevel(model, lines, seeds, z);
+
+                    List<Point2D> points = new ArrayList<>();
+
                     if(f1 == z)
                         f1 += epsilon;
                     if(f2 == z)
@@ -474,6 +475,10 @@ public class Controller {
                 }
             }
         }
+    }
+
+    private void calculateMapForLevel(Model model, List<Point2D> lines, List<Seed> seeds, double z) {
+
     }
 
 
