@@ -205,44 +205,56 @@ public class Controller {
             legendMap.spanFill(1 + x, 1, legendColors.get(j).getRGB());
         }
 
-        if(interpolationEnabled)
-        {
-            double wk = (double)mapPanel.getWidth() / (n + 1); //размер ячейки
+        if(interpolationEnabled) {
+            double wk = (double) mapPanel.getWidth() / (n + 1); //размер ячейки
 
 
-            double[] colors = new double[n+1];
-            for(int i = 0; i <= n; i++)
-            {
-                colors[i] = wk*i + wk/2;
+            double[] colors = new double[n + 1];
+            for (int i = 0; i <= n; i++) {
+                colors[i] = wk * i + wk / 2;
             }
-            for(int u = 0; u < legendMap.getWidth()-wk/2; u++)
-            {
-                int j = (int)((u) / wk);
-                int u0 = (int)(wk*j - wk/2);
-                int u1 = (int)(wk*(j+1)-wk/2);
-
-                if(u0 > 0) {
-                    int c0 = legendMap.getRGB(u0, 1);
-                    int c1 = legendMap.getRGB(u1, 1);
-
-                    int newColor = 0;
-                    for (int k = 0; k < 24; k += 8) {
-                        int cc0 = c0 >> k & 0x000000FF;
-                        int cc1 = c1 >> k & 0x000000FF;
-
-                        int ccxx = cc0 * (u1 - u) / (u1 - u0) + cc1 * (u - u0) / (u1 - u0);
-                        if (ccxx < 0)
-                            ccxx = 0;
-                        if (ccxx > 255)
-                            ccxx = 255;
-                        newColor |= (ccxx << k);
-                    }
-                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
+            for (int u = 0; u < legendMap.getWidth() - wk / 2; u++) {
+                if (u < colors[0]) {
+                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendColors.get(0).getRGB());
+                    continue;
                 }
-                /*else
+                if (u > colors[n]) {
+                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendColors.get(n).getRGB());
+                    continue;
+                }
+                int i;
+                for (i = 0; i < n; i++) {
+                    if (u >= colors[i] && u < colors[i + 1])
+                        break;
+                }
+                double u0 = colors[i];
+                double u1 =0;
+                try {
+                     u1 = colors[i + 1];
+                }
+                catch (IndexOutOfBoundsException e)
                 {
-                    legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendMap.getRGB(u0, 1));
-                }*/
+                    System.out.println("ds");
+                }
+                int c0 = legendColors.get(i).getRGB();
+                int c1 = legendColors.get(i + 1).getRGB();
+
+                int newColor = 0;
+                for (int k = 0; k < 24; k += 8) {
+                    int cc0 = c0 >> k & 0x000000FF;
+                    int cc1 = c1 >> k & 0x000000FF;
+
+                    int ccxx = (int) (cc0 * (u1 - u) / (u1 - u0) + cc1 * (u - u0) / (u1 - u0));
+                    if (ccxx < 0)
+                        ccxx = 0;
+                    if (ccxx > 255)
+                        ccxx = 255;
+                    newColor |= (ccxx << k);
+                }
+                legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
+
+
+
             }
         }
 
