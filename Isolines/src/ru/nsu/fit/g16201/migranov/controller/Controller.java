@@ -197,15 +197,18 @@ public class Controller {
     }
 
     private void drawLegend() {
+        //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
         MapPanel legendMap = legendPanel.getLegendMap();
-        for(int j = 0; j <= n; j++)
-        {
-            int x = (int)Math.round(legendMap.getWidth() * legendModel.getValue(j, 0));
-            legendMap.drawLine(x, 0, x, legendMap.getHeight());
-            legendMap.spanFill(1 + x, 1, legendColors.get(j).getRGB());
-        }
 
-        if(interpolationEnabled) {
+        if(!interpolationEnabled)
+        {
+            for (int j = 0; j <= n; j++) {
+                int x = (int) Math.round(legendMap.getWidth() * legendModel.getValue(j, 0));
+                legendMap.drawLine(x, 0, x, legendMap.getHeight());
+                legendMap.spanFill(1 + x, 1, legendColors.get(j).getRGB());
+            }
+        }
+        else {
             double wk = (double) mapPanel.getWidth() / (n + 1); //размер ячейки
 
 
@@ -229,15 +232,12 @@ public class Controller {
                 }
                 double u0 = colors[i];
                 double u1 = colors[i + 1];
-
                 int c0 = legendColors.get(i).getRGB();
                 int c1 = legendColors.get(i + 1).getRGB();
-
                 int newColor = 0;
                 for (int k = 0; k < 24; k += 8) {
                     int cc0 = c0 >> k & 0x000000FF;
                     int cc1 = c1 >> k & 0x000000FF;
-
                     int ccxx = (int) (cc0 * (u1 - u) / (u1 - u0) + cc1 * (u - u0) / (u1 - u0));
                     if (ccxx < 0)
                         ccxx = 0;
@@ -246,13 +246,8 @@ public class Controller {
                     newColor |= (ccxx << k);
                 }
                 legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
-
-
-
             }
         }
-
-            //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
 
         if(isGridEnabled) {
             drawGrid(legendPanel.getLegendMap(), legendModel);
@@ -520,10 +515,21 @@ public class Controller {
                         }*/
 
                     }
-                } else if (points.size() == 4) {
+                }
+                else if (points.size() == 4)
+                {
                     double f = (f1 + f2 + f3 + f4) / 4;
 
-                    //todo:
+                    //todo: создать список точек добавить туда пересечение
+                    if (f > z && z > f4 || f4 > z && z > f) {
+                        //Линия проъодит через f3f4 и f4f2. а другая - соотв через f3f1 и f1f2
+                    }
+
+                    else if (f > z && z > f3 || f3 > z && z > f)
+                    {
+                        //линия через f1f3 f3f4. другая
+                    }
+
                 }
 
 
