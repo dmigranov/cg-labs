@@ -128,6 +128,9 @@ public class MapPanel extends JPanel {
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         colorGraphics = colorCanvas.createGraphics();
 
+        interpolatedCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        interpolatedGraphics = interpolatedCanvas.createGraphics();
+
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
         gridGraphics.setColor(Color.BLACK);
@@ -168,7 +171,14 @@ public class MapPanel extends JPanel {
     }
 
     public int getRGB(int x, int y) {
-        return colorCanvas.getRGB(x, y);
+        //try {
+            return colorCanvas.getRGB(x, y);
+        /*}
+        catch (ArrayIndexOutOfBoundsException e)
+        {
+
+        }
+        return -1;-*/
     }
 
     class Span
@@ -241,8 +251,10 @@ public class MapPanel extends JPanel {
         return new Span(lx, rx, y);
     }
 
-    private void paintPixel(int x, int y, Color color)
+    public void paintPixel(int x, int y, int color)
     {
-        interpolatedCanvas.setRGB(x, y, color.getRGB());
+        //interpolatedCanvas.setRGB(x, y, color);   //пчему не работает???
+        interpolatedGraphics.setColor(new Color(color));
+        interpolatedGraphics.drawLine(x,y,x,y);
     }
 }

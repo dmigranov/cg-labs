@@ -221,23 +221,24 @@ public class Controller {
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
-        if(!interpolationEnabled) {
-            for (int i = 0; i < lines.size(); i += 2) {
-                Point2D p1 = lines.get(i);
-                Point2D p2 = lines.get(i + 1);
 
-                double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2 = p2.getY();
-                int u1 = (int) (width * (x1 - a) / (b - a) + 0.5);
-                int u2 = (int) (width * (x2 - a) / (b - a) + 0.5);
-                int v1 = (int) (height * (y1 - c) / (d - c) + 0.5);
-                int v2 = (int) (height * (y2 - c) / (d - c) + 0.5);
+        for (int i = 0; i < lines.size(); i += 2) {
+            Point2D p1 = lines.get(i);
+            Point2D p2 = lines.get(i + 1);
 
-                mapPanel.drawLine(u1, v1, u2, v2);
-                if (areGridPointsEnabled) {
-                    mapPanel.drawGridPoint(u1, v1);
-                    mapPanel.drawGridPoint(u2, v2);
-                }
+            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2 = p2.getY();
+            int u1 = (int) (width * (x1 - a) / (b - a) + 0.5);
+            int u2 = (int) (width * (x2 - a) / (b - a) + 0.5);
+            int v1 = (int) (height * (y1 - c) / (d - c) + 0.5);
+            int v2 = (int) (height * (y2 - c) / (d - c) + 0.5);
+
+            mapPanel.drawLine(u1, v1, u2, v2);
+            if (areGridPointsEnabled) {
+                mapPanel.drawGridPoint(u1, v1);
+                mapPanel.drawGridPoint(u2, v2);
             }
+        }
+
 
             for (Seed s : seeds) {
                 double x = s.x, y = s.y;
@@ -254,28 +255,56 @@ public class Controller {
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
             }
-        }
-        else
+
+        if(interpolationEnabled)
         {
+            //todo исправить
             double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки
             double vm = (double)mapPanel.getHeight() / (model.getM() - 1);
             for(int v = 0; v < mapPanel.getHeight(); v++) {
                 for (int u = 0; u < mapPanel.getWidth(); u++) {
-                    int j = /*mapPanel.getWidth() / model.getK() */ (int)(u / wk);
-                    int i = /*mapPanel.getHeight() / model.getM() */ (int)(v / vm);
+                    int j =  (int)(u / wk);
+                    int i =  (int)(v / vm);
+                    System.out.println(i + " " + j);
 
-                    int c00 = mapPanel.getRGB((int)wk*j, (int)vm*i);
-                    int c01 = mapPanel.getRGB((int)wk*(j+1), (int)vm*i);
-                    int c10 = mapPanel.getRGB((int)wk*(j), (int)vm*(i+1));
-                    int c11 = mapPanel.getRGB((int)wk*(j+1), (int)vm*(i+1));
+                    int u0 = (int)wk*j, v0 = (int)vm*i;
+                    if(i == 0)
+                        v0++;
+                    if(j==0)
+                        u0++;
+                    int u1 = (int)wk*(j+1), v1 = (int)vm*(i+1);
+                    u1 = u1 < mapPanel.getWidth() ? u1 : mapPanel.getWidth() - 1;
+                    v1 = v1 < mapPanel.getHeight() ? v1 : mapPanel.getHeight() - 1;
 
+                    int c00 = mapPanel.getRGB(u0, v0);
+                    int c10 = mapPanel.getRGB(u1, v0);
+                    int c01 = mapPanel.getRGB(u0, v1);
+                    int c11 = mapPanel.getRGB(u1, v1);
 
-                    System.out.println((int)wk*j + " " + (int)vm*i);
-                    System.out.println((int)wk*(j+1) + " " + (int)vm*(i+1));
+                    int newColor = 0;
 
+                    for(int k = 0; k < 24; k+=8) {
+                        int cc00 = c00 >> k & 0x000000FF;
+                        int cc10 = c10 >> k & 0x000000FF;
+                        int cc01 = c01 >> k & 0x000000FF;
+                        int cc11 = c11 >> k & 0x000000FF;
+
+                        int ccx0 = cc00 * (u1 - u)/(u1 - u0) + cc10 * (u-u0)/(u1-u0);       //по верхнему ребру
+                        int ccx1 = cc01 * (u1 - u)/(u1 - u0) + cc11 * (u-u0)/(u1-u0);       //по нижнему ребру
+
+                        int ccxx = ccx0 * (v1 - v)/(v1 - v0) + ccx1 * (v - v0)/(v1 - v0);
+                        if(ccxx < 0)
+                            ccxx = 0;
+                        if(ccxx > 255)
+                            ccxx = 255;
+                        //System.out.print(ccxx + " ");
+                        newColor |= (ccxx << k);
+                    }
+                    //System.out.println();
+                    mapPanel.paintPixel(u, v, newColor);
                 }
             }
-            System.out.println(width + " " + height);
+            System.out.println();
         }
     }
 
@@ -542,6 +571,17 @@ public class Controller {
         this.interpolationEnabled = interpolationEnabled;
         mapPanel.setInterpolationEnabled(interpolationEnabled);
         legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
-        recalculateAndDrawMap(mapPanel, mapModel, null, null);
+        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        //todo: легенда
+        //todo: линии оставить-то!
+
+        mapPanel.repaint();
+    }
+
+
+
+    private int[] getRGB(int color)
+    {
+        return new int[] { (color & 0xFF0000) >> 16, (color & 0x00FF00) >> 8, color & 0x0000FF };
     }
 }
