@@ -30,6 +30,7 @@ public class Controller {
     private List<Point2D> mapLines, legendLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
     private List<Seed> mapSeeds, legendSeeds;
+    private boolean interpolationEnabled;
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel, JLabel statusLabel) {
         this.mapPanel = mapPanel;
@@ -220,45 +221,61 @@ public class Controller {
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
-        for(int i = 0; i < lines.size(); i+=2)
-        {
-            Point2D p1 = lines.get(i);
-            Point2D p2 = lines.get(i+1);
+        if(!interpolationEnabled) {
+            for (int i = 0; i < lines.size(); i += 2) {
+                Point2D p1 = lines.get(i);
+                Point2D p2 = lines.get(i + 1);
 
-            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-            int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
-            int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
-            int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
-            int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+                double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2 = p2.getY();
+                int u1 = (int) (width * (x1 - a) / (b - a) + 0.5);
+                int u2 = (int) (width * (x2 - a) / (b - a) + 0.5);
+                int v1 = (int) (height * (y1 - c) / (d - c) + 0.5);
+                int v2 = (int) (height * (y2 - c) / (d - c) + 0.5);
 
-            mapPanel.drawLine(u1, v1, u2, v2);
-            if(areGridPointsEnabled)
-            {
-                mapPanel.drawGridPoint(u1, v1);
-                mapPanel.drawGridPoint(u2, v2);
-
+                mapPanel.drawLine(u1, v1, u2, v2);
+                if (areGridPointsEnabled) {
+                    mapPanel.drawGridPoint(u1, v1);
+                    mapPanel.drawGridPoint(u2, v2);
+                }
             }
 
+            for (Seed s : seeds) {
+                double x = s.x, y = s.y;
+                int color = s.color;
+
+                int us = (int) (width * (x - a) / (b - a) + 0.5);
+                int vs = (int) (height * (y - c) / (d - c) + 0.5);
+
+                vs = vs < height ? vs : height - 1;
+                us = us < width ? us : width - 1;
+
+                try {
+                    mapPanel.spanFill(us, vs, color);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                }
+            }
         }
-
-        for(Seed s : seeds)
+        else
         {
-            double x = s.x, y = s.y;
-            int color = s.color;
+            double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки
+            double vm = (double)mapPanel.getHeight() / (model.getM() - 1);
+            for(int v = 0; v < mapPanel.getHeight(); v++) {
+                for (int u = 0; u < mapPanel.getWidth(); u++) {
+                    int j = /*mapPanel.getWidth() / model.getK() */ (int)(u / wk);
+                    int i = /*mapPanel.getHeight() / model.getM() */ (int)(v / vm);
 
-            int us = (int)(width * (x - a)/(b - a) + 0.5);
-            int vs = (int)(height * (y - c)/(d - c) + 0.5);
+                    int c00 = mapPanel.getRGB((int)wk*j, (int)vm*i);
+                    int c01 = mapPanel.getRGB((int)wk*(j+1), (int)vm*i);
+                    int c10 = mapPanel.getRGB((int)wk*(j), (int)vm*(i+1));
+                    int c11 = mapPanel.getRGB((int)wk*(j+1), (int)vm*(i+1));
 
-            vs = vs < height ? vs : height - 1;
-            us = us < width ? us : width - 1;
 
-            try {
-                mapPanel.spanFill(us, vs, color);
+                    System.out.println((int)wk*j + " " + (int)vm*i);
+                    System.out.println((int)wk*(j+1) + " " + (int)vm*(i+1));
+
+                }
             }
-            catch(ArrayIndexOutOfBoundsException e)
-            {}
-
-
+            System.out.println(width + " " + height);
         }
     }
 
@@ -286,7 +303,8 @@ public class Controller {
         }
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
 
-        double epsilon = (b-a)/(mapPanel.getWidth());
+        double epsilonx = (b-a)/(mapPanel.getWidth());
+        double epsilony = (d-c)/(mapPanel.getHeight());
         //double epsilon2 = Controller.epsilon;
 
         for (int i = 0; i < model.getM() - 1; i++) {
@@ -314,53 +332,52 @@ public class Controller {
                 if (f4 == z)
                     f4 += epsilon;
 
-
                 if (f1 < z && z < f2) {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1) / (f2 - f1), f1p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX() - epsilon, p.getY()));
-                    tempSeeds.add(new Seed(biggerColor, p.getX() + epsilon, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() - epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() + epsilonx, p.getY()));
                 } else if (f1 > z && z > f2) {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2) / (f1 - f2)), f1p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(biggerColor, p.getX() - epsilon, p.getY()));
-                    tempSeeds.add(new Seed(lesserColor, p.getX() + epsilon, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() - epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() + epsilonx, p.getY()));
                 }
 
                 if (f3 < z && z < f4) {
                     Point2D p = new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3) / (f4 - f3), f3p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX() - epsilon, p.getY()));
-                    tempSeeds.add(new Seed(biggerColor, p.getX() + epsilon, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() - epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() + epsilonx, p.getY()));
                 } else if (f3 > z && z > f4) {
                     Point2D p = new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4) / (f3 - f4)), f3p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(biggerColor, p.getX() - epsilon, p.getY()));
-                    tempSeeds.add(new Seed(lesserColor, p.getX() + epsilon, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() - epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() + epsilonx, p.getY()));
                 }
 
                 if (f1 > z && z > f3) {
                     Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3) / (f1 - f3));
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - epsilon));   //???
-                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + epsilon));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - epsilony));   //???
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + epsilony));
                 } else if (f1 < z && z < f3) {
                     Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1) / (f3 - f1)));
                     points.add(p);
-                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - epsilon));
-                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + epsilon));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - epsilony));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + epsilony));
                 }
 
                 if (f2 > z && z > f4) {
                     Point2D p = new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4) / (f2 - f4));
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - epsilon));
-                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + epsilon));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - epsilony));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + epsilony));
                 } else if (f2 < z && z < f4) {
                     Point2D p = new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2) / (f4 - f2)));
                     points.add(p);
-                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - epsilon));
-                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + epsilon));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - epsilony));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + epsilony));
                 }
 
                 if (points.size() == 2) {
@@ -391,7 +408,7 @@ public class Controller {
                                 seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
                             }
                         }
-                        if (f1 > z && z > f3 || f1 < z && z < f3) {
+                        /*if (f1 > z && z > f3 || f1 < z && z < f3) {
                             if (f1 > f3) {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
@@ -399,7 +416,7 @@ public class Controller {
                                 seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
                             }
-                        }
+                        }*/
 
                     }
                 } else if (points.size() == 4) {
@@ -515,5 +532,16 @@ public class Controller {
             mapPanel.clearGridPoints();
         mapPanel.repaint();
         //todo: Точки входа в треугольники (возможно, занести в отдельынй массив и рисовать их там же (в отдельном цикле)
+    }
+
+    public boolean isInterpolationEnabled() {
+        return interpolationEnabled;
+    }
+
+    public void setInterpolationEnabled(boolean interpolationEnabled) {
+        this.interpolationEnabled = interpolationEnabled;
+        mapPanel.setInterpolationEnabled(interpolationEnabled);
+        legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
+        recalculateAndDrawMap(mapPanel, mapModel, null, null);
     }
 }

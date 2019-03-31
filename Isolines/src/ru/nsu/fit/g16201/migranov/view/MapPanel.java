@@ -22,12 +22,16 @@ public class MapPanel extends JPanel {
     private BufferedImage colorCanvas;
     private Graphics2D colorGraphics;
 
+    private BufferedImage interpolatedCanvas;
+    private Graphics2D interpolatedGraphics;
+
     //todo: когда буду реализовывать дин. рисование изолиний, делать это на отдельном канвасе (СКОРОСТЬ!)
 
     private int width, height;
     private Color isolineColor;
     private int isolineRGB;
     private boolean areGridPointsEnabled = false;
+    private boolean interpolationEnabled = false;
 
     static private final Color gridColor = Color.BLACK;
 
@@ -47,6 +51,9 @@ public class MapPanel extends JPanel {
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         colorGraphics = colorCanvas.createGraphics();
 
+        interpolatedCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        interpolatedGraphics = interpolatedCanvas.createGraphics();
+
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
         gridGraphics.setColor(gridColor);
@@ -63,7 +70,10 @@ public class MapPanel extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.drawImage(colorCanvas, 0, 0, width, height, null);
+        if(!interpolationEnabled)
+            g.drawImage(colorCanvas, 0, 0, width, height, null);
+        else
+            g.drawImage(interpolatedCanvas, 0, 0, width, height, null);
         g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(userLineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
@@ -153,6 +163,13 @@ public class MapPanel extends JPanel {
     public void clearUserLine() {
     }
 
+    public void setInterpolationEnabled(boolean interpolationEnabled) {
+        this.interpolationEnabled = interpolationEnabled;
+    }
+
+    public int getRGB(int x, int y) {
+        return colorCanvas.getRGB(x, y);
+    }
 
     class Span
     {
@@ -222,5 +239,10 @@ public class MapPanel extends JPanel {
         lx++;
         rx--; //возвращаемся на один, т.к. зашли на границу
         return new Span(lx, rx, y);
+    }
+
+    private void paintPixel(int x, int y, Color color)
+    {
+        interpolatedCanvas.setRGB(x, y, color.getRGB());
     }
 }

@@ -198,7 +198,7 @@ public class IsolinesFrame extends MainFrame {
 
     public  void onInterpolationEnabled()
     {
-        //todo
+        controller.setInterpolationEnabled(!controller.isInterpolationEnabled());
     }
 
     public  void onParameters()
@@ -246,7 +246,7 @@ public class IsolinesFrame extends MainFrame {
                 c = Double.parseDouble(regionSizesFields.get(2).getText());
                 d = Double.parseDouble(regionSizesFields.get(3).getText());
 
-                if(a >= b || c >= d || k <= 1 || m <= 1)
+                if(a >= b || c >= d || k <= 2 || m <= 2)
                     throw new NumberFormatException();
 
                 controller.setModelConstants(k, m, a, b, c, d);
