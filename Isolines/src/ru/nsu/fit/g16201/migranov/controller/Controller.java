@@ -328,6 +328,12 @@ public class Controller {
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
 
             mapPanel.drawLine(u1, v1, u2, v2);
+            if(areGridPointsEnabled)
+            {
+                mapPanel.drawGridPoint(u1, v1);
+                mapPanel.drawGridPoint(u2, v2);
+
+            }
 
         }
 
@@ -467,26 +473,20 @@ public class Controller {
 
     public void setGridEnabled(boolean gridEnabled) {
         isGridEnabled = gridEnabled;
-
-        drawGrid(mapPanel, mapModel);
-        drawGrid(legendPanel.getLegendMap(), legendModel);
-
-        /*else {
+        if(isGridEnabled) {
+            drawGrid(mapPanel, mapModel);
+            drawGrid(legendPanel.getLegendMap(), legendModel);
+        }
+        else {
             mapPanel.clearGrid();
             legendPanel.getLegendMap().clearGrid();
-        }*/
+        }
         mapPanel.repaint();
         legendPanel.getLegendMap().repaint();
 
     }
 
     private void drawGrid(MapPanel mapPanel, Model model) {
-        if(!isGridEnabled && !areGridPointsEnabled)
-        {
-            mapPanel.clearGrid();
-            return;
-        }
-
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
 
@@ -504,13 +504,7 @@ public class Controller {
                 int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
                 int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
 
-                if(isGridEnabled)
-                    mapPanel.drawGridRect(u1, v1, u2, v2);
-                if(areGridPointsEnabled)
-                {
-                    mapPanel.drawGridPoint(u1, v1);
-                    mapPanel.drawGridPoint(u2, v2);
-                }
+                mapPanel.drawGridRect(u1, v1, u2, v2);
 
 
             }
@@ -566,10 +560,10 @@ public class Controller {
 
     public void setGridPointsEnabled(boolean gridPointsEnabled) {
         areGridPointsEnabled = gridPointsEnabled;
-        drawGrid(mapPanel, mapModel);
-        drawGrid(legendPanel.getLegendMap(), legendModel);
-
+        if(areGridPointsEnabled)
+            recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        else
+            mapPanel.clearGridPoints();
         mapPanel.repaint();
-        legendPanel.getLegendMap().repaint();
     }
 }

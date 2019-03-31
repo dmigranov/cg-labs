@@ -13,6 +13,9 @@ public class MapPanel extends JPanel {
     private BufferedImage gridCanvas;
     private Graphics2D gridGraphics;
 
+    private BufferedImage gridPointsCanvas;
+    private Graphics2D gridPointsGraphics;
+
     private BufferedImage colorCanvas;
     private Graphics2D colorGraphics;
 
@@ -22,8 +25,7 @@ public class MapPanel extends JPanel {
     private Color isolineColor;
     private int isolineRGB;
 
-    private static final Color gridColor = Color.BLACK;
-
+    static private final Color gridColor = Color.BLACK;
 
     MapPanel(int width, int height)
     {
@@ -40,8 +42,13 @@ public class MapPanel extends JPanel {
 
         gridCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         gridGraphics = gridCanvas.createGraphics();
-        gridGraphics.setColor(Color.BLACK);
+        gridGraphics.setColor(gridColor);
         gridGraphics.setBackground(new Color(0,0,0,0));
+
+        gridPointsCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        gridPointsGraphics = gridPointsCanvas.createGraphics();
+        gridPointsGraphics.setColor(gridColor);
+        gridPointsGraphics.setBackground(new Color(0,0,0,0));
 
     }
 
@@ -52,6 +59,8 @@ public class MapPanel extends JPanel {
         g.drawImage(colorCanvas, 0, 0, width, height, null);
         g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
+        g.drawImage(gridPointsCanvas, 0, 0, width, height, null);
+
     }
 
     public void drawLine(int x1, int y1, int x2, int y2)
@@ -99,6 +108,11 @@ public class MapPanel extends JPanel {
         gridGraphics = gridCanvas.createGraphics();
         gridGraphics.setColor(Color.BLACK);
         gridGraphics.setBackground(new Color(0,0,0,0));
+
+        gridPointsCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        gridPointsGraphics = gridPointsCanvas.createGraphics();
+        gridPointsGraphics.setColor(gridColor);
+        gridPointsGraphics.setBackground(new Color(0,0,0,0));
     }
 
     public void drawGridRect(int u1, int v1, int u2, int v2) {
@@ -106,7 +120,12 @@ public class MapPanel extends JPanel {
     }
 
     public void drawGridPoint(int u, int v) {
-        gridGraphics.fillOval(u - 1, v - 1, 2, 2);
+        gridPointsGraphics.fillOval(u-4, v-4, 8, 8);
+    }
+
+    public void clearGridPoints() {
+        gridPointsGraphics.clearRect(0, 0, gridPointsCanvas.getWidth(), gridPointsCanvas.getHeight());
+
     }
 
 
