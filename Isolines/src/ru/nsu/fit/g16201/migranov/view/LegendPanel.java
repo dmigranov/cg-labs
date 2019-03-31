@@ -28,7 +28,6 @@ public class LegendPanel extends JPanel {
         middlePanel.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
         add(middlePanel, BorderLayout.NORTH);
         revalidate();
-
     }
 
     @Override
