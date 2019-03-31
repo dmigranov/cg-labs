@@ -24,6 +24,7 @@ public class MapPanel extends JPanel {
     private int width, height;
     private Color isolineColor;
     private int isolineRGB;
+    private boolean areGridPointsEnabled = false;
 
     static private final Color gridColor = Color.BLACK;
 
@@ -59,7 +60,8 @@ public class MapPanel extends JPanel {
         g.drawImage(colorCanvas, 0, 0, width, height, null);
         g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
-        g.drawImage(gridPointsCanvas, 0, 0, width, height, null);
+        if(areGridPointsEnabled)
+            g.drawImage(gridPointsCanvas, 0, 0, width, height, null);
 
     }
 
@@ -126,6 +128,10 @@ public class MapPanel extends JPanel {
     public void clearGridPoints() {
         gridPointsGraphics.clearRect(0, 0, gridPointsCanvas.getWidth(), gridPointsCanvas.getHeight());
 
+    }
+
+    public void setGridPointsEnabled(boolean gridPointsEnabled) {
+        areGridPointsEnabled = gridPointsEnabled;
     }
 
 

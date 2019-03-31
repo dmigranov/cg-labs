@@ -560,6 +560,7 @@ public class Controller {
 
     public void setGridPointsEnabled(boolean gridPointsEnabled) {
         areGridPointsEnabled = gridPointsEnabled;
+        mapPanel.setGridPointsEnabled(gridPointsEnabled);
         if(areGridPointsEnabled)
             recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         else
