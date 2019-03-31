@@ -17,7 +17,7 @@ public class Controller {
     private final MapPanel mapPanel;
     private final LegendPanel legendPanel;
     private BufferedReader br;
-    private List<Color> legendColors = new ArrayList<>();
+    private List<Color> legendColors;
     private Color isolineColor;
     private Model mapModel, legendModel;
     private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
@@ -69,6 +69,7 @@ public class Controller {
             int n = Integer.parseInt(substrings[0]);    //число уровней
             this.n = n;
             n++;    //т.к. от 0 до n
+            legendColors = new ArrayList<>();
             while (n > 0)
             {
                 substrings = readLineAndSplit();
