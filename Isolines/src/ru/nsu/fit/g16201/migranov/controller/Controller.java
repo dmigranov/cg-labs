@@ -29,7 +29,7 @@ public class Controller {
     private boolean areGridPointsEnabled = false;
 
 
-    private List<Point2D> mapLines, legendLines;        //l1p1 l1p2 l2p1 l2p2
+    private List<Point2D> mapLines, legendLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
     private List<Seed> mapSeeds, legendSeeds;
 
@@ -81,14 +81,15 @@ public class Controller {
                 double my = ((mapModel.getD() - mapModel.getC()) * y / mapPanel.getHeight() + mapModel.getC());
                 double z = mapModel.applyFunction(mx, my);
 
-                drawDynamicIsoline(z);
+                //calculateDynamicIsoline(z);
+                calculateMapForLevel(mapModel, userLines, null, z, 0);
 
                 mapPanel.repaint();
             }
         });
     }
 
-    public void drawDynamicIsoline(double z)
+    public void calculateDynamicIsoline(double z)
     {
         for (int i = 0; i < mapModel.getM() - 1; i++) {
             for (int j = 0; j < mapModel.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
@@ -143,12 +144,15 @@ public class Controller {
                     Point2D p1 = points.get(0);
                     Point2D p2 = points.get(1);
                     double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-                    int u1 = (int)(mapPanel.getWidth() * (x1 - mapModel.getA())/(mapModel.getB() - mapModel.getA()) + 0.5);
+                    /*int u1 = (int)(mapPanel.getWidth() * (x1 - mapModel.getA())/(mapModel.getB() - mapModel.getA()) + 0.5);
                     int u2 = (int)(mapPanel.getWidth() * (x2 - mapModel.getA())/(mapModel.getB() - mapModel.getA()) + 0.5);
                     int v1 = (int)(mapPanel.getHeight() * (y1 - mapModel.getC())/(mapModel.getD() - mapModel.getC()) + 0.5);
                     int v2 = (int)(mapPanel.getHeight() * (y2 - mapModel.getC())/(mapModel.getD() - mapModel.getC()) + 0.5);
 
-                    mapPanel.drawUserLine(u1, v1, u2, v2);
+                    mapPanel.drawUserLine(u1, v1, u2, v2);*/
+
+                    userLines.add(p1);
+                    userLines.add(p2);
 
                 } else if (points.size() == 4) {
                     double f = (f1 + f2 + f3 + f4) / 4;
@@ -209,6 +213,7 @@ public class Controller {
             mapSeeds = new ArrayList<>();
             legendLines = new ArrayList<>();
             legendSeeds = new ArrayList<>();
+            userLines = new ArrayList<>();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
             calculateMap(legendModel, legendLines, legendSeeds);
@@ -260,137 +265,6 @@ public class Controller {
 
     }
 
-    private void drawMap(MapPanel mapPanel, Model model)
-    {
-        //todo: сделать для случая с интерполяцией!
-
-        for(int i = 0; i < model.getM() - 1; i++)
-        {
-            for (int j = 0; j < model.getK() - 1; j++) {     //y - i, x - j (а в лекциях соответствие обратное)
-                double f1 = model.getValue(j, i + 1);
-                double f2 = model.getValue(j + 1, i + 1);
-                double f3 = model.getValue(j, i);
-                double f4 = model.getValue(j + 1, i);
-                Point2D f1p = model.getPoint(j, i + 1);
-                Point2D f2p = model.getPoint(j + 1, i + 1);
-                Point2D f3p = model.getPoint(j, i);
-                Point2D f4p = model.getPoint(j + 1, i);
-
-                for(int l = 1; l <= n; l++)     //так?
-                {
-                    List<Point2D> points = new ArrayList<>();
-
-                    double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue())/(n + 1);
-
-                    //todo?
-                    if(f1 == z)
-                        f1 += epsilon;
-                    if(f2 == z)
-                        f2 += epsilon;
-                    if(f3 == z)
-                        f3 += epsilon;
-                    if(f4 == z)
-                        f4 += epsilon;
-
-                    if(f1 < z && z < f2)
-                    {
-                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1)/(f2 -f1), f1p.getY()));
-                    }
-                    else if(f1 > z && z > f2)
-                    {
-                        points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2)/(f1 -f2)), f1p.getY()));
-                    }
-                    /*else if(f1 == z && f2 == z)
-                    {
-                        points.add(new Point2D.Double(f1p.getX(), f1p.getY()));
-                        points.add(new Point2D.Double(f2p.getX(), f2p.getY()));
-                    }*/ //прибавляю epsilon
-
-                    if(f3 < z && z < f4)
-                    {
-                        points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3)/(f4 -f3), f3p.getY()));
-                    }
-                    else if(f3 > z && z > f4)
-                    {
-                        points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4)/(f3 -f4)), f3p.getY()));
-                    }
-
-                    if(f1 > z && z > f3)
-                    {
-                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3)/(f1 -f3)));
-                    }
-                    else if(f1 < z && z < f3)
-                    {
-                        points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1)/(f3 -f1))));
-                    }
-
-                    if(f2 > z && z > f4)
-                    {
-                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4)/(f2 -f4)));
-                    }
-                    else if(f2 < z && z < f4)
-                    {
-                        points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2)/(f4 -f2))));
-                    }
-
-
-                    if(points.size() == 2)
-                    {
-                        Point2D p1 = points.get(0);
-                        Point2D p2 = points.get(1);
-                        double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-                        int u1 = (int)(mapPanel.getWidth() * (x1 - model.getA())/(model.getB() - model.getA()) + 0.5);
-                        int u2 = (int)(mapPanel.getWidth() * (x2 - model.getA())/(model.getB() - model.getA()) + 0.5);
-                        int v1 = (int)(mapPanel.getHeight() * (y1 - model.getC())/(model.getD() - model.getC()) + 0.5);
-                        int v2 = (int)(mapPanel.getHeight() * (y2 - model.getC())/(model.getD() - model.getC()) + 0.5);
-                        mapPanel.drawLine(u1, v1, u2, v2);
-
-                        Color lesserColor = legendColors.get(l - 1);
-                        Color biggerColor = legendColors.get(l);
-                        int us1=0, us2=0, vs1=0, vs2=0;
-                        if(f1 > f2 || f1 < f2)
-                        {
-                            //todo
-                            us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
-                            us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
-                            vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
-                            vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
-
-                            vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
-                            vs2 = vs2 <mapPanel.getHeight()?vs2:mapPanel.getHeight()-1;
-                            us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
-                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
-
-                            //todo: понимаю, в чём корень проблемы с легендой. во-первых, там сетка не совпадает с изолиниями полностью (из-за прибаления?(
-                            // но проблема в том, что иногда совпадает! и если не совпадает, то там личния в два пикселя и закрашивания не проиходит
-                            //try {
-                                if (f1 > f2) {
-                                    mapPanel.spanFill(us1, vs1, biggerColor.getRGB() );
-                                    mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
-                                } else if (f2 > f1) {
-                                    mapPanel.spanFill(us1, vs1,lesserColor.getRGB());
-                                    mapPanel.spanFill(us2, vs2,biggerColor.getRGB());
-                                }
-                            /*}
-                            catch(IndexOutOfBoundsException e)
-                            {
-                            }*/
-                        }
-
-
-                    }
-                    else if(points.size() == 4)
-                    {
-                        double f = (f1+f2+f3+f4)/4;
-
-                        //todo:
-                    }
-
-
-                }
-            }
-        }
-    }
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
     private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
@@ -617,6 +491,7 @@ public class Controller {
         mapSeeds = new ArrayList<>();
         legendLines = new ArrayList<>();
         legendSeeds = new ArrayList<>();
+        userLines = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawMap();
         calculateMap(legendModel, legendLines, legendSeeds);
