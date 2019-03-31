@@ -401,7 +401,6 @@ public class Controller {
                         if(f1 > f2 || f1 < f2)
                         {
                             //todo
-
                            if (f1 > f2) {
                                 seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
@@ -409,7 +408,17 @@ public class Controller {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
                             }
-
+                        }
+                        if(f3 > f4 || f3 < f4)
+                        {
+                            //todo
+                            if (f3 > f4) {
+                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
+                                seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
+                            } else if (f4 > f3) {
+                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
+                                seeds.add(new Seed(lesserColor, f4p.getX(), f4p.getY()));
+                            }
                         }
                     }
                     else if(points.size() == 4)
