@@ -25,7 +25,9 @@ public class Controller {
     private int n;      //количество цветов (на самом деле уменьшенное на единицу, т.к. c0, c1, ..., cn)
 
     private boolean isGridEnabled = false;
-    private boolean areIsolinesEnabled;
+    private boolean areIsolinesEnabled = true;
+    private boolean areGridPointsEnabled = false;
+
 
     private List<Point2D> mapLines, legendLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
@@ -59,7 +61,6 @@ public class Controller {
                 int x = e.getX(), y = e.getY();
                 if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
-                //int mx = (int)(mapPanel.getWidth() * (x - mapModel.getA())/(mapModel.getB() - mapModel.getA()) + 0.5);
                 double mx = ((mapModel.getB() - mapModel.getA()) * x/mapPanel.getWidth() + mapModel.getA());
                 double my = ((mapModel.getD() - mapModel.getC()) * y/mapPanel.getHeight() + mapModel.getC());
                 double f = mapModel.applyFunction(mx, my);
@@ -498,6 +499,8 @@ public class Controller {
                 int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
 
                 mapPanel.drawGridRect(u1, v1, u2, v2);
+
+
             }
         }
     }
@@ -513,6 +516,7 @@ public class Controller {
 
     public void setIsolinesEnabled(boolean isolinesEnabled) {
         this.areIsolinesEnabled = isolinesEnabled;
+        //todo
     }
 
     public int getK() {
@@ -525,7 +529,6 @@ public class Controller {
 
     public void setModelConstants(int k, int m, double a, double b, double c, double d) {
         mapModel = new Model(k, m, a, b, c, d);
-        //todo: legendModel
 
         mapPanel.clear();
         legendPanel.getLegendMap().clear();
@@ -543,5 +546,13 @@ public class Controller {
         drawLegend();
         mapPanel.repaint();
         legendPanel.repaint();
+    }
+
+    public boolean areGridPointsEnabled() {
+        return areGridPointsEnabled;
+    }
+
+    public void setGridPointsEnabled(boolean gridPointsEnabled) {
+        areGridPointsEnabled = gridPointsEnabled;
     }
 }

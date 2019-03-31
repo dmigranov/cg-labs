@@ -74,6 +74,8 @@ public class IsolinesFrame extends MainFrame {
         addCheckBoxMenuAndToolBarButton("Options/Interpolation on", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", "onInterpolationEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
+        addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
+
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
@@ -264,5 +266,10 @@ public class IsolinesFrame extends MainFrame {
     public void onGridEnabled()
     {
         controller.setGridEnabled(!controller.isGridEnabled());
+    }
+
+    public void onPointsEnabled()
+    {
+        controller.setGridPointsEnabled(!controller.areGridPointsEnabled());
     }
 }
