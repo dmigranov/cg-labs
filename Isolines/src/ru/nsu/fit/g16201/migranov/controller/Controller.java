@@ -241,21 +241,30 @@ public class Controller {
             double y = (d-c)*v/height + c;
             for (int u = 0; u < width; u++) {
                 double x = (b-a)*u/width + a;
+                if(x==0 && y==0)
+                    System.out.print("");
 
                 double f = mapModel.applyFunction(x, y);
 
                 int l;
-                for(l = 0; l < n; l++)
+                double zOld = model.getMinValue();
+                System.out.print(zOld + " ");
+                for(l = 1; l <= n; l++)
                 {
+                    if (f < model.getMinValue())
+                        break;
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue()) / (n + 1);
-                    if(f < z)
+                    System.out.print(z + " ");
+
+                    if(f < z && f >= zOld)
                     {
-                        //l--;
                         break;
                     }
                 }
-                System.out.println(l);
-                mapPanel.paintPixel(u, v, legendColors.get(l).getRGB());
+                System.out.println();
+
+
+                mapPanel.paintPixel(u, v, legendColors.get(l-1).getRGB());
 
             }
         }
