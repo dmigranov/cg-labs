@@ -10,6 +10,9 @@ public class MapPanel extends JPanel {
     private BufferedImage lineCanvas;
     private Graphics2D lineGraphics;
 
+    private BufferedImage userLineCanvas;
+    private Graphics2D userLineGraphics;
+
     private BufferedImage gridCanvas;
     private Graphics2D gridGraphics;
 
@@ -37,6 +40,9 @@ public class MapPanel extends JPanel {
         this.height = 1;
         lineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         lineGraphics = lineCanvas.createGraphics();
+
+        userLineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        userLineGraphics = lineCanvas.createGraphics();
 
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         colorGraphics = colorCanvas.createGraphics();
@@ -93,6 +99,7 @@ public class MapPanel extends JPanel {
         this.isolineColor = isolineColor;
         isolineRGB = isolineColor.getRGB();
         lineGraphics.setColor(isolineColor);
+        userLineGraphics.setColor(isolineColor);
     }
 
     public void updateSize() {
@@ -102,6 +109,10 @@ public class MapPanel extends JPanel {
         lineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         lineGraphics = lineCanvas.createGraphics();
         lineGraphics.setColor(isolineColor);
+
+        userLineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        userLineGraphics = lineCanvas.createGraphics();
+        userLineGraphics.setColor(isolineColor);
 
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         colorGraphics = colorCanvas.createGraphics();

@@ -71,10 +71,20 @@ public class Controller {
         });
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseExited(MouseEvent e) {
-                super.mouseExited(e);
-                statusLabel.setText("");
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int x = e.getX(), y = e.getY();
+                if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
+                    return;
+
+                double mx = ((mapModel.getB() - mapModel.getA()) * x/mapPanel.getWidth() + mapModel.getA());
+                double my = ((mapModel.getD() - mapModel.getC()) * y/mapPanel.getHeight() + mapModel.getC());
+                double f = mapModel.applyFunction(mx, my);
+
+
             }
+
+
         });
     }
 
@@ -566,5 +576,6 @@ public class Controller {
         else
             mapPanel.clearGridPoints();
         mapPanel.repaint();
+        //todo: Точки входа в треугольники (возможно, занести в отдельынй массив и рисовать их там же (в отдельном цикле)
     }
 }
