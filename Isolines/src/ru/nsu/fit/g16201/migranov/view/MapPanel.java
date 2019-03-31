@@ -16,6 +16,8 @@ public class MapPanel extends JPanel {
     private BufferedImage colorCanvas;
     private Graphics2D colorGraphics;
 
+    //todo: когда буду реализовывать дин. рисование изолиний, делать это на отдельном канвасе (СКОРОСТЬ!)
+
     private int width, height;
     private Color isolineColor;
     private int isolineRGB;

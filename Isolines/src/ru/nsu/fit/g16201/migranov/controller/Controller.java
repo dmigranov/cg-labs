@@ -286,6 +286,7 @@ public class Controller {
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
     private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
     {
+        int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
         for(int i = 0; i < lines.size(); i+=2)
         {
@@ -293,10 +294,10 @@ public class Controller {
             Point2D p2 = lines.get(i+1);
 
             double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
-            int u1 = (int)(mapPanel.getWidth() * (x1 - a)/(b - a) + 0.5);
-            int u2 = (int)(mapPanel.getWidth() * (x2 - a)/(b - a) + 0.5);
-            int v1 = (int)(mapPanel.getHeight() * (y1 - c)/(d - c) + 0.5);
-            int v2 = (int)(mapPanel.getHeight() * (y2 - c)/(d - c) + 0.5);
+            int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
+            int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
+            int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
+            int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
 
             mapPanel.drawLine(u1, v1, u2, v2);
 
@@ -304,7 +305,17 @@ public class Controller {
 
         for(Seed s : seeds)
         {
-            //mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
+            double x = s.x, y = s.y;
+            int color = s.color;
+
+            int us = (int)(width * (x - a)/(b - a) + 0.5);
+            int vs = (int)(height * (y - c)/(d - c) + 0.5);
+
+            vs = vs < height ? vs : height - 1;
+            us = us < width ? us : width - 1;
+
+            mapPanel.spanFill(us, vs, color);
+
 
         }
     }
@@ -390,19 +401,8 @@ public class Controller {
                         if(f1 > f2 || f1 < f2)
                         {
                             //todo
-                            us1 = (int)(mapPanel.getWidth() * (f1p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
-                            us2 = (int)(mapPanel.getWidth() * (f2p.getX() - model.getA())/(model.getB() - model.getA()) + 0.5);
-                            vs1 = (int)(mapPanel.getHeight() * (f1p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
-                            vs2 = (int)(mapPanel.getHeight() * (f2p.getY() - model.getC())/(model.getD() - model.getC()) + 0.5);
 
-                            vs1 = vs1 <mapPanel.getHeight()?vs1:mapPanel.getHeight()-1;
-                            vs2 = vs2 <mapPanel.getHeight()?vs2:mapPanel.getHeight()-1;
-                            us1 = us1 < mapPanel.getWidth()? us1 : mapPanel.getWidth()-1;
-                            us2 = us2 < mapPanel.getWidth()? us2 : mapPanel.getWidth()-1;
-
-                            //todo: понимаю, в чём корень проблемы с легендой. во-первых, там сетка не совпадает с изолиниями полностью (из-за прибаления?(
-                            // но проблема в том, что иногда совпадает! и если не совпадает, то там личния в два пикселя и закрашивания не проиходит
-                            if (f1 > f2) {
+                           if (f1 > f2) {
                                 seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
                             } else if (f2 > f1) {
