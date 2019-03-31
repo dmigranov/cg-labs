@@ -22,6 +22,9 @@ public class MapPanel extends JPanel {
     private Color isolineColor;
     private int isolineRGB;
 
+    private static final Color gridColor = Color.BLACK;
+
+
     MapPanel(int width, int height)
     {
         super();
@@ -100,6 +103,10 @@ public class MapPanel extends JPanel {
 
     public void drawGridRect(int u1, int v1, int u2, int v2) {
         gridGraphics.drawRect(u1, v1, u2 - u1, v2 - v1);
+    }
+
+    public void drawGridPoint(int u, int v) {
+        gridGraphics.fillOval(u - 1, v - 1, 2, 2);
     }
 
 
