@@ -251,7 +251,11 @@ public class Controller {
             vs = vs < height ? vs : height - 1;
             us = us < width ? us : width - 1;
 
-            mapPanel.spanFill(us, vs, color);
+            try {
+                mapPanel.spanFill(us, vs, color);
+            }
+            catch(ArrayIndexOutOfBoundsException e)
+            {}
 
 
         }
@@ -299,26 +303,48 @@ public class Controller {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1) / (f2 - f1), f1p.getY());
                     points.add(p);
                     tempSeeds.add(new Seed(lesserColor, p.getX() - 1, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() + 1, p.getY()));
                 } else if (f1 > z && z > f2) {
-                    points.add(new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2) / (f1 - f2)), f1p.getY()));
+                    Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2) / (f1 - f2)), f1p.getY());
+                    points.add(p);
+                    tempSeeds.add(new Seed(biggerColor, p.getX() - 1, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() + 1, p.getY()));
                 }
 
                 if (f3 < z && z < f4) {
-                    points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3) / (f4 - f3), f3p.getY()));
+                    Point2D p = new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (z - f3) / (f4 - f3), f3p.getY());
+                    points.add(p);
+                    tempSeeds.add(new Seed(lesserColor, p.getX() - 1, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX() + 1, p.getY()));
                 } else if (f3 > z && z > f4) {
-                    points.add(new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4) / (f3 - f4)), f3p.getY()));
+                    Point2D p = new Point2D.Double(f3p.getX() + (f4p.getX() - f3p.getX()) * (1 - (z - f4) / (f3 - f4)), f3p.getY());
+                    points.add(p);
+                    tempSeeds.add(new Seed(biggerColor, p.getX() - 1, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX() + 1, p.getY()));
                 }
 
                 if (f1 > z && z > f3) {
-                    points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3) / (f1 - f3)));
+                    Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3) / (f1 - f3));
+                    points.add(p);
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - 1));   //???
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + 1));
                 } else if (f1 < z && z < f3) {
-                    points.add(new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1) / (f3 - f1))));
+                    Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1) / (f3 - f1)));
+                    points.add(p);
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - 1));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + 1));
                 }
 
                 if (f2 > z && z > f4) {
-                    points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4) / (f2 - f4)));
+                    Point2D p = new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (z - f4) / (f2 - f4));
+                    points.add(p);
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() - 1));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() + 1));
                 } else if (f2 < z && z < f4) {
-                    points.add(new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2) / (f4 - f2))));
+                    Point2D p = new Point2D.Double(f2p.getX(), f4p.getY() + (f2p.getY() - f4p.getY()) * (1 - (z - f2) / (f4 - f2)));
+                    points.add(p);
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY() - 1));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY() + 1));
                 }
 
                 if (points.size() == 2) {
@@ -327,9 +353,12 @@ public class Controller {
                     lines.add(p1);
                     lines.add(p2);
 
-                    if(seeds != null) {
 
-                        if (f1 > z && z > f2 || f1 < z && z < f2) {
+                    if(seeds != null) {
+                        seeds.add(tempSeeds.get(0));
+                        seeds.add(tempSeeds.get(1));
+
+                        /*if (f1 > z && z > f2 || f1 < z && z < f2) {
                             //todo
                             if (f2 < f1) {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
@@ -347,7 +376,7 @@ public class Controller {
                                 seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
                                 seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
                             }
-                        }
+                        }*/
                     }
                 } else if (points.size() == 4) {
                     double f = (f1 + f2 + f3 + f4) / 4;
