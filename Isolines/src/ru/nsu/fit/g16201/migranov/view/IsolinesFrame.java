@@ -244,7 +244,7 @@ public class IsolinesFrame extends MainFrame {
                 c = Double.parseDouble(regionSizesFields.get(2).getText());
                 d = Double.parseDouble(regionSizesFields.get(3).getText());
 
-                if(a >= b || c >= d)
+                if(a >= b || c >= d || k <= 1 || m <= 1)
                     throw new NumberFormatException();
 
                 controller.setModelConstants(k, m, a, b, c, d);

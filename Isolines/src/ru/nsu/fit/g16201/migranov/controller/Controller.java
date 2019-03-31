@@ -28,8 +28,8 @@ public class Controller {
     private boolean areIsolinesEnabled;
 
     private List<Point2D> mapLines, legendLines;        //l1p1 l1p2 l2p1 l2p2
-    private Set<Seed> mapSeeds, legendSeeds;
-
+    //private Set<Seed> mapSeeds, legendSeeds;
+    private List<Seed> mapSeeds, legendSeeds;
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
         this.mapPanel = mapPanel;
@@ -100,9 +100,9 @@ public class Controller {
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
             mapLines = new ArrayList<>();
-            mapSeeds = new HashSet<>();
+            mapSeeds = new ArrayList<>();
             legendLines = new ArrayList<>();
-            legendSeeds = new HashSet<>();
+            legendSeeds = new ArrayList<>();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
             calculateMap(legendModel, legendLines, legendSeeds);
@@ -259,11 +259,11 @@ public class Controller {
                             // но проблема в том, что иногда совпадает! и если не совпадает, то там личния в два пикселя и закрашивания не проиходит
                             //try {
                                 if (f1 > f2) {
-                                    mapPanel.spanFill(us1, vs1, lesserColor.getRGB());
-                                    mapPanel.spanFill(us2, vs2, biggerColor.getRGB());
-                                } else if (f2 > f1) {
-                                    mapPanel.spanFill(us1, vs1, biggerColor.getRGB());
+                                    mapPanel.spanFill(us1, vs1, biggerColor.getRGB() );
                                     mapPanel.spanFill(us2, vs2, lesserColor.getRGB());
+                                } else if (f2 > f1) {
+                                    mapPanel.spanFill(us1, vs1,lesserColor.getRGB());
+                                    mapPanel.spanFill(us2, vs2,biggerColor.getRGB());
                                 }
                             /*}
                             catch(IndexOutOfBoundsException e)
@@ -287,7 +287,7 @@ public class Controller {
     }
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
-    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, Set<Seed> seeds)
+    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
@@ -324,7 +324,7 @@ public class Controller {
     }
 
     //первый раз только при загрузке файла. в пространстве xy
-    private void calculateMap(Model model, List<Point2D> lines, Set<Seed> seeds)
+    private void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
     {
         for(int i = 0; i < model.getM() - 1; i++)
         {
@@ -510,9 +510,9 @@ public class Controller {
         mapPanel.setColor(isolineColor);
         legendPanel.getLegendMap().setColor(isolineColor);
         mapLines = new ArrayList<>();
-        mapSeeds = new HashSet<>();
+        mapSeeds = new ArrayList<>();
         legendLines = new ArrayList<>();
-        legendSeeds = new HashSet<>();
+        legendSeeds = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawMap();
         calculateMap(legendModel, legendLines, legendSeeds);
