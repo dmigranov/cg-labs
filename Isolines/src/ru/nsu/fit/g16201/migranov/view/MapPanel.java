@@ -65,6 +65,7 @@ public class MapPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(colorCanvas, 0, 0, width, height, null);
         g.drawImage(lineCanvas, 0, 0, width, height, null);
+        g.drawImage(userLineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
         if(areGridPointsEnabled)
             g.drawImage(gridPointsCanvas, 0, 0, width, height, null);
@@ -143,6 +144,10 @@ public class MapPanel extends JPanel {
 
     public void setGridPointsEnabled(boolean gridPointsEnabled) {
         areGridPointsEnabled = gridPointsEnabled;
+    }
+
+    public void drawUserLine(int u1, int v1, int u2, int v2) {
+        userLineGraphics.drawLine(u1,v1,u2,v2);
     }
 
 
