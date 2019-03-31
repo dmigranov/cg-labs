@@ -213,7 +213,7 @@ public class Controller {
             for (int i = 0; i <= n; i++) {
                 colors[i] = wk * i + wk / 2;
             }
-            for (int u = 0; u < legendMap.getWidth() - wk / 2; u++) {
+            for (int u = 0; u < legendMap.getWidth(); u++) {
                 if (u < colors[0]) {
                     legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendColors.get(0).getRGB());
                     continue;
@@ -228,14 +228,8 @@ public class Controller {
                         break;
                 }
                 double u0 = colors[i];
-                double u1 =0;
-                try {
-                     u1 = colors[i + 1];
-                }
-                catch (IndexOutOfBoundsException e)
-                {
-                    System.out.println("ds");
-                }
+                double u1 = colors[i + 1];
+
                 int c0 = legendColors.get(i).getRGB();
                 int c1 = legendColors.get(i + 1).getRGB();
 
