@@ -43,6 +43,7 @@ public class Controller {
                 if(mapModel != null && legendModel != null) {
                     mapPanel.updateSize();
                     legendPanel.updateSize();
+                    legendModel = new Model(n + 2, 2, (x,y)->x, 0, legendPanel.getWidth(), 0, 1);
                     drawMap();
                     recalculateAndDrawUserLines();
                     drawLegend();
@@ -147,10 +148,13 @@ public class Controller {
             int b = Integer.parseInt(substrings[2]);
             isolineColor = new Color(r, g, b);
 
-            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
-
             mapPanel.updateSize();
             legendPanel.updateSize();
+
+            //legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);    //отнормировал до 1
+            legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, mapPanel.getWidth(), 0, mapPanel.getHeight());
+
+
             mapPanel.clear();
             legendPanel.getLegendMap().clear();
             mapPanel.clearGrid();
@@ -272,8 +276,17 @@ public class Controller {
     }
 
     private void calculateMapForLevel(Model model, List<Point2D> lines, List<Seed> seeds, double z, int l) {
-        Color lesserColor = legendColors.get(l - 1);
-        Color biggerColor = legendColors.get(l);
+
+        Color lesserColor, biggerColor;
+        if(l > 0) {
+            lesserColor = legendColors.get(l - 1);
+            biggerColor = legendColors.get(l);
+        }
+        else
+        {
+            biggerColor = Color.BLACK;
+            lesserColor = Color.BLACK;
+        }
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
             {
