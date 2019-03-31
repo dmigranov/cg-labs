@@ -397,27 +397,25 @@ public class Controller {
 
                         Color lesserColor = legendColors.get(l - 1);
                         Color biggerColor = legendColors.get(l);
-                        int us1=0, us2=0, vs1=0, vs2=0;
-                        if(f1 > f2 || f1 < f2)
+                        if(f1 > z && z > f2 || f1 < z && z < f2)
                         {
                             //todo
-                           if (f1 > f2) {
-                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
-                                seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
-                            } else if (f2 > f1) {
+                            if (f2 < f1) {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
+                            } else if (f2 > f1) {
+                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
+                                seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
                             }
                         }
-                        if(f3 > f4 || f3 < f4)
+                        if(f3 > z && z > f4 || f3 < z && z < f4)
                         {
-                            //todo
-                            if (f3 > f4) {
-                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
-                                seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
-                            } else if (f4 > f3) {
+                            if (f4 < f3) {
                                 seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
                                 seeds.add(new Seed(lesserColor, f4p.getX(), f4p.getY()));
+                            } else if (f4 > f3) {
+                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
+                                seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
                             }
                         }
                     }

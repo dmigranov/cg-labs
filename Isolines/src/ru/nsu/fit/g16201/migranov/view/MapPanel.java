@@ -71,6 +71,8 @@ public class MapPanel extends JPanel {
         lineGraphics.setBackground(new Color(0,0,0,0));
 
         lineGraphics.clearRect(0, 0, lineCanvas.getWidth(), lineCanvas.getHeight());
+        colorGraphics.clearRect(0, 0, colorCanvas.getWidth(), colorCanvas.getHeight());
+
     }
 
     public void setColor(Color isolineColor) {
