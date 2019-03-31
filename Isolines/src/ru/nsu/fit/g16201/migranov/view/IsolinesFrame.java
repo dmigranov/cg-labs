@@ -35,7 +35,7 @@ public class IsolinesFrame extends MainFrame {
 
         MapPanel mapPanel = new MapPanel(500, 500);
         LegendPanel legendPanel = new LegendPanel(500, 150, 100);
-        controller = new Controller(mapPanel, legendPanel);
+        controller = new Controller(mapPanel, legendPanel, statusLabel);
 
         mainPanel.setDoubleBuffered(true);
         mapPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));

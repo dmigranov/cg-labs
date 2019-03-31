@@ -4,9 +4,9 @@ import ru.nsu.fit.g16201.migranov.model.Model;
 import ru.nsu.fit.g16201.migranov.view.LegendPanel;
 import ru.nsu.fit.g16201.migranov.view.MapPanel;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
@@ -31,9 +31,10 @@ public class Controller {
     //private Set<Seed> mapSeeds, legendSeeds;
     private List<Seed> mapSeeds, legendSeeds;
 
-    public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
+    public Controller(MapPanel mapPanel, LegendPanel legendPanel, JLabel statusLabel) {
         this.mapPanel = mapPanel;
         this.legendPanel = legendPanel;
+
 
         mapPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -50,7 +51,25 @@ public class Controller {
             }
         });
 
-        //todo: mouse listener который следит за положением мыши на mapPanel и высичтывает координаты и значение функции
+        mapPanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+
+                int x = e.getX(), y = e.getY();
+                if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight())
+                    return;
+                statusLabel.setText(x + " " + y);
+
+            }
+        });
+        mapPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                statusLabel.setText("");
+            }
+        });
     }
 
     public int loadFile(File file) {
