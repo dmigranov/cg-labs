@@ -288,7 +288,8 @@ public class Controller {
         }
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
 
-        epsilon = (b-a)/(mapPanel.getWidth());
+        double epsilon = (b-a)/(mapPanel.getWidth());
+        double epsilon2 = Controller.epsilon;
 
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
@@ -307,13 +308,14 @@ public class Controller {
 
 
                 if (f1 == z)
-                    f1 += epsilon;
+                    f1 += epsilon2;
                 if (f2 == z)
-                    f2 += epsilon;
+                    f2 += epsilon2;
                 if (f3 == z)
-                    f3 += epsilon;
+                    f3 += epsilon2;
                 if (f4 == z)
-                    f4 += epsilon;
+                    f4 += epsilon2;
+
 
                 if (f1 < z && z < f2) {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1) / (f2 - f1), f1p.getY());
@@ -371,11 +373,10 @@ public class Controller {
 
 
                     if(seeds != null) {
-                        seeds.addAll(tempSeeds);
+                        //seeds.addAll(tempSeeds);
 
                         if (f1 > z && z > f2 || f1 < z && z < f2) {
-                            //todo
-                            if (f2 < f1) {
+=                            if (f2 < f1) {
                                 seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
                                 seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
                             } else if (f2 > f1) {
@@ -390,6 +391,15 @@ public class Controller {
                             } else if (f4 > f3) {
                                 seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
                                 seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
+                            }
+                        }
+                        if (f1 > z && z > f3 || f1 < z && z < f3) {
+                            if (f1 > f3) {
+                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
+                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
+                            } else if (f1 < f3) {
+                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
+                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
                             }
                         }
 
