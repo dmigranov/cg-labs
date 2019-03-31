@@ -258,6 +258,13 @@ public class MapPanel extends JPanel {
         interpolatedGraphics.drawLine(x,y,x,y);
     }
 
+    public void drawLineInterpolated(int x1, int y1, int x2, int y2, int color)
+    {
+        //interpolatedCanvas.setRGB(x, y, color);   //пчему не работает???
+        interpolatedGraphics.setColor(new Color(color));
+        interpolatedGraphics.drawLine(x1,y1,x2,y2);
+    }
+
     public void paintPixel(int x, int y, int color)
     {
         colorCanvas.setRGB(x, y, color);   //пчему не работает???

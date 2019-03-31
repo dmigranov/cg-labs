@@ -205,7 +205,39 @@ public class Controller {
             legendMap.spanFill(1 + x, 1, legendColors.get(j).getRGB());
         }
 
-        //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
+        if(interpolationEnabled)
+        {
+            double wk = (double)mapPanel.getWidth() / (n + 1); //размер ячейки
+
+            System.out.println(legendMap.getWidth());
+            for(int u = 0; u < legendMap.getWidth() - wk; u++)
+            {
+                int j = (int)(u / wk);
+                int u0 = (int)(wk*j + wk/2);
+                int u1 = (int)(wk*(j+1) +wk/2);
+
+                int c0 = legendMap.getRGB(u0,1);
+                int c1 = legendMap.getRGB(u1,1);
+
+                int newColor = 0;
+                for(int k = 0; k < 24; k+=8) {
+                    int cc0 = c0 >> k & 0x000000FF;
+                    int cc1 = c1 >> k & 0x000000FF;
+
+
+                    int ccxx = cc0 * (u1 - u)/(u1 - u0) + cc1 * (u - u0)/(u1 - u0);
+                    if(ccxx < 0)
+                        ccxx = 0;
+                    if(ccxx > 255)
+                        ccxx = 255;
+                    newColor |= (ccxx << k);
+                }
+                legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), newColor);
+
+            }
+        }
+
+            //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
 
         if(isGridEnabled) {
             drawGrid(legendPanel.getLegendMap(), legendModel);
@@ -248,21 +280,17 @@ public class Controller {
 
                 int l;
                 double zOld = model.getMinValue();
-                System.out.print(zOld + " ");
                 for(l = 1; l <= n; l++)
                 {
                     if (f < model.getMinValue())
                         break;
                     double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue()) / (n + 1);
-                    System.out.print(z + " ");
 
                     if(f < z && f >= zOld)
                     {
                         break;
                     }
                 }
-                System.out.println();
-
 
                 mapPanel.paintPixel(u, v, legendColors.get(l-1).getRGB());
 
@@ -306,8 +334,7 @@ public class Controller {
                     u1 = u1 < mapPanel.getWidth() ? u1 : mapPanel.getWidth() - 1;
                     v1 = v1 < mapPanel.getHeight() ? v1 : mapPanel.getHeight() - 1;
 
-                    System.out.println(u0 + " " + u + " " + u1 + "; " + v0 + " " + v + " " + v1);
-
+                    //System.out.println(u0 + " " + u + " " + u1 + "; " + v0 + " " + v + " " + v1);
 
                     int c00 = mapPanel.getRGB(u0, v0);
                     int c10 = mapPanel.getRGB(u1, v0);
@@ -330,10 +357,8 @@ public class Controller {
                             ccxx = 0;
                         if(ccxx > 255)
                             ccxx = 255;
-                        //System.out.print(ccxx + " ");
                         newColor |= (ccxx << k);
                     }
-                    //System.out.println();
                     mapPanel.paintPixelInterpolated(u, v, newColor);
                 }
             }
@@ -604,10 +629,11 @@ public class Controller {
         mapPanel.setInterpolationEnabled(interpolationEnabled);
         legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
-        //todo: легенда
+        drawLegend();
         //todo: линии оставить-то!
 
         mapPanel.repaint();
+        legendPanel.repaint();
     }
 
 
