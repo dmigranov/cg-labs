@@ -10,9 +10,7 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Controller {
     private static double epsilon = 1e-3;
@@ -46,6 +44,7 @@ public class Controller {
                     mapPanel.updateSize();
                     legendPanel.updateSize();
                     drawMap();
+                    recalculateAndDrawUserLines();
                     drawLegend();
                     mapPanel.repaint();
                     legendPanel.repaint();
@@ -73,6 +72,7 @@ public class Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                mapPanel.clearUserLine();
                 int x = e.getX(), y = e.getY();
                 if (x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
@@ -83,10 +83,31 @@ public class Controller {
 
                 //calculateDynamicIsoline(z);
                 calculateMapForLevel(mapModel, userLines, null, z, 0);
+                recalculateAndDrawUserLines();
 
                 mapPanel.repaint();
             }
         });
+    }
+
+    private void recalculateAndDrawUserLines() {
+        int width = mapPanel.getWidth(), height = mapPanel.getHeight();
+        double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
+        for(int i = 0; i < userLines.size(); i+=2)
+        {
+            Point2D p1 = userLines.get(i);
+            Point2D p2 = userLines.get(i+1);
+
+            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
+            int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
+            int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
+            int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
+            int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+
+            mapPanel.drawUserLine(u1, v1, u2, v2);
+
+
+        }
     }
 
     public void calculateDynamicIsoline(double z)

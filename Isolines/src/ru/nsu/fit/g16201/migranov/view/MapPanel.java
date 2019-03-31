@@ -150,6 +150,9 @@ public class MapPanel extends JPanel {
         userLineGraphics.drawLine(u1,v1,u2,v2);
     }
 
+    public void clearUserLine() {
+    }
+
 
     class Span
     {
