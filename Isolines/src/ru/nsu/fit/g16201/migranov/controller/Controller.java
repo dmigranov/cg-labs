@@ -10,7 +10,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Controller {
     private static double epsilon = 1e-3;
@@ -26,7 +28,7 @@ public class Controller {
     private boolean areIsolinesEnabled;
 
     private List<Point2D> mapLines, legendLines;        //l1p1 l1p2 l2p1 l2p2
-    private List<Seed> mapSeeds, legendSeeds;
+    private Set<Seed> mapSeeds, legendSeeds;
 
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel) {
@@ -98,9 +100,9 @@ public class Controller {
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
             mapLines = new ArrayList<>();
-            mapSeeds = new ArrayList<>();
+            mapSeeds = new HashSet<>();
             legendLines = new ArrayList<>();
-            legendSeeds = new ArrayList<>();
+            legendSeeds = new HashSet<>();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
             calculateMap(legendModel, legendLines, legendSeeds);
@@ -285,7 +287,7 @@ public class Controller {
     }
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
-    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
+    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, Set<Seed> seeds)
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
@@ -322,7 +324,7 @@ public class Controller {
     }
 
     //первый раз только при загрузке файла. в пространстве xy
-    private void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
+    private void calculateMap(Model model, List<Point2D> lines, Set<Seed> seeds)
     {
         for(int i = 0; i < model.getM() - 1; i++)
         {
@@ -508,9 +510,9 @@ public class Controller {
         mapPanel.setColor(isolineColor);
         legendPanel.getLegendMap().setColor(isolineColor);
         mapLines = new ArrayList<>();
-        mapSeeds = new ArrayList<>();
+        mapSeeds = new HashSet<>();
         legendLines = new ArrayList<>();
-        legendSeeds = new ArrayList<>();
+        legendSeeds = new HashSet<>();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawMap();
         calculateMap(legendModel, legendLines, legendSeeds);
