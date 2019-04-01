@@ -127,11 +127,8 @@ public class Controller {
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
 
             mapPanel.drawUserLine(u1, v1, u2, v2);
-
-
         }
     }
-
 
     public int loadFile(File file) {
 
@@ -198,7 +195,6 @@ public class Controller {
         return 0;
     }
 
-
     private String[] readLineAndSplit() throws IOException
     {
         String line;
@@ -212,13 +208,11 @@ public class Controller {
         if(isGridEnabled) {
             drawGrid(mapPanel, mapModel);
         }
-
     }
 
     private void drawLegend() {
         //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
         MapPanel legendMap = legendPanel.getLegendMap();
-
         if(!interpolationEnabled)
         {
             for (int j = 0; j <= n; j++) {
@@ -272,7 +266,6 @@ public class Controller {
             drawGrid(legendPanel.getLegendMap(), legendModel);
         }
         legendPanel.drawText(n, mapModel.getMinValue(), mapModel.getMaxValue(), legendModel);
-
     }
 
 
@@ -312,7 +305,6 @@ public class Controller {
                     double x = (b - a) * u / width + a;
 
                     double f = mapModel.applyFunction(x, y);
-
                     int l;
                     double zOld = model.getMinValue();
                     for (l = 1; l <= n; l++) {
@@ -358,10 +350,8 @@ public class Controller {
 
 
                 mapPanel.spanFill(us, vs, color);
-                //mapPanel.drawGridPoint(us, vs, color);
-
+                //mapPanel.drawGridPoint(us, vs, color);    //for test only
             }
-
         }
 
         if(interpolationEnabled)
@@ -525,8 +515,6 @@ public class Controller {
                         Seed s1 = tempSeeds.get(0), s2 = tempSeeds.get(1), s3 = tempSeeds.get(2), s4 = tempSeeds.get(3);
                         seeds.add(new Seed(s1, s3));//их цвета одинаков
                         seeds.add(new Seed(s2, s4));//их цвета одинаков
-
-
                     }
                 }
                 else if (points.size() == 4)

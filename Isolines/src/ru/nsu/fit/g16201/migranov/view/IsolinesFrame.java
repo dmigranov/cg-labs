@@ -59,7 +59,7 @@ public class IsolinesFrame extends MainFrame {
         add(statusPanel, BorderLayout.SOUTH);
 
         revalidate();
-        setMinimumSize(new Dimension(1080, 900));
+        setMinimumSize(new Dimension(1200, 900));
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -77,7 +77,6 @@ public class IsolinesFrame extends MainFrame {
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Per-pixel color map on", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", "onPerPixelColorMap", false, false);
-
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
