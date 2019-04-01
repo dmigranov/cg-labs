@@ -91,6 +91,12 @@ public class Controller {
 
                 mapPanel.repaint();
             }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                statusLabel.setText("");
+            }
         });
     }
 
@@ -253,7 +259,7 @@ public class Controller {
         if(isGridEnabled) {
             drawGrid(legendPanel.getLegendMap(), legendModel);
         }
-        legendPanel.drawText(n, mapModel.getMinValue(), mapModel.getMaxValue());
+        legendPanel.drawText(n, mapModel.getMinValue(), mapModel.getMaxValue(), legendModel);
 
     }
 
@@ -333,8 +339,7 @@ public class Controller {
 
 
                 mapPanel.spanFill(us, vs, color);
-                //mapPanel.paintPixel(us, vs, color);
-                mapPanel.drawGridPoint(us, vs, color);
+                //mapPanel.drawGridPoint(us, vs, color);
 
             }
 
@@ -414,8 +419,6 @@ public class Controller {
             lesserColor = Color.BLACK;
         }
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
-if(model.getK() == 2)
-    System.out.println();
 
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)

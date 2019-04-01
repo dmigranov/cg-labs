@@ -60,6 +60,7 @@ public class IsolinesFrame extends MainFrame {
 
         revalidate();
         setMinimumSize(new Dimension(1080, 900));
+        pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
