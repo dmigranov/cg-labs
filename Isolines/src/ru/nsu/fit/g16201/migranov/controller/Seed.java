@@ -3,10 +3,10 @@ package ru.nsu.fit.g16201.migranov.controller;
 import java.awt.*;
 
 class Seed {
-    private static final int LEFT = 1;
-    private static final int RIGHT = 2;
-    private static final int UP = 4;
-    private static final int DOWN = 8;
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
+    public static final int UP = 4;
+    public static final int DOWN = 8;
 
     int color;
     int direction;

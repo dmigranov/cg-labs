@@ -12,6 +12,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.nsu.fit.g16201.migranov.controller.Seed.LEFT;
+import static ru.nsu.fit.g16201.migranov.controller.Seed.RIGHT;
+
 public class Controller {
     private static double epsilon = 1e-3;
     private final MapPanel mapPanel;
@@ -400,9 +403,6 @@ public class Controller {
         }
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
 
-        double epsilonx = (b-a)/(mapPanel.getWidth());
-        double epsilony = (d-c)/(mapPanel.getHeight());
-
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
             {
@@ -431,13 +431,13 @@ public class Controller {
                 if (f1 < z && z < f2) {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (z - f1) / (f2 - f1), f1p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX() - epsilonx, p.getY()));
-                    tempSeeds.add(new Seed(biggerColor, p.getX() + epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY(), LEFT));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY(), RIGHT));
                 } else if (f1 > z && z > f2) {
                     Point2D p = new Point2D.Double(f1p.getX() + (f2p.getX() - f1p.getX()) * (1 - (z - f2) / (f1 - f2)), f1p.getY());
                     points.add(p);
-                    tempSeeds.add(new Seed(biggerColor, p.getX() - epsilonx, p.getY()));
-                    tempSeeds.add(new Seed(lesserColor, p.getX() + epsilonx, p.getY()));
+                    tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY(), LEFT));
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY(), RIGHT));
                 }
 
                 if (f3 < z && z < f4) {
