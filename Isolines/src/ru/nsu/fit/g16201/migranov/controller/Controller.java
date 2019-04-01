@@ -310,13 +310,15 @@ public class Controller {
                 double x = s.x, y = s.y;
                 int color = s.color;
 
+                System.out.println(color);
+
                 int us = (int) (width * (x - a) / (b - a) + 0.5);
                 int vs = (int) (height * (y - c) / (d - c) + 0.5);
 
                 if(direction == UP)
-                    vs+=1;  //на самом деле вниз
+                    vs-=1;  //на самом деле вниз
                 else if(direction == DOWN)
-                    vs-=1;
+                    vs+=1;
                 else if(direction == RIGHT)
                     us+=1;
                 else if(direction == LEFT)
