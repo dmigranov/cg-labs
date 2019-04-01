@@ -156,7 +156,6 @@ public class Controller {
 
             legendModel = new Model(this.n + 2, 2, (x,y)->x, 0, 1, 0, 1);
 
-
             mapPanel.clear();
             legendPanel.getLegendMap().clear();
             mapPanel.clearGrid();
@@ -301,28 +300,41 @@ public class Controller {
                             break;
                         }
                     }
-
                     mapPanel.paintPixel(u, v, legendColors.get(l - 1).getRGB());
-
                 }
             }
         }
         else {
-
             for (Seed s : seeds) {
+                int direction = s.direction;
                 double x = s.x, y = s.y;
                 int color = s.color;
 
                 int us = (int) (width * (x - a) / (b - a) + 0.5);
                 int vs = (int) (height * (y - c) / (d - c) + 0.5);
 
-                vs = vs < height ? vs : height - 1;
-                us = us < width ? us : width - 1;
+                if(direction == UP)
+                    vs+=1;  //на самом деле вниз
+                else if(direction == DOWN)
+                    vs-=1;
+                else if(direction == RIGHT)
+                    us+=1;
+                else if(direction == LEFT)
+                    us-=1;
 
-                try {
-                    mapPanel.spanFill(us, vs, color);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                }
+                if(us < 0)
+                    us = 0;
+                else if (us >= width)
+                    us = width - 1;
+
+                if(vs < 0)
+                    vs = 0;
+                else if (vs >= height)
+                    vs = height - 1;
+
+
+                mapPanel.spanFill(us, vs, color);
+
             }
 
         }
