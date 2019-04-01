@@ -56,6 +56,20 @@ public class LegendPanel extends JPanel {
     }
 
     public void drawText(int n, double minValue, double maxValue) {
+        /*for (;;)
+        {
+            Point centerPoint = entry.getKey();
+            Point fieldPoint = entry.getValue();
+            double impact = field.getImpact(fieldPoint.y, fieldPoint.x);
+            String text;
+            if (impact == (int) impact)   //целое
+                text = Integer.toString((int) impact);
+            else
+                text = new DecimalFormat("#.##").format(impact);
+            int x = (centerPoint.x - rs) + (2 * rs + 1 - metrics.stringWidth(text)) / 2;
+            int y = centerPoint.y + impactGraphics.getFont().getSize() / 3;
+            canvasGraphics.drawString(text, x, y);
+        }*/
     }
 
     public void updateSize() {

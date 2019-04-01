@@ -15,7 +15,7 @@ import java.util.List;
 import static ru.nsu.fit.g16201.migranov.controller.Seed.*;
 
 public class Controller {
-    private static double epsilon = 1e-3;
+    private static double epsilon = 1e-2;
     private final MapPanel mapPanel;
     private final LegendPanel legendPanel;
     private BufferedReader br;
@@ -316,13 +316,13 @@ public class Controller {
                 int vs = (int) (height * (y - c) / (d - c) + 0.5);
 
                 if(direction == UP)
-                    vs-=1;  //на самом деле вниз
+                    vs+=2;  //на самом деле вниз
                 else if(direction == DOWN)
-                    vs+=1;
+                    vs-=2;
                 else if(direction == RIGHT)
-                    us+=1;
+                    us+=2;
                 else if(direction == LEFT)
-                    us-=1;
+                    us-=2;
 
                 if(us < 0)
                     us = 0;
@@ -336,6 +336,8 @@ public class Controller {
 
 
                 mapPanel.spanFill(us, vs, color);
+                //mapPanel.paintPixel(us, vs, color);
+                mapPanel.drawGridPoint(us, vs, color);
 
             }
 
@@ -431,6 +433,7 @@ public class Controller {
                 List<Point2D> points = new ArrayList<>();
                 List<Seed> tempSeeds = new ArrayList<>();
 
+                //double epsilon = (b-a)/10 + (d-c)/10;
 
                 if (f1 == z)
                     f1 += epsilon;
@@ -468,7 +471,7 @@ public class Controller {
                 if (f1 > z && z > f3) {
                     Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (z - f3) / (f1 - f3));
                     points.add(p);
-                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY(), DOWN));   //???
+                    tempSeeds.add(new Seed(lesserColor, p.getX(), p.getY(), DOWN));
                     tempSeeds.add(new Seed(biggerColor, p.getX(), p.getY(), UP));
                 } else if (f1 < z && z < f3) {
                     Point2D p = new Point2D.Double(f1p.getX(), f3p.getY() + (f1p.getY() - f3p.getY()) * (1 - (z - f1) / (f3 - f1)));
@@ -496,36 +499,36 @@ public class Controller {
                     lines.add(p2);
 
                     if(seeds != null) {
-                        seeds.addAll(tempSeeds);
 
                         /*if (f1 > z && z > f2 || f1 < z && z < f2) {
                            if (f2 < f1) {
-                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
-                                seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY()));
+                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY(), NONE));
+                                seeds.add(new Seed(lesserColor, f2p.getX(), f2p.getY(), NONE));
                             } else if (f2 > f1) {
-                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
-                                seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY()));
+                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY(), NONE));
+                                seeds.add(new Seed(biggerColor, f2p.getX(), f2p.getY(), NONE));
                             }
                         }
                         if (f3 > z && z > f4 || f3 < z && z < f4) {
                             if (f4 < f3) {
-                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
-                                seeds.add(new Seed(lesserColor, f4p.getX(), f4p.getY()));
+                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY(), NONE));
+                                seeds.add(new Seed(lesserColor, f4p.getX(), f4p.getY(), NONE));
                             } else if (f4 > f3) {
-                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
-                                seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY()));
+                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY(), NONE));
+                                seeds.add(new Seed(biggerColor, f4p.getX(), f4p.getY(), NONE));
                             }
                         }
                         if (f1 > z && z > f3 || f1 < z && z < f3) {
                             if (f1 > f3) {
-                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY()));
-                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY()));
+                                seeds.add(new Seed(biggerColor, f1p.getX(), f1p.getY(), NONE));
+                                seeds.add(new Seed(lesserColor, f3p.getX(), f3p.getY(), NONE));
                             } else if (f1 < f3) {
-                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY()));
-                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY()));
+                                seeds.add(new Seed(lesserColor, f1p.getX(), f1p.getY(), NONE));
+                                seeds.add(new Seed(biggerColor, f3p.getX(), f3p.getY(), NONE));
                             }
                         }*/
 
+                        seeds.addAll(tempSeeds);
                     }
                 }
                 else if (points.size() == 4)
@@ -541,6 +544,12 @@ public class Controller {
                     {
                         //линия через f1f3 f3f4. другая
                     }
+
+                }
+
+                else if (points.size() == 0)
+                {
+                    //seeds.add(new Seed(f2.3));
 
                 }
 
@@ -625,6 +634,7 @@ public class Controller {
         legendPanel.getLegendMap().clearGrid();
         mapPanel.setColor(isolineColor);
         legendPanel.getLegendMap().setColor(isolineColor);
+        mapPanel.clearGridPoints();
         mapLines = new ArrayList<>();
         mapSeeds = new ArrayList<>();
         legendLines = new ArrayList<>();
@@ -634,6 +644,7 @@ public class Controller {
         drawMap();
         calculateMap(legendModel, legendLines, legendSeeds);
         drawLegend();
+
         mapPanel.repaint();
         legendPanel.repaint();
     }

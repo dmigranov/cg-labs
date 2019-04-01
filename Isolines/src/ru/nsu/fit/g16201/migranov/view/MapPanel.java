@@ -150,6 +150,12 @@ public class MapPanel extends JPanel {
         gridPointsGraphics.fillOval(u-4, v-4, 8, 8);
     }
 
+    public void drawGridPoint(int u, int v, int color) {
+        gridPointsGraphics.setColor(new Color(color));
+        gridPointsGraphics.fillOval(u-4, v-4, 8, 8);
+    }
+
+
     public void clearGridPoints() {
         gridPointsGraphics.clearRect(0, 0, gridPointsCanvas.getWidth(), gridPointsCanvas.getHeight());
 
@@ -243,9 +249,11 @@ public class MapPanel extends JPanel {
             return null;
         int lx = x, rx = x;
         while(lx > 0 && colorCanvas.getRGB(lx, y) == color && lineCanvas.getRGB(lx, y) != isolineRGB) --lx;
+
         while(rx < width - 1 && colorCanvas.getRGB(rx, y) == color && lineCanvas.getRGB(rx, y) != isolineRGB) ++rx;
-        if(lx == rx)
+        if(lx == rx) {
             return null;
+        }
         lx++;
         rx--; //возвращаемся на один, т.к. зашли на границу
         return new Span(lx, rx, y);
