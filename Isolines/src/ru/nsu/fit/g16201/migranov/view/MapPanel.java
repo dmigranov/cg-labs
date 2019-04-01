@@ -64,7 +64,6 @@ public class MapPanel extends JPanel {
         gridPointsGraphics = gridPointsCanvas.createGraphics();
         gridPointsGraphics.setColor(gridColor);
         gridPointsGraphics.setBackground(new Color(0,0,0,0));
-
     }
 
     @Override

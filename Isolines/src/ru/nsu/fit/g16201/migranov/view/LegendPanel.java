@@ -37,8 +37,6 @@ public class LegendPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g)
     {
-        //todo: подписи (см первую)
-
         super.paintComponent(g);
         g.drawImage(canvas, 0, 0, width, height, null);
     }

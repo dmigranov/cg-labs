@@ -72,6 +72,17 @@ public class Controller {
                 statusLabel.setText(String.format("x = %.3f", mx) + ", " + String.format("y = %.3f", my) + "; " + String.format("f(x, y) = %.3f", f));
 
             }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+                int x = e.getX(), y = e.getY();
+                if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
+                    return;
+
+                //todo; динамическая изолиния
+            }
         });
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -520,23 +531,44 @@ public class Controller {
                 }
                 else if (points.size() == 4)
                 {
-                    double f = (f1 + f2 + f3 + f4) / 4;
+                    Point2D p1=null, p2=null, p3=null, p4=null;
 
+                    double f = (f1 + f2 + f3 + f4) / 4;
+                    for (Point2D p : points)
+                    {
+                        if(p.getY() == f3p.getY())
+                            p1 = p;
+                        else if (p.getX() == f2p.getX())
+                            p2 = p;
+                        else if (p.getX() == f3p.getX())
+                            p3 = p;
+                        else if (p.getY() == f1p.getY())
+                            p4 = p;
+                    }
                     //todo: создать список точек добавить туда пересечение
                     if (f > z && z > f4 || f4 > z && z > f) {
                         //Линия проъодит через f3f4 и f4f2. а другая - соотв через f3f1 и f1f2
+                        //p1p2 & p3p4
+                        mapColorLines.add(new Line(p1, p2, lesserColor));
+                        mapColorLines.add(new Line(p1, p2, lesserColor));
+                        //todo: закраска: в середине - один цвет, по бокам друйгой. в этом ифе ещё один ифелс (от этого зависит, где буде тbigger )
+
                     }
 
                     else if (f > z && z > f3 || f3 > z && z > f)
                     {
                         //линия через f1f3 f3f4. другая
+                        //p1p3 & p2p4
+                        mapColorLines.add(new Line(p1, p3, lesserColor));
+                        mapColorLines.add(new Line(p2, p4, lesserColor));
+
                     }
 
                 }
 
                 else if (points.size() == 0)
                 {
-                    //seeds.add(new Seed(f2.3));
+
 
                 }
 

@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.function.BiFunction;
 
 public class Model {
-    private static final BiFunction<Double, Double, Double> standardFunction = (x, y) -> x*x + y*y;
+    private static final BiFunction<Double, Double, Double> standardFunction = (x, y) -> x*x + y*y; //кубы тоже норм но медленнее
     private double a = -200, b = 200, c = -200, d = 200;  //область определения
     private int k, m;
     private double[][] grid;
