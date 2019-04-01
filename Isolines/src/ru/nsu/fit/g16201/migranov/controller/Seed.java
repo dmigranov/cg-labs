@@ -8,9 +8,6 @@ class Seed {
     private static final int UP = 4;
     private static final int DOWN = 8;
 
-
-
-
     int color;
     int direction;
     double x;
