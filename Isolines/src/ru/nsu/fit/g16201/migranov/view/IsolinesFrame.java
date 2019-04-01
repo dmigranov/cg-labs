@@ -59,7 +59,7 @@ public class IsolinesFrame extends MainFrame {
         add(statusPanel, BorderLayout.SOUTH);
 
         revalidate();
-        setMinimumSize(new Dimension(600, 600));
+        setMinimumSize(new Dimension(1080, 900));
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -247,7 +247,7 @@ public class IsolinesFrame extends MainFrame {
                 c = Double.parseDouble(regionSizesFields.get(2).getText());
                 d = Double.parseDouble(regionSizesFields.get(3).getText());
 
-                if(a >= b || c >= d || k <= 2 || m <= 2)
+                if(a >= b || c >= d || k <= 2 || m <= 2 || m > 300 || k > 300)
                     throw new NumberFormatException();
 
                 controller.setModelConstants(k, m, a, b, c, d);

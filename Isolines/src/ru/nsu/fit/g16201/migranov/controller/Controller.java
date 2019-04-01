@@ -415,6 +415,8 @@ public class Controller {
             lesserColor = Color.BLACK;
         }
         double a=model.getA(), b = model.getB(), c=model.getC(), d = model.getD();
+if(model.getK() == 2)
+    System.out.println();
 
         for (int i = 0; i < model.getM() - 1; i++) {
             for (int j = 0; j < model.getK() - 1; j++)  //y - i, x - j (а в лекциях соответствие обратное)
@@ -497,7 +499,7 @@ public class Controller {
                     lines.add(p2);
 
                     if(seeds != null) {
-                        //seeds.addAll(tempSeeds);
+                        seeds.addAll(tempSeeds);
                         Seed s1 = tempSeeds.get(0), s2 = tempSeeds.get(1), s3 = tempSeeds.get(2), s4 = tempSeeds.get(3);
                         seeds.add(new Seed(s1, s3));//их цвета одинаков
                         seeds.add(new Seed(s2, s4));//их цвета одинаков
