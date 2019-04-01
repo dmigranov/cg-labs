@@ -213,7 +213,6 @@ public class Controller {
         else {
             double wk = (double) mapPanel.getWidth() / (n + 1); //размер ячейки
 
-
             double[] colors = new double[n + 1];
             for (int i = 0; i <= n; i++) {
                 colors[i] = wk * i + wk / 2;
