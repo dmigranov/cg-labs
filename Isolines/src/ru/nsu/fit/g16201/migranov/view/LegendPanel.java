@@ -26,7 +26,7 @@ public class LegendPanel extends JPanel {
         middlePanel.add(Box.createHorizontalStrut(20), BorderLayout.EAST);
         middlePanel.add(legendMap, BorderLayout.CENTER);
         middlePanel.add(Box.createHorizontalStrut(20), BorderLayout.WEST);
-        add(middlePanel, BorderLayout.NORTH);
+        add(middlePanel, BorderLayout.SOUTH);
         revalidate();
     }
 

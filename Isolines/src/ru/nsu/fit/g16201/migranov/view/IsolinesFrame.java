@@ -75,6 +75,7 @@ public class IsolinesFrame extends MainFrame {
         addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
+        addCheckBoxMenuAndToolBarButton("Options/Per-pixel color map on", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", "onPerPixelColorMap", false, false);
 
     }
 
@@ -271,5 +272,10 @@ public class IsolinesFrame extends MainFrame {
     public void onPointsEnabled()
     {
         controller.setGridPointsEnabled(!controller.areGridPointsEnabled());
+    }
+
+    public void onPerPixelColorMap()
+    {
+        controller.setPerPixelColorMapEnabled(!controller.isPerPixelColorMapEnabled());
     }
 }

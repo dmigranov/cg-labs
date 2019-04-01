@@ -25,12 +25,13 @@ public class Controller {
     private boolean isGridEnabled = false;
     private boolean areIsolinesEnabled = true;
     private boolean areGridPointsEnabled = false;
-
+    private boolean interpolationEnabled = false;
+    private boolean perPixelColorMapEnabled = false;
 
     private List<Point2D> mapLines, legendLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
     private List<Seed> mapSeeds, legendSeeds;
-    private boolean interpolationEnabled;
+
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel, JLabel statusLabel) {
         this.mapPanel = mapPanel;
@@ -279,35 +280,34 @@ public class Controller {
                 mapPanel.drawGridPoint(u2, v2);
             }
         }
-        for(int v = 0; v < height; v++) {
-            double y = (d-c)*v/height + c;
-            for (int u = 0; u < width; u++) {
-                double x = (b-a)*u/width + a;
-                if(x==0 && y==0)
-                    System.out.print("");
+        if(perPixelColorMapEnabled) {
+            for (int v = 0; v < height; v++) {
+                double y = (d - c) * v / height + c;
+                for (int u = 0; u < width; u++) {
+                    double x = (b - a) * u / width + a;
 
-                double f = mapModel.applyFunction(x, y);
+                    double f = mapModel.applyFunction(x, y);
 
-                int l;
-                double zOld = model.getMinValue();
-                for(l = 1; l <= n; l++)
-                {
-                    if (f < model.getMinValue())
-                        break;
-                    double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue()) / (n + 1);
+                    int l;
+                    double zOld = model.getMinValue();
+                    for (l = 1; l <= n; l++) {
+                        if (f < model.getMinValue())
+                            break;
+                        double z = model.getMinValue() + l * (model.getMaxValue() - model.getMinValue()) / (n + 1);
 
-                    if(f < z && f >= zOld)
-                    {
-                        break;
+                        if (f < z && f >= zOld) {
+                            break;
+                        }
                     }
+
+                    mapPanel.paintPixel(u, v, legendColors.get(l - 1).getRGB());
+
                 }
-
-                mapPanel.paintPixel(u, v, legendColors.get(l-1).getRGB());
-
             }
         }
+        else {
 
-            /*for (Seed s : seeds) {
+            for (Seed s : seeds) {
                 double x = s.x, y = s.y;
                 int color = s.color;
 
@@ -321,9 +321,9 @@ public class Controller {
                     mapPanel.spanFill(us, vs, color);
                 } catch (ArrayIndexOutOfBoundsException e) {
                 }
-            }*/
+            }
 
-
+        }
 
         if(interpolationEnabled)
         {
@@ -651,7 +651,6 @@ public class Controller {
         legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         drawLegend();
-        //todo: линии оставить-то!
 
         mapPanel.repaint();
         legendPanel.repaint();
@@ -662,5 +661,18 @@ public class Controller {
     private int[] getRGB(int color)
     {
         return new int[] { (color & 0xFF0000) >> 16, (color & 0x00FF00) >> 8, color & 0x0000FF };
+    }
+
+    public boolean isPerPixelColorMapEnabled() {
+        return perPixelColorMapEnabled;
+    }
+
+    public void setPerPixelColorMapEnabled(boolean perPixelColorMapEnabled) {
+        this.perPixelColorMapEnabled = perPixelColorMapEnabled;
+
+        mapPanel.clear();
+        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        mapPanel.repaint();
+
     }
 }
