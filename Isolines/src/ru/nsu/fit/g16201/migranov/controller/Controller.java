@@ -32,6 +32,7 @@ public class Controller {
 
     private List<Point2D> mapLines, legendLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
+    private List<Line> mapLinesx;        //l1p1 l1p2 l2p1 l2p2
     private List<Seed> mapSeeds, legendSeeds;
 
 
