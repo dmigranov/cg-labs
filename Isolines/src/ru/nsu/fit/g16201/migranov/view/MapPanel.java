@@ -193,6 +193,10 @@ public class MapPanel extends JPanel {
         this.isolinesEnabled = isolinesEnabled;
     }
 
+    public void drawColorLine(int u1, int v1, int u2, int v2, Color color) {
+        colorGraphics.setColor(color);
+        colorGraphics.drawLine(u1,v1,u2,v2);
+    }
 
 
     class Span

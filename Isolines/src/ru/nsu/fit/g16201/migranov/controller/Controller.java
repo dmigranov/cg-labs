@@ -30,10 +30,10 @@ public class Controller {
     private boolean interpolationEnabled = false;
     private boolean perPixelColorMapEnabled = false;
 
-    private List<Point2D> mapLines, legendLines, userLines;        //l1p1 l1p2 l2p1 l2p2
+    private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
-    private List<Line> mapLinesx;        //l1p1 l1p2 l2p1 l2p2
-    private List<Seed> mapSeeds, legendSeeds;
+    private List<Line> mapColorLines;
+    private List<Seed> mapSeeds;
 
 
     public Controller(MapPanel mapPanel, LegendPanel legendPanel, JLabel statusLabel) {
@@ -170,13 +170,12 @@ public class Controller {
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
             mapLines = new ArrayList<>();
+            mapColorLines = new ArrayList<>();
             mapSeeds = new ArrayList<>();
-            legendLines = new ArrayList<>();
-            legendSeeds = new ArrayList<>();
+
             userLines = new ArrayList<>();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
-            calculateMap(legendModel, legendLines, legendSeeds);
             drawLegend();
             mapPanel.repaint();
             legendPanel.repaint();
@@ -225,11 +224,11 @@ public class Controller {
                 colors[i] = wk * i + wk / 2;
             }
             for (int u = 0; u < legendMap.getWidth(); u++) {
-                if (u < colors[0]) {
+                if (u <= colors[0]) {
                     legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendColors.get(0).getRGB());
                     continue;
                 }
-                if (u > colors[n]) {
+                if (u >= colors[n]) {
                     legendMap.drawLineInterpolated(u, 0, u, legendMap.getHeight(), legendColors.get(n).getRGB());
                     continue;
                 }
@@ -240,6 +239,7 @@ public class Controller {
                 }
                 double u0 = colors[i];
                 double u1 = colors[i + 1];
+
                 int c0 = legendColors.get(i).getRGB();
                 int c1 = legendColors.get(i + 1).getRGB();
                 int newColor = 0;
@@ -271,9 +271,15 @@ public class Controller {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
 
-        for (int i = 0; i < lines.size(); i += 2) {
-            Point2D p1 = lines.get(i);
-            Point2D p2 = lines.get(i + 1);
+        //for (int i = 0; i < lines.size(); i += 2) {
+            //Point2D p1 = lines.get(i);
+            //Point2D p2 = lines.get(i + 1);
+
+        for(Line l : mapColorLines)
+        {
+            Point2D p1 = l.p1;
+            Point2D p2 = l.p2;
+            Color color = l.color;
 
             double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2 = p2.getY();
             int u1 = (int) (width * (x1 - a) / (b - a) + 0.5);
@@ -281,8 +287,8 @@ public class Controller {
             int v1 = (int) (height * (y1 - c) / (d - c) + 0.5);
             int v2 = (int) (height * (y2 - c) / (d - c) + 0.5);
 
-
             mapPanel.drawLine(u1, v1, u2, v2);
+            mapPanel.drawColorLine(u1, v1, u2, v2, color);
             if (areGridPointsEnabled) {
                 mapPanel.drawGridPoint(u1, v1);
                 mapPanel.drawGridPoint(u2, v2);
@@ -501,6 +507,7 @@ public class Controller {
                     Point2D p2 = points.get(1);
                     lines.add(p1);
                     lines.add(p2);
+                    mapColorLines.add(new Line(p1, p2, lesserColor));
 
                     if(seeds != null) {
                         seeds.addAll(tempSeeds);
@@ -595,6 +602,7 @@ public class Controller {
     public void setIsolinesEnabled(boolean isolinesEnabled) {
         this.areIsolinesEnabled = isolinesEnabled;
         mapPanel.setIsolinesEnabled(areIsolinesEnabled);
+        mapPanel.repaint();
     }
 
     public int getK() {
@@ -616,13 +624,12 @@ public class Controller {
         legendPanel.getLegendMap().setColor(isolineColor);
         mapPanel.clearGridPoints();
         mapLines = new ArrayList<>();
+        mapColorLines = new ArrayList<>();
         mapSeeds = new ArrayList<>();
-        legendLines = new ArrayList<>();
-        legendSeeds = new ArrayList<>();
+
         userLines = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawMap();
-        calculateMap(legendModel, legendLines, legendSeeds);
         drawLegend();
 
         mapPanel.repaint();
