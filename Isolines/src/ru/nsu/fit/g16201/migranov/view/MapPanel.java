@@ -32,6 +32,7 @@ public class MapPanel extends JPanel {
     private int isolineRGB;
     private boolean areGridPointsEnabled = false;
     private boolean interpolationEnabled = false;
+    private boolean isolinesEnabled = true;
 
     static private final Color gridColor = Color.BLACK;
 
@@ -74,7 +75,8 @@ public class MapPanel extends JPanel {
             g.drawImage(colorCanvas, 0, 0, width, height, null);
         else
             g.drawImage(interpolatedCanvas, 0, 0, width, height, null);
-        g.drawImage(lineCanvas, 0, 0, width, height, null);
+        if(isolinesEnabled)
+            g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(userLineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
         if(areGridPointsEnabled)
@@ -186,6 +188,12 @@ public class MapPanel extends JPanel {
         }
         return -1;-*/
     }
+
+    public void setIsolinesEnabled(boolean isolinesEnabled) {
+        this.isolinesEnabled = isolinesEnabled;
+    }
+
+
 
     class Span
     {

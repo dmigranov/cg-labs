@@ -280,6 +280,7 @@ public class Controller {
             int v1 = (int) (height * (y1 - c) / (d - c) + 0.5);
             int v2 = (int) (height * (y2 - c) / (d - c) + 0.5);
 
+
             mapPanel.drawLine(u1, v1, u2, v2);
             if (areGridPointsEnabled) {
                 mapPanel.drawGridPoint(u1, v1);
@@ -592,7 +593,7 @@ public class Controller {
 
     public void setIsolinesEnabled(boolean isolinesEnabled) {
         this.areIsolinesEnabled = isolinesEnabled;
-        //todo
+        mapPanel.setIsolinesEnabled(areIsolinesEnabled);
     }
 
     public int getK() {
