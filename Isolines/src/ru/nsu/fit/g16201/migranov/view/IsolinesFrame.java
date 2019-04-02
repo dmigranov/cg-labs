@@ -328,17 +328,21 @@ public class IsolinesFrame extends MainFrame {
 
     public void onInterpolationEnabled()
     {
-        controller.setInterpolationEnabled(!controller.isInterpolationEnabled());
+        //controller.setInterpolationEnabled(!controller.isInterpolationEnabled());
+        controller.setMode(Controller.INTERPOLATION);
+
     }
 
     public void onPerPixelColorMap()
     {
-        controller.setPerPixelColorMapEnabled(!controller.isPerPixelColorMapEnabled());
+        //controller.setPerPixelColorMapEnabled(!controller.isPerPixelColorMapEnabled());
+        controller.setMode(Controller.PERPIXELACTUAL);
+
     }
 
     public void onFillEnabled()
     {
-
+        controller.setMode(Controller.SPAN);
     }
 
     public void onClear()

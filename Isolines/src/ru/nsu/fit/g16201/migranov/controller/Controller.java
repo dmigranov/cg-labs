@@ -15,9 +15,9 @@ import java.util.List;
 import static ru.nsu.fit.g16201.migranov.controller.Seed.*;
 
 public class Controller {
-    static final int INTERPOLATION = 0;
-    static final int SPAN = 1;
-    static final int PERPIXELACTUAL = 2;
+    public static final int INTERPOLATION = 0;
+    public static final int SPAN = 1;
+    public static final int PERPIXELACTUAL = 2;
     private int mode = SPAN;
 
     private final MapPanel mapPanel;
