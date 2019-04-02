@@ -48,9 +48,9 @@ public class Controller {
                 if(mapModel != null && legendModel != null) {
                     mapPanel.updateSize();
                     legendPanel.updateSize();
+                    drawLegend();
                     drawMap();
                     recalculateAndDrawUserLines();
-                    drawLegend();
                     mapPanel.repaint();
                     legendPanel.repaint();
                 }
@@ -115,10 +115,7 @@ public class Controller {
     private void recalculateAndDrawUserLines() {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
-        /*for(int i = 0; i < userLines.size(); i+=2)
-        {
-            Point2D p1 = userLines.get(i);
-            Point2D p2 = userLines.get(i+1);*/
+
         for(Line l : userLines)
         {
             Point2D p1 = l.p1;
@@ -184,9 +181,9 @@ public class Controller {
             //mapColorLines = new ArrayList<>();
             mapSeeds = new ArrayList<>();
             userLines = new ArrayList<>();
+            drawLegend();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
-            drawLegend();
             mapPanel.repaint();
             legendPanel.repaint();
         }
@@ -649,8 +646,8 @@ public class Controller {
         mapSeeds = new ArrayList<>();
         userLines = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
-        drawMap();
         drawLegend();
+        drawMap();
 
         mapPanel.repaint();
         legendPanel.repaint();
@@ -679,8 +676,8 @@ public class Controller {
         this.interpolationEnabled = interpolationEnabled;
         mapPanel.setInterpolationEnabled(interpolationEnabled);
         legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
-        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         drawLegend();
+        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
 
         mapPanel.repaint();
         legendPanel.repaint();
@@ -704,5 +701,11 @@ public class Controller {
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         mapPanel.repaint();
 
+    }
+
+    public void clearUserIsolines() {
+        userLines = new ArrayList<>();
+        mapPanel.clearUserLine();
+        mapPanel.repaint();
     }
 }

@@ -77,6 +77,8 @@ public class IsolinesFrame extends MainFrame {
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Per-pixel color map on", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", "onPerPixelColorMap", false, false);
+        addMenuAndToolBarButton("Options/Clear user isolines", "Clear user isolines", KeyEvent.VK_C, "blur.png", "onClear", true);
+
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
@@ -277,5 +279,10 @@ public class IsolinesFrame extends MainFrame {
     public void onPerPixelColorMap()
     {
         controller.setPerPixelColorMapEnabled(!controller.isPerPixelColorMapEnabled());
+    }
+
+    public void onClear()
+    {
+        controller.clearUserIsolines();
     }
 }
