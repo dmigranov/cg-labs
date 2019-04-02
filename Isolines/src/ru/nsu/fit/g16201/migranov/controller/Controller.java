@@ -33,7 +33,6 @@ public class Controller {
     private boolean areGridPointsEnabled = false;
     //private boolean interpolationEnabled = false;
     //private boolean perPixelColorMapEnabled = false;
-
     //private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
     private List<Line> mapLines, userLines;
@@ -43,7 +42,6 @@ public class Controller {
     public Controller(MapPanel mapPanel, LegendPanel legendPanel, JLabel statusLabel) {
         this.mapPanel = mapPanel;
         this.legendPanel = legendPanel;
-
 
         mapPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -676,34 +674,6 @@ public class Controller {
         mapPanel.clearUserLine();
         mapPanel.repaint();
     }
-
-    /*public boolean isPerPixelColorMapEnabled() {
-        return perPixelColorMapEnabled;
-    }
-
-    public void setPerPixelColorMapEnabled(boolean perPixelColorMapEnabled) {
-        this.perPixelColorMapEnabled = perPixelColorMapEnabled;
-
-        mapPanel.clear();
-        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
-        mapPanel.repaint();
-
-    }
-
-    public boolean isInterpolationEnabled() {
-        return interpolationEnabled;
-    }
-
-    public void setInterpolationEnabled(boolean interpolationEnabled) {
-        this.interpolationEnabled = interpolationEnabled;
-        mapPanel.setInterpolationEnabled(interpolationEnabled);
-        legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
-        drawLegend();
-        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
-
-        mapPanel.repaint();
-        legendPanel.repaint();
-    }*/
 
     public void setMode(int mode)
     {
