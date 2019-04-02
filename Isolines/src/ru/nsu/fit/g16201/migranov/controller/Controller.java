@@ -71,6 +71,7 @@ public class Controller {
                 double my = ((mapModel.getD() - mapModel.getC()) * y/mapPanel.getHeight() + mapModel.getC());
                 double f = mapModel.applyFunction(mx, my);
 
+
                 statusLabel.setText(String.format("x = %.3f", mx) + ", " + String.format("y = %.3f", my) + "; " + String.format("f(x, y) = %.3f", f));
 
             }
@@ -83,10 +84,18 @@ public class Controller {
                 if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
 
+
+
                 //todo; динамическая изолиния
             }
         });
         mapPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+
+            }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
@@ -95,12 +104,11 @@ public class Controller {
                 if (x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
 
-                double mx = ((mapModel.getB() - mapModel.getA()) * x / mapPanel.getWidth() + mapModel.getA());
+                /*double mx = ((mapModel.getB() - mapModel.getA()) * x / mapPanel.getWidth() + mapModel.getA());
                 double my = ((mapModel.getD() - mapModel.getC()) * y / mapPanel.getHeight() + mapModel.getC());
-                double z = mapModel.applyFunction(mx, my);
+                double z = mapModel.applyFunction(mx, my);  //точное значение функции*/
 
-                //calculateDynamicIsoline(z);
-                calculateMapForLevel(mapModel, userLines, null, z, 0);
+                calculateMapForLevel(mapModel, userLines, null, interpolate(x, y), 0);
                 recalculateAndDrawUserLines();
 
                 mapPanel.repaint();
@@ -112,6 +120,43 @@ public class Controller {
                 statusLabel.setText("");
             }
         });
+    }
+
+    private double interpolate(int u, int v)
+    {
+
+        double a = mapModel.getA();
+        double b = mapModel.getB();
+        double c = mapModel.getC();
+        double d = mapModel.getD();
+
+        int width = mapPanel.getWidth();
+        int height = mapPanel.getHeight();
+
+        double wk = (double)width / (mapModel.getK() - 1); //размер ячейки
+        double vm = (double)height / (mapModel.getM() - 1);
+        int j = (int)(u / wk);
+        int i = (int)(v / vm);
+        double uModel = (b - a) * u / width + a;
+        double vModel = (d - c) * v / height + c;
+
+        Point2D f3p = mapModel.getPoint(j, i );
+        Point2D f2p = mapModel.getPoint(j+1, i + 1);
+        double u0 = f3p.getX();
+        double u1 = f2p.getX();
+
+        double v0 = f3p.getY();
+        double v1 = f2p.getY();
+
+        double f1 = mapModel.getValue(j, i + 1);
+        double f2 = mapModel.getValue(j + 1, i + 1);
+        double f3 = mapModel.getValue(j, i);
+        double f4 = mapModel.getValue(j + 1, i);
+
+        double ccx0 = f1 * (u1 - uModel)/(u1 - u0) + f2 * (uModel - u0)/(u1-u0);       //по верхнему ребру
+        double ccx1 = f3 * (u1 - uModel)/(u1 - u0) + f4 * (uModel - u0)/(u1-u0);       //по нижнему ребру
+
+        return ccx1 * (v1 - vModel)/(v1 - v0) + ccx0 * (vModel - v0)/(v1 - v0);
     }
 
     private void recalculateAndDrawUserLines() {
@@ -702,6 +747,5 @@ public class Controller {
         }
         mapPanel.repaint();
         legendPanel.repaint();
-
     }
 }
