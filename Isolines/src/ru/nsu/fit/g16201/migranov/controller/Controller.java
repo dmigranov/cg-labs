@@ -84,8 +84,10 @@ public class Controller {
 
                 mapPanel.clearUserLine();
                 dynamicUserLine.clear();
+                mapPanel.clearGridPoints();
                 calculateMapForLevel(mapModel, dynamicUserLine, null, interpolate(x, y), 0);
                 recalculateAndDrawUserLines();
+                recalculateGridPoints(mapLines);
 
                 mapPanel.repaint();
 
@@ -111,8 +113,10 @@ public class Controller {
                 double my = ((mapModel.getD() - mapModel.getC()) * y / mapPanel.getHeight() + mapModel.getC());
                 double z = mapModel.applyFunction(mx, my);  //точное значение функции*/
 
+                mapPanel.clearGridPoints();
                 calculateMapForLevel(mapModel, userLines, null, interpolate(x, y), 0);
                 recalculateAndDrawUserLines();
+                recalculateGridPoints(mapLines);
 
                 mapPanel.repaint();
             }
@@ -176,7 +180,7 @@ public class Controller {
         return ccx1 * (v1 - vModel)/(v1 - v0) + ccx0 * (vModel - v0)/(v1 - v0);
     }
 
-    private void recalculateGridpoint(List<Line> lines)
+    private void recalculateGridPoints(List<Line> lines)
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
@@ -766,8 +770,10 @@ public class Controller {
     public void setGridPointsEnabled(boolean gridPointsEnabled) {
         areGridPointsEnabled = gridPointsEnabled;
         mapPanel.setGridPointsEnabled(gridPointsEnabled);
-        if(areGridPointsEnabled)
+        if(areGridPointsEnabled) {
             recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+            recalculateGridPoints(userLines);
+        }
         else
             mapPanel.clearGridPoints();
         mapPanel.repaint();
@@ -785,6 +791,8 @@ public class Controller {
         userLines.clear();
         dynamicUserLine.clear();
         mapPanel.clearUserLine();
+        mapPanel.clearGridPoints();
+        recalculateGridPoints(mapLines);
         mapPanel.repaint();
     }
 
@@ -811,9 +819,11 @@ public class Controller {
             mapPanel.setInterpolationEnabled(false);
             legendPanel.getLegendMap().setInterpolationEnabled(false);
             mapPanel.clear();
+            drawLegend();
             recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         }
         mapPanel.repaint();
         legendPanel.repaint();
+        legendPanel.getLegendMap().repaint();
     }
 }
