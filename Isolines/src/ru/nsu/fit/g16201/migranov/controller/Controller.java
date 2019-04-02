@@ -389,7 +389,6 @@ public class Controller {
                         legendX = width -1;
 
                     mapPanel.paintPixelInterpolated(u, v, legendPanel.getColorInterpolated(legendX, 1));
-
                 }
             }
         }
