@@ -200,6 +200,10 @@ public class MapPanel extends JPanel {
         colorGraphics.drawLine(u1,v1,u2,v2);
     }
 
+    int getColorInterpolated(int x, int y) {
+        return interpolatedCanvas.getRGB(x, y);
+    }
+
 
     class Span
     {
