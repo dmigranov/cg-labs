@@ -47,7 +47,7 @@ public class MapPanel extends JPanel {
         lineGraphics = lineCanvas.createGraphics();
 
         userLineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        userLineGraphics = lineCanvas.createGraphics();
+        userLineGraphics = userLineCanvas.createGraphics();
         userLineGraphics.setBackground(new Color(0,0,0,0));
 
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -75,7 +75,7 @@ public class MapPanel extends JPanel {
             g.drawImage(colorCanvas, 0, 0, width, height, null);
         else
             g.drawImage(interpolatedCanvas, 0, 0, width, height, null);
-        //g.drawImage(userLineCanvas, 0, 0, width, height, null);
+        g.drawImage(userLineCanvas, 0, 0, width, height, null);
         if(isolinesEnabled)
             g.drawImage(lineCanvas, 0, 0, width, height, null);
         g.drawImage(gridCanvas, 0, 0, width, height, null);
@@ -124,9 +124,9 @@ public class MapPanel extends JPanel {
         lineGraphics.setColor(isolineColor);
 
         userLineCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        userLineGraphics = lineCanvas.createGraphics();
+        userLineGraphics = userLineCanvas.createGraphics();
         userLineGraphics.setColor(isolineColor);
-        userLineGraphics.setBackground(new Color(0,0,0,0));
+        //userLineGraphics.setBackground(new Color(0,0,0,0));
 
         colorCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         colorGraphics = colorCanvas.createGraphics();

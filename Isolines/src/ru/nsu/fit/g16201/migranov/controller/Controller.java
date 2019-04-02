@@ -32,7 +32,7 @@ public class Controller {
 
     //private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
-    private List<Line> mapColorLines, userLines;
+    private List<Line> mapLines, userLines;
     private List<Seed> mapSeeds;
 
 
@@ -115,11 +115,14 @@ public class Controller {
     private void recalculateAndDrawUserLines() {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
-        for(int i = 0; i < userLines.size(); i+=2)
+        /*for(int i = 0; i < userLines.size(); i+=2)
         {
             Point2D p1 = userLines.get(i);
-            Point2D p2 = userLines.get(i+1);
-
+            Point2D p2 = userLines.get(i+1);*/
+        for(Line l : userLines)
+        {
+            Point2D p1 = l.p1;
+            Point2D p2 = l.p2;
             double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
             int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
@@ -178,7 +181,7 @@ public class Controller {
             mapPanel.setColor(isolineColor);
             legendPanel.getLegendMap().setColor(isolineColor);
             mapLines = new ArrayList<>();
-            mapColorLines = new ArrayList<>();
+            //mapColorLines = new ArrayList<>();
             mapSeeds = new ArrayList<>();
             userLines = new ArrayList<>();
             calculateMap(mapModel, mapLines, mapSeeds);
@@ -269,7 +272,7 @@ public class Controller {
 
 
     //чтобы каждый раз не считать изолинии, сохранять их в лист и при ресайзе переводить из системы xy в uv
-    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Point2D> lines, List<Seed> seeds)
+    private void recalculateAndDrawMap(MapPanel mapPanel, Model model, List<Line> lines, List<Seed> seeds)
     {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = model.getA(), b = model.getB(), c = model.getC(), d = model.getD();
@@ -278,7 +281,7 @@ public class Controller {
             //Point2D p1 = lines.get(i);
             //Point2D p2 = lines.get(i + 1);
 
-        for(Line l : mapColorLines)
+        for(Line l : lines)
         {
             Point2D p1 = l.p1;
             Point2D p2 = l.p2;
@@ -405,7 +408,7 @@ public class Controller {
     }
 
     //первый раз только при загрузке файла. в пространстве xy
-    private void calculateMap(Model model, List<Point2D> lines, List<Seed> seeds)
+    private void calculateMap(Model model, List<Line> lines, List<Seed> seeds)
     {
         for(int l = 1; l <= n; l++)     //так?
         {
@@ -414,7 +417,7 @@ public class Controller {
         }
     }
 
-    private void calculateMapForLevel(Model model, List<Point2D> lines, List<Seed> seeds, double z, int l) {
+    private void calculateMapForLevel(Model model, List<Line> lines, List<Seed> seeds, double z, int l) {
 
         Color lesserColor, biggerColor;
         if(l > 0) {
@@ -505,9 +508,9 @@ public class Controller {
                 if (points.size() == 2) {
                     Point2D p1 = points.get(0);
                     Point2D p2 = points.get(1);
-                    lines.add(p1);
-                    lines.add(p2);
-                    mapColorLines.add(new Line(p1, p2, lesserColor));
+                    //lines.add(p1);
+                    //lines.add(p2);
+                    lines.add(new Line(p1, p2, lesserColor));
 
                     if(seeds != null) {
                         seeds.addAll(tempSeeds);
@@ -536,18 +539,17 @@ public class Controller {
                     if (f > z && z > f4 || f4 > z && z > f) {
                         //Линия проъодит через f3f4 и f4f2. а другая - соотв через f3f1 и f1f2
                         //p1p2 & p3p4
-                        mapColorLines.add(new Line(p1, p2, lesserColor));
-                        mapColorLines.add(new Line(p1, p2, lesserColor));
+                        lines.add(new Line(p1, p2, lesserColor));
+                        lines.add(new Line(p1, p2, lesserColor));
                         //todo: закраска: в середине - один цвет, по бокам друйгой. в этом ифе ещё один ифелс (от этого зависит, где буде тbigger )
-
                     }
 
                     else if (f > z && z > f3 || f3 > z && z > f)
                     {
                         //линия через f1f3 f3f4. другая
                         //p1p3 & p2p4
-                        mapColorLines.add(new Line(p1, p3, lesserColor));
-                        mapColorLines.add(new Line(p2, p4, lesserColor));
+                        lines.add(new Line(p1, p3, lesserColor));
+                        lines.add(new Line(p2, p4, lesserColor));
 
                     }
 
@@ -643,7 +645,7 @@ public class Controller {
         legendPanel.getLegendMap().setColor(isolineColor);
         mapPanel.clearGridPoints();
         mapLines = new ArrayList<>();
-        mapColorLines = new ArrayList<>();
+        //mapColorLines = new ArrayList<>();
         mapSeeds = new ArrayList<>();
         userLines = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
