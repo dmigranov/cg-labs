@@ -319,7 +319,7 @@ public class Controller {
                 }
             }
         }
-        else {
+        else {  //else if четная заливка
             for (Seed s : seeds) {
                 int direction = s.direction;
                 double x = s.x, y = s.y;
@@ -353,7 +353,7 @@ public class Controller {
             }
         }
 
-        if(interpolationEnabled)
+        if(interpolationEnabled)    //else if интерполяция
         {
             //todo исправить
             double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки

@@ -79,6 +79,7 @@ public class IsolinesFrame extends MainFrame {
         addCheckBoxMenuAndToolBarButton("Options/Per-pixel color map on", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", "onPerPixelColorMap", false, false);
         addMenuAndToolBarButton("Options/Clear user isolines", "Clear user isolines", KeyEvent.VK_C, "blur.png", "onClear", true);
 
+        //todo: обьъединить режим интерпоялции, режим попиксельной закраски и режим спана в баттонгруппу
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
