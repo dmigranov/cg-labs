@@ -72,14 +72,16 @@ public class IsolinesFrame extends MainFrame {
 
         addSubMenu("Options", KeyEvent.VK_O);
         addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", true);
-        addCheckBoxMenuAndToolBarButton("Options/Interpolation on", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", "onInterpolationEnabled", false, false);
+
+        ButtonGroup group = new ButtonGroup();
+        addRadioButtonMenuAndToolBarButton("Options/Interpolation mode", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", group, "onInterpolationEnabled", false, false);
+        addRadioButtonMenuAndToolBarButton("Options/Filled color map mode", "Shows if interpolation is enabled", KeyEvent.VK_F, "blur.png", group, "onFillEnabled", true, false);
+        addRadioButtonMenuAndToolBarButton("Options/Per-pixel color map mode", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", group, "onPerPixelColorMap", false, false);
+
         addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
         addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
-        addCheckBoxMenuAndToolBarButton("Options/Per-pixel color map on", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", "onPerPixelColorMap", false, false);
         addMenuAndToolBarButton("Options/Clear user isolines", "Clear user isolines", KeyEvent.VK_C, "blur.png", "onClear", true);
-
-        //todo: обьъединить режим интерпоялции, режим попиксельной закраски и режим спана в баттонгруппу
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
@@ -252,11 +254,6 @@ public class IsolinesFrame extends MainFrame {
         System.exit(0);
     }
 
-    public  void onInterpolationEnabled()
-    {
-        controller.setInterpolationEnabled(!controller.isInterpolationEnabled());
-    }
-
     public  void onParameters()
     {
         JPanel optionsPanel = new JPanel();
@@ -329,9 +326,19 @@ public class IsolinesFrame extends MainFrame {
         controller.setGridPointsEnabled(!controller.areGridPointsEnabled());
     }
 
+    public void onInterpolationEnabled()
+    {
+        controller.setInterpolationEnabled(!controller.isInterpolationEnabled());
+    }
+
     public void onPerPixelColorMap()
     {
         controller.setPerPixelColorMapEnabled(!controller.isPerPixelColorMapEnabled());
+    }
+
+    public void onFillEnabled()
+    {
+
     }
 
     public void onClear()

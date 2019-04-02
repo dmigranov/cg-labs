@@ -15,7 +15,10 @@ import java.util.List;
 import static ru.nsu.fit.g16201.migranov.controller.Seed.*;
 
 public class Controller {
-    private static double epsilon = 1e-2;
+    public static final int INTERPOLATION = 0;
+    public static final int SPAN = 1;
+    public static final int PERPIXELACTUAL = 2;
+
     private final MapPanel mapPanel;
     private final LegendPanel legendPanel;
     private BufferedReader br;
@@ -435,6 +438,7 @@ public class Controller {
 
                 //double epsilon = (b-a)/10 + (d-c)/10;
 
+                double epsilon = 1e-2;
                 if (f1 == z)
                     f1 += epsilon;
                 if (f2 == z)
@@ -658,21 +662,6 @@ public class Controller {
         //todo: Точки входа в треугольники (возможно, занести в отдельынй массив и рисовать их там же (в отдельном цикле)
     }
 
-    public boolean isInterpolationEnabled() {
-        return interpolationEnabled;
-    }
-
-    public void setInterpolationEnabled(boolean interpolationEnabled) {
-        this.interpolationEnabled = interpolationEnabled;
-        mapPanel.setInterpolationEnabled(interpolationEnabled);
-        legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
-        drawLegend();
-        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
-
-        mapPanel.repaint();
-        legendPanel.repaint();
-    }
-
 
 
     private int[] getRGB(int color)
@@ -691,6 +680,21 @@ public class Controller {
         recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
         mapPanel.repaint();
 
+    }
+
+    public boolean isInterpolationEnabled() {
+        return interpolationEnabled;
+    }
+
+    public void setInterpolationEnabled(boolean interpolationEnabled) {
+        this.interpolationEnabled = interpolationEnabled;
+        mapPanel.setInterpolationEnabled(interpolationEnabled);
+        legendPanel.getLegendMap().setInterpolationEnabled(interpolationEnabled);
+        drawLegend();
+        recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+
+        mapPanel.repaint();
+        legendPanel.repaint();
     }
 
     public void clearUserIsolines() {
