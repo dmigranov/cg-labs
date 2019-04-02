@@ -31,8 +31,8 @@ public class Controller {
     private boolean isGridEnabled = false;
     private boolean areIsolinesEnabled = true;
     private boolean areGridPointsEnabled = false;
-    private boolean interpolationEnabled = false;
-    private boolean perPixelColorMapEnabled = false;
+    //private boolean interpolationEnabled = false;
+    //private boolean perPixelColorMapEnabled = false;
 
     //private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
@@ -216,7 +216,7 @@ public class Controller {
     private void drawLegend() {
         //recalculateAndDrawMap(legendPanel.getLegendMap(), legendModel, legendLines, legendSeeds);
         MapPanel legendMap = legendPanel.getLegendMap();
-        if(!interpolationEnabled)
+        if(mode != INTERPOLATION)
         {
             for (int j = 0; j <= n; j++) {
                 int x = (int) Math.round(legendMap.getWidth() * legendModel.getValue(j, 0));
@@ -301,7 +301,7 @@ public class Controller {
                 mapPanel.drawGridPoint(u2, v2);
             }
         }
-        if(perPixelColorMapEnabled) {
+        if(mode == PERPIXELACTUAL) {
             for (int v = 0; v < height; v++) {
                 double y = (d - c) * v / height + c;
                 for (int u = 0; u < width; u++) {
@@ -323,7 +323,8 @@ public class Controller {
                 }
             }
         }
-        else {  //else if четная заливка
+        else if (mode == SPAN)
+        {
             for (Seed s : seeds) {
                 int direction = s.direction;
                 double x = s.x, y = s.y;
@@ -356,8 +357,7 @@ public class Controller {
                 //mapPanel.drawGridPoint(us, vs, color);    //for test only
             }
         }
-
-        if(interpolationEnabled)    //else if интерполяция
+        else if(mode == INTERPOLATION)    //else if интерполяция
         {
             double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки
             double vm = (double)mapPanel.getHeight() / (model.getM() - 1);
@@ -677,7 +677,7 @@ public class Controller {
         mapPanel.repaint();
     }
 
-    public boolean isPerPixelColorMapEnabled() {
+    /*public boolean isPerPixelColorMapEnabled() {
         return perPixelColorMapEnabled;
     }
 
@@ -703,7 +703,7 @@ public class Controller {
 
         mapPanel.repaint();
         legendPanel.repaint();
-    }
+    }*/
 
     public void setMode(int mode)
     {
