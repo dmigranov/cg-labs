@@ -35,7 +35,7 @@ public class Controller {
     //private boolean perPixelColorMapEnabled = false;
     //private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
-    private List<Line> mapLines, userLines;
+    private List<Line> mapLines, userLines, dynamicUserLine;
     private List<Seed> mapSeeds;
 
 
@@ -84,9 +84,13 @@ public class Controller {
                 if(x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
 
+                mapPanel.clearUserLine();
+                dynamicUserLine.clear();
+                calculateMapForLevel(mapModel, dynamicUserLine, null, interpolate(x, y), 0);
+                recalculateAndDrawUserLines();
 
+                mapPanel.repaint();
 
-                //todo; динамическая изолиния
             }
         });
         mapPanel.addMouseListener(new MouseAdapter() {
@@ -94,6 +98,7 @@ public class Controller {
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
 
+                userLines.addAll(dynamicUserLine);
             }
 
             @Override
@@ -136,7 +141,15 @@ public class Controller {
         double wk = (double)width / (mapModel.getK() - 1); //размер ячейки
         double vm = (double)height / (mapModel.getM() - 1);
         int j = (int)(u / wk);
+        if (j >= mapModel.getK() - 1)
+            j = mapModel.getK() - 2;
+        if (j < 0)
+            j = 0;
         int i = (int)(v / vm);
+        if (i >= mapModel.getM() - 1)
+            i = mapModel.getM() - 2;
+        if (i < 0)
+            i = 0;
         double uModel = (b - a) * u / width + a;
         double vModel = (d - c) * v / height + c;
 
@@ -148,10 +161,16 @@ public class Controller {
         double v0 = f3p.getY();
         double v1 = f2p.getY();
 
-        double f1 = mapModel.getValue(j, i + 1);
-        double f2 = mapModel.getValue(j + 1, i + 1);
-        double f3 = mapModel.getValue(j, i);
-        double f4 = mapModel.getValue(j + 1, i);
+        double f1=0, f2=0, f3=0, f4=0;
+        try {
+            f1 = mapModel.getValue(j, i + 1);
+            f2 = mapModel.getValue(j + 1, i + 1);
+            f3 = mapModel.getValue(j, i);
+            f4 = mapModel.getValue(j + 1, i);
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+        }
 
         double ccx0 = f1 * (u1 - uModel)/(u1 - u0) + f2 * (uModel - u0)/(u1-u0);       //по верхнему ребру
         double ccx1 = f3 * (u1 - uModel)/(u1 - u0) + f4 * (uModel - u0)/(u1-u0);       //по нижнему ребру
@@ -172,7 +191,17 @@ public class Controller {
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
             int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
-
+            mapPanel.drawUserLine(u1, v1, u2, v2);
+        }
+        for(Line l : dynamicUserLine)
+        {
+            Point2D p1 = l.p1;
+            Point2D p2 = l.p2;
+            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
+            int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
+            int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
+            int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
+            int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
             mapPanel.drawUserLine(u1, v1, u2, v2);
         }
     }
@@ -228,6 +257,7 @@ public class Controller {
             //mapColorLines = new ArrayList<>();
             mapSeeds = new ArrayList<>();
             userLines = new ArrayList<>();
+            dynamicUserLine = new ArrayList<>();
             drawLegend();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
@@ -402,6 +432,7 @@ public class Controller {
         }
         else if(mode == INTERPOLATION)    //else if интерполяция
         {
+            //можно заменить на вызов функции interpolate в цикле, Но боюсь за скорость
             double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки
             double vm = (double)mapPanel.getHeight() / (model.getM() - 1);
             for(int v = 0; v < mapPanel.getHeight(); v++) {
@@ -679,10 +710,10 @@ public class Controller {
         mapPanel.setColor(isolineColor);
         legendPanel.getLegendMap().setColor(isolineColor);
         mapPanel.clearGridPoints();
-        mapLines = new ArrayList<>();
-        //mapColorLines = new ArrayList<>();
-        mapSeeds = new ArrayList<>();
-        userLines = new ArrayList<>();
+        mapLines.clear();
+        mapSeeds.clear();
+        userLines.clear();
+        dynamicUserLine.clear();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawLegend();
         drawMap();
@@ -715,7 +746,8 @@ public class Controller {
 
 
     public void clearUserIsolines() {
-        userLines = new ArrayList<>();
+        userLines.clear();
+        dynamicUserLine.clear();
         mapPanel.clearUserLine();
         mapPanel.repaint();
     }

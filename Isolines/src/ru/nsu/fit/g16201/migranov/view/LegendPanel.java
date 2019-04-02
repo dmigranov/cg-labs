@@ -89,8 +89,6 @@ public class LegendPanel extends JPanel {
     }
 
 
-
-
     public int getColorInterpolated(int legendX, int y) {
         return legendMap.getColorInterpolated(legendX, y);
     }
