@@ -30,9 +30,9 @@ public class Controller {
     private boolean interpolationEnabled = false;
     private boolean perPixelColorMapEnabled = false;
 
-    private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
+    //private List<Point2D> mapLines, userLines;        //l1p1 l1p2 l2p1 l2p2
     //private Set<Seed> mapSeeds, legendSeeds;
-    private List<Line> mapColorLines;
+    private List<Line> mapColorLines, userLines;
     private List<Seed> mapSeeds;
 
 
@@ -88,7 +88,7 @@ public class Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                mapPanel.clearUserLine();
+                //mapPanel.clearUserLine();
                 int x = e.getX(), y = e.getY();
                 if (x < 0 || x > mapPanel.getWidth() || y < 0 || y > mapPanel.getHeight() || mapModel == null)
                     return;
@@ -180,7 +180,6 @@ public class Controller {
             mapLines = new ArrayList<>();
             mapColorLines = new ArrayList<>();
             mapSeeds = new ArrayList<>();
-
             userLines = new ArrayList<>();
             calculateMap(mapModel, mapLines, mapSeeds);
             drawMap();
@@ -646,7 +645,6 @@ public class Controller {
         mapLines = new ArrayList<>();
         mapColorLines = new ArrayList<>();
         mapSeeds = new ArrayList<>();
-
         userLines = new ArrayList<>();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawMap();
