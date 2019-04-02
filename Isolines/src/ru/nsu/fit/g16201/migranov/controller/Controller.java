@@ -176,6 +176,28 @@ public class Controller {
         return ccx1 * (v1 - vModel)/(v1 - v0) + ccx0 * (vModel - v0)/(v1 - v0);
     }
 
+    private void recalculateGridpoint(List<Line> lines)
+    {
+        int width = mapPanel.getWidth(), height = mapPanel.getHeight();
+        double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
+
+        for(Line l : lines)
+        {
+            Point2D p1 = l.p1;
+            Point2D p2 = l.p2;
+            double x1 = p1.getX(), x2 = p2.getX(), y1 = p1.getY(), y2  = p2.getY();
+            int u1 = (int)(width * (x1 - a)/(b - a) + 0.5);
+            int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
+            int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
+            int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+
+            if (areGridPointsEnabled) {
+                mapPanel.drawGridPoint(u1, v1);
+                mapPanel.drawGridPoint(u2, v2);
+            }
+        }
+    }
+
     private void recalculateAndDrawUserLines() {
         int width = mapPanel.getWidth(), height = mapPanel.getHeight();
         double a = mapModel.getA(), b = mapModel.getB(), c = mapModel.getC(), d = mapModel.getD();
@@ -189,10 +211,12 @@ public class Controller {
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
             int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
-            /*if (areGridPointsEnabled) {
+
+            if (areGridPointsEnabled) {
                 mapPanel.drawGridPoint(u1, v1);
                 mapPanel.drawGridPoint(u2, v2);
-            }*/
+            }
+
             mapPanel.drawUserLine(u1, v1, u2, v2);
         }
         for(Line l : dynamicUserLine)
@@ -204,10 +228,12 @@ public class Controller {
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
             int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
-            /*if (areGridPointsEnabled) {
+
+            if (areGridPointsEnabled) {
                 mapPanel.drawGridPoint(u1, v1);
                 mapPanel.drawGridPoint(u2, v2);
-            }*/
+            }
+
             mapPanel.drawUserLine(u1, v1, u2, v2);
         }
     }
@@ -724,6 +750,7 @@ public class Controller {
         mapSeeds.clear();
         userLines.clear();
         dynamicUserLine.clear();
+        mapPanel.clearUserLine();
         calculateMap(mapModel, mapLines, mapSeeds);
         drawLegend();
         drawMap();
