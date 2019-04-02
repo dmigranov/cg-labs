@@ -189,6 +189,10 @@ public class Controller {
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
             int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+            /*if (areGridPointsEnabled) {
+                mapPanel.drawGridPoint(u1, v1);
+                mapPanel.drawGridPoint(u2, v2);
+            }*/
             mapPanel.drawUserLine(u1, v1, u2, v2);
         }
         for(Line l : dynamicUserLine)
@@ -200,6 +204,10 @@ public class Controller {
             int u2 = (int)(width * (x2 - a)/(b - a) + 0.5);
             int v1 = (int)(height * (y1 - c)/(d - c) + 0.5);
             int v2 = (int)(height * (y2 - c)/(d - c) + 0.5);
+            /*if (areGridPointsEnabled) {
+                mapPanel.drawGridPoint(u1, v1);
+                mapPanel.drawGridPoint(u2, v2);
+            }*/
             mapPanel.drawUserLine(u1, v1, u2, v2);
         }
     }
@@ -736,7 +744,6 @@ public class Controller {
         else
             mapPanel.clearGridPoints();
         mapPanel.repaint();
-        //todo: Точки входа в треугольники (возможно, занести в отдельынй массив и рисовать их там же (в отдельном цикле)
     }
 
 
