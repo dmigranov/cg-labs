@@ -74,14 +74,18 @@ public class IsolinesFrame extends MainFrame {
         addMenuAndToolBarButton("Options/Parameters", "Change parameters", KeyEvent.VK_P, "settings.png", "onParameters", true);
 
         ButtonGroup group = new ButtonGroup();
-        addRadioButtonMenuAndToolBarButton("Options/Interpolation mode", "Shows if interpolation is enabled", KeyEvent.VK_I, "blur.png", group, "onInterpolationEnabled", false, false);
-        addRadioButtonMenuAndToolBarButton("Options/Filled color map mode", "Shows if interpolation is enabled", KeyEvent.VK_F, "blur.png", group, "onFillEnabled", true, false);
-        addRadioButtonMenuAndToolBarButton("Options/Per-pixel color map mode", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "blur.png", group, "onPerPixelColorMap", false, false);
+        addRadioButtonMenuAndToolBarButton("Options/Interpolation mode", "Shows if interpolation is enabled", KeyEvent.VK_I, "bw.png", group, "onInterpolationEnabled", false, true);
+        addRadioButtonMenuAndToolBarButton("Options/Filled color map mode", "Shows if filling mode is enabled", KeyEvent.VK_F, "absorption.png", group, "onFillEnabled", true, true);
+        addRadioButtonMenuAndToolBarButton("Options/Per-pixel color map mode", "Shows if per-pixel color map is enabled", KeyEvent.VK_C, "emboss.png", group, "onPerPixelColorMap", false, true);
 
-        addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "blur.png", "onIsolinesEnabled", true, false);
-        addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "blur.png", "onGridEnabled", false, false);
-        addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "blur.png", "onPointsEnabled", false, false);
-        addMenuAndToolBarButton("Options/Clear user isolines", "Clear user isolines", KeyEvent.VK_C, "blur.png", "onClear", true);
+        addCheckBoxMenuAndToolBarButton("Options/Isolines on", "Shows if isolines are shown", KeyEvent.VK_L, "line.png", "onIsolinesEnabled", true, true);
+        addCheckBoxMenuAndToolBarButton("Options/Grid on", "Shows if grid is shown", KeyEvent.VK_G, "grid.png", "onGridEnabled", false, true);
+        addCheckBoxMenuAndToolBarButton("Options/Grid points on", "Shows if grid points are shown", KeyEvent.VK_P, "gridpoint.png", "onPointsEnabled", false, true);
+        addMenuAndToolBarButton("Options/Clear user isolines", "Clear user isolines", KeyEvent.VK_C, "clear.png", "onClear", true);
+
+        addSubMenu("Help", KeyEvent.VK_H);
+        addMenuAndToolBarButton("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout", false);
+
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
@@ -348,5 +352,15 @@ public class IsolinesFrame extends MainFrame {
     public void onClear()
     {
         controller.clearUserIsolines();
+    }
+
+    public void onAbout()
+    {
+        JPanel aboutPanel = new JPanel();
+        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
+        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
+        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
+        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection and icons8.com"));
+        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Isolines", JOptionPane.INFORMATION_MESSAGE);
     }
 }

@@ -25,8 +25,6 @@ public class MapPanel extends JPanel {
     private BufferedImage interpolatedCanvas;
     private Graphics2D interpolatedGraphics;
 
-    //todo: когда буду реализовывать дин. рисование изолиний, делать это на отдельном канвасе (СКОРОСТЬ!)
-
     private int width, height;
     private Color isolineColor;
     private int isolineRGB;
@@ -105,7 +103,6 @@ public class MapPanel extends JPanel {
 
         lineGraphics.clearRect(0, 0, lineCanvas.getWidth(), lineCanvas.getHeight());
         colorGraphics.clearRect(0, 0, colorCanvas.getWidth(), colorCanvas.getHeight());
-
     }
 
     public void setColor(Color isolineColor) {
@@ -157,7 +154,6 @@ public class MapPanel extends JPanel {
         gridPointsGraphics.setColor(new Color(color));
         gridPointsGraphics.fillOval(u-4, v-4, 8, 8);
     }
-
 
     public void clearGridPoints() {
         gridPointsGraphics.clearRect(0, 0, gridPointsCanvas.getWidth(), gridPointsCanvas.getHeight());

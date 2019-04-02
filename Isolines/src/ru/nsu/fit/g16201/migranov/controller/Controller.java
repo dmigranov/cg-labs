@@ -71,9 +71,7 @@ public class Controller {
                 double my = ((mapModel.getD() - mapModel.getC()) * y/mapPanel.getHeight() + mapModel.getC());
                 double f = mapModel.applyFunction(mx, my);
 
-
                 statusLabel.setText(String.format("x = %.3f", mx) + ", " + String.format("y = %.3f", my) + "; " + String.format("f(x, y) = %.3f", f));
-
             }
 
             @Override
@@ -588,46 +586,50 @@ public class Controller {
                 else if (points.size() == 4)
                 {
                     Point2D p1=null, p2=null, p3=null, p4=null;
+                    Seed[] s = new Seed[8];
+                    Seed s1=null, s2=null, s3=null, s4=null;
 
                     double f = (f1 + f2 + f3 + f4) / 4;
-                    for (Point2D p : points)
+                    for (int k = 0; k < points.size(); k++)
                     {
-                        if(p.getY() == f3p.getY())
+                        Point2D p = points.get(k);
+                        if(p.getY() == f3p.getY()) {
                             p1 = p;
-                        else if (p.getX() == f2p.getX())
+                            s[0] = tempSeeds.get(k*2);
+                            s[1] = tempSeeds.get(k*2 + 1);
+                        }
+                        else if (p.getX() == f2p.getX()) {
                             p2 = p;
-                        else if (p.getX() == f3p.getX())
+                            s[2] = tempSeeds.get(k*2);
+                            s[3] = tempSeeds.get(k*2 + 1);
+                        }
+                        else if (p.getX() == f3p.getX()) {
                             p3 = p;
-                        else if (p.getY() == f1p.getY())
+                            s[4] = tempSeeds.get(k*2);
+                            s[5] = tempSeeds.get(k*2 + 1);
+                        }
+                        else if (p.getY() == f1p.getY()) {
                             p4 = p;
+                            s[6] = tempSeeds.get(k*2);
+                            s[7] = tempSeeds.get(k*2 + 1);
+                        }
+
                     }
-                    //todo: создать список точек добавить туда пересечение
                     if (f > z && z > f4 || f4 > z && z > f) {
-                        //Линия проъодит через f3f4 и f4f2. а другая - соотв через f3f1 и f1f2
-                        //p1p2 & p3p4
+                        //Линия проъодит через f3f4 и f4f2. а другая - соотв через f3f1 и f1f2 p1p2 & p3p4
                         lines.add(new Line(p1, p2, lesserColor));
                         lines.add(new Line(p1, p2, lesserColor));
-                        //todo: закраска: в середине - один цвет, по бокам друйгой. в этом ифе ещё один ифелс (от этого зависит, где буде тbigger )
                     }
 
                     else if (f > z && z > f3 || f3 > z && z > f)
                     {
-                        //линия через f1f3 f3f4. другая
-                        //p1p3 & p2p4
+                        //линия через f1f3 f3f4. другая p1p3 & p2p4
                         lines.add(new Line(p1, p3, lesserColor));
                         lines.add(new Line(p2, p4, lesserColor));
-
                     }
+                    seeds.addAll(tempSeeds);
 
                 }
-
-                else if (points.size() == 0)
-                {
-
-
-                }
-
-
             }
         }
     }
