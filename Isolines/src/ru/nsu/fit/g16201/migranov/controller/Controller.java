@@ -355,7 +355,6 @@ public class Controller {
 
         if(interpolationEnabled)    //else if интерполяция
         {
-            //todo исправить
             double wk = (double)mapPanel.getWidth() / (model.getK() - 1); //размер ячейки
             double vm = (double)mapPanel.getHeight() / (model.getM() - 1);
             for(int v = 0; v < mapPanel.getHeight(); v++) {
@@ -364,39 +363,33 @@ public class Controller {
                     int i =  (int)(v / vm);
 
                     int u0 = (int)wk*j, v0 = (int)vm*i;
-                    if(i == 0)
+                    /*if(i == 0)
                         v0++;
                     if(j==0)
-                        u0++;
+                        u0++;*/
                     int u1 = (int)wk*(j+1), v1 = (int)vm*(i+1);
                     u1 = u1 < mapPanel.getWidth() ? u1 : mapPanel.getWidth() - 1;
                     v1 = v1 < mapPanel.getHeight() ? v1 : mapPanel.getHeight() - 1;
 
                     //System.out.println(u0 + " " + u + " " + u1 + "; " + v0 + " " + v + " " + v1);
 
-                    int c00 = mapPanel.getRGB(u0, v0);
-                    int c10 = mapPanel.getRGB(u1, v0);
-                    int c01 = mapPanel.getRGB(u0, v1);
-                    int c11 = mapPanel.getRGB(u1, v1);
+                    double f1 = model.getValue(j, i + 1);
+                    double f2 = model.getValue(j + 1, i + 1);
+                    double f3 = model.getValue(j, i);
+                    double f4 = model.getValue(j + 1, i);
 
-                    int newColor = 0;
+                    //todo
 
-                    for(int k = 0; k < 24; k+=8) {
-                        int cc00 = c00 >> k & 0x000000FF;
-                        int cc10 = c10 >> k & 0x000000FF;
-                        int cc01 = c01 >> k & 0x000000FF;
-                        int cc11 = c11 >> k & 0x000000FF;
+                    int ccx0 = cc00 * (u1 - u)/(u1 - u0) + cc10 * (u-u0)/(u1-u0);       //по верхнему ребру
+                    int ccx1 = cc01 * (u1 - u)/(u1 - u0) + cc11 * (u-u0)/(u1-u0);       //по нижнему ребру
 
-                        int ccx0 = cc00 * (u1 - u)/(u1 - u0) + cc10 * (u-u0)/(u1-u0);       //по верхнему ребру
-                        int ccx1 = cc01 * (u1 - u)/(u1 - u0) + cc11 * (u-u0)/(u1-u0);       //по нижнему ребру
+                    int ccxx = ccx0 * (v1 - v)/(v1 - v0) + ccx1 * (v - v0)/(v1 - v0);
+                    if(ccxx < 0)
+                        ccxx = 0;
+                    if(ccxx > 255)
+                           ccxx = 255;
+                    newColor |= (ccxx << k);
 
-                        int ccxx = ccx0 * (v1 - v)/(v1 - v0) + ccx1 * (v - v0)/(v1 - v0);
-                        if(ccxx < 0)
-                            ccxx = 0;
-                        if(ccxx > 255)
-                            ccxx = 255;
-                        newColor |= (ccxx << k);
-                    }
                     mapPanel.paintPixelInterpolated(u, v, newColor);
                 }
             }
