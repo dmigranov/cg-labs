@@ -365,12 +365,6 @@ public class Controller {
                     double uModel = (b - a) * u / width + a;
                     double vModel = (d - c) * v / height + c;
 
-
-                    //int u0 = (int)wk*j, v0 = (int)vm*i;
-                    //int u1 = (int)wk*(j+1), v1 = (int)vm*(i+1);
-                    //u1 = u1 < mapPanel.getWidth() ? u1 : mapPanel.getWidth() - 1;
-                    //v1 = v1 < mapPanel.getHeight() ? v1 : mapPanel.getHeight() - 1;
-
                     Point2D f3p = model.getPoint(j, i );
                     Point2D f2p = model.getPoint(j+1, i + 1);
                     double u0 = f3p.getX();
@@ -379,33 +373,23 @@ public class Controller {
                     double v0 = f3p.getY();
                     double v1 = f2p.getY();
 
-
-
-                    //System.out.println(u0 + " " + u + " " + u1 + "; " + v0 + " " + v + " " + v1);
-
                     double f1 = model.getValue(j, i + 1);
                     double f2 = model.getValue(j + 1, i + 1);
                     double f3 = model.getValue(j, i);
                     double f4 = model.getValue(j + 1, i);
 
-                    //todo
-
                     double ccx0 = f1 * (u1 - uModel)/(u1 - u0) + f2 * (uModel - u0)/(u1-u0);       //по верхнему ребру
                     double ccx1 = f3 * (u1 - uModel)/(u1 - u0) + f4 * (uModel - u0)/(u1-u0);       //по нижнему ребру
 
-                    double ccxx = ccx0 * (v1 - vModel)/(v1 - v0) + ccx1 * (vModel - v0)/(v1 - v0);
+                    double ccxx = ccx1 * (v1 - vModel)/(v1 - v0) + ccx0 * (vModel - v0)/(v1 - v0);
 
                     int legendX = (int)((ccxx - model.getMinValue())/ (model.getMaxValue() - model.getMinValue()) * width);
 
                     if(legendX >= width)
                         legendX = width -1;
-                    try {
-                        mapPanel.paintPixelInterpolated(u, v, legendPanel.getColorInterpolated(legendX, 1));
-                    }
-                    catch (ArrayIndexOutOfBoundsException e)
-                    {
-                        System.out.println();
-                    }
+
+                    mapPanel.paintPixelInterpolated(u, v, legendPanel.getColorInterpolated(legendX, 1));
+
                 }
             }
         }
