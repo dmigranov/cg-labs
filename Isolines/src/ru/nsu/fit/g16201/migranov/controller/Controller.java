@@ -15,9 +15,10 @@ import java.util.List;
 import static ru.nsu.fit.g16201.migranov.controller.Seed.*;
 
 public class Controller {
-    public static final int INTERPOLATION = 0;
-    public static final int SPAN = 1;
-    public static final int PERPIXELACTUAL = 2;
+    static final int INTERPOLATION = 0;
+    static final int SPAN = 1;
+    static final int PERPIXELACTUAL = 2;
+    private int mode = SPAN;
 
     private final MapPanel mapPanel;
     private final LegendPanel legendPanel;
@@ -669,6 +670,13 @@ public class Controller {
         return new int[] { (color & 0xFF0000) >> 16, (color & 0x00FF00) >> 8, color & 0x0000FF };
     }
 
+
+    public void clearUserIsolines() {
+        userLines = new ArrayList<>();
+        mapPanel.clearUserLine();
+        mapPanel.repaint();
+    }
+
     public boolean isPerPixelColorMapEnabled() {
         return perPixelColorMapEnabled;
     }
@@ -697,9 +705,33 @@ public class Controller {
         legendPanel.repaint();
     }
 
-    public void clearUserIsolines() {
-        userLines = new ArrayList<>();
-        mapPanel.clearUserLine();
+    public void setMode(int mode)
+    {
+        this.mode = mode;
+
+        if(mode == SPAN)
+        {
+            mapPanel.setInterpolationEnabled(false);
+            legendPanel.getLegendMap().setInterpolationEnabled(false);
+            drawLegend();
+            recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        }
+        else if (mode == INTERPOLATION)
+        {
+            mapPanel.setInterpolationEnabled(true);
+            legendPanel.getLegendMap().setInterpolationEnabled(true);
+            drawLegend();
+            recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        }
+        else if (mode == PERPIXELACTUAL)
+        {
+            mapPanel.setInterpolationEnabled(false);
+            legendPanel.getLegendMap().setInterpolationEnabled(false);
+            mapPanel.clear();
+            recalculateAndDrawMap(mapPanel, mapModel, mapLines, mapSeeds);
+        }
         mapPanel.repaint();
+        legendPanel.repaint();
+
     }
 }
