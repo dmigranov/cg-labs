@@ -1,14 +1,16 @@
 package ru.nsu.fit.g16201.migranov.model;
 
-public class Matrix {
-    private double[] array;
+import java.util.Arrays;
 
-    private double rows, cols;
+public class Matrix {
+    private double[] data;
+
+    private int rows, cols;
     public Matrix(int rows, int cols)
     {
         this.rows = rows;
         this.cols = cols;
-        array = new double[rows * cols];
+        data = new double[rows * cols];
     }
 
     public Matrix(int rows, int cols, double ... elements)
@@ -17,15 +19,15 @@ public class Matrix {
             throw new IllegalArgumentException();
         this.rows = rows;
         this.cols = cols;
-        array = new double[rows * cols];
+        data = new double[rows * cols];
         //todo
     }
 
-    public void setRow(double[] row)
+    public void setRow(int rowNumber, double[] row)
     {
-        if(row.length != cols)
+        if(row.length != cols || rowNumber >= rows)
             throw new IllegalArgumentException();
-
+        System.arraycopy(row, 0, data, rowNumber*cols, row.length);
     }
 
     public static void add(Matrix m1, Matrix m2)

@@ -38,11 +38,11 @@ public class Controller {
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
 
+            Matrix sceneRotateMatrix = new Matrix(3, 3);
             for(int i = 0; i < 3; i++)
             {
                 substrings = readLineAndSplit();
-                //todo распарсить матрицу (куда положить?)
-                Matrix matrix = new Matrix(3, 3);
+                sceneRotateMatrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
             }
 
             substrings = readLineAndSplit();
