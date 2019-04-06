@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,6 +10,8 @@ public class Controller {
     private int n, m, k;
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
+    private Color backgroundColor;
+
 
     private BufferedReader br;
 
@@ -33,13 +36,30 @@ public class Controller {
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
 
+            for(int i = 0; i < 3; i++)
+            {
+                substrings = readLineAndSplit();
+                //todo распарсить матрицу (куда положить?)
+            }
+
+            substrings = readLineAndSplit();
+            backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
+
+            int figureCount;
+            substrings = readLineAndSplit();
+            figureCount = Integer.parseInt(substrings[0]);
+
+            for (int i = 0; i < figureCount; i++)
+            {
+                //читаем тела вращения
+            }
 
         }
         catch (IOException e)
         {
             return -1;
         }
-        return 0; //todo убрать
+        return 0;
     }
 
     private String[] readLineAndSplit() throws IOException
