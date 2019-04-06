@@ -64,7 +64,7 @@ public class Controller {
             }
 
         }
-        catch (IOException | ArrayIndexOutOfBoundsException e)
+        catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
         {
             return -1;
         }
