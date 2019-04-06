@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.model.Matrix;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,6 +42,7 @@ public class Controller {
             {
                 substrings = readLineAndSplit();
                 //todo распарсить матрицу (куда положить?)
+                Matrix matrix = new Matrix(3, 3);
             }
 
             substrings = readLineAndSplit();
@@ -51,11 +54,17 @@ public class Controller {
 
             for (int i = 0; i < figureCount; i++)
             {
-                //читаем тела вращения
+                substrings = readLineAndSplit();substrings = readLineAndSplit();
+                int r = Integer.parseInt(substrings[0]), g = Integer.parseInt(substrings[1]), b = Integer.parseInt(substrings[2]);
+
+                substrings = readLineAndSplit();substrings = readLineAndSplit();
+                double cx = Double.parseDouble(substrings[0]), cy = Double.parseDouble(substrings[1]), cz = Double.parseDouble(substrings[2]);
+
+
             }
 
         }
-        catch (IOException e)
+        catch (IOException | ArrayIndexOutOfBoundsException e)
         {
             return -1;
         }
