@@ -54,13 +54,13 @@ public class Controller {
 
             for (int i = 0; i < figureCount; i++)
             {
-                substrings = readLineAndSplit();substrings = readLineAndSplit();
-                int r = Integer.parseInt(substrings[0]), g = Integer.parseInt(substrings[1]), b = Integer.parseInt(substrings[2]);
+                substrings = readLineAndSplit();
+                Color color = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
 
-                substrings = readLineAndSplit();substrings = readLineAndSplit();
+                substrings = readLineAndSplit();
                 double cx = Double.parseDouble(substrings[0]), cy = Double.parseDouble(substrings[1]), cz = Double.parseDouble(substrings[2]);
 
-
+                //todo
             }
 
         }

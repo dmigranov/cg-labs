@@ -52,6 +52,13 @@ public class WireframeFrame extends MainFrame {
         addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave", true);
 
+
+
+
+        addSubMenu("Help", KeyEvent.VK_H);
+        addMenuAndToolBarButton("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout", false);
+
+
     }
 
 
@@ -224,5 +231,15 @@ public class WireframeFrame extends MainFrame {
     public void onSave()
     {
         //todo;
+    }
+
+    public void onAbout()
+    {
+        JPanel aboutPanel = new JPanel();
+        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
+        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
+        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
+        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection and icons8.com"));
+        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Wireframe", JOptionPane.INFORMATION_MESSAGE);
     }
 }
