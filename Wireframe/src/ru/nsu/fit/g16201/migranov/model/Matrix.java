@@ -59,7 +59,6 @@ public class Matrix {
                 for(int k = 0; k < m; k++)
                     nd[i * n + j] += m1d[i * m + k] * m2d[k * n + j];
 
-
         return N;
     }
 
@@ -74,4 +73,7 @@ public class Matrix {
     }
 
 
+    public double get(int row, int col) {
+        return data[row * cols + col];
+    }
 }

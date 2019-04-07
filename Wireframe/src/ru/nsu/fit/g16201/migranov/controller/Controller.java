@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
+
     private SplinePanel splinePanel;
 
 
@@ -106,11 +107,20 @@ public class Controller {
         List<Point2D> splinePoints = figure.getSplinePoints();
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
-            Matrix Px = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
-            Matrix Py = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
+            Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
+            Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
             for(double t = 0; t <= 1; t+=0.01)
             {
                 Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
+                Matrix TM = Matrix.multiply(T, splineMatrix);
+
+                Matrix X = Matrix.multiply(TM, Gx);
+                Matrix Y = Matrix.multiply(TM, Gy);
+
+                double x = X.get(0, 0);
+                double y = Y.get(0, 0);
+
+                //todo
 
             }
         }

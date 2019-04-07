@@ -15,12 +15,20 @@ class MatrixTest {
         m2 = new Matrix(3, 2, 1, 2, 3, 4, 5, 6);
         m = Matrix.multiply(m1, m2);
 
-        Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
-        Matrix Px = new Matrix(4, 1, 4, 5, 4, 2);
+        Matrix M = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
+        Matrix Gx = new Matrix(4, 1, 4, 5, 4, 2);
         Matrix T = new Matrix(1, 4, 27, 9, 3, 1);
 
-        for(int i = 0; i < 5; i++)
-
+        long time = 0;
+        for(int i = 0; i < 100; i++)
+        {
+            long start = System.nanoTime();
+            Matrix r = Matrix.multiply(Matrix.multiply(T, M), Gx);
+            long end = System.nanoTime();
+            //System.out.println(time);
+            time += (end - start);
+        }
+        System.out.println(time/100L);
 
 
 
