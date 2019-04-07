@@ -41,6 +41,14 @@ public class Matrix {
         return null;
     }
 
-
+    public static Matrix multiplyByScalar(double a, Matrix m)
+    {
+        Matrix n = new Matrix(m.rows, m.cols);
+        for(int i = 0; i < m.rows*m.cols; i++)
+        {
+            n.data[i] = m.data[i] * a;
+        }
+        return n;
+    }
 
 }

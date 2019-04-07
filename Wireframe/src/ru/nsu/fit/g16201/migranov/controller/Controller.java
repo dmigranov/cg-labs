@@ -101,6 +101,7 @@ public class Controller {
 
     private void drawSplineLine() {
 
+        //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(0); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
         for(int i = 1; i < splinePoints.size() - 2; i++)
