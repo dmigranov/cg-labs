@@ -19,8 +19,12 @@ public class Matrix {
             throw new IllegalArgumentException();
         this.rows = rows;
         this.cols = cols;
-        data = new double[rows * cols];
-        //todo
+
+        data = elements; //на самом деле нехорошо - а вдруг изменят значение (теоретически можно подать прям массив)?
+
+        //data = new double[rows * cols];
+        //for(int i = 0; )
+
     }
 
     public void setRow(int rowNumber, double[] row)
@@ -36,23 +40,27 @@ public class Matrix {
         return null;
     }
 
-    public static Matrix multiply(Matrix m1, Matrix m2)
+    public static Matrix multiply(Matrix M1, Matrix M2)
     {
         //todo: проверка?
 
-        Matrix n = new Matrix(m1.rows, m2.cols);
-        double[] m1d = m1.data;
-        double[] m2d = m2.data;
-        double[] nd = n.data;
+        Matrix N = new Matrix(M1.rows, M2.cols);
+        double[] m1d = M1.data;
+        double[] m2d = M2.data;
+        double[] nd = N.data;
+
+        int l = M1.rows;
+        int m = M1.cols; //=m2.rows
+        int n = M2.cols;
 
 
-        for(int i = 0; i < m1.rows; i++)
-            for(int j = 0; j < m2.rows; j++)    //m2.rows = m1.cols
-                for(int k = 0; k < m2.cols; k++)
-                    nd[]
+        for(int i = 0; i < l; i++)
+            for(int j = 0; j < n;j++)    //m2.rows = m1.cols
+                for(int k = 0; k < m; k++)
+                    nd[i * n + j] += m1d[i * m + k] * m2d[k * n + j];
 
 
-        return null;
+        return N;
     }
 
     public static Matrix multiplyByScalar(double a, Matrix m)
@@ -64,5 +72,6 @@ public class Matrix {
         }
         return n;
     }
+
 
 }
