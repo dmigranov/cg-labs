@@ -16,4 +16,9 @@ public class Figure {
         this.rotateMatrix = rotateMatrix;
         this.splinePoints = splinePoints;
     }
+
+
+    public List<Point2D> getSplinePoints() {
+        return splinePoints;
+    }
 }

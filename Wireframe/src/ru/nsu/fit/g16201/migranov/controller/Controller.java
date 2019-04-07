@@ -4,6 +4,7 @@ import ru.nsu.fit.g16201.migranov.model.Figure;
 import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point2D;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.view.SplinePanel;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -14,16 +15,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Controller {
+    private static Matrix splineMatrix = new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0);
+
+    private SplinePanel splinePanel;
+
+
     private int n, m, k;
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
-
-    private static Matrix splineMatrix = new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0);
+    private List<Figure> figures;
 
 
     private BufferedReader br;
+
+    public Controller(SplinePanel splinePanel) {
+        this.splinePanel = splinePanel;
+    }
 
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -54,7 +63,7 @@ public class Controller {
             int figureCount;
             substrings = readLineAndSplit();
             figureCount = Integer.parseInt(substrings[0]);
-            List<Figure> figures = new ArrayList<>();
+            figures = new ArrayList<>();
 
             for (int i = 0; i < figureCount; i++)
             {
@@ -79,12 +88,20 @@ public class Controller {
                 figures.add(figure);
             }
 
+            drawSplineLine();
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
         {
             return -1;
         }
+
+
+
         return 0;
+    }
+
+    private void drawSplineLine() {
+
     }
 
     //возвращает матрицу 4x4
