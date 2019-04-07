@@ -38,6 +38,20 @@ public class Matrix {
 
     public static Matrix multiply(Matrix m1, Matrix m2)
     {
+        //todo: проверка?
+
+        Matrix n = new Matrix(m1.rows, m2.cols);
+        double[] m1d = m1.data;
+        double[] m2d = m2.data;
+        double[] nd = n.data;
+
+
+        for(int i = 0; i < m1.rows; i++)
+            for(int j = 0; j < m2.rows; j++)    //m2.rows = m1.cols
+                for(int k = 0; k < m2.cols; k++)
+                    nd[]
+
+
         return null;
     }
 
