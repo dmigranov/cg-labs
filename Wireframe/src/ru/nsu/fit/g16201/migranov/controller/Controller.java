@@ -53,6 +53,7 @@ public class Controller {
             int figureCount;
             substrings = readLineAndSplit();
             figureCount = Integer.parseInt(substrings[0]);
+            List<Figure> figures = new ArrayList<>();
 
             for (int i = 0; i < figureCount; i++)
             {
@@ -75,6 +76,7 @@ public class Controller {
                     splinePoints.add(splinePoint);
                 }
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
+                figures.add(figure);
 
             }
 
@@ -86,7 +88,7 @@ public class Controller {
         return 0;
     }
 
-    private Matrix readMatrixByRow(int rows, int cols) throws IOException {
+    /*private Matrix readMatrixByRow(int rows, int cols) throws IOException {
         String[] substrings;
         Matrix matrix = new Matrix(rows, cols);
         for(int i = 0; i < rows; i++)
@@ -95,7 +97,21 @@ public class Controller {
             matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
         }
         return matrix;
+    }*/
+
+    private Matrix read3x3MatrixByRow() throws IOException {
+        String[] substrings;
+        Matrix matrix = new Matrix(4, 4);
+        for(int i = 0; i < 3; i++)
+        {
+            substrings = readLineAndSplit();
+            matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]), 0});
+        }
+        matrix.setRow(3, new double[] {0, 0, 0, 1});
+
+        return matrix;
     }
+
 
     private String[] readLineAndSplit() throws IOException
     {
