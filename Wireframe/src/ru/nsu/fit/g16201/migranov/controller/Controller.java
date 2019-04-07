@@ -20,6 +20,8 @@ public class Controller {
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
 
+    private static Matrix splineMatrix = new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0);
+
 
     private BufferedReader br;
 
