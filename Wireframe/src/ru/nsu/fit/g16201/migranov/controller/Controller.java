@@ -87,20 +87,26 @@ public class Controller {
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
             }
-
-            drawSplineLine();
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
         {
             return -1;
         }
 
+        drawSplineLine();
 
 
         return 0;
     }
 
     private void drawSplineLine() {
+
+        Figure figure = figures.get(0); //todo итерация по телам
+        List<Point2D> splinePoints = figure.getSplinePoints();
+        for(int i = 1; i < splinePoints.size() - 2; i++)
+        {
+
+        }
 
     }
 
