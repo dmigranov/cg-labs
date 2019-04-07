@@ -67,7 +67,10 @@ public class Controller {
 
                 substrings = readLineAndSplit();
                 int splinePointCount = Integer.parseInt(substrings[0]);
-                //цикл
+                for(int j = 0; j < splinePointCount; j++)
+                {
+
+                }
 
             }
 

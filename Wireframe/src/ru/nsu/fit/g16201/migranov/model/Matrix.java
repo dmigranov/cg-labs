@@ -30,14 +30,16 @@ public class Matrix {
         System.arraycopy(row, 0, data, rowNumber*cols, row.length);
     }
 
-    public static void add(Matrix m1, Matrix m2)
+    public static Matrix add(Matrix m1, Matrix m2)
     {
 
+        return null;
     }
 
-    public static void multiply(Matrix m1, Matrix m2)
+    public static Matrix multiply(Matrix m1, Matrix m2)
     {
 
+        return null;
     }
 
 }
