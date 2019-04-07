@@ -44,8 +44,7 @@ public class Controller {
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
 
-            sceneRotateMatrix = readMatrixByRow(3, 3);
-            //todo: дополнить до 4x4?
+            sceneRotateMatrix = read3x3MatrixByRow();
 
             substrings = readLineAndSplit();
             backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
@@ -63,8 +62,7 @@ public class Controller {
                 substrings = readLineAndSplit();
                 Point3D center = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
-                Matrix rotateMatrix = readMatrixByRow(3, 3);
-                //todo: дополнить до 4x4?
+                Matrix rotateMatrix = read3x3MatrixByRow();
 
                 substrings = readLineAndSplit();
                 int splinePointCount = Integer.parseInt(substrings[0]);
@@ -77,7 +75,6 @@ public class Controller {
                 }
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
-
             }
 
         }
@@ -88,17 +85,7 @@ public class Controller {
         return 0;
     }
 
-    /*private Matrix readMatrixByRow(int rows, int cols) throws IOException {
-        String[] substrings;
-        Matrix matrix = new Matrix(rows, cols);
-        for(int i = 0; i < rows; i++)
-        {
-            substrings = readLineAndSplit();
-            matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
-        }
-        return matrix;
-    }*/
-
+    //возвращает матрицу 4x4
     private Matrix read3x3MatrixByRow() throws IOException {
         String[] substrings;
         Matrix matrix = new Matrix(4, 4);
