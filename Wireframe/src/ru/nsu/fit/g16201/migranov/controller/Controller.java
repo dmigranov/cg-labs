@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Controller {
-    private static Matrix splineMatrix = new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0);
+    private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
     private SplinePanel splinePanel;
 
