@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Figure {
     private Color color;
-    //private Point cx cy cz
+    private Point3D center;
 
     private Matrix rotateMatrix;
 

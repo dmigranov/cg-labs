@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Matrix;
+import ru.nsu.fit.g16201.migranov.model.Point3D;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ public class Controller {
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
     private Color backgroundColor;
+    private Matrix sceneRotateMatrix;
 
 
     private BufferedReader br;
@@ -38,12 +40,13 @@ public class Controller {
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
 
-            Matrix sceneRotateMatrix = new Matrix(3, 3);
+            /*Matrix sceneRotateMatrix = new Matrix(3, 3);
             for(int i = 0; i < 3; i++)
             {
                 substrings = readLineAndSplit();
                 sceneRotateMatrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
-            }
+            }*/
+            sceneRotateMatrix = readMatrixByRow(3, 3);
 
             substrings = readLineAndSplit();
             backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
@@ -58,9 +61,14 @@ public class Controller {
                 Color color = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
 
                 substrings = readLineAndSplit();
-                double cx = Double.parseDouble(substrings[0]), cy = Double.parseDouble(substrings[1]), cz = Double.parseDouble(substrings[2]);
+                Point3D center = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
-                //todo
+                Matrix rotateMatrix = readMatrixByRow(3, 3);
+
+                substrings = readLineAndSplit();
+                int splinePointCount = Integer.parseInt(substrings[0]);
+                //цикл
+
             }
 
         }
@@ -69,6 +77,17 @@ public class Controller {
             return -1;
         }
         return 0;
+    }
+
+    private Matrix readMatrixByRow(int rows, int cols) throws IOException {
+        String[] substrings;
+        Matrix matrix = new Matrix(rows, cols);
+        for(int i = 0; i < rows; i++)
+        {
+            substrings = readLineAndSplit();
+            matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
+        }
+        return matrix;
     }
 
     private String[] readLineAndSplit() throws IOException
