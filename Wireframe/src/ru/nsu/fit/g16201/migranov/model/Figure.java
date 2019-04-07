@@ -18,6 +18,7 @@ public class Figure {
     }
 
 
+    //todo: может стоит сделать дек чтобы можно добавлять и в конец и в анчало?
     public List<Point2D> getSplinePoints() {
         return splinePoints;
     }

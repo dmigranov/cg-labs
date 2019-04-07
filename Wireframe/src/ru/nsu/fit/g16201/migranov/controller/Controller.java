@@ -106,7 +106,13 @@ public class Controller {
         List<Point2D> splinePoints = figure.getSplinePoints();
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
+            Matrix Px = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
+            Matrix Py = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
+            for(double t = 0; t <= 1; t+=0.01)
+            {
+                Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
 
+            }
         }
 
     }
