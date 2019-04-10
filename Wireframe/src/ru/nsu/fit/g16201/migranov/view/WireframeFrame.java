@@ -33,7 +33,7 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        splinePanel = new SplinePanel(400, 400);
+        splinePanel = new SplinePanel(401, 401);
         createConfigurationPanel();
         controller = new Controller(splinePanel);
         addMenus();

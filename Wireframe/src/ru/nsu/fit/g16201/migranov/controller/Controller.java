@@ -20,6 +20,7 @@ public class Controller {
 
     private SplinePanel splinePanel;
 
+    private int currentFigure = 0;
 
     private int n, m, k;
     private double a, b, c, d;
@@ -94,18 +95,39 @@ public class Controller {
             return -1;
         }
 
+
+        calculateSplineArea();
         drawSplineLine();
 
 
         return 0;
     }
 
+    //область определения сплайна (чтобы знать как масштабировать)
+    private void calculateSplineArea() {
+        double xMin = Double.MIN_VALUE, xMax = Double.MAX_VALUE, yMin = Double.MIN_VALUE, yMax = Double.MAX_VALUE;
+
+        Figure figure = figures.get(currentFigure);
+        List<Point2D> splinePoints = figure.getSplinePoints();
+
+        for(Point2D p : splinePoints)
+        {
+            xMax = p.x > xMax ? p.x : xMax;
+            xMin = p.x < xMin ? p.x : xMin;
+            yMax = p.y > yMax ? p.y : yMax;
+            yMin = p.y < yMin ? p.y : yMin;
+
+        }
+
+
+
+    }
+
     private void drawSplineLine() {
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
-        Figure figure = figures.get(0); //todo итерация по телам
+        Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
-        double xMin = Double.MIN_VALUE, xMax = Double.MAX_VALUE, yMin = Double.MIN_VALUE, yMax = Double.MAX_VALUE;
         //long start = System.currentTimeMillis();
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {

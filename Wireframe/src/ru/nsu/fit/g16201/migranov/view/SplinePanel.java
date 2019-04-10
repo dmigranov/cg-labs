@@ -17,8 +17,11 @@ public class SplinePanel extends JPanel {
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
+        canvasGraphics.setBackground(Color.WHITE);
 
-        canvasGraphics.drawLine(0, 0, 399, 399);
+        canvasGraphics.clearRect(0, 0, width, height);
+        canvasGraphics.drawLine(0, 0, 400, 400);
+        //x y
 
     }
 
