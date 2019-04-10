@@ -105,7 +105,7 @@ public class Controller {
 
     //область определения сплайна (чтобы знать как масштабировать)
     private void calculateSplineArea() {
-        double xMin = Double.MIN_VALUE, xMax = Double.MAX_VALUE, yMin = Double.MIN_VALUE, yMax = Double.MAX_VALUE;
+        double xMin = Double.MAX_VALUE, xMax = Double.MIN_VALUE, yMin = Double.MAX_VALUE, yMax = Double.MIN_VALUE;
 
         Figure figure = figures.get(currentFigure);
         List<Point2D> splinePoints = figure.getSplinePoints();
@@ -116,9 +116,10 @@ public class Controller {
             xMin = p.x < xMin ? p.x : xMin;
             yMax = p.y > yMax ? p.y : yMax;
             yMin = p.y < yMin ? p.y : yMin;
-
         }
 
+        System.out.println(xMax + " " + xMin);
+        System.out.println(yMax + " " + yMin);
 
 
     }
