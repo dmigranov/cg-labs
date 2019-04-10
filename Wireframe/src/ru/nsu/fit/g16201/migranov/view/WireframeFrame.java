@@ -21,6 +21,8 @@ public class WireframeFrame extends MainFrame {
 
     private Controller controller;
 
+    private SplinePanel splinePanel;
+
 
 
     public static void main(String[] args) throws Exception {
@@ -30,8 +32,7 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        SplinePanel splinePanel = new SplinePanel();
-
+        splinePanel = new SplinePanel(400, 400);
         controller = new Controller(splinePanel);
         addMenus();
 
@@ -43,7 +44,6 @@ public class WireframeFrame extends MainFrame {
         statusPanel.add(statusLabel);
         add(statusPanel, BorderLayout.SOUTH);
 
-
         setMinimumSize(new Dimension(800, 600));
         setLocationRelativeTo(null);
         setVisible(true);
@@ -54,6 +54,8 @@ public class WireframeFrame extends MainFrame {
         addMenuAndToolBarButton("File/Open", "Open a file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Save as", "Save figures as", KeyEvent.VK_S, "download.png", "onSave", true);
 
+        addSubMenu("Options", KeyEvent.VK_O);
+        addMenuAndToolBarButton("Options/Spline configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", false);
 
 
 
@@ -242,5 +244,17 @@ public class WireframeFrame extends MainFrame {
         aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
         aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection and icons8.com"));
         JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Wireframe", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void onConfigureSplines()
+    {
+        //splinePanel - непосредственно для отрисовки, кнопки в другом
+        JPanel configurationPanel = new JPanel();   //tabs...
+        configurationPanel.add(splinePanel);
+        if(JOptionPane.showConfirmDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            ;
+        }
+
     }
 }
