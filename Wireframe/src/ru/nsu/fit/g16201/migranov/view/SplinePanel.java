@@ -36,4 +36,8 @@ public class SplinePanel extends JPanel {
         g.drawImage(canvas, 0, 0, width, height, null);
     }
 
+    public void drawPoint(int u, int v) {
+        //canvas.setRGB(u, v, 0);
+        canvasGraphics.drawLine(u, v, u, v);
+    }
 }

@@ -19,6 +19,7 @@ public class Controller {
 
 
     private SplinePanel splinePanel;
+    private double xm, ym;
 
     private int currentFigure = 0;
 
@@ -118,14 +119,16 @@ public class Controller {
             yMin = p.y < yMin ? p.y : yMin;
         }
 
-        double xm = Math.max(Math.abs(xMax), Math.abs(xMin));
-        double ym = Math.max(Math.abs(yMax), Math.abs(yMin));
-
-
-
+        xm = Math.max(Math.abs(xMax), Math.abs(xMin));
+        ym = Math.max(Math.abs(yMax), Math.abs(yMin));
     }
 
     private void drawSplineLine() {
+
+        int width = splinePanel.getPreferredSize().width;
+        width-=width/10;
+        int height = splinePanel.getPreferredSize().height;
+        height-=height/10;
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
@@ -146,11 +149,14 @@ public class Controller {
                 double x = X.get(0, 0);
                 double y = Y.get(0, 0);
 
+                double max = Math.max(xm, ym);
+                int u = (int)((x + xm)/2/max * width);
+                int v = (int)((y + ym)/2/max * height);
 
-                //todo
-
+                splinePanel.drawPoint(u, v);
             }
         }
+        splinePanel.repaint();
 
     }
 
