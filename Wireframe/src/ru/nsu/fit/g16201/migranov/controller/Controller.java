@@ -118,8 +118,9 @@ public class Controller {
             yMin = p.y < yMin ? p.y : yMin;
         }
 
-        System.out.println(xMax + " " + xMin);
-        System.out.println(yMax + " " + yMin);
+        double xm = Math.max(Math.abs(xMax), Math.abs(xMin));
+        double ym = Math.max(Math.abs(yMax), Math.abs(yMin));
+
 
 
     }

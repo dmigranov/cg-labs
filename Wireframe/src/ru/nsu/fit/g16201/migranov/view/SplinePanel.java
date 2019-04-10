@@ -21,6 +21,9 @@ public class SplinePanel extends JPanel {
 
         canvasGraphics.clearRect(0, 0, width, height);
         canvasGraphics.drawLine(0, 0, 400, 400);
+        canvasGraphics.drawLine(width/2, 0, width/2, height - 1);
+        canvasGraphics.drawLine(0, height/2, width - 1, height/2);
+
         //оси
 
     }
