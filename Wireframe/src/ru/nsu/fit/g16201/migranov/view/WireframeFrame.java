@@ -258,7 +258,7 @@ public class WireframeFrame extends MainFrame {
     {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
 
-        if(JOptionPane.showConfirmDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        if(JOptionPane.showConfirmDialog(this, configurationPanel, "Configuration", 0) == JOptionPane.OK_OPTION)
         {
             ;
         }
