@@ -64,7 +64,7 @@ public class WireframeFrame extends MainFrame {
         addMenuAndToolBarButton("File/Save as", "Save figures as", KeyEvent.VK_S, "download.png", "onSave", true);
 
         addSubMenu("Options", KeyEvent.VK_O);
-        addMenuAndToolBarButton("Options/Configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", false);
+        addMenuAndToolBarButton("Options/Configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", true);
 
 
         addSubMenu("Help", KeyEvent.VK_H);
