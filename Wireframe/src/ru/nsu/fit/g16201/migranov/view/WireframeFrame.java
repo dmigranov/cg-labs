@@ -22,6 +22,7 @@ public class WireframeFrame extends MainFrame {
     private Controller controller;
 
     private SplinePanel splinePanel;
+    private JPanel configurationPanel;
 
 
 
@@ -33,6 +34,7 @@ public class WireframeFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
         splinePanel = new SplinePanel(400, 400);
+        createConfigurationPanel();
         controller = new Controller(splinePanel);
         addMenus();
 
@@ -49,14 +51,20 @@ public class WireframeFrame extends MainFrame {
         setVisible(true);
     }
 
+    private void createConfigurationPanel() {
+        configurationPanel = new JPanel();   //tabs...
+        configurationPanel.add(splinePanel);
+
+        //todo:
+    }
+
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
         addMenuAndToolBarButton("File/Open", "Open a file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Save as", "Save figures as", KeyEvent.VK_S, "download.png", "onSave", true);
 
         addSubMenu("Options", KeyEvent.VK_O);
-        addMenuAndToolBarButton("Options/Spline configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", false);
-
+        addMenuAndToolBarButton("Options/Configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", false);
 
 
         addSubMenu("Help", KeyEvent.VK_H);
@@ -249,8 +257,7 @@ public class WireframeFrame extends MainFrame {
     public void onConfigureSplines()
     {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
-        JPanel configurationPanel = new JPanel();   //tabs...
-        configurationPanel.add(splinePanel);
+
         if(JOptionPane.showConfirmDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             ;
