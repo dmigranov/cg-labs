@@ -126,9 +126,9 @@ public class Controller {
     private void drawSplineLine() {
 
         int width = splinePanel.getPreferredSize().width;
-        width-=width/10;
+        //width-=width/20;
         int height = splinePanel.getPreferredSize().height;
-        height-=height/10;
+        //height-=height/20;
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
@@ -136,6 +136,9 @@ public class Controller {
         //long start = System.currentTimeMillis();
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
+
+            //todo: нарисовать жирно spline Point + не забыть про предыдующие две
+            //splinePanel.drawSplinePoint();
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
             for(double t = 0; t <= 1; t+=0.01)
@@ -150,9 +153,11 @@ public class Controller {
                 double y = Y.get(0, 0);
 
                 double max = Math.max(xm, ym);
+                //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
                 int u = (int)((x + xm)/2/max * width);
-                int v = (int)((y + ym)/2/max * height);
+                int v = (int)((y + ym)/2/max * height); //todo: отзеркалить относительно игрека
 
+                //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
                 splinePanel.drawPoint(u, v);
             }
         }

@@ -24,8 +24,6 @@ public class WireframeFrame extends MainFrame {
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
 
-
-
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
     }
@@ -53,6 +51,7 @@ public class WireframeFrame extends MainFrame {
 
     private void createConfigurationPanel() {
         configurationPanel = new JPanel();   //tabs...
+
         configurationPanel.add(splinePanel);
 
         //todo:
