@@ -51,8 +51,8 @@ public class WireframeFrame extends MainFrame {
 
     private void addMenus() throws NoSuchMethodException {
         addSubMenu("File", KeyEvent.VK_F);
-        addMenuAndToolBarButton("File/Open", "Open a picture file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
-        addMenuAndToolBarButton("File/Save as", "Save modified picture as", KeyEvent.VK_S, "download.png", "onSave", true);
+        addMenuAndToolBarButton("File/Open", "Open a file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
+        addMenuAndToolBarButton("File/Save as", "Save figures as", KeyEvent.VK_S, "download.png", "onSave", true);
 
 
 
