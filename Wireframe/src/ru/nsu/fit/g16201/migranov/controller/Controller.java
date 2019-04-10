@@ -105,6 +105,7 @@ public class Controller {
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(0); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
+        double xMin = Double.MIN_VALUE, xMax = Double.MAX_VALUE, yMin = Double.MIN_VALUE, yMax = Double.MAX_VALUE;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);

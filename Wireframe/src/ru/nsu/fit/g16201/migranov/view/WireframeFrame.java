@@ -64,7 +64,6 @@ public class WireframeFrame extends MainFrame {
     }
 
 
-
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {
         MenuElement element = getParentMenuElement(path);
