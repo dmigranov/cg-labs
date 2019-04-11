@@ -152,6 +152,7 @@ public class Controller {
         //long start = System.currentTimeMillis();
         Point uv = getUV(splinePoints.get(0).x, splinePoints.get(0).y);
         splinePanel.drawSplinePoint(uv.x, uv.y);
+        //pointsMap.put(uv, )
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
@@ -207,6 +208,11 @@ public class Controller {
         //return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
         return new Point(u, v);
     }
+
+    private Point getUV(Point2D p) {
+        return getUV(p.x, p.y);
+    }
+
 
     //возвращает матрицу 4x4
     private Matrix read3x3MatrixByRow() throws IOException {
