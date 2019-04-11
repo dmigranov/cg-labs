@@ -46,11 +46,12 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
+                //todo нужна такая же штука как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
+
                 int x = e.getX(), y = e.getY();
                 if(splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor())
                 {
                     int radius = splinePanel.getSplinePointRadius();
-                    //todo: окрестность смотрим находим
                     for (Point p : pointsMap.keySet())
                     {
                         if(Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
@@ -192,7 +193,7 @@ public class Controller {
         {
             Point uv = getUV(p);
             splinePanel.drawSplinePoint(uv.x, uv.y);
-            pointsMap.put(uv, p);
+            pointsMap.put(uv, p);   //может куда-то ещё ложить номер, чтобы легко найти
         }
     }
 
