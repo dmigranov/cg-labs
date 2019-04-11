@@ -36,8 +36,8 @@ public class Controller {
     private List<Figure> figures;
 
     //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
-
     private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
+    private boolean pointStartedMoving = false;
 
 
     private int width, height;
@@ -70,7 +70,7 @@ public class Controller {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-        
+
 
             }
         });

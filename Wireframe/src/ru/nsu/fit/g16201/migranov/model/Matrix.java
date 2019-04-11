@@ -45,7 +45,6 @@ public class Matrix {
         {
             nd[i] = m1d[i] + m2d[i];
         }
-
         return N;
     }
 
@@ -61,7 +60,6 @@ public class Matrix {
         int l = M1.rows;
         int m = M1.cols; //=m2.rows
         int n = M2.cols;
-
 
         for(int i = 0; i < l; i++)
             for(int j = 0; j < n;j++)    //m2.rows = m1.cols
