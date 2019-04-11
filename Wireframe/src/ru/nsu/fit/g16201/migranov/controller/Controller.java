@@ -30,7 +30,7 @@ public class Controller {
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
 
-
+    private int width, height;
     private BufferedReader br;
 
     public Controller(SplinePanel splinePanel) {
@@ -125,9 +125,9 @@ public class Controller {
 
     private void drawSplineLine() {
 
-        int width = splinePanel.getPreferredSize().width;
+        width = splinePanel.getPreferredSize().width;
         //width-=width/20;
-        int height = splinePanel.getPreferredSize().height;
+        height = splinePanel.getPreferredSize().height;
         //height-=height/20;
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
@@ -152,17 +152,22 @@ public class Controller {
                 double x = X.get(0, 0);
                 double y = Y.get(0, 0);
 
-                double max = Math.max(xm, ym);
-                //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
-                int u = (int)((x + xm)/2/max * width);
-                int v = (int)((y + ym)/2/max * height); //todo: отзеркалить относительно игрека
+                int uv[] = getUV(x, y);
 
                 //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
-                splinePanel.drawPoint(u, v);
+                splinePanel.drawPoint(uv[0], uv[1]);
             }
         }
         splinePanel.repaint();
 
+    }
+
+    private int[] getUV(double x, double y) {
+        //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
+        double max = Math.max(xm, ym);
+        //todo: отзеркалить относительно игрека
+
+        return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
     }
 
     //возвращает матрицу 4x4
