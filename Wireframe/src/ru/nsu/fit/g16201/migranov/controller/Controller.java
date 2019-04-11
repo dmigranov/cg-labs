@@ -134,10 +134,14 @@ public class Controller {
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
         //long start = System.currentTimeMillis();
+        int uv[] = getUV(splinePoints.get(0).x, splinePoints.get(0).y);
+        splinePanel.drawSplinePoint(uv[0], uv[1]);
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
-            //todo: нарисовать жирно spline Point + не забыть про предыдующие две
+            uv = getUV(splinePoints.get(i).x, splinePoints.get(i).y);
+            splinePanel.drawSplinePoint(uv[0], uv[1]);
+
             //splinePanel.drawSplinePoint();
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
@@ -152,7 +156,7 @@ public class Controller {
                 double x = X.get(0, 0);
                 double y = Y.get(0, 0);
 
-                int uv[] = getUV(x, y);
+                uv = getUV(x, y);
 
                 //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
                 splinePanel.drawPoint(uv[0], uv[1]);
