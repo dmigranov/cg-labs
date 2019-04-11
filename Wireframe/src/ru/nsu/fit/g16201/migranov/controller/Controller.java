@@ -7,12 +7,16 @@ import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.view.SplinePanel;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
@@ -30,11 +34,22 @@ public class Controller {
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
 
+    private Map<Point, Point2D> pointsMap = new HashMap<>();
+
     private int width, height;
     private BufferedReader br;
 
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
+        splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+
+
+            }
+        });
     }
 
     public int loadFile(File file) {
@@ -135,15 +150,14 @@ public class Controller {
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
         //long start = System.currentTimeMillis();
-        int uv[] = getUV(splinePoints.get(0).x, splinePoints.get(0).y);
-        splinePanel.drawSplinePoint(uv[0], uv[1]);
+        Point uv = getUV(splinePoints.get(0).x, splinePoints.get(0).y);
+        splinePanel.drawSplinePoint(uv.x, uv.y);
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
             uv = getUV(splinePoints.get(i).x, splinePoints.get(i).y);
-            splinePanel.drawSplinePoint(uv[0], uv[1]);
+            splinePanel.drawSplinePoint(uv.x, uv.y);
 
-            //splinePanel.drawSplinePoint();
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
             for(double t = 0; t <= 1; t+=0.01)
@@ -160,28 +174,25 @@ public class Controller {
                 uv = getUV(x, y);
 
                 //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
-                splinePanel.drawPoint(uv[0], uv[1]);
+                splinePanel.drawPoint(uv.x, uv.y);
             }
         }
 
         uv = getUV(splinePoints.get(splinePoints.size() - 2).x, splinePoints.get(splinePoints.size() - 2).y);
-        splinePanel.drawSplinePoint(uv[0], uv[1]);
+        splinePanel.drawSplinePoint(uv.x, uv.y);
         uv = getUV(splinePoints.get(splinePoints.size() - 1).x, splinePoints.get(splinePoints.size() - 1).y);
-        splinePanel.drawSplinePoint(uv[0], uv[1]);
+        splinePanel.drawSplinePoint(uv.x, uv.y);
 
         splinePanel.repaint();
 
     }
 
-    private int[] getUV(double x, double y) {
-        //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
-        double max = Math.max(xm, ym);
-
+    private Point getUV(double x, double y) {
         //width = height!
         int u=0, v=0;
         if(xm > ym)
         {
-            double xm = this.xm*1.1;
+            double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
             double ym = this.ym*1.1;
             u = (int)((x + xm)/2/xm * (width));
             v = (int)((-y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
@@ -190,11 +201,11 @@ public class Controller {
         {
             //todo
             //int v = (int)((y + ym)/2/ym * height);
-            //int v = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+            //int u = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
 
         //return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
-        return new int[]{u, v};
+        return new Point(u, v);
     }
 
     //возвращает матрицу 4x4
