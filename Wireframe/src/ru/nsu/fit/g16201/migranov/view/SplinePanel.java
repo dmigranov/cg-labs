@@ -9,6 +9,8 @@ public class SplinePanel extends JPanel {
     private BufferedImage canvas;
     private Graphics2D canvasGraphics;
 
+    private final int splinePointRadius = 3;
+
     public SplinePanel(int width, int height) {
         super();
         this.width = width;
@@ -42,6 +44,11 @@ public class SplinePanel extends JPanel {
 
     public void drawSplinePoint(int u, int v)
     {
-        canvasGraphics.fillOval( u - 3, v - 3, 6, 6);
+        canvasGraphics.fillOval( u - splinePointRadius, v - splinePointRadius, splinePointRadius*2, splinePointRadius*2);
+    }
+
+    public int getSplinePointRadius()
+    {
+        return splinePointRadius;
     }
 }

@@ -46,8 +46,11 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
+                int x = e.getX(), y = e.getY();
 
 
+                //при изменении положения удалять из списка по индексу и вставлять по индексу новый
+                //а можно наверное даже не удалять а изменять
             }
         });
     }
@@ -156,9 +159,6 @@ public class Controller {
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
-            /*uv = getUV(splinePoints.get(i).x, splinePoints.get(i).y);
-            splinePanel.drawSplinePoint(uv.x, uv.y);*/
-
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
             for(double t = 0; t <= 1; t+=0.01)
@@ -179,10 +179,6 @@ public class Controller {
             }
         }
 
-        /*uv = getUV(splinePoints.get(splinePoints.size() - 2).x, splinePoints.get(splinePoints.size() - 2).y);
-        splinePanel.drawSplinePoint(uv.x, uv.y);
-        uv = getUV(splinePoints.get(splinePoints.size() - 1).x, splinePoints.get(splinePoints.size() - 1).y);
-        splinePanel.drawSplinePoint(uv.x, uv.y);*/
 
         splinePanel.repaint();
 
