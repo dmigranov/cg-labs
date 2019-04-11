@@ -163,6 +163,12 @@ public class Controller {
                 splinePanel.drawPoint(uv[0], uv[1]);
             }
         }
+
+        uv = getUV(splinePoints.get(splinePoints.size() - 2).x, splinePoints.get(splinePoints.size() - 2).y);
+        splinePanel.drawSplinePoint(uv[0], uv[1]);
+        uv = getUV(splinePoints.get(splinePoints.size() - 1).x, splinePoints.get(splinePoints.size() - 1).y);
+        splinePanel.drawSplinePoint(uv[0], uv[1]);
+
         splinePanel.repaint();
 
     }
@@ -172,13 +178,21 @@ public class Controller {
         double max = Math.max(xm, ym);
         //todo: отзеркалить относительно игрека
 
+        //width = height!
+        int u=0, v=0;
         if(xm > ym)
         {
-            int u = (int)((x + xm)/2/xm * width);
-            int v = (int)((y + ym)/2/max * height);//от 0 до height - непраивльно (смотри картнку)
+            u = (int)((x + xm)/2/xm * width);
+            v = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+        }
+        else
+        {
+            //int v = (int)((y + ym)/2/ym * height);
+            //int v = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
 
-        return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
+        //return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
+        return new int[]{u, v};
     }
 
     //возвращает матрицу 4x4
