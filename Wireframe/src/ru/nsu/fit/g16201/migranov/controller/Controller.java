@@ -34,7 +34,7 @@ public class Controller {
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
 
-    private Map<Point, Point2D> pointsMap = new HashMap<>();
+    private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
 
     private int width, height;
     private BufferedReader br;
@@ -146,21 +146,18 @@ public class Controller {
         height = splinePanel.getPreferredSize().height;
         //height-=height/20;
 
-
-        drawSplinePoints();
-
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
+        drawSplinePoints(splinePoints);
+
         //long start = System.currentTimeMillis();
-        Point uv = getUV(splinePoints.get(0));
-        splinePanel.drawSplinePoint(uv.x, uv.y);
-        pointsMap.put(uv, splinePoints.get(0));
+        Point uv;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
-            uv = getUV(splinePoints.get(i).x, splinePoints.get(i).y);
-            splinePanel.drawSplinePoint(uv.x, uv.y);
+            /*uv = getUV(splinePoints.get(i).x, splinePoints.get(i).y);
+            splinePanel.drawSplinePoint(uv.x, uv.y);*/
 
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
@@ -182,17 +179,22 @@ public class Controller {
             }
         }
 
-        uv = getUV(splinePoints.get(splinePoints.size() - 2).x, splinePoints.get(splinePoints.size() - 2).y);
+        /*uv = getUV(splinePoints.get(splinePoints.size() - 2).x, splinePoints.get(splinePoints.size() - 2).y);
         splinePanel.drawSplinePoint(uv.x, uv.y);
         uv = getUV(splinePoints.get(splinePoints.size() - 1).x, splinePoints.get(splinePoints.size() - 1).y);
-        splinePanel.drawSplinePoint(uv.x, uv.y);
+        splinePanel.drawSplinePoint(uv.x, uv.y);*/
 
         splinePanel.repaint();
 
     }
 
-    private void drawSplinePoints() {
-
+    private void drawSplinePoints(List<Point2D> splinePoints) {
+        for(Point2D p : splinePoints)
+        {
+            Point uv = getUV(p);
+            splinePanel.drawSplinePoint(uv.x, uv.y);
+            pointsMap.put(uv, p);
+        }
     }
 
     private Point getUV(double x, double y) {
