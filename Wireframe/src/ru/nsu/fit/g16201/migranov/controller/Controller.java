@@ -150,9 +150,9 @@ public class Controller {
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
         //long start = System.currentTimeMillis();
-        Point uv = getUV(splinePoints.get(0).x, splinePoints.get(0).y);
+        Point uv = getUV(splinePoints.get(0));
         splinePanel.drawSplinePoint(uv.x, uv.y);
-        //pointsMap.put(uv, )
+        pointsMap.put(uv, splinePoints.get(0));
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
 
