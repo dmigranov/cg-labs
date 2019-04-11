@@ -49,7 +49,13 @@ public class Controller {
                 int x = e.getX(), y = e.getY();
                 if(splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor())
                 {
+                    int radius = splinePanel.getSplinePointRadius();
                     //todo: окрестность смотрим находим
+                    for (Point p : pointsMap.keySet())
+                    {
+                        if(Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
+                            System.out.println("hello");
+                    }
                 }
 
                 //при изменении положения удалять из списка по индексу и вставлять по индексу новый
