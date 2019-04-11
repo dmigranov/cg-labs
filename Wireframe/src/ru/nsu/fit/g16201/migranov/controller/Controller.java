@@ -114,10 +114,8 @@ public class Controller {
             return -1;
         }
 
-
         calculateSplineArea();
         drawSplineLine();
-
 
         return 0;
     }
@@ -139,15 +137,12 @@ public class Controller {
 
         xm = Math.max(Math.abs(xMax), Math.abs(xMin));
         ym = Math.max(Math.abs(yMax), Math.abs(yMin));
-        System.out.println(xm + " " + ym);
     }
 
     private void drawSplineLine() {
 
         width = splinePanel.getPreferredSize().width;
-        //width-=width/20;
         height = splinePanel.getPreferredSize().height;
-        //height-=height/20;
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
@@ -158,7 +153,6 @@ public class Controller {
         Point uv;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
-
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
             Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
             for(double t = 0; t <= 1; t+=0.01)
@@ -195,22 +189,22 @@ public class Controller {
 
     private Point getUV(double x, double y) {
         //width = height!
-        int u=0, v=0;
+        int u, v;
+        double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*1.1;
         if(xm > ym)
         {
-            double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
-            double ym = this.ym*1.1;
-            u = (int)((x + xm)/2/xm * (width));
+            u = (int)((x + xm)/2/xm * width);
             v = (int)((-y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
+        //==?
         else
         {
-            //todo
-            //int v = (int)((y + ym)/2/ym * height);
-            //int u = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+            //todo проверить
+            v = (int)((-y + ym)/2/ym * height);
+            u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
 
-        //return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
         return new Point(u, v);
     }
 
