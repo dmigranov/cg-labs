@@ -47,7 +47,10 @@ public class Controller {
                 super.mouseDragged(e);
 
                 int x = e.getX(), y = e.getY();
-
+                if(splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor())
+                {
+                    //todo: окрестность смотрим находим
+                }
 
                 //при изменении положения удалять из списка по индексу и вставлять по индексу новый
                 //а можно наверное даже не удалять а изменять

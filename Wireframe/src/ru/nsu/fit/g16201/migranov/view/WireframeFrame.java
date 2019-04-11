@@ -54,6 +54,8 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
 
+
+
         //todo:
     }
 

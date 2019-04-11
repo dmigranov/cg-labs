@@ -10,6 +10,9 @@ public class SplinePanel extends JPanel {
     private Graphics2D canvasGraphics;
 
     private final int splinePointRadius = 3;
+    private final Color splinePointColor = Color.BLACK;
+    private final Color splineLineColor = Color.GRAY;
+
 
     public SplinePanel(int width, int height) {
         super();
@@ -39,16 +42,26 @@ public class SplinePanel extends JPanel {
 
     public void drawPoint(int u, int v) {
         //canvas.setRGB(u, v, 0);
+        canvasGraphics.setColor(splineLineColor);
         canvasGraphics.drawLine(u, v, u, v);
     }
 
     public void drawSplinePoint(int u, int v)
     {
+        canvasGraphics.setColor(splinePointColor);
         canvasGraphics.fillOval( u - splinePointRadius, v - splinePointRadius, splinePointRadius*2, splinePointRadius*2);
     }
 
     public int getSplinePointRadius()
     {
         return splinePointRadius;
+    }
+
+    public int getSplinePointColor() {
+        return splinePointColor.getRGB();
+    }
+
+    public int getRGB(int x, int y) {
+        return canvas.getRGB(x, y);
     }
 }
