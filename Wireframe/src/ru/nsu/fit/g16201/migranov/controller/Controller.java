@@ -146,6 +146,9 @@ public class Controller {
         height = splinePanel.getPreferredSize().height;
         //height-=height/20;
 
+
+        drawSplinePoints();
+
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
@@ -185,6 +188,10 @@ public class Controller {
         splinePanel.drawSplinePoint(uv.x, uv.y);
 
         splinePanel.repaint();
+
+    }
+
+    private void drawSplinePoints() {
 
     }
 
