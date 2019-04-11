@@ -176,17 +176,17 @@ public class Controller {
     private int[] getUV(double x, double y) {
         //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
         double max = Math.max(xm, ym);
-        //todo: отзеркалить относительно игрека
 
         //width = height!
         int u=0, v=0;
         if(xm > ym)
         {
-            u = (int)((x + xm)/2/xm * width);
-            v = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+            u = (int)((x + xm)/2/xm * (width - 20));
+            v = (int)((-y + ym)/2/xm * (height - 20) + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
         else
         {
+            //todo
             //int v = (int)((y + ym)/2/ym * height);
             //int v = (int)((y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
