@@ -34,10 +34,19 @@ public class Matrix {
         System.arraycopy(row, 0, data, rowNumber*cols, row.length);
     }
 
-    public static Matrix add(Matrix m1, Matrix m2)
+    public static Matrix add(Matrix M1, Matrix M2)
     {
+        //todo: проверка?
+        Matrix N = new Matrix(M1.rows, M1.cols);
+        double[] m1d = M1.data;
+        double[] m2d = M2.data;
+        double[] nd = N.data;
+        for(int i = 0; i < m1d.length; i++)
+        {
+            nd[i] = m1d[i] + m2d[i];
+        }
 
-        return null;
+        return N;
     }
 
     public static Matrix multiply(Matrix M1, Matrix M2)

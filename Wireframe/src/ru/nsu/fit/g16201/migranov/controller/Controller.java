@@ -7,6 +7,7 @@ import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.view.SplinePanel;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
@@ -34,7 +35,10 @@ public class Controller {
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
 
-    private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
+    //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
+
+    private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
+
 
     private int width, height;
     private BufferedReader br;
@@ -46,21 +50,28 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                //todo нужна такая же штука как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
+                //todo нужна такая же система как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
 
                 int x = e.getX(), y = e.getY();
-                if(splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor())
-                {
+                if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                     int radius = splinePanel.getSplinePointRadius();
-                    for (Point p : pointsMap.keySet())
-                    {
-                        if(Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
+                    for (Point p : pointsMap.keySet()) {
+                        if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
                             System.out.println("hello");
                     }
                 }
 
                 //при изменении положения удалять из списка по индексу и вставлять по индексу новый
                 //а можно наверное даже не удалять а изменять
+            }
+        });
+
+        splinePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+        
+
             }
         });
     }
@@ -193,7 +204,7 @@ public class Controller {
         {
             Point uv = getUV(p);
             splinePanel.drawSplinePoint(uv.x, uv.y);
-            pointsMap.put(uv, p);   //может куда-то ещё ложить номер, чтобы легко найти
+            pointsMap.put(uv, splinePoints.indexOf(p));   //может куда-то ещё ложить номер, чтобы легко найти
         }
     }
 
