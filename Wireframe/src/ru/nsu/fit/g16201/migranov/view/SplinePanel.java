@@ -43,6 +43,5 @@ public class SplinePanel extends JPanel {
     public void drawSplinePoint(int u, int v)
     {
         canvasGraphics.fillOval( u - 3, v - 3, 6, 6);
-
     }
 }

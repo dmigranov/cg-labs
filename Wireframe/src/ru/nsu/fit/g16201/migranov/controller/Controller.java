@@ -121,14 +121,15 @@ public class Controller {
 
         xm = Math.max(Math.abs(xMax), Math.abs(xMin));
         ym = Math.max(Math.abs(yMax), Math.abs(yMin));
+        System.out.println(xm + " " + ym);
     }
 
     private void drawSplineLine() {
 
         width = splinePanel.getPreferredSize().width;
-        //width-=width/20;
+        width-=width/20;
         height = splinePanel.getPreferredSize().height;
-        //height-=height/20;
+        height-=height/20;
 
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
@@ -168,10 +169,10 @@ public class Controller {
 
     private int[] getUV(double x, double y) {
         //точно все праивльно? не порчу ли я чего из-за деления на разное? подумать
-        double max = Math.max(xm, ym);
+        double max = Math.max(width/xm, height/ym);
         //todo: отзеркалить относительно игрека
 
-        return new int[]{ (int)((x + xm)/2/max * width), (int)((y + ym)/2/max * height)};
+        return new int[]{ (int)((x + xm)/2*max), (int)((y + ym)/2*max)};
     }
 
     //возвращает матрицу 4x4
