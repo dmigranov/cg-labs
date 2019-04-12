@@ -36,7 +36,8 @@ public class Controller {
     private List<Figure> figures;
 
     //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
-    private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
+    //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
+    private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
     private boolean pointStartedMoving = false;
 
 
@@ -55,7 +56,7 @@ public class Controller {
                 int x = e.getX(), y = e.getY();
                 if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                     int radius = splinePanel.getSplinePointRadius();
-                    for (Point p : pointsMap.keySet()) {
+                    for (Point p : screenSplinePoints) {
                         if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
                             System.out.println("hello");
                     }
@@ -204,7 +205,7 @@ public class Controller {
         {
             Point uv = getUV(p);
             splinePanel.drawSplinePoint(uv.x, uv.y);
-            pointsMap.put(uv, splinePoints.indexOf(p));   //может куда-то ещё ложить номер, чтобы легко найти
+            screenSplinePoints.add(uv);   //может куда-то ещё ложить номер, чтобы легко найти
         }
     }
 
@@ -225,6 +226,7 @@ public class Controller {
             v = (int)((-y + ym)/2/ym * height);
             u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
+
 
         return new Point(u, v);
     }

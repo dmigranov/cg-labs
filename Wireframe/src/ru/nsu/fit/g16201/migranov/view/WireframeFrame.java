@@ -90,7 +90,7 @@ public class WireframeFrame extends MainFrame {
             try {
                 method.invoke(WireframeFrame.this);
             } catch (Exception e) {
-                //throw new RuntimeException(e);
+                throw new RuntimeException(e);
             }
         });
 
@@ -139,7 +139,7 @@ public class WireframeFrame extends MainFrame {
                 try {
                     method.invoke(WireframeFrame.this);
                 } catch (Exception e) {
-                    //throw new RuntimeException(e);
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -188,7 +188,7 @@ public class WireframeFrame extends MainFrame {
                 try {
                     method.invoke(WireframeFrame.this);
                 } catch (Exception e) {
-                    //throw new RuntimeException(e);
+                    throw new RuntimeException(e);
                 }
             }
         });
