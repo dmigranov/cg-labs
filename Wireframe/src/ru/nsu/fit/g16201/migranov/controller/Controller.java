@@ -35,14 +35,16 @@ public class Controller {
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
 
+    private BufferedReader br;
+
     //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
     //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
-    private boolean pointStartedMoving = false;
+    private boolean grabbedPoint = false, startedMoving = false;
 
 
     private int width, height;
-    private BufferedReader br;
+
 
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
@@ -53,13 +55,22 @@ public class Controller {
 
                 //todo нужна такая же система как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
 
+                if(startedMoving && !grabbedPoint)
+                    return;
+                startedMoving = true;
+
                 int x = e.getX(), y = e.getY();
                 if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                     int radius = splinePanel.getSplinePointRadius();
                     for (Point p : screenSplinePoints) {
                         if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
-                            System.out.println("hello");
+                        {
+                            System.out.println("hellO");
+                            grabbedPoint = true;
+                            break;                             //todo: искать не первый, а наиболее близкий
+                        }
                     }
+
                 }
 
                 //при изменении положения удалять из списка по индексу и вставлять по индексу новый
@@ -71,7 +82,7 @@ public class Controller {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-
+                startedMoving = false;
 
             }
         });
