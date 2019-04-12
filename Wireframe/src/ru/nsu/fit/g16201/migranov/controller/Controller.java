@@ -10,10 +10,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -37,7 +34,7 @@ public class Controller {
 
     private BufferedReader br;
 
-    //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
+    //private Map<Point, Point2D> pointsMap = new HashMap<>();
     //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
     private boolean pointIsGrabbed = false, startedMoving = false;
@@ -267,7 +264,6 @@ public class Controller {
             u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
 
-
         return new Point(u, v);
     }
 
@@ -279,14 +275,13 @@ public class Controller {
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
-            //y = -(2*(v-height)*xm/height + ym*width/height - ym);
             y = -2*xm*v/height - ym*width/height + xm + ym;
         }
         //==?
         else
         {
-            //todo написать
-            //v = (int)((-y + ym)/2/ym * height);
+            //todo написать (wolfram!)
+            y = ym*(2.0*v/height - 1);
             //u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
         return new Point2D(x, y);
@@ -307,10 +302,8 @@ public class Controller {
             matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]), 0});
         }
         matrix.setRow(3, new double[] {0, 0, 0, 1});
-
         return matrix;
     }
-
 
     private String[] readLineAndSplit() throws IOException
     {
@@ -339,4 +332,14 @@ public class Controller {
     }
 
 
+    public void saveFile(File file) {
+        try(PrintWriter pw = new PrintWriter(file);) {
+            pw.println(n + " " + m + " " + k + " " +  a + " " + b + " " +c + " " +d);
+            //todo: реалищовать
+
+        }
+        catch(IOException e)
+        {
+        }
+    }
 }

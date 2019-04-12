@@ -47,7 +47,6 @@ public class SplinePanel extends JPanel {
         canvasGraphics.drawLine(u, v, u, v);
     }
     public void drawLine(int u1, int v1, int u2, int v2) {
-        //canvas.setRGB(u, v, 0);
         canvasGraphics.setColor(splineLineColor);
         canvasGraphics.drawLine(u1, v1, u2, v2);
     }

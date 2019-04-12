@@ -51,7 +51,6 @@ public class Matrix {
     public static Matrix multiply(Matrix M1, Matrix M2)
     {
         //todo: проверка?
-
         Matrix N = new Matrix(M1.rows, M2.cols);
         double[] m1d = M1.data;
         double[] m2d = M2.data;

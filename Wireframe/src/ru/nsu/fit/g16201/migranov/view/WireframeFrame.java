@@ -54,7 +54,7 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 1));
+        inputPanel.setLayout(new GridLayout(2, 2));
         configurationPanel.add(inputPanel);
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
@@ -66,16 +66,13 @@ public class WireframeFrame extends MainFrame {
         JButton deleteLastPointButton = new JButton("Delete the point in the end");
         deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
-
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
         inputPanel.add(deleteFirstPointButton);
         inputPanel.add(deleteLastPointButton);
 
 
-
-
-        //todo:
+        //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
     }
 
     private void addMenus() throws NoSuchMethodException {
@@ -261,7 +258,10 @@ public class WireframeFrame extends MainFrame {
 
     public void onSave()
     {
-        //todo;
+        File file = getSaveFileName("png", "A PNG file");
+        if (file != null) {
+            controller.saveFile(file);
+        }
     }
 
     public void onAbout()
