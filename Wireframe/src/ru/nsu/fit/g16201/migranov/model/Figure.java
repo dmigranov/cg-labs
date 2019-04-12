@@ -22,4 +22,6 @@ public class Figure {
     public List<Point2D> getSplinePoints() {
         return splinePoints;
     }
+
+
 }

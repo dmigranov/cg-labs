@@ -26,7 +26,6 @@ public class Controller {
     private SplinePanel splinePanel;
     private double xm, ym;
 
-    private int currentFigure = 0;
 
     private int n, m, k;
     private double a, b, c, d;
@@ -34,6 +33,9 @@ public class Controller {
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
     private List<Figure> figures;
+    private Figure currentFigure = null;
+    private int currentFigureIndex = 0;
+
 
     private BufferedReader br;
 
@@ -41,6 +43,7 @@ public class Controller {
     //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
     private boolean pointIsGrabbed = false, startedMoving = false;
+    private int grabbedPointIndex;
 
 
     private int width, height;
@@ -60,25 +63,33 @@ public class Controller {
                 startedMoving = true;
 
                 int x = e.getX(), y = e.getY();
-                if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
-                    int radius = splinePanel.getSplinePointRadius();
-                    Point grabbedPoint = null;
-                    for (Point p : screenSplinePoints) {
-                        if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
-                        {
-                            System.out.println("hellO");
-                            pointIsGrabbed = true;
-                            grabbedPoint = p;
-                            break;                             //todo: искать не первый, а наиболее близкий
+                if(!pointIsGrabbed) {
+                    if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
+                        int radius = splinePanel.getSplinePointRadius();
+                        Point grabbedPoint = null;
+                        for (Point p : screenSplinePoints) {
+                            if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius) {
+                                System.out.println("hellO");
+                                pointIsGrabbed = true;
+                                grabbedPoint = p;
+                                break;                             //todo: искать не первый, а наиболее близкий
+                            }
                         }
+                        if (grabbedPoint == null)
+                            return;
+                        grabbedPointIndex = screenSplinePoints.indexOf(grabbedPoint);
+
                     }
-                    if(grabbedPoint == null)
-                        return;
-                    int i = screenSplinePoints.indexOf(grabbedPoint);
-
-
-
-
+                }
+                if(pointIsGrabbed)
+                {
+                    Point2D movedPoint = currentFigure.getSplinePoints().get(grabbedPointIndex);
+                    Point2D newCoords = getXY(x, y);
+                    movedPoint.x = newCoords.x;
+                    movedPoint.y = newCoords.y;
+                    screenSplinePoints.get(grabbedPointIndex).x = x;
+                    screenSplinePoints.get(grabbedPointIndex).y = y;
+                    drawSplineLine();
                 }
 
                 //при изменении положения удалять из списка по индексу и вставлять по индексу новый
@@ -91,7 +102,7 @@ public class Controller {
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 startedMoving = false;
-
+                pointIsGrabbed = false;
             }
         });
     }
@@ -155,6 +166,7 @@ public class Controller {
             return -1;
         }
 
+        currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
 
@@ -165,7 +177,7 @@ public class Controller {
     private void calculateSplineArea() {
         double xMin = Double.MAX_VALUE, xMax = Double.MIN_VALUE, yMin = Double.MAX_VALUE, yMax = Double.MIN_VALUE;
 
-        Figure figure = figures.get(currentFigure);
+        Figure figure = figures.get(currentFigureIndex);
         List<Point2D> splinePoints = figure.getSplinePoints();
 
         for(Point2D p : splinePoints)
@@ -185,8 +197,9 @@ public class Controller {
         width = splinePanel.getPreferredSize().width;
         height = splinePanel.getPreferredSize().height;
 
+        splinePanel.clear();
         //T - вектор строка t^3 t^2 t 1, t [0,1]
-        Figure figure = figures.get(currentFigure); //todo итерация по телам
+        Figure figure = figures.get(currentFigureIndex); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
 
         drawSplinePoints(splinePoints);

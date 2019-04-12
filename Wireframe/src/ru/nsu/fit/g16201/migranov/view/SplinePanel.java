@@ -64,4 +64,8 @@ public class SplinePanel extends JPanel {
     public int getRGB(int x, int y) {
         return canvas.getRGB(x, y);
     }
+
+    public void clear() {
+        canvasGraphics.clearRect(0, 0, width, height);
+    }
 }
