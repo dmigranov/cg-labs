@@ -40,7 +40,7 @@ public class Controller {
     //private Map<Point, Point2D> pointsMap = new HashMap<>();    //todo: при добавлении/изменении надо обновлять
     //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
-    private boolean grabbedPoint = false, startedMoving = false;
+    private boolean pointIsGrabbed = false, startedMoving = false;
 
 
     private int width, height;
@@ -55,21 +55,29 @@ public class Controller {
 
                 //todo нужна такая же система как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
 
-                if(startedMoving && !grabbedPoint)
+                if(startedMoving && !pointIsGrabbed)
                     return;
                 startedMoving = true;
 
                 int x = e.getX(), y = e.getY();
                 if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                     int radius = splinePanel.getSplinePointRadius();
+                    Point grabbedPoint = null;
                     for (Point p : screenSplinePoints) {
                         if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius)
                         {
                             System.out.println("hellO");
-                            grabbedPoint = true;
+                            pointIsGrabbed = true;
+                            grabbedPoint = p;
                             break;                             //todo: искать не первый, а наиболее близкий
                         }
                     }
+                    if(grabbedPoint == null)
+                        return;
+                    int i = screenSplinePoints.indexOf(grabbedPoint);
+
+
+
 
                 }
 
@@ -180,9 +188,9 @@ public class Controller {
         //T - вектор строка t^3 t^2 t 1, t [0,1]
         Figure figure = figures.get(currentFigure); //todo итерация по телам
         List<Point2D> splinePoints = figure.getSplinePoints();
+
         drawSplinePoints(splinePoints);
 
-        //long start = System.currentTimeMillis();
         Point uv;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
@@ -205,7 +213,6 @@ public class Controller {
                 splinePanel.drawPoint(uv.x, uv.y);
             }
         }
-
 
         splinePanel.repaint();
 
@@ -240,6 +247,26 @@ public class Controller {
 
 
         return new Point(u, v);
+    }
+
+    private Point2D getXY(int u, int v)
+    {
+        double x = 0, y = 0;
+        double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*1.1;
+        if(xm > ym)
+        {
+            x = xm*(2.0*u/width - 1);
+            y = -(2*(v-height)*xm/height + ym*width/height - ym);
+        }
+        //==?
+        else
+        {
+            //todo написать
+            //v = (int)((-y + ym)/2/ym * height);
+            //u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+        }
+        return new Point2D(x, y);
     }
 
     private Point getUV(Point2D p) {
