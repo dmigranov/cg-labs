@@ -43,7 +43,6 @@ public class Controller {
     private boolean pointIsGrabbed = false, startedMoving = false;
     private int grabbedPointIndex;
 
-
     private int width, height;
 
 
@@ -74,7 +73,7 @@ public class Controller {
                         if (grabbedPoint == null)
                             return;
                         grabbedPointIndex = screenSplinePoints.indexOf(grabbedPoint);
-
+                        //todo: То ли кажется, но иногда новый плохо движется после добавления
                     }
                 }
                 if(pointIsGrabbed)
@@ -328,6 +327,8 @@ public class Controller {
     }
 
     public void deleteSplinePoint(int index) {
+        if(index >= currentFigure.getSplinePoints().size() || index < 0)
+            return;
         //screenSplinePoints.remove(index);
         currentFigure.getSplinePoints().remove(index);
         drawSplineLine();
