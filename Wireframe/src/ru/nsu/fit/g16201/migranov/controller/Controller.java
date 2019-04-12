@@ -14,10 +14,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
@@ -95,8 +93,8 @@ public class Controller {
                     Point2D newCoords = getXY(x, y);
                     movedPoint.x = newCoords.x;
                     movedPoint.y = newCoords.y;
-                    screenSplinePoints.get(grabbedPointIndex).x = x;
-                    screenSplinePoints.get(grabbedPointIndex).y = y;
+                    //screenSplinePoints.get(grabbedPointIndex).x = x;
+                    //screenSplinePoints.get(grabbedPointIndex).y = y;
                     drawSplineLine();
                 }
 
@@ -243,6 +241,7 @@ public class Controller {
     }
 
     private void drawSplinePoints(List<Point2D> splinePoints) {
+        screenSplinePoints.clear();
         for(Point2D p : splinePoints)
         {
             Point uv = getUV(p);
@@ -323,13 +322,20 @@ public class Controller {
     }
 
     public void addSplinePoint(int index) {
-        screenSplinePoints.add(index, new Point(getUV(0, 0)));
+        //screenSplinePoints.add(index, new Point(getUV(0, 0)));
         currentFigure.getSplinePoints().add(index, new Point2D(0, 0));
         drawSplineLine();
+    }
 
+    public void deleteSplinePoint(int index) {
+        //screenSplinePoints.remove(index);
+        currentFigure.getSplinePoints().remove(index);
+        drawSplineLine();
     }
 
     public int getSplinePointsCount() {
         return currentFigure.getSplinePoints().size();
     }
+
+
 }

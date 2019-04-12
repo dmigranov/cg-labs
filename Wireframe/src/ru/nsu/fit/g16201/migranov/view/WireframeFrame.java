@@ -58,22 +58,20 @@ public class WireframeFrame extends MainFrame {
         configurationPanel.add(inputPanel);
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
-        addFirstPointButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.addSplinePoint(0);
-            }
-        });
+        addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
         JButton addLastPointButton = new JButton("Add new point in the end");
-        addLastPointButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.addSplinePoint(controller.getSplinePointsCount());
-            }
-        });
+        addLastPointButton.addActionListener(e -> controller.addSplinePoint(controller.getSplinePointsCount()));
+        JButton deleteFirstPointButton = new JButton("Delete the point in the beginning");
+        deleteFirstPointButton.addActionListener(e -> controller.deleteSplinePoint(0));
+        JButton deleteLastPointButton = new JButton("Delete the point in the end");
+        deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
+
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
+        inputPanel.add(deleteFirstPointButton);
+        inputPanel.add(deleteLastPointButton);
+
 
 
 

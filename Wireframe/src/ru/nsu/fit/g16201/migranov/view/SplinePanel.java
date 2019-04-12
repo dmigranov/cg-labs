@@ -9,7 +9,7 @@ public class SplinePanel extends JPanel {
     private BufferedImage canvas;
     private Graphics2D canvasGraphics;
 
-    private final int splinePointRadius = 3;
+    private final int splinePointRadius = 10;
     private final Color splinePointColor = Color.BLACK;
     private final Color splineLineColor = Color.GRAY;
 
