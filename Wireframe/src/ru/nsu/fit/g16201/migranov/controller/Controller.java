@@ -56,7 +56,7 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                //todo нужна такая же система как в первой лабе что если начал не с этой точки то не надо ничего! (активная точка0
+                //todo: ограничители по бокам!
 
                 if(startedMoving && !pointIsGrabbed)
                     return;
@@ -203,7 +203,7 @@ public class Controller {
 
         drawSplinePoints(splinePoints);
 
-        Point uv;
+        Point uv, prev = null;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -222,7 +222,10 @@ public class Controller {
                 uv = getUV(x, y);
 
                 //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
-                splinePanel.drawPoint(uv.x, uv.y);
+                //splinePanel.drawPoint(uv.x, uv.y);
+                if(prev != null)
+                    splinePanel.drawLine(prev.x, prev.y, uv.x, uv.y);
+                prev = uv;
             }
         }
 
