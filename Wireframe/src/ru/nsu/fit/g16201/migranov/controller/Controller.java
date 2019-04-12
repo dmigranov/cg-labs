@@ -56,13 +56,12 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                //todo: ограничители по бокам!
-
                 if(startedMoving && !pointIsGrabbed)
                     return;
                 startedMoving = true;
 
                 int x = e.getX(), y = e.getY();
+
                 if(!pointIsGrabbed) {
                     if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                         int radius = splinePanel.getSplinePointRadius();
@@ -82,6 +81,16 @@ public class Controller {
                 }
                 if(pointIsGrabbed)
                 {
+                    if(x < 0)
+                        x = 0;
+                    else if(x >= width)
+                        x = width -1 ;
+                    if(y < 0)
+                        y = 0;
+                    else if(y >= height)
+                        y = height -1 ;
+
+                    //я не трогаю mx и my, чтобы не менять масштаб
                     Point2D movedPoint = currentFigure.getSplinePoints().get(grabbedPointIndex);
                     Point2D newCoords = getXY(x, y);
                     movedPoint.x = newCoords.x;
@@ -91,8 +100,7 @@ public class Controller {
                     drawSplineLine();
                 }
 
-                //при изменении положения удалять из списка по индексу и вставлять по индексу новый
-                //а можно наверное даже не удалять а изменять
+                //при изменении положения удалять из списка по индексу и вставлять по индексу новый (а когда-то может стоит пересчитывать? при открытии окошка например)
             }
         });
 
@@ -221,7 +229,6 @@ public class Controller {
 
                 uv = getUV(x, y);
 
-                //todo: лучше наверное рисовать линию между предыдущей и нынешней чтобы в слкчае чего не было точек
                 //splinePanel.drawPoint(uv.x, uv.y);
                 if(prev != null)
                     splinePanel.drawLine(prev.x, prev.y, uv.x, uv.y);
