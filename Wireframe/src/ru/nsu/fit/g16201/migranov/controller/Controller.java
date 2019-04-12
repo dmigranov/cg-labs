@@ -69,7 +69,6 @@ public class Controller {
                         Point grabbedPoint = null;
                         for (Point p : screenSplinePoints) {
                             if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius) {
-                                System.out.println("hellO");
                                 pointIsGrabbed = true;
                                 grabbedPoint = p;
                                 break;                             //todo: искать не первый, а наиболее близкий
@@ -270,7 +269,8 @@ public class Controller {
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
-            y = -(2*(v-height)*xm/height + ym*width/height - ym);
+            //y = -(2*(v-height)*xm/height + ym*width/height - ym);
+            y = -2*xm*v/height - ym*width/height + xm + ym;
         }
         //==?
         else
