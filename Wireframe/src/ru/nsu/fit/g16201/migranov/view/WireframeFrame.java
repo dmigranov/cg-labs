@@ -54,6 +54,12 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
 
+        JButton addFirstPointButton = new JButton("Add new point in the beginning");
+        JButton addLastPointButton = new JButton("Add new point in the end");
+
+        configurationPanel.add(addFirstPointButton);
+        configurationPanel.add(addLastPointButton);
+
 
 
         //todo:
@@ -258,11 +264,6 @@ public class WireframeFrame extends MainFrame {
     public void onConfigureSplines()
     {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
-
-        /*if(JOptionPane.showConfirmDialog(this, configurationPanel, "Configuration", 0) == JOptionPane.OK_OPTION)
-        {
-            ;
-        }*/
 
         JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
