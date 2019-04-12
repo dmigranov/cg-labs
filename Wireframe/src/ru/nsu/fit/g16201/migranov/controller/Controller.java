@@ -157,6 +157,8 @@ public class Controller {
 
                 substrings = readLineAndSplit();
                 int splinePointCount = Integer.parseInt(substrings[0]);
+                if(splinePointCount < 4)
+                    throw new IOException("Not enough spline points");
                 List<Point2D> splinePoints = new ArrayList<>();
                 for(int j = 0; j < splinePointCount; j++)
                 {
@@ -318,5 +320,16 @@ public class Controller {
         line = br.readLine();
         line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
         return line.split("\\s+");
+    }
+
+    public void addSplinePoint(int index) {
+        screenSplinePoints.add(index, new Point(getUV(0, 0)));
+        currentFigure.getSplinePoints().add(index, new Point2D(0, 0));
+        drawSplineLine();
+
+    }
+
+    public int getSplinePointsCount() {
+        return currentFigure.getSplinePoints().size();
     }
 }

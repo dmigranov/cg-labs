@@ -53,12 +53,27 @@ public class WireframeFrame extends MainFrame {
         configurationPanel = new JPanel();   //tabs...
 
         configurationPanel.add(splinePanel);
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(2, 1));
+        configurationPanel.add(inputPanel);
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
+        addFirstPointButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.addSplinePoint(0);
+            }
+        });
         JButton addLastPointButton = new JButton("Add new point in the end");
+        addLastPointButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.addSplinePoint(controller.getSplinePointsCount());
+            }
+        });
 
-        configurationPanel.add(addFirstPointButton);
-        configurationPanel.add(addLastPointButton);
+        inputPanel.add(addFirstPointButton);
+        inputPanel.add(addLastPointButton);
 
 
 
