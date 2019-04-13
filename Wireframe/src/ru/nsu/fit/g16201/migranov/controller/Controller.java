@@ -260,7 +260,6 @@ public class Controller {
                         continue;   //нет нужды уже прибавлять
                     }*/
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
-                    System.out.println(tempLength);
                     if(tempLength >= a && tempLength <= b)
                     //if(tempLength >= a)
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
@@ -280,7 +279,7 @@ public class Controller {
     private double calculateLength(List<Point2D> splinePoints)
     {
         Double xPrev = null, yPrev = null;
-        int length = 0;
+        double length = 0;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -296,6 +295,7 @@ public class Controller {
                 double x = X.get(0, 0), y = Y.get(0, 0);
 
                 if(xPrev != null) {
+
                     length += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
                 }
                 xPrev = x;
