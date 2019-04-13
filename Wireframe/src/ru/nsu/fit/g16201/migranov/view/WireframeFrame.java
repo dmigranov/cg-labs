@@ -24,7 +24,7 @@ public class WireframeFrame extends MainFrame {
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
 
-    private JTextField aField, bField, cField, dField;
+    private JTextField aField, bField, cField, dField, nField, mField, kField;
     private JButton confirmButton;
 
     public static void main(String[] args) throws Exception {
@@ -75,6 +75,7 @@ public class WireframeFrame extends MainFrame {
         bField = new JTextField();
         cField = new JTextField();
         dField = new JTextField();
+
         aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());
         cField.addKeyListener(new FloatTextFieldKeyListener());

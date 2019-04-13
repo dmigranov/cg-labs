@@ -17,10 +17,8 @@ import java.util.ArrayList;
 public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
-
     private SplinePanel splinePanel;
     private double xm, ym;
-
 
     private int n, m, k;
     private double a, b, c, d;
@@ -183,7 +181,7 @@ public class Controller {
         {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints);
-            //есть идейка как оптимизировать всю эту фигню с тем, где относительно длины мы находимся на каждой кривой. надо для начала проверять только для 0 и для 1 (не надо сразу во всех точках!!! это лишнее
+
             for(int i = 1; i < splinePoints.size() - 2; i++)
             {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -195,6 +193,7 @@ public class Controller {
                     Matrix X = Matrix.multiply(TM, Gx);
                     Matrix Y = Matrix.multiply(TM, Gy);
                     double x = X.get(0, 0), y = Y.get(0, 0);
+                    //должны получить, где на кривой находится точка - это u (не та u, что у меня обозначает пиксельные координаты)
 
                 }
             }
