@@ -253,16 +253,16 @@ public class Controller {
 
                 uv = getUV(x, y);
                 if(uvPrev != null) {
-                    if(tempLength > b)
+                    /*if(tempLength > b)
                     {
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
                         uvPrev = uv;
                         continue;   //нет нужды уже прибавлять
-                    }
+                    }*/
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
 
-                    //if(tempLength >= a && tempLength <= b)
-                    if(tempLength >= a)
+                    if(tempLength >= a && tempLength <= b)
+                    //if(tempLength >= a)
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
                     else
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
