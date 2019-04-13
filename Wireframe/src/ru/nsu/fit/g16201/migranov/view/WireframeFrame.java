@@ -75,11 +75,15 @@ public class WireframeFrame extends MainFrame {
         bField = new JTextField();
         cField = new JTextField();
         dField = new JTextField();
+        mField = new JTextField();
+        nField = new JTextField();
+        kField = new JTextField();
 
         aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());
-        cField.addKeyListener(new FloatTextFieldKeyListener());
+        cField.addKeyListener(new FloatTextFieldKeyListener()); //может лучше ползунок для угла?
         dField.addKeyListener(new FloatTextFieldKeyListener());
+        mField.addKeyListener(new IntegerTextFieldKeyListener());
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
