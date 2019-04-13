@@ -25,6 +25,7 @@ public class WireframeFrame extends MainFrame {
     private JPanel configurationPanel;
 
     private JTextField aField, bField;
+    private JButton confirmButton;
 
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
@@ -71,7 +72,6 @@ public class WireframeFrame extends MainFrame {
         JButton deleteLastPointButton = new JButton("Delete the point in the end");
         deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
-        //JTextField aField = new JTextField(controller.getA() + "",4), bField = new JTextField(controller.getB() + "",4);
         aField = new JTextField();
         bField = new JTextField();
 
@@ -87,7 +87,7 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(new JLabel("b: "));
         inputPanel.add(bField);
 
-        JButton confirmButton = new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,8 +114,6 @@ public class WireframeFrame extends MainFrame {
             }
         });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        inputButtonPanel.add(Box.createVerticalStrut(20));
-        inputButtonPanel.add(confirmButton);
 
         //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
     }
@@ -326,7 +324,9 @@ public class WireframeFrame extends MainFrame {
         aField.setText(controller.getA() + "");
         bField.setText(controller.getB() + "");
 
-        JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         //todo передать в параметрах OK без кансела?
+        JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
+
     }
 }

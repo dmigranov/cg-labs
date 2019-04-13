@@ -93,8 +93,6 @@ public class Controller {
                     //screenSplinePoints.get(grabbedPointIndex).y = y;
                     drawSplineLine();
                 }
-
-                //при изменении положения удалять из списка по индексу и вставлять по индексу новый (а когда-то может стоит пересчитывать? при открытии окошка например)
             }
         });
 
