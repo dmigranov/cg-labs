@@ -207,8 +207,9 @@ public class Controller {
 
         drawSplinePoints(splinePoints);
 
-        Point uv, prev = null;
-        double length = 0;
+        Point uv, uvPrev = null;
+        double length = 0, xPrev = 0, yPrev = 0;
+
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -226,9 +227,13 @@ public class Controller {
                 uv = getUV(x, y);
 
                 //splinePanel.drawPoint(uv.x, uv.y);
-                if(prev != null)
-                    splinePanel.drawLine(prev.x, prev.y, uv.x, uv.y);
-                prev = uv;
+                if(uvPrev != null) {
+                    splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
+                    length+=Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
+                }
+                xPrev = x;
+                yPrev = y;
+                uvPrev = uv;
             }
         }
 

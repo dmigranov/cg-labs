@@ -8,4 +8,9 @@ public class Point2D {
         this.x = x;
         this.y = y;
     }
+
+    public static double distance(Point2D p1, Point2D p2)
+    {
+        return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.x - p2.x, 2));
+    }
 }

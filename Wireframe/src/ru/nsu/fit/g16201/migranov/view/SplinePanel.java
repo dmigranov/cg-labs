@@ -11,7 +11,7 @@ public class SplinePanel extends JPanel {
 
     private final int splinePointRadius = 3;
     private final Color splinePointColor = Color.BLACK;
-    private final Color splineLineColor = Color.GRAY;
+    private final Color splineLineColor = Color.BLACK;
 
 
     public SplinePanel(int width, int height) {
@@ -35,7 +35,7 @@ public class SplinePanel extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        canvasGraphics.setColor(Color.BLACK);
+        canvasGraphics.setColor(Color.GRAY);
         canvasGraphics.drawLine(width/2, 0, width/2, height - 1);
         canvasGraphics.drawLine(0, height/2, width - 1, height/2);
         g.drawImage(canvas, 0, 0, width, height, null);
