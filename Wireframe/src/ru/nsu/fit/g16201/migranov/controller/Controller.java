@@ -174,8 +174,13 @@ public class Controller {
         currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
+        drawObjects();
 
         return 0;
+    }
+
+    private void drawObjects() {
+
     }
 
     //область определения сплайна (чтобы знать как масштабировать)
@@ -269,6 +274,11 @@ public class Controller {
         }
 
         splinePanel.repaint();
+
+    }
+
+    private void calculateLength()
+    {
 
     }
 
