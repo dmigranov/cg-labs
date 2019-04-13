@@ -55,9 +55,12 @@ public class WireframeFrame extends MainFrame {
         configurationPanel = new JPanel();   //tabs...
 
         configurationPanel.add(splinePanel);
-        JPanel inputPanel = new JPanel();
+        JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(4, 2, 3, 5));
-        configurationPanel.add(inputPanel);
+        inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
+
+        inputButtonPanel.add(inputPanel);
+        configurationPanel.add(inputButtonPanel);
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
         addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
@@ -84,6 +87,10 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(new JLabel("b: "));
         inputPanel.add(bField);
 
+        JButton confirmButton = new JButton("Confirm");
+        confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        inputButtonPanel.add(Box.createVerticalStrut(20));
+        inputButtonPanel.add(confirmButton);
 
         //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
     }
@@ -295,6 +302,6 @@ public class WireframeFrame extends MainFrame {
         bField.setText(controller.getB() + "");
 
         JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-
+        //todo передать в параметрах OK без кансела?
     }
 }

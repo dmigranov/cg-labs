@@ -390,5 +390,13 @@ public class Controller {
         return b;
     }
 
+    public double getC() {
+        return c;
+    }
+
+    public double getD() {
+        return d;
+    }
+
 
 }
