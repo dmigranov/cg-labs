@@ -24,7 +24,7 @@ public class WireframeFrame extends MainFrame {
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
 
-    private JTextField aField, bField;
+    private JTextField aField, bField, cField, dField;
     private JButton confirmButton;
 
     public static void main(String[] args) throws Exception {
@@ -57,9 +57,8 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(4, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(6, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
-
         inputButtonPanel.add(inputPanel);
         configurationPanel.add(inputButtonPanel);
 
@@ -74,9 +73,12 @@ public class WireframeFrame extends MainFrame {
 
         aField = new JTextField();
         bField = new JTextField();
-
+        cField = new JTextField();
+        dField = new JTextField();
         aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());
+        cField.addKeyListener(new FloatTextFieldKeyListener());
+        dField.addKeyListener(new FloatTextFieldKeyListener());
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
@@ -86,6 +88,10 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(aField);
         inputPanel.add(new JLabel("b: "));
         inputPanel.add(bField);
+        inputPanel.add(new JLabel("c: "));
+        inputPanel.add(cField);
+        inputPanel.add(new JLabel("d: "));
+        inputPanel.add(dField);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
@@ -94,16 +100,17 @@ public class WireframeFrame extends MainFrame {
                 try
                 {
                     int n = controller.getN(), m = controller.getM(), k = controller.getK();
-                    double a, b, c = controller.getC(), d = controller.getD();
+                    double a, b, c, d;
                     //k = Integer.parseInt(kField.getText());
                     //m = Integer.parseInt(mField.getText());
                     a = Double.parseDouble(aField.getText());
                     b = Double.parseDouble(bField.getText());
-                    //c = Double.parseDouble(regionSizesFields.get(2).getText());
-                    //d = Double.parseDouble(regionSizesFields.get(3).getText());
+                    c = Double.parseDouble(cField.getText());
+                    d = Double.parseDouble(dField.getText());
 
                     if(!(b > a && a >= 0 && 1 >= b))
                         throw new NumberFormatException("Wrong a or b");
+                    //todo
 
                     controller.setConstants(n, m, k, a, b, c, d);
                 }
@@ -114,6 +121,7 @@ public class WireframeFrame extends MainFrame {
             }
         });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //inputButtonPanel add confirmButton
 
         //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
     }
@@ -323,9 +331,11 @@ public class WireframeFrame extends MainFrame {
 
         aField.setText(controller.getA() + "");
         bField.setText(controller.getB() + "");
+        cField.setText(controller.getC() + "");
+        dField.setText(controller.getD() + "");
+
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        //todo передать в параметрах OK без кансела?
         JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
 
     }
