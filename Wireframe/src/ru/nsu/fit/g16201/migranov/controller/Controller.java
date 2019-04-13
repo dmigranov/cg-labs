@@ -260,7 +260,7 @@ public class Controller {
                         continue;   //нет нужды уже прибавлять
                     }*/
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
-
+                    System.out.println(tempLength);
                     if(tempLength >= a && tempLength <= b)
                     //if(tempLength >= a)
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
