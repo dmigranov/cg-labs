@@ -193,7 +193,8 @@ public class Controller {
                     Matrix X = Matrix.multiply(TM, Gx);
                     Matrix Y = Matrix.multiply(TM, Gy);
                     double x = X.get(0, 0), y = Y.get(0, 0);
-                    //должны получить, где на кривой находится точка - это u (не та u, что у меня обозначает пиксельные координаты)
+                    //должны получить, где на кривой находится точка - это u (не та u, что у меня обозначает пиксельные координаты) (КАК В calcLen)
+
 
                 }
             }
@@ -253,15 +254,15 @@ public class Controller {
 
                 uv = getUV(x, y);
                 if(uvPrev != null) {
-                    /*if(tempLength > b)
+                    if(tempLength > b)
                     {
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
                         uvPrev = uv;
                         continue;   //нет нужды уже прибавлять
-                    }*/
+                    }
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
-                    if(tempLength >= a && tempLength <= b)
-                    //if(tempLength >= a)
+                    //if(tempLength >= a && tempLength <= b)
+                    if(tempLength >= a)
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
                     else
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
