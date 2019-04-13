@@ -398,5 +398,29 @@ public class Controller {
         return d;
     }
 
+    public int getN() {
+        return n;
+    }
 
+    public int getM() {
+        return m;
+    }
+
+    public int getK() {
+        return k;
+    }
+
+    public void setConstants(int n, int m, int k, double a, double b, double c, double d) {
+        this.n = n;
+        this.m = m;
+        this.k = k;
+
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        this.d = d;
+
+        drawSplineLine();
+        //todo: пересчитать 3д
+    }
 }

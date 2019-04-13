@@ -88,6 +88,31 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(bField);
 
         JButton confirmButton = new JButton("Confirm");
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try
+                {
+                    int n = controller.getN(), m = controller.getM(), k = controller.getK();
+                    double a, b, c = controller.getC(), d = controller.getD();
+                    //k = Integer.parseInt(kField.getText());
+                    //m = Integer.parseInt(mField.getText());
+                    a = Double.parseDouble(aField.getText());
+                    b = Double.parseDouble(bField.getText());
+                    //c = Double.parseDouble(regionSizesFields.get(2).getText());
+                    //d = Double.parseDouble(regionSizesFields.get(3).getText());
+
+                    if(!(b > a && a >= 0 && 1 >= b))
+                        throw new NumberFormatException("Wrong a or b");
+
+                    controller.setConstants(n, m, k, a, b, c, d);
+                }
+                catch (NumberFormatException n)
+                {
+                    JOptionPane.showMessageDialog(WireframeFrame.this, n.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         inputButtonPanel.add(Box.createVerticalStrut(20));
         inputButtonPanel.add(confirmButton);
