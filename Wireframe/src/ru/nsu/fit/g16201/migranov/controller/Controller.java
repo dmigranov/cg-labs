@@ -182,6 +182,21 @@ public class Controller {
     private void drawFigures() {
         for(Figure figure : figures)
         {
+            List<Point2D> splinePoints = figure.getSplinePoints();
+            for(int i = 1; i < splinePoints.size() - 2; i++)
+            {
+                Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
+                Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
+                for(double t = 0; t <= 1; t+=0.01)
+                {
+                    Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
+                    Matrix TM = Matrix.multiply(T, splineMatrix);
+                    Matrix X = Matrix.multiply(TM, Gx);
+                    Matrix Y = Matrix.multiply(TM, Gy);
+                    double x = X.get(0, 0), y = Y.get(0, 0);
+
+                }
+            }
 
         }
     }
@@ -232,13 +247,11 @@ public class Controller {
             {
                 Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
                 Matrix TM = Matrix.multiply(T, splineMatrix);
-
                 Matrix X = Matrix.multiply(TM, Gx);
                 Matrix Y = Matrix.multiply(TM, Gy);
                 double x = X.get(0, 0), y = Y.get(0, 0);
 
                 uv = getUV(x, y);
-
                 if(uvPrev != null) {
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
 
@@ -255,7 +268,6 @@ public class Controller {
         }
 
         splinePanel.repaint();
-
     }
 
     private double calculateLength(List<Point2D> splinePoints)
