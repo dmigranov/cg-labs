@@ -208,6 +208,7 @@ public class Controller {
         drawSplinePoints(splinePoints);
 
         Point uv, prev = null;
+        double length = 0;
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
             Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -220,8 +221,7 @@ public class Controller {
                 Matrix X = Matrix.multiply(TM, Gx);
                 Matrix Y = Matrix.multiply(TM, Gy);
 
-                double x = X.get(0, 0);
-                double y = Y.get(0, 0);
+                double x = X.get(0, 0), y = Y.get(0, 0);
 
                 uv = getUV(x, y);
 
