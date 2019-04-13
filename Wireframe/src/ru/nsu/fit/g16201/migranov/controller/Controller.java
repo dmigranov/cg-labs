@@ -89,9 +89,8 @@ public class Controller {
                     Point2D newCoords = getXY(x, y);
                     movedPoint.x = newCoords.x;
                     movedPoint.y = newCoords.y;
-                    //screenSplinePoints.get(grabbedPointIndex).x = x;
-                    //screenSplinePoints.get(grabbedPointIndex).y = y;
                     drawSplineLine();
+                    //drawFigures();
                 }
             }
         });
@@ -183,6 +182,8 @@ public class Controller {
         for(Figure figure : figures)
         {
             List<Point2D> splinePoints = figure.getSplinePoints();
+            double length = calculateLength(splinePoints);
+            //есть идейка как оптимизировать всю эту фигню с тем, где относительно длины мы находимся на каждой кривой. надо для начала проверять только для 0 и для 1 (не надо сразу во всех точках!!! это лишнее
             for(int i = 1; i < splinePoints.size() - 2; i++)
             {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -253,9 +254,16 @@ public class Controller {
 
                 uv = getUV(x, y);
                 if(uvPrev != null) {
+                    if(tempLength > b)
+                    {
+                        splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
+                        uvPrev = uv;
+                        continue;   //нет нужды уже прибавлять
+                    }
                     tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
 
-                    if(tempLength >= a && tempLength <= b)
+                    //if(tempLength >= a && tempLength <= b)
+                    if(tempLength >= a)
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
                     else
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
