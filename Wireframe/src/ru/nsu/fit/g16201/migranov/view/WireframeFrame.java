@@ -24,6 +24,8 @@ public class WireframeFrame extends MainFrame {
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
 
+    private JTextField aField, bField;
+
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
     }
@@ -32,8 +34,8 @@ public class WireframeFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
         splinePanel = new SplinePanel(501, 501);
-        createConfigurationPanel();
         controller = new Controller(splinePanel);
+        createConfigurationPanel();
         addMenus();
 
         JPanel statusPanel = new JPanel();
@@ -54,7 +56,7 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(4, 2, 3, 5));
         configurationPanel.add(inputPanel);
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
@@ -66,15 +68,21 @@ public class WireframeFrame extends MainFrame {
         JButton deleteLastPointButton = new JButton("Delete the point in the end");
         deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
-        JTextField aField = new JTextField(controller.getA() + "",4), bField = new JTextField(controller.getB() + "",4);
+        //JTextField aField = new JTextField(controller.getA() + "",4), bField = new JTextField(controller.getB() + "",4);
+        aField = new JTextField();
+        bField = new JTextField();
 
-
+        aField.addKeyListener(new FloatTextFieldKeyListener());
+        bField.addKeyListener(new FloatTextFieldKeyListener());
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
         inputPanel.add(deleteFirstPointButton);
         inputPanel.add(deleteLastPointButton);
-
+        inputPanel.add(new JLabel("a: "));
+        inputPanel.add(aField);
+        inputPanel.add(new JLabel("b: "));
+        inputPanel.add(bField);
 
 
         //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
@@ -282,6 +290,9 @@ public class WireframeFrame extends MainFrame {
     public void onConfigureSplines()
     {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
+
+        aField.setText(controller.getA() + "");
+        bField.setText(controller.getB() + "");
 
         JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
