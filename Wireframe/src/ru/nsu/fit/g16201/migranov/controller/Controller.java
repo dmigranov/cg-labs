@@ -120,8 +120,12 @@ public class Controller {
             k = Integer.parseInt(substrings[2]);
             a = Double.parseDouble(substrings[3]);
             b = Double.parseDouble(substrings[4]);
+            if(!(b > a && a >= 0 && 1 >= b))
+                throw new IOException("Wrong a or b");
             c = Double.parseDouble(substrings[5]);
             d = Double.parseDouble(substrings[6]);
+            if(!(d > c && c >= 0 && 2*Math.PI >= d))
+                throw new IOException("Wrong c or d");
 
             substrings = readLineAndSplit();
             zn = Double.parseDouble(substrings[0]);
@@ -258,6 +262,7 @@ public class Controller {
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
                     else
                         splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y, Color.GRAY);
+                    //todo: риски?
                 }
                 uvPrev = uv;
                 xPrev = x;
