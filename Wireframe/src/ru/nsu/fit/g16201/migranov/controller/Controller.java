@@ -62,7 +62,7 @@ public class Controller {
                             if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius) {
                                 pointIsGrabbed = true;
                                 grabbedPoint = p;
-                                break;                             //todo: искать не первый, а наиболее близкий
+                                break;                             //todo? искать не первый, а наиболее близкий
                             }
                         }
                         if (grabbedPoint == null)
@@ -194,8 +194,11 @@ public class Controller {
                     Matrix Y = Matrix.multiply(TM, Gy);
                     double x = X.get(0, 0), y = Y.get(0, 0);
                     //должны получить, где на кривой находится точка - это u (не та u, что у меня обозначает пиксельные координаты) (КАК В calcLen)
-
-
+                    //a v = это по углу (это изи)
+                    //то есть на самом деле мне не надо итерироваться по всем t и точкам?
+                    //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
+                    //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
+                    //потому что как иначе я не представляю
                 }
             }
 
@@ -361,7 +364,6 @@ public class Controller {
         return getUV(p.x, p.y);
     }
 
-
     //возвращает матрицу 4x4
     private Matrix read3x3MatrixByRow() throws IOException {
         String[] substrings;
@@ -384,7 +386,6 @@ public class Controller {
     }
 
     public void addSplinePoint(int index) {
-        //screenSplinePoints.add(index, new Point(getUV(0, 0)));
         currentFigure.getSplinePoints().add(index, new Point2D(0, 0));
         drawSplineLine();
     }
@@ -392,7 +393,6 @@ public class Controller {
     public void deleteSplinePoint(int index) {
         if(index >= currentFigure.getSplinePoints().size() || index < 0)
             return;
-        //screenSplinePoints.remove(index);
         currentFigure.getSplinePoints().remove(index);
         drawSplineLine();
     }
@@ -404,7 +404,11 @@ public class Controller {
 
     public void saveFile(File file) {
         try(PrintWriter pw = new PrintWriter(file);) {
-            pw.println(n + " " + m + " " + k + " " +  a + " " + b + " " +c + " " +d);
+            pw.println(n + " " + m + " " + k + " " + a + " " + b + " " + c + " " + d);
+            pw.println(zn + " " + zf + " " + sw + " " + sh);
+
+            //матрицы..
+
             //todo: реалищовать
 
         }
@@ -412,7 +416,6 @@ public class Controller {
         {
         }
     }
-
 
     public double getA() {
         return a;
