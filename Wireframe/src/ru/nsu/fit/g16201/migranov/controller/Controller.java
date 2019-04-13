@@ -174,13 +174,16 @@ public class Controller {
         currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
-        drawObjects();
+        drawFigures();
 
         return 0;
     }
 
-    private void drawObjects() {
+    private void drawFigures() {
+        for(Figure figure : figures)
+        {
 
+        }
     }
 
     //область определения сплайна (чтобы знать как масштабировать)
@@ -209,35 +212,13 @@ public class Controller {
 
         splinePanel.clear();
         //T - вектор строка t^3 t^2 t 1, t [0,1]
-        Figure figure = figures.get(currentFigureIndex); //todo итерация по телам
+        Figure figure = figures.get(currentFigureIndex);
         List<Point2D> splinePoints = figure.getSplinePoints();
 
         drawSplinePoints(splinePoints);
 
-        double length = 0;
+        double length = calculateLength(splinePoints);
         Double xPrev = null, yPrev = null;
-
-        for(int i = 1; i < splinePoints.size() - 2; i++)
-        {
-            Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
-            Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
-            for(double t = 0; t <= 1; t+=0.01)
-            {
-                Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
-                Matrix TM = Matrix.multiply(T, splineMatrix);
-
-                Matrix X = Matrix.multiply(TM, Gx);
-                Matrix Y = Matrix.multiply(TM, Gy);
-
-                double x = X.get(0, 0), y = Y.get(0, 0);
-
-                if(xPrev != null) {
-                    length += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
-                }
-                xPrev = x;
-                yPrev = y;
-            }
-        }
 
         Point uv, uvPrev = null;
 
@@ -277,9 +258,32 @@ public class Controller {
 
     }
 
-    private void calculateLength()
+    private double calculateLength(List<Point2D> splinePoints)
     {
+        Double xPrev = null, yPrev = null;
+        int length = 0;
+        for(int i = 1; i < splinePoints.size() - 2; i++)
+        {
+            Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
+            Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
+            for(double t = 0; t <= 1; t+=0.01)
+            {
+                Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
+                Matrix TM = Matrix.multiply(T, splineMatrix);
 
+                Matrix X = Matrix.multiply(TM, Gx);
+                Matrix Y = Matrix.multiply(TM, Gy);
+
+                double x = X.get(0, 0), y = Y.get(0, 0);
+
+                if(xPrev != null) {
+                    length += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
+                }
+                xPrev = x;
+                yPrev = y;
+            }
+        }
+        return length;
     }
 
     private void drawSplinePoints(List<Point2D> splinePoints) {
