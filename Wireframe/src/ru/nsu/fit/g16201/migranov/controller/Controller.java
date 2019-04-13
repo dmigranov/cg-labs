@@ -207,8 +207,32 @@ public class Controller {
 
         drawSplinePoints(splinePoints);
 
+        double length = 0;
+        Double xPrev = null, yPrev = null;
+
+        for(int i = 1; i < splinePoints.size() - 2; i++)
+        {
+            Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
+            Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
+            for(double t = 0; t <= 1; t+=0.01)
+            {
+                Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
+                Matrix TM = Matrix.multiply(T, splineMatrix);
+
+                Matrix X = Matrix.multiply(TM, Gx);
+                Matrix Y = Matrix.multiply(TM, Gy);
+
+                double x = X.get(0, 0), y = Y.get(0, 0);
+
+                if(xPrev != null) {
+                    length += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
+                }
+                xPrev = x;
+                yPrev = y;
+            }
+        }
+
         Point uv, uvPrev = null;
-        double length = 0, xPrev = 0, yPrev = 0;
 
         for(int i = 1; i < splinePoints.size() - 2; i++)
         {
@@ -226,13 +250,9 @@ public class Controller {
 
                 uv = getUV(x, y);
 
-                //splinePanel.drawPoint(uv.x, uv.y);
                 if(uvPrev != null) {
                     splinePanel.drawLine(uvPrev.x, uvPrev.y, uv.x, uv.y);
-                    length+=Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
                 }
-                xPrev = x;
-                yPrev = y;
                 uvPrev = uv;
             }
         }
