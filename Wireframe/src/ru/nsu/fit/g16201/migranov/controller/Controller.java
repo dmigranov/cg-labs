@@ -349,9 +349,8 @@ public class Controller {
         //==?
         else
         {
-            //todo написать (wolfram!)
-            y = ym*(2.0*v/height - 1);
-            //u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
+            y = -ym*(2.0*v/height - 1);
+            x = (xm*height + 2*ym*u)/width - xm - ym;
         }
         return new Point2D(x, y);
     }
