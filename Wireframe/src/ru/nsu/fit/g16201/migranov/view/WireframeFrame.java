@@ -113,10 +113,11 @@ public class WireframeFrame extends MainFrame {
             public void actionPerformed(ActionEvent e) {
                 try
                 {
-                    int n = controller.getN(), m = controller.getM(), k = controller.getK();
                     double a, b, c, d;
-                    //k = Integer.parseInt(kField.getText());
-                    //m = Integer.parseInt(mField.getText());
+                    int n, m, k;
+                    n = Integer.parseInt(nField.getText());
+                    k = Integer.parseInt(kField.getText());
+                    m = Integer.parseInt(mField.getText());
                     a = Double.parseDouble(aField.getText());
                     b = Double.parseDouble(bField.getText());
                     c = Double.parseDouble(cField.getText());
@@ -127,7 +128,6 @@ public class WireframeFrame extends MainFrame {
 
                     if(!(d > c && c >= 0 && 2*Math.PI >= d))
                         throw new NumberFormatException("Wrong c or d");
-                    //todo
 
                     controller.setConstants(n, m, k, a, b, c, d);
                 }
@@ -350,7 +350,9 @@ public class WireframeFrame extends MainFrame {
         bField.setText(controller.getB() + "");
         cField.setText(controller.getC() + "");
         dField.setText(controller.getD() + "");
-
+        nField.setText(controller.getN() + "");
+        mField.setText(controller.getM() + "");
+        kField.setText(controller.getK() + "");
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
