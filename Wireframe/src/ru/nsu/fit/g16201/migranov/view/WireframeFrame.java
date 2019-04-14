@@ -58,7 +58,7 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(6, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(9, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
         inputButtonPanel.add(inputPanel);
         configurationPanel.add(inputButtonPanel);
@@ -76,15 +76,17 @@ public class WireframeFrame extends MainFrame {
         bField = new JTextField();
         cField = new JTextField();
         dField = new JTextField();
-        mField = new JTextField();
         nField = new JTextField();
+        mField = new JTextField();
         kField = new JTextField();
 
         aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());
         cField.addKeyListener(new FloatTextFieldKeyListener()); //может лучше ползунок для угла?
         dField.addKeyListener(new FloatTextFieldKeyListener());
+        nField.addKeyListener(new IntegerTextFieldKeyListener());
         mField.addKeyListener(new IntegerTextFieldKeyListener());
+        kField.addKeyListener(new IntegerTextFieldKeyListener());
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
@@ -98,6 +100,12 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(cField);
         inputPanel.add(new JLabel("d: "));
         inputPanel.add(dField);
+        inputPanel.add(new JLabel("n: "));
+        inputPanel.add(nField);
+        inputPanel.add(new JLabel("m: "));
+        inputPanel.add(mField);
+        inputPanel.add(new JLabel("k: "));
+        inputPanel.add(kField);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(new ActionListener() {
