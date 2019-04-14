@@ -408,10 +408,16 @@ public class Controller {
             pw.println(backgroundColor.getRed() + " " + backgroundColor.getGreen() + " " + backgroundColor.getBlue());
             pw.println(figures.size());
 
+            for(Figure figure : figures)
+            {
+                Color color = figure.getColor();
+                pw.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue());
 
-            //todo: реалищовать
 
 
+                //todo: реалищовать
+
+            }
 
         }
         catch(IOException e)
