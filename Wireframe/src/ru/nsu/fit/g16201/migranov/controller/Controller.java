@@ -405,7 +405,13 @@ public class Controller {
 
             write3x3MatrixByRow(pw, sceneRotateMatrix);
 
+            pw.println(backgroundColor.getRed() + " " + backgroundColor.getGreen() + " " + backgroundColor.getBlue());
+            pw.println(figures.size());
+
+
             //todo: реалищовать
+
+
 
         }
         catch(IOException e)
@@ -418,7 +424,8 @@ public class Controller {
         for(int i = 0; i < 3; i++)
         {
             String s = "";
-            s = String.format("%f %f %f", matrix.get(i, 0), matrix.get(i, 1), matrix.get(i, 2));
+            //s = String.format("%f %f %f", matrix.get(i, 0), matrix.get(i, 1), matrix.get(i, 2));
+            s = matrix.get(i, 0) + " " + matrix.get(i, 1) + " " +  matrix.get(i, 2);
             pw.println(s);
         }
     }
