@@ -36,7 +36,7 @@ public class Controller {
 
     private int width, height;
 
-\
+
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -177,6 +177,7 @@ public class Controller {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
 
+            Double xPrev = null, yPrev = null;
 
             for(int i = 1; i < splinePoints.size() - 2; i++)
             {
@@ -196,9 +197,10 @@ public class Controller {
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
 
-
-                    tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
-
+                    if(xPrev != null)
+                        tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
+                    xPrev = x;
+                    yPrev = y;
                 }
             }
 
