@@ -29,9 +29,6 @@ public class Controller {
     private Figure currentFigure = null;
     private int currentFigureIndex = 0;
 
-
-    private BufferedReader br;
-
     //private Map<Point, Point2D> pointsMap = new HashMap<>();
     //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
@@ -106,10 +103,9 @@ public class Controller {
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
-            this.br = br;
             String[] substrings;
 
-            substrings = readLineAndSplit();
+            substrings = readLineAndSplit(br);
             n = Integer.parseInt(substrings[0]);
             m = Integer.parseInt(substrings[1]);
             k = Integer.parseInt(substrings[2]);
@@ -122,40 +118,40 @@ public class Controller {
             if(!(d > c && c >= 0 && 2*Math.PI >= d))
                 throw new IOException("Wrong c or d");
 
-            substrings = readLineAndSplit();
+            substrings = readLineAndSplit(br);
             zn = Double.parseDouble(substrings[0]);
             zf = Double.parseDouble(substrings[1]);
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
 
-            sceneRotateMatrix = read3x3MatrixByRow();
+            sceneRotateMatrix = read3x3MatrixByRow(br);
 
-            substrings = readLineAndSplit();
+            substrings = readLineAndSplit(br);
             backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
 
             int figureCount;
-            substrings = readLineAndSplit();
+            substrings = readLineAndSplit(br);
             figureCount = Integer.parseInt(substrings[0]);
             figures = new ArrayList<>();
 
             for (int i = 0; i < figureCount; i++)
             {
-                substrings = readLineAndSplit();
+                substrings = readLineAndSplit(br);
                 Color color = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
 
-                substrings = readLineAndSplit();
+                substrings = readLineAndSplit(br);
                 Point3D center = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
-                Matrix rotateMatrix = read3x3MatrixByRow();
+                Matrix rotateMatrix = read3x3MatrixByRow(br);
 
-                substrings = readLineAndSplit();
+                substrings = readLineAndSplit(br);
                 int splinePointCount = Integer.parseInt(substrings[0]);
                 if(splinePointCount < 4)
                     throw new IOException("Not enough spline points");
                 List<Point2D> splinePoints = new ArrayList<>();
                 for(int j = 0; j < splinePointCount; j++)
                 {
-                    substrings = readLineAndSplit();
+                    substrings = readLineAndSplit(br);
                     Point2D splinePoint = new Point2D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]));
                     splinePoints.add(splinePoint);
                 }
@@ -365,19 +361,19 @@ public class Controller {
     }
 
     //возвращает матрицу 4x4
-    private Matrix read3x3MatrixByRow() throws IOException {
+    private Matrix read3x3MatrixByRow(BufferedReader br) throws IOException {
         String[] substrings;
         Matrix matrix = new Matrix(4, 4);
         for(int i = 0; i < 3; i++)
         {
-            substrings = readLineAndSplit();
+            substrings = readLineAndSplit(br);
             matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]), 0});
         }
         matrix.setRow(3, new double[] {0, 0, 0, 1});
         return matrix;
     }
 
-    private String[] readLineAndSplit() throws IOException
+    private String[] readLineAndSplit(BufferedReader br) throws IOException
     {
         String line;
         line = br.readLine();
