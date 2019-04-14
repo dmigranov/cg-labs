@@ -30,14 +30,13 @@ public class Controller {
     private int currentFigureIndex = 0;
 
     //private Map<Point, Point2D> pointsMap = new HashMap<>();
-    //private Map<Point, Integer> pointsMap = new HashMap<>();    //Integer - номер в листе
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
     private boolean pointIsGrabbed = false, startedMoving = false;
     private int grabbedPointIndex;
 
     private int width, height;
 
-
+\
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -176,13 +175,14 @@ public class Controller {
         for(Figure figure : figures)
         {
             List<Point2D> splinePoints = figure.getSplinePoints();
-            double length = calculateLength(splinePoints);
+            double length = calculateLength(splinePoints), tempLength = 0;
+
 
             for(int i = 1; i < splinePoints.size() - 2; i++)
             {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
                 Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
-                for(double t = 0; t <= 1; t+=0.01)
+                for(double t = 0; t <= 1; t+=0.02)  //???
                 {
                     Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
                     Matrix TM = Matrix.multiply(T, splineMatrix);
@@ -195,6 +195,10 @@ public class Controller {
                     //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
+
+
+                    tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
+
                 }
             }
 
