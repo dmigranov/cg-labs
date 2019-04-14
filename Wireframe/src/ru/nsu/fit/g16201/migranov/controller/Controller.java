@@ -403,7 +403,7 @@ public class Controller {
             pw.println(n + " " + m + " " + k + " " + a + " " + b + " " + c + " " + d);
             pw.println(zn + " " + zf + " " + sw + " " + sh);
 
-            write3x3MatrixByRow(pw);
+            write3x3MatrixByRow(pw, sceneRotateMatrix);
 
             //todo: реалищовать
 
@@ -414,8 +414,13 @@ public class Controller {
     }
 
     //4 строку и столбец - выбрасываем
-    private void write3x3MatrixByRow(PrintWriter pw) {
-
+    private void write3x3MatrixByRow(PrintWriter pw, Matrix matrix) {
+        for(int i = 0; i < 3; i++)
+        {
+            String s = "";
+            s = String.format("%f %f %f", matrix.get(i, 0), matrix.get(i, 1), matrix.get(i, 2));
+            pw.println(s);
+        }
     }
 
     public double getA() {
