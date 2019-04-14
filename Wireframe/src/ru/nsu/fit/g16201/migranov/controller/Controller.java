@@ -36,6 +36,8 @@ public class Controller {
 
     private int width, height;
 
+    private double zoomRate = 1.1;
+
 
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
@@ -183,7 +185,7 @@ public class Controller {
             {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
                 Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
-                for(double t = 0; t <= 1; t+=0.02)  //???
+                for(double t = 0; t <= 1; t+=0.01)  //??? я думаю, все таким лучше чтобы было одинаков в подсчете длины и тут, чтобы не было неточности
                 {
                     Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
                     Matrix TM = Matrix.multiply(T, splineMatrix);
@@ -324,8 +326,8 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*1.1;
+        double xm = this.xm*zoomRate;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*zoomRate;
         if(xm > ym)
         {
             u = (int)((x + xm)/2/xm * width);
@@ -344,9 +346,9 @@ public class Controller {
 
     private Point2D getXY(int u, int v)
     {
-        double x = 0, y = 0;
-        double xm = this.xm*1.1;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*1.1;
+        double x, y;
+        double xm = this.xm*zoomRate;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*zoomRate;
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
@@ -404,7 +406,7 @@ public class Controller {
 
 
     public void saveFile(File file) {
-        try(PrintWriter pw = new PrintWriter(file);) {
+        try(PrintWriter pw = new PrintWriter(file)) {
             pw.println(n + " " + m + " " + k + " " + a + " " + b + " " + c + " " + d);
             pw.println(zn + " " + zf + " " + sw + " " + sh);
 
@@ -443,7 +445,7 @@ public class Controller {
     private void write3x3MatrixByRow(PrintWriter pw, Matrix matrix) {
         for(int i = 0; i < 3; i++)
         {
-            String s = "";
+            String s;
             //s = String.format("%f %f %f", matrix.get(i, 0), matrix.get(i, 1), matrix.get(i, 2));
             s = matrix.get(i, 0) + " " + matrix.get(i, 1) + " " +  matrix.get(i, 2);
             pw.println(s);

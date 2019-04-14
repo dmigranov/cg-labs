@@ -30,8 +30,9 @@ class MatrixTest {
         }
         System.out.println(time/100L);
 
-
-
+        m1 = new Matrix(1, 3, 1, 2, 3);
+        m2 = new Matrix(1, 3, 1, 2, 3);
+        Matrix m3 = Matrix.add(m1, m2);
 
 
 

@@ -37,10 +37,13 @@ public class Matrix {
 
     public static Matrix add(Matrix M1, Matrix M2)
     {
-        //todo: проверка?
-        Matrix N = new Matrix(M1.rows, M1.cols);
         double[] m1d = M1.data;
         double[] m2d = M2.data;
+        if(m1d.length != m2d.length || M1.cols != M2.cols)
+            throw new IllegalArgumentException();
+
+        Matrix N = new Matrix(M1.rows, M1.cols);
+
         double[] nd = N.data;
         for(int i = 0; i < m1d.length; i++)
         {

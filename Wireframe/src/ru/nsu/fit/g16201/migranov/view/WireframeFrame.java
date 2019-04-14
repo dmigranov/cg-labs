@@ -63,6 +63,9 @@ public class WireframeFrame extends MainFrame {
         inputButtonPanel.add(inputPanel);
         configurationPanel.add(inputButtonPanel);
 
+        JButton zoomInButton = new JButton("Zoom in");
+        JButton zoomOutButton = new JButton("Zoom out");
+
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
         addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
         JButton addLastPointButton = new JButton("Add new point in the end");
@@ -108,33 +111,30 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(kField);
 
         confirmButton = new JButton("Confirm");
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try
-                {
-                    double a, b, c, d;
-                    int n, m, k;
-                    n = Integer.parseInt(nField.getText());
-                    k = Integer.parseInt(kField.getText());
-                    m = Integer.parseInt(mField.getText());
-                    a = Double.parseDouble(aField.getText());
-                    b = Double.parseDouble(bField.getText());
-                    c = Double.parseDouble(cField.getText());
-                    d = Double.parseDouble(dField.getText());
+        confirmButton.addActionListener(e -> {
+            try
+            {
+                double a, b, c, d;
+                int n, m, k;
+                n = Integer.parseInt(nField.getText());
+                k = Integer.parseInt(kField.getText());
+                m = Integer.parseInt(mField.getText());
+                a = Double.parseDouble(aField.getText());
+                b = Double.parseDouble(bField.getText());
+                c = Double.parseDouble(cField.getText());
+                d = Double.parseDouble(dField.getText());
 
-                    if(!(b > a && a >= 0 && 1 >= b))
-                        throw new NumberFormatException("Wrong a or b");
+                if(!(b > a && a >= 0 && 1 >= b))
+                    throw new NumberFormatException("Wrong a or b");
 
-                    if(!(d > c && c >= 0 && 2*Math.PI >= d))
-                        throw new NumberFormatException("Wrong c or d");
+                if(!(d > c && c >= 0 && 2*Math.PI >= d))
+                    throw new NumberFormatException("Wrong c or d");
 
-                    controller.setConstants(n, m, k, a, b, c, d);
-                }
-                catch (NumberFormatException n)
-                {
-                    JOptionPane.showMessageDialog(WireframeFrame.this, n.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                controller.setConstants(n, m, k, a, b, c, d);
+            }
+            catch (NumberFormatException n)
+            {
+                JOptionPane.showMessageDialog(WireframeFrame.this, n.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
