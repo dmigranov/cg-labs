@@ -34,6 +34,11 @@ public class Matrix {
         System.arraycopy(row, 0, data, rowNumber*cols, row.length);
     }
 
+    public double[] getRow(int rowNumber)
+    {
+
+    }
+
     public static Matrix add(Matrix M1, Matrix M2)
     {
         //todo: проверка?

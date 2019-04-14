@@ -403,7 +403,7 @@ public class Controller {
             pw.println(n + " " + m + " " + k + " " + a + " " + b + " " + c + " " + d);
             pw.println(zn + " " + zf + " " + sw + " " + sh);
 
-            //матрицы..
+            write3x3MatrixByRow(pw);
 
             //todo: реалищовать
 
@@ -411,6 +411,11 @@ public class Controller {
         catch(IOException e)
         {
         }
+    }
+
+    //4 строку и столбец - выбрасываем
+    private void write3x3MatrixByRow(PrintWriter pw) {
+
     }
 
     public double getA() {
