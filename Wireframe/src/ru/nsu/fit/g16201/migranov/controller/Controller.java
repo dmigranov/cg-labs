@@ -413,9 +413,18 @@ public class Controller {
                 Color color = figure.getColor();
                 pw.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue());
 
+                Point3D center = figure.getCenter();
+                pw.println(center.x + " " + center.y + " " + center.z);
 
+                write3x3MatrixByRow(pw, figure.getRotateMatrix());
 
-                //todo: реалищовать
+                List<Point2D> splinePoints = figure.getSplinePoints();
+                pw.println(splinePoints.size());
+
+                for(Point2D p : splinePoints)
+                {
+                    pw.println(p.x + " " + p.y);
+                }
 
             }
 

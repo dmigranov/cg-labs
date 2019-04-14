@@ -29,4 +29,20 @@ public class Figure {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public Point3D getCenter() {
+        return center;
+    }
+
+    public void setCenter(Point3D center) {
+        this.center = center;
+    }
+
+    public Matrix getRotateMatrix() {
+        return rotateMatrix;
+    }
+
+    public void setRotateMatrix(Matrix rotateMatrix) {
+        this.rotateMatrix = rotateMatrix;
+    }
 }
