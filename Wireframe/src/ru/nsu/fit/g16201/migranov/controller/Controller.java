@@ -224,6 +224,16 @@ public class Controller {
                     yPrev = y;
                 }
             }
+
+            for(int i = 0; i <= Gu.length; i++)
+            {
+                Point2D gu = Gu[i];
+                for(int j = 0; j < m; j++)
+                {
+
+                }
+            }
+
         }
         //System.out.println(System.currentTimeMillis() - start);
     }
