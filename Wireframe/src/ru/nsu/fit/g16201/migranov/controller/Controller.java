@@ -36,7 +36,7 @@ public class Controller {
 
     private int width, height;
 
-    private double zoomRate = 1.1;
+    private double scale;
 
 
     public Controller(SplinePanel splinePanel) {
@@ -104,6 +104,7 @@ public class Controller {
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
+            scale = 1.1;
             String[] substrings;
 
             substrings = readLineAndSplit(br);
@@ -326,8 +327,8 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        double xm = this.xm*zoomRate;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*zoomRate;
+        double xm = this.xm*scale;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*scale;
         if(xm > ym)
         {
             u = (int)((x + xm)/2/xm * width);
@@ -347,8 +348,8 @@ public class Controller {
     private Point2D getXY(int u, int v)
     {
         double x, y;
-        double xm = this.xm*zoomRate;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*zoomRate;
+        double xm = this.xm*scale;    //чтобы оставалось пространство по бокам
+        double ym = this.ym*scale;
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
@@ -492,5 +493,11 @@ public class Controller {
 
         drawSplineLine();
         //todo: пересчитать 3д
+    }
+
+    public void changeScale(double ds) {
+        if(this.scale + ds > 0)
+            this.scale += ds;
+        drawSplineLine();
     }
 }

@@ -58,13 +58,16 @@ public class WireframeFrame extends MainFrame {
 
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(9, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(10, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
         inputButtonPanel.add(inputPanel);
         configurationPanel.add(inputButtonPanel);
 
         JButton zoomInButton = new JButton("Zoom in");
         JButton zoomOutButton = new JButton("Zoom out");
+        zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
+        zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
+
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
         addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
@@ -109,6 +112,8 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(mField);
         inputPanel.add(new JLabel("k: "));
         inputPanel.add(kField);
+        inputPanel.add(zoomInButton);
+        inputPanel.add(zoomOutButton);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
