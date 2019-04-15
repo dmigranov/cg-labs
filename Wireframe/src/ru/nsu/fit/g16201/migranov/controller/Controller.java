@@ -175,6 +175,7 @@ public class Controller {
     }
 
     private void drawFigures() {
+        //long start = System.currentTimeMillis();
         for(Figure figure : figures)
         {
             List<Point2D> splinePoints = figure.getSplinePoints();
@@ -209,21 +210,22 @@ public class Controller {
                     //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
-                    System.out.println(tempLength);
+
+                    if(xPrev != null)
+                        tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
+
                     if(tempLength >= u[uIndex])
                     {
                         Gu[uIndex] = new Point2D(x, y);
                         uIndex++;
-                    }   //тут?
+                    }   //todo проверить
 
-                    if(xPrev != null)
-                        tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
                     xPrev = x;
                     yPrev = y;
                 }
             }
-            System.out.println();
         }
+        //System.out.println(System.currentTimeMillis() - start);
     }
 
     //область определения сплайна (чтобы знать как масштабировать)
