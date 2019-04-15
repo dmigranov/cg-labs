@@ -186,6 +186,7 @@ public class Controller {
             u[0] = a*length;
             for(int i = 1; i < n; i++)  //можно и до n+1, но для надежности снизу
             {
+                //todo: k? я так понял k мы не соединяем точками, в отличие от n (n*k, m*k!)
                 u[i] = u[i-1] + (b - a)*length/n;
             }
             u[n] = b*length;
@@ -233,8 +234,7 @@ public class Controller {
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
-
-
+                    //это сохранять? или сразу применять на эту точку матрицы все дела?
                 }
             }
 
