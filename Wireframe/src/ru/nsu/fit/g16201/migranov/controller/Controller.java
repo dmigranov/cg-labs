@@ -190,7 +190,6 @@ public class Controller {
             u[n] = b*length;
             int uIndex = 0;
 
-
             Double xPrev = null, yPrev = null;
 
             for(int i = 1; i < splinePoints.size() - 2; i++)
@@ -210,6 +209,7 @@ public class Controller {
                     //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
+                    System.out.println(tempLength);
                     if(tempLength >= u[uIndex])
                     {
                         Gu[uIndex] = new Point2D(x, y);
@@ -217,7 +217,7 @@ public class Controller {
                     }   //тут?
 
                     if(xPrev != null)
-                        tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
+                        tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
                     xPrev = x;
                     yPrev = y;
                 }
