@@ -180,13 +180,16 @@ public class Controller {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
 
-            double u[] = new double[n + 1];
+            double[] u = new double[n + 1];
+            Point2D[] Gu = new Point2D[n + 1];
             u[0] = a*length;
-            for(int i = 1; i < n + 1; i++)
+            for(int i = 1; i < n; i++)  //можно и до n+1, но для надежности снизу
             {
                 u[i] = u[i-1] + (b - a)*length/n;
-                //len = 10 a= 0.4 b = 0.6 n =
             }
+            u[n] = b*length;
+            int uIndex = 0;
+
 
             Double xPrev = null, yPrev = null;
 
@@ -207,6 +210,11 @@ public class Controller {
                     //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
+                    if(tempLength >= u[uIndex])
+                    {
+                        Gu[uIndex] = new Point2D(x, y);
+                        uIndex++;
+                    }   //тут?
 
                     if(xPrev != null)
                         tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2))/length;
@@ -214,6 +222,7 @@ public class Controller {
                     yPrev = y;
                 }
             }
+            System.out.println();
         }
     }
 
@@ -292,6 +301,7 @@ public class Controller {
         splinePanel.repaint();
     }
 
+    //тогда можно уж возвращать ещё и точку, где начинается a..
     private double calculateLength(List<Point2D> splinePoints)
     {
         Double xPrev = null, yPrev = null;
