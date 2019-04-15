@@ -180,6 +180,14 @@ public class Controller {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
 
+            double u[] = new double[n + 1];
+            u[0] = a*length;
+            for(int i = 1; i < n + 1; i++)
+            {
+                u[i] = u[i-1] + (b - a)*length/n;
+                //len = 10 a= 0.4 b = 0.6 n =
+            }
+
             Double xPrev = null, yPrev = null;
 
             for(int i = 1; i < splinePoints.size() - 2; i++)
@@ -206,7 +214,6 @@ public class Controller {
                     yPrev = y;
                 }
             }
-
         }
     }
 
