@@ -18,7 +18,7 @@ public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
     private SplinePanel splinePanel;
-    private double xm, ym;
+    private double xm, ym;//
 
     private int n, m, k;
     private double a, b, c, d;
