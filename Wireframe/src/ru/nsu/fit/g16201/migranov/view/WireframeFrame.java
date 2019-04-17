@@ -57,12 +57,14 @@ public class WireframeFrame extends MainFrame {
 
     private void createConfigurationPanel() {
         configurationPanel = new JPanel();   //tabs...
+        JPanel commonPanel = new JPanel();
+        tabbedPane.add("Common", commonPanel);
+        tabbedPane.add("Figure 1", configurationPanel);
 
-        tabbedPane.add(configurationPanel);
-
+        commonPanel.setLayout(new GridLayout(7, 2, 3, 5));
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(10, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
         inputButtonPanel.add(inputPanel);
         configurationPanel.add(inputButtonPanel);
@@ -103,18 +105,22 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(deleteLastPointButton);
         inputPanel.add(new JLabel("a: "));
         inputPanel.add(aField);
+        commonPanel.add(new JLabel("a: "));
+        commonPanel.add(aField);
         inputPanel.add(new JLabel("b: "));
         inputPanel.add(bField);
-        inputPanel.add(new JLabel("c: "));
-        inputPanel.add(cField);
-        inputPanel.add(new JLabel("d: "));
-        inputPanel.add(dField);
-        inputPanel.add(new JLabel("n: "));
-        inputPanel.add(nField);
-        inputPanel.add(new JLabel("m: "));
-        inputPanel.add(mField);
-        inputPanel.add(new JLabel("k: "));
-        inputPanel.add(kField);
+        commonPanel.add(new JLabel("b: "));
+        commonPanel.add(bField);
+        commonPanel.add(new JLabel("c: "));
+        commonPanel.add(cField);
+        commonPanel.add(new JLabel("d: "));
+        commonPanel.add(dField);
+        commonPanel.add(new JLabel("n: "));
+        commonPanel.add(nField);
+        commonPanel.add(new JLabel("m: "));
+        commonPanel.add(mField);
+        commonPanel.add(new JLabel("k: "));
+        commonPanel.add(kField);
         inputPanel.add(zoomInButton);
         inputPanel.add(zoomOutButton);
 
