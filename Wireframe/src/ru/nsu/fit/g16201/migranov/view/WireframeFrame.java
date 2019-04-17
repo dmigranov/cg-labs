@@ -61,8 +61,8 @@ public class WireframeFrame extends MainFrame {
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
         createSplineConfigurationPanel();
-        tabbedPane.add("Figure 1", splineConfigurationPanel);
-        for(int i = 1; i < figureCount; i++) {
+        //tabbedPane.add("Figure 1", splineConfigurationPanel);
+        for(int i = 0; i < figureCount; i++) {
             tabbedPane.add("Figure " + (i + 1), new JPanel());
         }
         tabbedPane.addChangeListener(e -> {
@@ -71,7 +71,10 @@ public class WireframeFrame extends MainFrame {
             int selected = tabbedPane.getSelectedIndex();
             if(selected != 0) {
                 //todo
-                ((JPanel)tabbedPane.getSelectedComponent()).add(splineConfigurationPanel);
+                JPanel panel = ((JPanel)tabbedPane.getSelectedComponent());
+                //panel.removeAll();
+                panel.add(splineConfigurationPanel);
+                panel.revalidate();
                 controller.setCurrentFigure(selected - 1);
             }
         });
