@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,6 +59,16 @@ public class WireframeFrame extends MainFrame {
 
     private void createCommonConfigurationPanel() {
         tabbedPane = new JTabbedPane();
+        tabbedPane.setUI(new BasicTabbedPaneUI() {
+            private final Insets borderInsets = new Insets(0, 0, 0, 0);
+            @Override
+            protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
+            }
+            @Override
+            protected Insets getContentBorderInsets(int tabPlacement) {
+                return borderInsets;
+            }
+        });     //без этого были странные белые полоски под вкладками https://stackoverflow.com/questions/5183687/java-remove-margin-padding-on-a-jtabbedpane
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
         createSplineConfigurationPanel();
