@@ -27,7 +27,6 @@ public class SplinePanel extends JPanel {
         canvasGraphics.clearRect(0, 0, width, height);
     }
 
-
     @Override
     public void paintComponent(Graphics g)
     {
