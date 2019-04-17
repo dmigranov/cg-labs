@@ -18,7 +18,8 @@ public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
     private SplinePanel splinePanel;
-    private double xm, ym;//
+    //private double xm, ym;
+    private Double[] xm, ym;
 
     private int n, m, k;
     private double a, b, c, d;
@@ -167,6 +168,9 @@ public class Controller {
             return -1;
         }
 
+        xm = new Double[figureCount];
+        ym = new Double[figureCount];
+
         currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
@@ -245,6 +249,9 @@ public class Controller {
 
     //область определения сплайна (чтобы знать как масштабировать)
     private void calculateSplineArea() {
+        if(xm[currentFigureIndex] != null)
+            return;
+
         double xMin = Double.MAX_VALUE, xMax = Double.MIN_VALUE, yMin = Double.MAX_VALUE, yMax = Double.MIN_VALUE;
 
         Figure figure = figures.get(currentFigureIndex);
@@ -258,8 +265,8 @@ public class Controller {
             yMin = p.y < yMin ? p.y : yMin;
         }
 
-        xm = Math.max(Math.abs(xMax), Math.abs(xMin));
-        ym = Math.max(Math.abs(yMax), Math.abs(yMin));
+        xm[currentFigureIndex] = Math.max(Math.abs(xMax), Math.abs(xMin));
+        ym[currentFigureIndex] = Math.max(Math.abs(yMax), Math.abs(yMin));
     }
 
     private void drawSplineLine() {
@@ -361,8 +368,8 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        double xm = this.xm*scale;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*scale;
+        double xm = this.xm[currentFigureIndex]*scale;    //чтобы оставалось пространство по бокам
+        double ym = this.ym[currentFigureIndex]*scale;
         if(xm > ym)
         {
             u = (int)((x + xm)/2/xm * width);
@@ -382,8 +389,8 @@ public class Controller {
     private Point2D getXY(int u, int v)
     {
         double x, y;
-        double xm = this.xm*scale;    //чтобы оставалось пространство по бокам
-        double ym = this.ym*scale;
+        double xm = this.xm[currentFigureIndex]*scale;    //чтобы оставалось пространство по бокам
+        double ym = this.ym[currentFigureIndex]*scale;
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
