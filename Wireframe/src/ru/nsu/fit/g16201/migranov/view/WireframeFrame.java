@@ -62,6 +62,7 @@ public class WireframeFrame extends MainFrame {
         tabbedPane.add("Figure 1", configurationPanel);
 
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
+
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
