@@ -19,7 +19,10 @@ public class Controller {
 
     private SplinePanel splinePanel;
     //private double xm, ym;
+    //private double scale;
+
     private Double[] xm, ym;
+    private double[] scale;
 
     private int n, m, k;
     private double a, b, c, d;
@@ -36,8 +39,6 @@ public class Controller {
     private int grabbedPointIndex;
 
     private int width, height;
-
-    private double scale;
 
 
     public Controller(SplinePanel splinePanel) {
@@ -107,7 +108,7 @@ public class Controller {
         currentFigureIndex = 0;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
-            scale = 1.1;
+            //scale = 1.1;
             String[] substrings;
 
             substrings = readLineAndSplit(br);
@@ -170,6 +171,9 @@ public class Controller {
 
         xm = new Double[figureCount];
         ym = new Double[figureCount];
+        scale = new double[figureCount];
+        for (int i = 0; i < figureCount; i++)
+            scale[i] = 1.1;
 
         currentFigure = figures.get(0);
         calculateSplineArea();
@@ -368,8 +372,8 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        double xm = this.xm[currentFigureIndex]*scale;    //чтобы оставалось пространство по бокам
-        double ym = this.ym[currentFigureIndex]*scale;
+        double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
+        double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
         if(xm > ym)
         {
             u = (int)((x + xm)/2/xm * width);
@@ -389,8 +393,8 @@ public class Controller {
     private Point2D getXY(int u, int v)
     {
         double x, y;
-        double xm = this.xm[currentFigureIndex]*scale;    //чтобы оставалось пространство по бокам
-        double ym = this.ym[currentFigureIndex]*scale;
+        double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
+        double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
@@ -474,9 +478,7 @@ public class Controller {
                 {
                     pw.println(p.x + " " + p.y);
                 }
-
             }
-
         }
         catch(IOException e)
         {
@@ -537,13 +539,13 @@ public class Controller {
     }
 
     public void changeScale(double ds) {
-        if(this.scale + ds > 0)
-            this.scale += ds;
+        if(this.scale[currentFigureIndex] + ds > 0)
+            this.scale[currentFigureIndex] += ds;
         drawSplineLine();
     }
 
     public void setCurrentFigure(int index) {
-        //todo: Проверка? + надо пересчитать xm и ym!
+        //todo: Проверка?
         currentFigureIndex = index;
         currentFigure = figures.get(index);
         calculateSplineArea();
