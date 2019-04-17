@@ -26,7 +26,7 @@ public class WireframeFrame extends MainFrame {
 
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
-    private JTabbedPane tabbedPane = new JTabbedPane();
+    private JTabbedPane tabbedPane;
 
 
     private JTextField aField, bField, cField, dField, nField, mField, kField;
@@ -58,6 +58,7 @@ public class WireframeFrame extends MainFrame {
     }
 
     private void createCommonConfigurationPanel() {
+        tabbedPane = new JTabbedPane();
         configurationPanel = new JPanel();   //tabs...
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
