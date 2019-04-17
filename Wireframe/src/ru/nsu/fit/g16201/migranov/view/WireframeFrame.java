@@ -61,7 +61,7 @@ public class WireframeFrame extends MainFrame {
         tabbedPane.add("Common", commonPanel);
         tabbedPane.add("Figure 1", configurationPanel);
 
-        commonPanel.setLayout(new GridLayout(7, 2, 3, 5));
+        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
@@ -91,20 +91,17 @@ public class WireframeFrame extends MainFrame {
         mField = new JTextField();
         kField = new JTextField();
 
-        aField.addKeyListener(new FloatTextFieldKeyListener());
+        /*aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());
         cField.addKeyListener(new FloatTextFieldKeyListener()); //может лучше ползунок для угла?
         dField.addKeyListener(new FloatTextFieldKeyListener());
         nField.addKeyListener(new IntegerTextFieldKeyListener());
         mField.addKeyListener(new IntegerTextFieldKeyListener());
-        kField.addKeyListener(new IntegerTextFieldKeyListener());
+        kField.addKeyListener(new IntegerTextFieldKeyListener());*/
 
-        //inputPanel.add(new JLabel("a: "));
-        //inputPanel.add(aField);
-        commonPanel.add(new JLabel("a: "));
+
+        /*commonPanel.add(new JLabel("a: "));
         commonPanel.add(aField);
-        //inputPanel.add(new JLabel("b: "));
-        //inputPanel.add(bField);
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);
         commonPanel.add(new JLabel("c: "));
@@ -116,7 +113,14 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new JLabel("m: "));
         commonPanel.add(mField);
         commonPanel.add(new JLabel("k: "));
-        commonPanel.add(kField);
+        commonPanel.add(kField);*/
+        commonPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("d: ", dField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
