@@ -42,7 +42,6 @@ public class WireframeFrame extends MainFrame {
 
         splinePanel = new SplinePanel(501, 501);
         controller = new Controller(splinePanel);
-        createCommonConfigurationPanel();
         addMenus();
 
         JPanel statusPanel = new JPanel();
@@ -68,8 +67,8 @@ public class WireframeFrame extends MainFrame {
             public void stateChanged(ChangeEvent e) {
                 //0 - common
                 int selected = tabbedPane.getSelectedIndex();
-
-                controller.setCurrentFigure(selected - 1);
+                if(selected != 0)
+                    controller.setCurrentFigure(selected - 1);
             }
         });
 
@@ -327,6 +326,7 @@ public class WireframeFrame extends MainFrame {
             if(r > 0)
             {
                 figureCount = r;
+                createCommonConfigurationPanel();
                 for (AbstractButton b : deactivatedButtons)
                 {
                     b.setEnabled(true);
