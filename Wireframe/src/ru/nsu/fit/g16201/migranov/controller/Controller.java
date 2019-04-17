@@ -226,7 +226,7 @@ public class Controller {
                 }
             }
 
-            for(int i = 0; i <= Gu.length; i++)
+            for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
                 for(double v = c; v <= d; v+=(d-c)/m)   //ничего не потеряется из-за double? в случае чего, сделать как с u

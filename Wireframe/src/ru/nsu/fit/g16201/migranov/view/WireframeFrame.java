@@ -24,6 +24,8 @@ public class WireframeFrame extends MainFrame {
 
     private SplinePanel splinePanel;
     private JPanel configurationPanel;
+    private JTabbedPane tabbedPane = new JTabbedPane();
+
 
     private JTextField aField, bField, cField, dField, nField, mField, kField;
     private JButton confirmButton;
@@ -56,6 +58,8 @@ public class WireframeFrame extends MainFrame {
     private void createConfigurationPanel() {
         configurationPanel = new JPanel();   //tabs...
 
+        tabbedPane.add(configurationPanel);
+
         configurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(10, 2, 3, 5));
@@ -67,7 +71,6 @@ public class WireframeFrame extends MainFrame {
         JButton zoomOutButton = new JButton("Zoom out");
         zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
         zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
-
 
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
         addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
@@ -360,7 +363,7 @@ public class WireframeFrame extends MainFrame {
         kField.setText(controller.getK() + "");
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
+        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
 
     }
 }
