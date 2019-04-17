@@ -29,7 +29,7 @@ public class WireframeFrame extends MainFrame {
     private JPanel splineConfigurationPanel;
     private JTabbedPane tabbedPane;
 
-    private JTextField aField, bField, cField, dField, nField, mField, kField;
+    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField;
     private JButton confirmButton;
     private int figureCount;
 
@@ -72,7 +72,6 @@ public class WireframeFrame extends MainFrame {
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
         createSplineConfigurationPanel();
-        //tabbedPane.add("Figure 1", splineConfigurationPanel);
         for(int i = 0; i < figureCount; i++) {
             JPanel panel = new JPanel();
             panel.setPreferredSize(splineConfigurationPanel.getPreferredSize());
@@ -112,11 +111,11 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);*/
 
-
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
             try
             {
+                //todo: в зависимости от влкадки
                 double a, b, c, d;
                 int n, m, k;
                 n = Integer.parseInt(nField.getText());
