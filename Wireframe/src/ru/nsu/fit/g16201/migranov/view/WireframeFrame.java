@@ -31,6 +31,7 @@ public class WireframeFrame extends MainFrame {
 
     private JTextField aField, bField, cField, dField, nField, mField, kField;
     private JButton confirmButton;
+    private int figureCount;
 
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
@@ -41,7 +42,7 @@ public class WireframeFrame extends MainFrame {
 
         splinePanel = new SplinePanel(501, 501);
         controller = new Controller(splinePanel);
-        createConfigurationPanel();
+        createCommonConfigurationPanel();
         addMenus();
 
         JPanel statusPanel = new JPanel();
@@ -57,7 +58,7 @@ public class WireframeFrame extends MainFrame {
         setVisible(true);
     }
 
-    private void createConfigurationPanel() {
+    private void createCommonConfigurationPanel() {
         configurationPanel = new JPanel();   //tabs...
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
@@ -65,7 +66,10 @@ public class WireframeFrame extends MainFrame {
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                //todo
+                //0 - common
+                int selected = tabbedPane.getSelectedIndex();
+
+                controller.setCurrentFigure(selected - 1);
             }
         });
 
@@ -108,14 +112,10 @@ public class WireframeFrame extends MainFrame {
         /*aField.addKeyListener(new FloatTextFieldKeyListener());
         bField.addKeyListener(new FloatTextFieldKeyListener());*/
 
-
-
         /*commonPanel.add(new JLabel("a: "));
         commonPanel.add(aField);
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);*/
-
-
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
@@ -324,8 +324,9 @@ public class WireframeFrame extends MainFrame {
         if(file != null) {
             setTitle(file.getName() + " | Denis Migranov, 16201");
             int r = controller.loadFile(file);
-            if(r == 0)
+            if(r > 0)
             {
+                figureCount = r;
                 for (AbstractButton b : deactivatedButtons)
                 {
                     b.setEnabled(true);

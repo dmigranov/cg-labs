@@ -102,6 +102,7 @@ public class Controller {
     }
 
     public int loadFile(File file) {
+        int figureCount;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
             scale = 1.1;
@@ -131,7 +132,6 @@ public class Controller {
             substrings = readLineAndSplit(br);
             backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
 
-            int figureCount;
             substrings = readLineAndSplit(br);
             figureCount = Integer.parseInt(substrings[0]);
             figures = new ArrayList<>();
@@ -171,7 +171,7 @@ public class Controller {
         drawSplineLine();
         drawFigures();
 
-        return 0;
+        return figureCount;
     }
 
     private void drawFigures() {
@@ -531,6 +531,14 @@ public class Controller {
     public void changeScale(double ds) {
         if(this.scale + ds > 0)
             this.scale += ds;
+        drawSplineLine();
+    }
+
+    public void setCurrentFigure(int index) {
+        //todo: Проверка? + надо пересчитать xm и ym!
+        currentFigureIndex = index;
+        currentFigure = figures.get(index);
+        calculateSplineArea();
         drawSplineLine();
     }
 }
