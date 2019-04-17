@@ -99,16 +99,12 @@ public class WireframeFrame extends MainFrame {
         mField.addKeyListener(new IntegerTextFieldKeyListener());
         kField.addKeyListener(new IntegerTextFieldKeyListener());
 
-        inputPanel.add(addFirstPointButton);
-        inputPanel.add(addLastPointButton);
-        inputPanel.add(deleteFirstPointButton);
-        inputPanel.add(deleteLastPointButton);
-        inputPanel.add(new JLabel("a: "));
-        inputPanel.add(aField);
+        //inputPanel.add(new JLabel("a: "));
+        //inputPanel.add(aField);
         commonPanel.add(new JLabel("a: "));
         commonPanel.add(aField);
-        inputPanel.add(new JLabel("b: "));
-        inputPanel.add(bField);
+        //inputPanel.add(new JLabel("b: "));
+        //inputPanel.add(bField);
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);
         commonPanel.add(new JLabel("c: "));
@@ -121,6 +117,11 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(mField);
         commonPanel.add(new JLabel("k: "));
         commonPanel.add(kField);
+
+        inputPanel.add(addFirstPointButton);
+        inputPanel.add(addLastPointButton);
+        inputPanel.add(deleteFirstPointButton);
+        inputPanel.add(deleteLastPointButton);
         inputPanel.add(zoomInButton);
         inputPanel.add(zoomOutButton);
 
