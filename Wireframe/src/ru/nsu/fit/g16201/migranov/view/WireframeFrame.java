@@ -122,10 +122,8 @@ public class WireframeFrame extends MainFrame {
 
                     if (!(b > a && a >= 0 && 1 >= b))
                         throw new NumberFormatException("Wrong a or b");
-
                     if (!(d > c && c >= 0 && 2 * Math.PI >= d))
                         throw new NumberFormatException("Wrong c or d");
-
                     controller.setConstants(n, m, k, a, b, c, d);
                 }
                 else
@@ -136,9 +134,7 @@ public class WireframeFrame extends MainFrame {
 
                     if (!(b > a && a >= 0 && 1 >= b))
                         throw new NumberFormatException("Wrong a or b");
-
                     controller.setAB(a, b);
-
                 }
                 updateFields();
             }
@@ -162,7 +158,6 @@ public class WireframeFrame extends MainFrame {
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuAndToolBarButton("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout", false);
     }
-
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {
