@@ -28,7 +28,6 @@ public class WireframeFrame extends MainFrame {
     private JPanel configurationPanel;
     private JTabbedPane tabbedPane;
 
-
     private JTextField aField, bField, cField, dField, nField, mField, kField;
     private JButton confirmButton;
     private int figureCount;
@@ -66,17 +65,14 @@ public class WireframeFrame extends MainFrame {
         for(int i = 1; i < figureCount; i++) {
             tabbedPane.add("Figure " + (i + 1), new JPanel());
         }
-        tabbedPane.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
+        tabbedPane.addChangeListener(e -> {
+            //todo
+            //0 - common
+            int selected = tabbedPane.getSelectedIndex();
+            if(selected != 0) {
                 //todo
-                //0 - common
-                int selected = tabbedPane.getSelectedIndex();
-                if(selected != 0) {
-                    //todo
-                    ((JPanel)tabbedPane.getSelectedComponent()).add(configurationPanel);
-                    controller.setCurrentFigure(selected - 1);
-                }
+                ((JPanel)tabbedPane.getSelectedComponent()).add(configurationPanel);
+                controller.setCurrentFigure(selected - 1);
             }
         });
 
@@ -117,9 +113,8 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
         /*aField.addKeyListener(new FloatTextFieldKeyListener());
-        bField.addKeyListener(new FloatTextFieldKeyListener());*/
-
-        /*commonPanel.add(new JLabel("a: "));
+        bField.addKeyListener(new FloatTextFieldKeyListener());
+        commonPanel.add(new JLabel("a: "));
         commonPanel.add(aField);
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);*/
@@ -160,8 +155,6 @@ public class WireframeFrame extends MainFrame {
         });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         //inputButtonPanel add confirmButton
-
-        //todo: масштрабирование? (я думаю, просто поменять коэфф. с 1.1 на что-то иное!
     }
 
     private void addMenus() throws NoSuchMethodException {
@@ -172,11 +165,8 @@ public class WireframeFrame extends MainFrame {
         addSubMenu("Options", KeyEvent.VK_O);
         addMenuAndToolBarButton("Options/Configuration", "Configure splines", KeyEvent.VK_S, "upload-1.png", "onConfigureSplines", true);
 
-
         addSubMenu("Help", KeyEvent.VK_H);
         addMenuAndToolBarButton("Help/About", "Shows program version and copyright information", KeyEvent.VK_A, "book.png", "onAbout", false);
-
-
     }
 
 
