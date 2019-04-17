@@ -58,9 +58,9 @@ public class WireframeFrame extends MainFrame {
 
     private void createCommonConfigurationPanel() {
         tabbedPane = new JTabbedPane();
-        splineConfigurationPanel = new JPanel();   //tabs...
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
+        createSplineConfigurationPanel();
         tabbedPane.add("Figure 1", splineConfigurationPanel);
         for(int i = 1; i < figureCount; i++) {
             tabbedPane.add("Figure " + (i + 1), new JPanel());
@@ -78,25 +78,6 @@ public class WireframeFrame extends MainFrame {
 
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
 
-        splineConfigurationPanel.add(splinePanel);
-        JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
-        inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
-        inputButtonPanel.add(inputPanel);
-        splineConfigurationPanel.add(inputButtonPanel);
-
-        JButton zoomInButton = new JButton("Zoom in");
-        JButton zoomOutButton = new JButton("Zoom out");
-        zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
-        zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
-        JButton addFirstPointButton = new JButton("Add new point in the beginning");
-        addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
-        JButton addLastPointButton = new JButton("Add new point in the end");
-        addLastPointButton.addActionListener(e -> controller.addSplinePoint(controller.getSplinePointsCount()));
-        JButton deleteFirstPointButton = new JButton("Delete the point in the beginning");
-        deleteFirstPointButton.addActionListener(e -> controller.deleteSplinePoint(0));
-        JButton deleteLastPointButton = new JButton("Delete the point in the end");
-        deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
         aField = new JTextField();
         bField = new JTextField();
@@ -119,12 +100,6 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new JLabel("b: "));
         commonPanel.add(bField);*/
 
-        inputPanel.add(addFirstPointButton);
-        inputPanel.add(addLastPointButton);
-        inputPanel.add(deleteFirstPointButton);
-        inputPanel.add(deleteLastPointButton);
-        inputPanel.add(zoomInButton);
-        inputPanel.add(zoomOutButton);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
@@ -371,8 +346,33 @@ public class WireframeFrame extends MainFrame {
         JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
     }
 
-    public void createSplinePanel()
+    public void createSplineConfigurationPanel()
     {
+        splineConfigurationPanel = new JPanel();   //tabs...
+        splineConfigurationPanel.add(splinePanel);
+        JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
+        inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
+        inputButtonPanel.add(inputPanel);
+        splineConfigurationPanel.add(inputButtonPanel);
+        JButton zoomInButton = new JButton("Zoom in");
+        JButton zoomOutButton = new JButton("Zoom out");
+        zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
+        zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
+        JButton addFirstPointButton = new JButton("Add new point in the beginning");
+        addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
+        JButton addLastPointButton = new JButton("Add new point in the end");
+        addLastPointButton.addActionListener(e -> controller.addSplinePoint(controller.getSplinePointsCount()));
+        JButton deleteFirstPointButton = new JButton("Delete the point in the beginning");
+        deleteFirstPointButton.addActionListener(e -> controller.deleteSplinePoint(0));
+        JButton deleteLastPointButton = new JButton("Delete the point in the end");
+        deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
+        inputPanel.add(addFirstPointButton);
+        inputPanel.add(addLastPointButton);
+        inputPanel.add(deleteFirstPointButton);
+        inputPanel.add(deleteLastPointButton);
+        inputPanel.add(zoomInButton);
+        inputPanel.add(zoomOutButton);
     }
 }
