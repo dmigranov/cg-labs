@@ -63,7 +63,9 @@ public class WireframeFrame extends MainFrame {
         createSplineConfigurationPanel();
         //tabbedPane.add("Figure 1", splineConfigurationPanel);
         for(int i = 0; i < figureCount; i++) {
-            tabbedPane.add("Figure " + (i + 1), new JPanel());
+            JPanel panel = new JPanel();
+            panel.setPreferredSize(splineConfigurationPanel.getPreferredSize());
+            tabbedPane.add("Figure " + (i + 1), panel);
         }
         tabbedPane.addChangeListener(e -> {
             //todo
