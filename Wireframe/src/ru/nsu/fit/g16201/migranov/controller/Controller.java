@@ -546,6 +546,8 @@ public class Controller {
 
     public void setCurrentFigure(int index) {
         //todo: Проверка?
+
+        //масштаб при изначальной загрузке такой, чтобы всё было красиво вписано (он не одинаковый для разных вкладок!)
         currentFigureIndex = index;
         currentFigure = figures.get(index);
         calculateSplineArea();
