@@ -184,6 +184,8 @@ public class Controller {
     }
 
     private void drawFigures() {
+        double fminX, fminY, fminZ, fmaxX, fmaxY, fmaxZ;
+
         //long start = System.currentTimeMillis();
         for(Figure figure : figures)
         {
@@ -244,6 +246,10 @@ public class Controller {
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
                     //это сохранять? или сразу применять на эту точку матрицы все дела?
+
+                    //todo: вращение
+
+
                 }
             }
 
@@ -400,7 +406,7 @@ public class Controller {
             x = xm*(2.0*u/width - 1);
             y = -2*xm*v/height - ym*width/height + xm + ym;
         }
-        //==?
+        //==? todo
         else
         {
             y = -ym*(2.0*v/height - 1);
