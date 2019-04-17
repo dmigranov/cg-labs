@@ -25,7 +25,7 @@ public class WireframeFrame extends MainFrame {
     private Controller controller;
 
     private SplinePanel splinePanel;
-    private JPanel configurationPanel;
+    private JPanel splineConfigurationPanel;
     private JTabbedPane tabbedPane;
 
     private JTextField aField, bField, cField, dField, nField, mField, kField;
@@ -58,10 +58,10 @@ public class WireframeFrame extends MainFrame {
 
     private void createCommonConfigurationPanel() {
         tabbedPane = new JTabbedPane();
-        configurationPanel = new JPanel();   //tabs...
+        splineConfigurationPanel = new JPanel();   //tabs...
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
-        tabbedPane.add("Figure 1", configurationPanel);
+        tabbedPane.add("Figure 1", splineConfigurationPanel);
         for(int i = 1; i < figureCount; i++) {
             tabbedPane.add("Figure " + (i + 1), new JPanel());
         }
@@ -71,19 +71,19 @@ public class WireframeFrame extends MainFrame {
             int selected = tabbedPane.getSelectedIndex();
             if(selected != 0) {
                 //todo
-                ((JPanel)tabbedPane.getSelectedComponent()).add(configurationPanel);
+                ((JPanel)tabbedPane.getSelectedComponent()).add(splineConfigurationPanel);
                 controller.setCurrentFigure(selected - 1);
             }
         });
 
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
 
-        configurationPanel.add(splinePanel);
+        splineConfigurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
         inputButtonPanel.add(inputPanel);
-        configurationPanel.add(inputButtonPanel);
+        splineConfigurationPanel.add(inputButtonPanel);
 
         JButton zoomInButton = new JButton("Zoom in");
         JButton zoomOutButton = new JButton("Zoom out");
@@ -369,6 +369,10 @@ public class WireframeFrame extends MainFrame {
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
         JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
+    }
+
+    public void createSplinePanel()
+    {
 
     }
 }
