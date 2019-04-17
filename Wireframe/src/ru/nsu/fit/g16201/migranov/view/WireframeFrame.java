@@ -88,7 +88,7 @@ public class WireframeFrame extends MainFrame {
             }
         });
 
-        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
+        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));    //todo: сделать красиво
 
         aField = new JTextField();
         bField = new JTextField();
@@ -109,24 +109,38 @@ public class WireframeFrame extends MainFrame {
         confirmButton.addActionListener(e -> {
             try
             {
-                //todo: в зависимости от влкадки
-                double a, b, c, d;
-                int n, m, k;
-                n = Integer.parseInt(nField.getText());
-                k = Integer.parseInt(kField.getText());
-                m = Integer.parseInt(mField.getText());
-                a = Double.parseDouble(aField.getText());
-                b = Double.parseDouble(bField.getText());
-                c = Double.parseDouble(cField.getText());
-                d = Double.parseDouble(dField.getText());
+                if(tabbedPane.getSelectedIndex() == 0) {
+                    double a, b, c, d;
+                    int n, m, k;
+                    n = Integer.parseInt(nField.getText());
+                    k = Integer.parseInt(kField.getText());
+                    m = Integer.parseInt(mField.getText());
+                    a = Double.parseDouble(aField.getText());
+                    b = Double.parseDouble(bField.getText());
+                    c = Double.parseDouble(cField.getText());
+                    d = Double.parseDouble(dField.getText());
 
-                if(!(b > a && a >= 0 && 1 >= b))
-                    throw new NumberFormatException("Wrong a or b");
+                    if (!(b > a && a >= 0 && 1 >= b))
+                        throw new NumberFormatException("Wrong a or b");
 
-                if(!(d > c && c >= 0 && 2*Math.PI >= d))
-                    throw new NumberFormatException("Wrong c or d");
+                    if (!(d > c && c >= 0 && 2 * Math.PI >= d))
+                        throw new NumberFormatException("Wrong c or d");
 
-                controller.setConstants(n, m, k, a, b, c, d);
+                    controller.setConstants(n, m, k, a, b, c, d);
+                }
+                else
+                {
+                    double a, b;
+                    a = Double.parseDouble(aSplineField.getText());
+                    b = Double.parseDouble(bSplineField.getText());
+
+                    if (!(b > a && a >= 0 && 1 >= b))
+                        throw new NumberFormatException("Wrong a or b");
+
+                    controller.setAB(a, b);
+
+                }
+                updateFields();
             }
             catch (NumberFormatException n)
             {
@@ -339,18 +353,22 @@ public class WireframeFrame extends MainFrame {
     {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
 
+        updateFields();
+
+        //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
+    }
+
+    private void updateFields() {
         aField.setText(controller.getA() + "");
         aSplineField.setText(controller.getA() + "");
         bField.setText(controller.getB() + "");
-        bSplineField.setText(controller.getA() + "");
+        bSplineField.setText(controller.getB() + "");
         cField.setText(controller.getC() + "");
         dField.setText(controller.getD() + "");
         nField.setText(controller.getN() + "");
         mField.setText(controller.getM() + "");
         kField.setText(controller.getK() + "");
-
-        //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
     }
 
     public void createSplineConfigurationPanel()

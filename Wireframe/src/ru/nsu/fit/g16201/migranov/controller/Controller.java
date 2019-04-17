@@ -553,4 +553,12 @@ public class Controller {
         calculateSplineArea();
         drawSplineLine();
     }
+
+    public void setAB(double a, double b) {
+        this.a = a;
+        this.b = b;
+
+        drawSplineLine();
+        //todo: пересчитать 3d
+    }
 }
