@@ -104,12 +104,6 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
-        /*aField.addKeyListener(new FloatTextFieldKeyListener());
-        bField.addKeyListener(new FloatTextFieldKeyListener());
-        commonPanel.add(new JLabel("a: "));
-        commonPanel.add(aField);
-        commonPanel.add(new JLabel("b: "));
-        commonPanel.add(bField);*/
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
@@ -346,7 +340,9 @@ public class WireframeFrame extends MainFrame {
         //splinePanel - непосредственно для отрисовки, кнопки в другом
 
         aField.setText(controller.getA() + "");
+        aSplineField.setText(controller.getA() + "");
         bField.setText(controller.getB() + "");
+        bSplineField.setText(controller.getA() + "");
         cField.setText(controller.getC() + "");
         dField.setText(controller.getD() + "");
         nField.setText(controller.getN() + "");
@@ -362,9 +358,10 @@ public class WireframeFrame extends MainFrame {
         splineConfigurationPanel = new JPanel();   //tabs...
         splineConfigurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2, 3, 5));
+        inputPanel.setLayout(new GridLayout(7, 2, 3, 5));
         inputButtonPanel.setLayout(new BoxLayout(inputButtonPanel, BoxLayout.Y_AXIS));
         inputButtonPanel.add(inputPanel);
+
         splineConfigurationPanel.add(inputButtonPanel);
         JButton zoomInButton = new JButton("Zoom in");
         JButton zoomOutButton = new JButton("Zoom out");
@@ -379,6 +376,16 @@ public class WireframeFrame extends MainFrame {
         JButton deleteLastPointButton = new JButton("Delete the point in the end");
         deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
 
+        aSplineField = new JTextField();
+        bSplineField = new JTextField();
+        aSplineField.addKeyListener(new FloatTextFieldKeyListener());
+        bSplineField.addKeyListener(new FloatTextFieldKeyListener());
+
+
+        inputPanel.add(new JLabel("a: "));
+        inputPanel.add(aSplineField);
+        inputPanel.add(new JLabel("b: "));
+        inputPanel.add(bSplineField);
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
         inputPanel.add(deleteFirstPointButton);
