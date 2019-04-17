@@ -62,14 +62,18 @@ public class WireframeFrame extends MainFrame {
         configurationPanel = new JPanel();   //tabs...
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
-        tabbedPane.add("Figure 1", configurationPanel);
+        for(int i = 0; i < figureCount; i++) {
+            tabbedPane.add("Figure " + (i + 1), new JPanel());
+        }
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 //0 - common
                 int selected = tabbedPane.getSelectedIndex();
-                if(selected != 0)
+                if(selected != 0) {
+                    //todo
                     controller.setCurrentFigure(selected - 1);
+                }
             }
         });
 
