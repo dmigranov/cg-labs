@@ -103,6 +103,7 @@ public class Controller {
 
     public int loadFile(File file) {
         int figureCount;
+        currentFigureIndex = 0;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
             scale = 1.1;

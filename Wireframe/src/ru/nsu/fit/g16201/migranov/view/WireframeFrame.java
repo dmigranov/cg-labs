@@ -79,13 +79,10 @@ public class WireframeFrame extends MainFrame {
             tabbedPane.add("Figure " + (i + 1), panel);
         }
         tabbedPane.addChangeListener(e -> {
-            //todo
             //0 - common
             int selected = tabbedPane.getSelectedIndex();
             if(selected != 0) {
-                //todo
                 JPanel panel = ((JPanel)tabbedPane.getSelectedComponent());
-                //panel.removeAll();
                 panel.add(splineConfigurationPanel);
                 panel.revalidate();
                 controller.setCurrentFigure(selected - 1);
@@ -93,7 +90,6 @@ public class WireframeFrame extends MainFrame {
         });
 
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
-
 
         aField = new JTextField();
         bField = new JTextField();
