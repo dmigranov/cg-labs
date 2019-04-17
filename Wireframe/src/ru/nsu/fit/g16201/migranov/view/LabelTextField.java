@@ -8,11 +8,11 @@ public class LabelTextField extends JPanel {
     LabelTextField(String s, JTextField textField, KeyListener listener)
     {
         textField.setPreferredSize(new Dimension(60, 30));
-        add(new JLabel(s));
+        JLabel label = new JLabel(s);
+        add(label);
         add(textField);
         textField.addKeyListener(listener);
         setAlignmentX(LEFT_ALIGNMENT);
-
     }
 
 }

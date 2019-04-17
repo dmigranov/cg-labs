@@ -5,6 +5,8 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,6 +62,12 @@ public class WireframeFrame extends MainFrame {
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
         tabbedPane.add("Figure 1", configurationPanel);
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                //todo
+            }
+        });
 
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
 
@@ -74,7 +82,6 @@ public class WireframeFrame extends MainFrame {
         JButton zoomOutButton = new JButton("Zoom out");
         zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
         zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
-
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
         addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
         JButton addLastPointButton = new JButton("Add new point in the end");
@@ -91,30 +98,6 @@ public class WireframeFrame extends MainFrame {
         nField = new JTextField();
         mField = new JTextField();
         kField = new JTextField();
-
-        /*aField.addKeyListener(new FloatTextFieldKeyListener());
-        bField.addKeyListener(new FloatTextFieldKeyListener());
-        cField.addKeyListener(new FloatTextFieldKeyListener()); //может лучше ползунок для угла?
-        dField.addKeyListener(new FloatTextFieldKeyListener());
-        nField.addKeyListener(new IntegerTextFieldKeyListener());
-        mField.addKeyListener(new IntegerTextFieldKeyListener());
-        kField.addKeyListener(new IntegerTextFieldKeyListener());*/
-
-
-        /*commonPanel.add(new JLabel("a: "));
-        commonPanel.add(aField);
-        commonPanel.add(new JLabel("b: "));
-        commonPanel.add(bField);
-        commonPanel.add(new JLabel("c: "));
-        commonPanel.add(cField);
-        commonPanel.add(new JLabel("d: "));
-        commonPanel.add(dField);
-        commonPanel.add(new JLabel("n: "));
-        commonPanel.add(nField);
-        commonPanel.add(new JLabel("m: "));
-        commonPanel.add(mField);
-        commonPanel.add(new JLabel("k: "));
-        commonPanel.add(kField);*/
         commonPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
@@ -122,6 +105,17 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
+        /*aField.addKeyListener(new FloatTextFieldKeyListener());
+        bField.addKeyListener(new FloatTextFieldKeyListener());*/
+
+
+
+        /*commonPanel.add(new JLabel("a: "));
+        commonPanel.add(aField);
+        commonPanel.add(new JLabel("b: "));
+        commonPanel.add(bField);*/
+
+
 
         inputPanel.add(addFirstPointButton);
         inputPanel.add(addLastPointButton);
