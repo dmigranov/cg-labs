@@ -163,7 +163,7 @@ public class Controller {
                 }
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
-                figure.setModelPoints(new Point3D[(n+1)*(k+1)][(m+1)*(k+1)]);
+                figure.setModelPoints(new Point3D[n*k + 1][m*k + 1]);
 
             }
         }
@@ -196,13 +196,13 @@ public class Controller {
             double length = calculateLength(splinePoints), tempLength = 0;
             figure.setLength(length);
 
-            double[] u = new double[n + 1];
-            Point2D[] Gu = new Point2D[n + 1];
+            double[] u = new double[n*k + 1];
+            Point2D[] Gu = new Point2D[n*k + 1];
             u[0] = a*length;
             for(int i = 1; i < n*k; i++)  //можно и до n+1, но для надежности снизу
             {
-                //todo: k? я так понял k мы не соединяем точками, в отличие от n (n*k, m*k!)
-                u[i] = u[i-1] + (b - a)*length/n;
+                //u[i] = u[i-1] + (b - a)*length/n;
+                u[i] = u[i-1] + (b - a)*length/n/k;
             }
             u[n*k] = b*length;
             int uIndex = 0;
@@ -247,10 +247,10 @@ public class Controller {
                 Point2D gu = Gu[i];
                 //for(double v = c; v <= d; v+=(d-c)/m, j++)   //ничего не потеряется из-за double? в случае чего, сделать как с u
 
-                for (int j = 0; j <= m; j++)
+                for (int j = 0; j <= m*k; j++)
                 {
                     //double v = c * (1 - j/m) + d * j/m;
-                    double v = (d - c) * j/m + c;
+                    double v = (d - c) * j/m/k + c;
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
