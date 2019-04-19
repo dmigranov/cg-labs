@@ -42,7 +42,6 @@ public class Controller {
 
     private Point3D[][] modelPoints;
 
-
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -177,6 +176,8 @@ public class Controller {
         for (int i = 0; i < figureCount; i++)
             scale[i] = 1.1;
 
+        modelPoints = new Point3D[n+1][m+1];
+
         currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
@@ -242,7 +243,8 @@ public class Controller {
             for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
-                for(double v = c; v <= d; v+=(d-c)/m)   //ничего не потеряется из-за double? в случае чего, сделать как с u
+                int j = 0;
+                for(double v = c; v <= d; v+=(d-c)/m, j++)   //ничего не потеряется из-за double? в случае чего, сделать как с u
                 {
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
@@ -256,6 +258,7 @@ public class Controller {
                     Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
                     Matrix np = Matrix.multiply(rtm, p);
 
+                    modelPoints[i][j] = new Point3D(np.get(0, 0),np.get(1, 0),np.get(2, 0));
 
                 }
             }
