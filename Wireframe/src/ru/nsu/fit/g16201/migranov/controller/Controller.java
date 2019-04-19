@@ -201,14 +201,12 @@ public class Controller {
             u[0] = a*length;
             for(int i = 1; i < n*k; i++)  //можно и до n+1, но для надежности снизу
             {
-                //u[i] = u[i-1] + (b - a)*length/n;
-                u[i] = u[i-1] + (b - a)*length/n/k;
+                u[i] = u[i-1] + (b - a)*length/n/k;         //u[i] = u[i-1] + (b - a)*length/n;
             }
             u[n*k] = b*length;
             int uIndex = 0;
 
             Double xPrev = null, yPrev = null;
-
             for(int i = 1; i < splinePoints.size() - 2; i++)
             {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
@@ -234,7 +232,7 @@ public class Controller {
                     {
                         Gu[uIndex] = new Point2D(x, y);
                         uIndex++;
-                    }   //todo проверить
+                    }   //todo проверить (не xPrev?)
 
                     xPrev = x;
                     yPrev = y;
@@ -245,7 +243,6 @@ public class Controller {
             for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
-                //for(double v = c; v <= d; v+=(d-c)/m, j++)   //ничего не потеряется из-за double? в случае чего, сделать как с u
 
                 for (int j = 0; j <= m*k; j++)
                 {
@@ -262,8 +259,16 @@ public class Controller {
 
                     Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
                     Matrix np = Matrix.multiply(rtm, p);
+                    double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
 
-                    modelPoints[i][j] = new Point3D(np.get(0, 0),np.get(1, 0),np.get(2, 0));
+                    modelPoints[i][j] = new Point3D(nx, ny, nz);
+
+                    if(nx < minX) minX = nx;
+                    if(nx > maxX) maxX = nx;
+                    if(ny < minY) minY = ny;
+                    if(ny > maxY) maxY = ny;
+                    if(nz < minZ) minZ = nz;
+                    if(nz > maxZ) maxZ = nz;
 
 
 
