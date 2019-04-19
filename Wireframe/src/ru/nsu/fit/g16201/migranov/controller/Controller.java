@@ -40,6 +40,8 @@ public class Controller {
 
     private int width, height;
 
+    private Point3D[][] modelPoints;
+
 
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
