@@ -176,7 +176,6 @@ public class Controller {
         for (int i = 0; i < figureCount; i++)
             scale[i] = 1.1;
 
-
         currentFigure = figures.get(0);
         calculateSplineArea();
         drawSplineLine();
@@ -243,9 +242,11 @@ public class Controller {
             for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
-                int j = 0;
-                for(double v = c; v <= d; v+=(d-c)/m, j++)   //ничего не потеряется из-за double? в случае чего, сделать как с u
+                //for(double v = c; v <= d; v+=(d-c)/m, j++)   //ничего не потеряется из-за double? в случае чего, сделать как с u
+
+                for (int j = 0; j <= m; j++)
                 {
+                    double v = ;
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
@@ -262,6 +263,7 @@ public class Controller {
 
                 }
             }
+            System.out.println("end");
 
         }
         //System.out.println(System.currentTimeMillis() - start);
