@@ -29,6 +29,8 @@ public class WireframeFrame extends MainFrame {
     private JPanel splineConfigurationPanel;
     private JTabbedPane tabbedPane;
 
+    private WireframePanel wireframePanel;
+
     private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField;
     private JButton confirmButton;
     private int figureCount;
@@ -40,9 +42,16 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+
         splinePanel = new SplinePanel(501, 501);
+        wireframePanel = new WireframePanel();
+        mainPanel.add(wireframePanel, BorderLayout.CENTER);
         controller = new Controller(splinePanel);
         addMenus();
+
+        add(mainPanel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));

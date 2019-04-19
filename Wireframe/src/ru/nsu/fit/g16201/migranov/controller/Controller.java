@@ -270,14 +270,17 @@ public class Controller {
                     if(nz < minZ) minZ = nz;
                     if(nz > maxZ) maxZ = nz;
 
-
-
                 }
             }
-            System.out.println("end");
 
         }
         //System.out.println(System.currentTimeMillis() - start);
+
+        //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
+        //todo: отобразить
+
+
+
     }
 
     //область определения сплайна (чтобы знать как масштабировать)
