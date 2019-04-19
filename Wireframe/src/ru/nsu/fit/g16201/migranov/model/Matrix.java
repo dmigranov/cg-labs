@@ -27,7 +27,7 @@ public class Matrix {
 
     }
 
-    public static Matrix getTranslateMatrix(Point3D where) {
+    public static Matrix getTranslationMatrix(Point3D where) {
         return new Matrix(4, 4,
                 1, 0, 0, where.x,
                         0, 1, 0, where.y,
