@@ -41,7 +41,7 @@ public class Controller {
     private int width, height;
 
     public Controller(SplinePanel splinePanel) {
-        this.splinePanel = splinePanel;
+        this.splinePanel = splinePanel;             //todo: resize
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -114,6 +114,8 @@ public class Controller {
             n = Integer.parseInt(substrings[0]);
             m = Integer.parseInt(substrings[1]);
             k = Integer.parseInt(substrings[2]);
+            if(m <= 0 || n <= 0 || k <= 0)
+                throw new IOException("Wrong m, n, or k");
             a = Double.parseDouble(substrings[3]);
             b = Double.parseDouble(substrings[4]);
             if(!(b > a && a >= 0 && 1 >= b))
@@ -161,7 +163,7 @@ public class Controller {
                 }
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
-                figure.setModelPoints(new Point3D[n+1][m+1]);
+                figure.setModelPoints(new Point3D[(n+1)*(k+1)][(m+1)*(k+1)]);
 
             }
         }

@@ -120,6 +120,8 @@ public class WireframeFrame extends MainFrame {
                     c = Double.parseDouble(cField.getText());
                     d = Double.parseDouble(dField.getText());
 
+                    if(m <= 0 || n <= 0 || k <= 0)
+                        throw new NumberFormatException("Wrong m, n, or k");
                     if (!(b > a && a >= 0 && 1 >= b))
                         throw new NumberFormatException("Wrong a or b");
                     if (!(d > c && c >= 0 && 2 * Math.PI >= d))
