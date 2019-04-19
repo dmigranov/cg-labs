@@ -246,7 +246,8 @@ public class Controller {
 
                 for (int j = 0; j <= m; j++)
                 {
-                    double v = ;
+                    //double v = c * (1 - j/m) + d * j/m;
+                    double v = (d - c) * j/m + c;
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
