@@ -192,6 +192,7 @@ public class Controller {
         {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
+            figure.setLength(length);
 
             double[] u = new double[n + 1];
             Point2D[] Gu = new Point2D[n + 1];
@@ -261,6 +262,8 @@ public class Controller {
                     Matrix np = Matrix.multiply(rtm, p);
 
                     modelPoints[i][j] = new Point3D(np.get(0, 0),np.get(1, 0),np.get(2, 0));
+
+
 
                 }
             }

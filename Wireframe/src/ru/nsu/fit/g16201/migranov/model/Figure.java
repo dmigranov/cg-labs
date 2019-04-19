@@ -7,9 +7,11 @@ public class Figure {
     private Color color;
     private Point3D center;
     private Matrix rotateMatrix;
-    private List<Point2D> splinePoints;
 
     private Point3D[][] modelPoints;
+
+    private double length;
+    private List<Point2D> splinePoints;
 
 
     public Figure(Point3D center, Color color, Matrix rotateMatrix, List<Point2D> splinePoints) {
@@ -54,5 +56,13 @@ public class Figure {
 
     public void setModelPoints(Point3D[][] modelPoints) {
         this.modelPoints = modelPoints;
+    }
+
+    public double getLength() {
+        return length;
+    }
+
+    public void setLength(double length) {
+        this.length = length;
     }
 }
