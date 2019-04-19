@@ -185,7 +185,7 @@ public class Controller {
     }
 
     private void drawFigures() {
-        double fminX, fminY, fminZ, fmaxX, fmaxY, fmaxZ;
+        double minX, maxX, minY, maxY, minZ, maxZ;      //крайние точки - габаритный бокс!
 
         //long start = System.currentTimeMillis();
         for(Figure figure : figures)
@@ -239,7 +239,7 @@ public class Controller {
                 }
             }
 
-            Point3D modelPoints[][] = figure.getModelPoints();
+            Point3D[][] modelPoints = figure.getModelPoints();
             for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
