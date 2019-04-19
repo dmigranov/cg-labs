@@ -199,12 +199,12 @@ public class Controller {
             double[] u = new double[n + 1];
             Point2D[] Gu = new Point2D[n + 1];
             u[0] = a*length;
-            for(int i = 1; i < n; i++)  //можно и до n+1, но для надежности снизу
+            for(int i = 1; i < n*k; i++)  //можно и до n+1, но для надежности снизу
             {
                 //todo: k? я так понял k мы не соединяем точками, в отличие от n (n*k, m*k!)
                 u[i] = u[i-1] + (b - a)*length/n;
             }
-            u[n] = b*length;
+            u[n*k] = b*length;
             int uIndex = 0;
 
             Double xPrev = null, yPrev = null;
