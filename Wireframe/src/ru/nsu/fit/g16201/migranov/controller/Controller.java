@@ -247,7 +247,10 @@ public class Controller {
                     double z = gu.x;
                     //это сохранять? или сразу применять на эту точку матрицы все дела?
 
-                    //todo: вращение
+                    Matrix p = new Matrix(4, 1, x, y, z, 1);
+                    Matrix translateMatrix = new Matrix()
+
+                    Matrix np = Matrix.multiply(figure.getRotateMatrix(), p);
 
 
                 }
@@ -419,16 +422,16 @@ public class Controller {
         return getUV(p.x, p.y);
     }
 
-    //возвращает матрицу 4x4 - x, теперь 3x3
+    //возвращает матрицу 4x4
     private Matrix read3x3MatrixByRow(BufferedReader br) throws IOException {
         String[] substrings;
-        Matrix matrix = new Matrix(3, 3);
+        Matrix matrix = new Matrix(4, 4);
         for(int i = 0; i < 3; i++)
         {
             substrings = readLineAndSplit(br);
-            //matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]), 0});
-            matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2])});
+            matrix.setRow(i, new double[] {Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]), 0});
         }
+        matrix.setRow(3, new double[] {0, 0, 0, 1});
         return matrix;
     }
 
