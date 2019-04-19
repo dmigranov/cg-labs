@@ -27,6 +27,13 @@ public class Matrix {
 
     }
 
+    public static Matrix getTranslateMatrix(Point3D center) {
+        Matrix T = new Matrix(4, 4);
+
+
+        return T;
+    }
+
     public void setRow(int rowNumber, double[] row)
     {
         if(row.length != cols || rowNumber >= rows)

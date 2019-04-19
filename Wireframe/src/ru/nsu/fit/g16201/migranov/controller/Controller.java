@@ -248,7 +248,7 @@ public class Controller {
                     //это сохранять? или сразу применять на эту точку матрицы все дела?
 
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
-                    Matrix translateMatrix = new Matrix()
+                    Matrix translateMatrix = Matrix.getTranslateMatrix(figure.getCenter());
 
                     Matrix np = Matrix.multiply(figure.getRotateMatrix(), p);
 
