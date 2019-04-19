@@ -239,6 +239,7 @@ public class Controller {
                 }
             }
 
+            Point3D modelPoints[][] = figure.getModelPoints();
             for(int i = 0; i < Gu.length; i++)
             {
                 Point2D gu = Gu[i];
