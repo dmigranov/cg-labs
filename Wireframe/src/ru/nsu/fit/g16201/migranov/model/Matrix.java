@@ -27,11 +27,12 @@ public class Matrix {
 
     }
 
-    public static Matrix getTranslateMatrix(Point3D center) {
-        Matrix T = new Matrix(4, 4);
-
-
-        return T;
+    public static Matrix getTranslateMatrix(Point3D where) {
+        return new Matrix(4, 4,
+                1, 0, 0, where.x,
+                        0, 1, 0, where.y,
+                        0, 0, 1, where.z,
+                        0, 0, 0, 1);
     }
 
     public void setRow(int rowNumber, double[] row)
