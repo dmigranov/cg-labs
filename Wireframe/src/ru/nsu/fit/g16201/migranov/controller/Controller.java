@@ -187,7 +187,7 @@ public class Controller {
     }
 
     private void drawFigures() {
-        double minX, maxX, minY, maxY, minZ, maxZ;      //крайние точки - габаритный бокс!
+        double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //крайние точки - габаритный бокс!
 
         //long start = System.currentTimeMillis();
         for(Figure figure : figures)
@@ -254,11 +254,11 @@ public class Controller {
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
-                    //это сохранять? или сразу применять на эту точку матрицы все дела?
 
+                    //это сохранять? или сразу применять на эту точку матрицы все дела?
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
                     Matrix translateMatrix = Matrix.getTranslationMatrix(figure.getCenter());
-                    //на самом деле произведение r и t имеет простой вид
+                    //на самом деле произведение r и t имеет простой вид - можно упростить так что
 
                     Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
                     Matrix np = Matrix.multiply(rtm, p);
