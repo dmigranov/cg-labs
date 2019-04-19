@@ -1,9 +1,32 @@
 package ru.nsu.fit.g16201.migranov.view;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class WireframePanel extends JPanel {
     private int width, height;
+    private BufferedImage canvas;
+    private Graphics2D canvasGraphics;
+
+    public WireframePanel() {
+        super();
+//todo
+        //setPreferredSize(new Dimension(width, height));
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvasGraphics = canvas.createGraphics();
+        canvasGraphics.setColor(Color.BLACK);
+        canvasGraphics.setBackground(Color.WHITE);
+
+        canvasGraphics.clearRect(0, 0, width, height);
+    }
+
+    @Override
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
 
 
+
+    }
 }

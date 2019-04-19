@@ -13,7 +13,6 @@ public class SplinePanel extends JPanel {
     private final Color splinePointColor = Color.BLACK;
     private final Color splineLineColor = Color.BLACK;
 
-
     public SplinePanel(int width, int height) {
         super();
         this.width = width;
