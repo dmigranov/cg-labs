@@ -40,8 +40,6 @@ public class Controller {
 
     private int width, height;
 
-    private Point3D[][] modelPoints;
-
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -163,6 +161,8 @@ public class Controller {
                 }
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
+                figure.setModelPoints(new Point3D[n+1][m+1]);
+
             }
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
@@ -176,7 +176,6 @@ public class Controller {
         for (int i = 0; i < figureCount; i++)
             scale[i] = 1.1;
 
-        modelPoints = new Point3D[n+1][m+1];
 
         currentFigure = figures.get(0);
         calculateSplineArea();

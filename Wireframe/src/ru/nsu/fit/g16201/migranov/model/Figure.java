@@ -9,6 +9,8 @@ public class Figure {
     private Matrix rotateMatrix;
     private List<Point2D> splinePoints;
 
+    private Point3D[][] modelPoints;
+
 
     public Figure(Point3D center, Color color, Matrix rotateMatrix, List<Point2D> splinePoints) {
         this.center = center;
@@ -44,5 +46,13 @@ public class Figure {
 
     public void setRotateMatrix(Matrix rotateMatrix) {
         this.rotateMatrix = rotateMatrix;
+    }
+
+    public Point3D[][] getModelPoints() {
+        return modelPoints;
+    }
+
+    public void setModelPoints(Point3D[][] modelPoints) {
+        this.modelPoints = modelPoints;
     }
 }
