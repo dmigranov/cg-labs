@@ -41,7 +41,11 @@ public class Matrix {
         Point3D u = rr.normalize();
         Point3D v = Point3D.getVectorProduct(w, u);
 
-        return new Matrix(4, 4
+        return new Matrix(4, 4,
+                u.x, u.y, u.z, -u.x*up.x,
+                        v.x, v.y, v.z, -u.y*up.y,
+                        w.x, w.y, w.z, -u.z*up.z,
+                        0, 0, 0, 1
         );
     }
 
