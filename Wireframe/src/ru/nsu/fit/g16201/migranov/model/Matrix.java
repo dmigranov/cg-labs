@@ -49,6 +49,10 @@ public class Matrix {
         );
     }
 
+    public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
+
+    }
+
     public void setRow(int rowNumber, double[] row)
     {
         if(row.length != cols || rowNumber >= rows)

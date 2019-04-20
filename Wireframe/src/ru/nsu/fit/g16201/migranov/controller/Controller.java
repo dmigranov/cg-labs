@@ -33,7 +33,8 @@ public class Controller {
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
-    private Matrix viewMatrix;
+    private Matrix cameraMatrix;
+    private Matrix projectionMatrix;
     private List<Figure> figures;
     private Figure currentFigure = null;
     private int currentFigureIndex = 0;
@@ -48,7 +49,9 @@ public class Controller {
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;             //todo: resize
 
-        viewMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+        cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+        projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+
 
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -286,7 +289,9 @@ public class Controller {
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         for (Figure figure : figures)
         {
-            figure.getModelPoints();
+            Point3D[][] modelPoints = figure.getModelPoints();
+
+
         }
 
 
