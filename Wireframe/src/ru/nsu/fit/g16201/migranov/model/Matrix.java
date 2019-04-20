@@ -49,8 +49,13 @@ public class Matrix {
         );
     }
 
+    //персективное, а не паралл
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
-
+        return new Matrix(4, 4,
+                2/sw*zn, 0, 0, 0,
+                        0, 2/sh*zn, 0, 0,
+                        0, 0, zn/(zf - zn), -zn*zf/(zf - zn),
+                        0, 0, 1, 0);
     }
 
     public void setRow(int rowNumber, double[] row)
