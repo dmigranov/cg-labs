@@ -198,30 +198,28 @@ public class Controller {
         double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //крайние точки - габаритный бокс!
 
         //long start = System.currentTimeMillis();
-        for(Figure figure : figures)
-        {
+        for (Figure figure : figures) {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
             figure.setLength(length);
 
-            double[] u = new double[n*k + 1];
-            Point2D[] Gu = new Point2D[n*k + 1];
-            u[0] = a*length;
-            for(int i = 1; i < n*k; i++)  //можно и до n+1, но для надежности снизу
+            double[] u = new double[n * k + 1];
+            Point2D[] Gu = new Point2D[n * k + 1];
+            u[0] = a * length;
+            for (int i = 1; i < n * k; i++)  //можно и до n+1, но для надежности снизу
             {
-                u[i] = u[i-1] + (b - a)*length/n/k;         //u[i] = u[i-1] + (b - a)*length/n;
+                u[i] = u[i - 1] + (b - a) * length / n / k;         //u[i] = u[i-1] + (b - a)*length/n;
             }
-            u[n*k] = b*length;
+            u[n * k] = b * length;
             int uIndex = 0;
 
             Double xPrev = null, yPrev = null;
-            for(int i = 1; i < splinePoints.size() - 2; i++)
-            {
+            for (int i = 1; i < splinePoints.size() - 2; i++) {
                 Matrix Gx = new Matrix(4, 1, splinePoints.get(i - 1).x, splinePoints.get(i).x, splinePoints.get(i + 1).x, splinePoints.get(i + 2).x);
                 Matrix Gy = new Matrix(4, 1, splinePoints.get(i - 1).y, splinePoints.get(i).y, splinePoints.get(i + 1).y, splinePoints.get(i + 2).y);
-                for(double t = 0; t <= 1; t+=0.01)  //??? я думаю, все таким лучше чтобы было одинаков в подсчете длины и тут, чтобы не было неточности
+                for (double t = 0; t <= 1; t += 0.01)  //??? я думаю, все таким лучше чтобы было одинаков в подсчете длины и тут, чтобы не было неточности
                 {
-                    Matrix T = new Matrix(1, 4, t*t*t, t*t, t, 1);
+                    Matrix T = new Matrix(1, 4, t * t * t, t * t, t, 1);
                     Matrix TM = Matrix.multiply(T, splineMatrix);
                     Matrix X = Matrix.multiply(TM, Gx);
                     Matrix Y = Matrix.multiply(TM, Gy);
@@ -233,11 +231,10 @@ public class Controller {
                     //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
                     //потому что как иначе я не представляю
 
-                    if(xPrev != null)
+                    if (xPrev != null)
                         tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
 
-                    if(tempLength >= u[uIndex])
-                    {
+                    if (tempLength >= u[uIndex]) {
                         Gu[uIndex] = new Point2D(x, y);
                         uIndex++;
                     }   //todo проверить (не xPrev?)
@@ -248,35 +245,33 @@ public class Controller {
             }
 
             Point3D[][] modelPoints = figure.getModelPoints();
-            for(int i = 0; i < Gu.length; i++)
-            {
+            Matrix translateMatrix = Matrix.getTranslationMatrix(figure.getCenter());
+            Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
+            for (int i = 0; i < Gu.length; i++) {
                 Point2D gu = Gu[i];
 
-                for (int j = 0; j <= m*k; j++)
-                {
+                for (int j = 0; j <= m * k; j++) {
                     //double v = c * (1 - j/m) + d * j/m;
-                    double v = (d - c) * j/m/k + c;
+                    double v = (d - c) * j / m / k + c;
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
 
                     //это сохранять? или сразу применять на эту точку матрицы все дела?
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
-                    Matrix translateMatrix = Matrix.getTranslationMatrix(figure.getCenter());
                     //на самом деле произведение r и t имеет простой вид - можно упростить так что
 
-                    Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
                     Matrix np = Matrix.multiply(rtm, p);
                     double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
 
                     modelPoints[i][j] = new Point3D(nx, ny, nz);
 
-                    if(nx < minX) minX = nx;
-                    if(nx > maxX) maxX = nx;
-                    if(ny < minY) minY = ny;
-                    if(ny > maxY) maxY = ny;
-                    if(nz < minZ) minZ = nz;
-                    if(nz > maxZ) maxZ = nz;
+                    if (nx < minX) minX = nx;
+                    if (nx > maxX) maxX = nx;
+                    if (ny < minY) minY = ny;
+                    if (ny > maxY) maxY = ny;
+                    if (nz < minZ) minZ = nz;
+                    if (nz > maxZ) maxZ = nz;
 
                 }
             }
@@ -285,8 +280,14 @@ public class Controller {
         //System.out.println(System.currentTimeMillis() - start);
 
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
-        //todo: отобразить
+        //todo: отобразить + матрица поворота E! (думаю, её можно внизу)
 
+
+        //считаю, что в modelPoints лежат уже отображенные в указанные пределы
+        for (Figure figure : figures)
+        {
+            figure.getModelPoints();
+        }
 
 
     }
