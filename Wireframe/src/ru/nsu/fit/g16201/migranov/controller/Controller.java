@@ -50,8 +50,6 @@ public class Controller {
         this.splinePanel = splinePanel;             //todo: resize
 
         cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
-        projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
-
 
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -141,6 +139,11 @@ public class Controller {
             zf = Double.parseDouble(substrings[1]);
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
+
+            if(!(zn > 0 && zf > zn))
+                throw new IOException("Wrong clipping");
+
+            projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
 
             sceneRotateMatrix = read3x3MatrixByRow(br);
 
@@ -294,7 +297,13 @@ public class Controller {
 
             for (int i = 0; i <= n*k; i++) {
                 for (int j = 0; j <= m * k; j++) {
+                    Point3D p = modelPoints[i][j];
+                    Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
 
+                    Matrix nmp = Matrix.multiply(projView, mp);
+
+                    Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
+                    System.out.println(np.x + " " + np.y + " " + np.z);
                 }
             }
 
