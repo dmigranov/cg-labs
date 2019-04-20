@@ -35,6 +35,10 @@ public class Matrix {
                         0, 0, 0, 1);
     }
 
+    public static Matrix getViewMatrix(Point3D eye, Point3D ref, Point3D up) {
+
+    }
+
     public void setRow(int rowNumber, double[] row)
     {
         if(row.length != cols || rowNumber >= rows)

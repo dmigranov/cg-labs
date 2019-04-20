@@ -24,11 +24,16 @@ public class Controller {
     private Double[] xm, ym;
     private double[] scale;
 
+    private Point3D eye = new Point3D(-10, 0, 0);
+    private Point3D ref = new Point3D(10, 0, 0);
+    private Point3D up = new Point3D(0, 1, 0);
+
     private int n, m, k;
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
+    private Matrix viewMatrix;
     private List<Figure> figures;
     private Figure currentFigure = null;
     private int currentFigureIndex = 0;
@@ -42,6 +47,9 @@ public class Controller {
 
     public Controller(SplinePanel splinePanel) {
         this.splinePanel = splinePanel;             //todo: resize
+
+        viewMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {

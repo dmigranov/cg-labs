@@ -9,4 +9,9 @@ public class Point3D {
         this.y = y;
         this.z = z;
     }
+
+    public Point3D normalize(Point3D p)
+    {
+        double len = Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y, 2) + Math.pow(p.z, 2));
+    }
 }
