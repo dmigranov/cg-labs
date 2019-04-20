@@ -10,8 +10,8 @@ public class Point3D {
         this.z = z;
     }
 
-    public static Point3D getVectorProduct(Point3D up, Point3D w) {
-
+    public static Point3D getVectorProduct(Point3D a, Point3D b) {
+        return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
     }
 
     public Point3D normalize()
