@@ -285,12 +285,18 @@ public class Controller {
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
         //todo: отобразить + матрица поворота E! (думаю, её можно внизу)
 
+        Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         for (Figure figure : figures)
         {
             Point3D[][] modelPoints = figure.getModelPoints();
 
+            for (int i = 0; i <= n*k; i++) {
+                for (int j = 0; j <= m * k; j++) {
+
+                }
+            }
 
         }
 
