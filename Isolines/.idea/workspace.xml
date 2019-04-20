@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c80b392e-e91e-411a-8a45-bd67608304de" name="Default Changelist" comment="" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IsolinesFrame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="273">
+              <caret line="83" column="107" selection-start-line="83" selection-start-column="107" selection-end-line="83" selection-end-column="107" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#addMenuAndToolBarButton#0;class#IsolinesFrame#0" />
+                <element signature="e#13659#13660#0" expanded="true" />
+                <element signature="e#13684#13685#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FloatTextFieldKeyListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="10" column="116" selection-start-line="10" selection-start-column="116" selection-end-line="10" selection-end-column="116" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LegendPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1420">
+              <caret line="89" selection-start-line="89" selection-end-line="89" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1733#1734#0" expanded="true" />
+                <element signature="e#1762#1763#0" expanded="true" />
+                <element signature="e#3104#3105#0" expanded="true" />
+                <element signature="e#3162#3163#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/MapPanel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-166">
+              <caret line="64" column="14" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="14" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6865#6866#0" expanded="true" />
+                <element signature="e#6914#6915#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="353">
+              <caret line="821" column="25" selection-start-line="821" selection-start-column="25" selection-end-line="821" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#26273#26274#0" expanded="true" />
+                <element signature="e#26309#26310#0" expanded="true" />
+                <element signature="e#27881#27882#0" expanded="true" />
+                <element signature="e#27922#27923#0" expanded="true" />
+                <element signature="e#28152#28153#0" expanded="true" />
+                <element signature="e#28190#28191#0" expanded="true" />
+                <element signature="e#28215#28216#0" expanded="true" />
+                <element signature="e#28253#28254#0" expanded="true" />
+                <element signature="e#29027#29028#0" expanded="true" />
+                <element signature="e#29070#29071#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/out/production/FIT_16201_Migranov_Isolines_Data/example.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Model.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1600">
+              <caret line="109" selection-start-line="109" selection-end-line="109" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2595#2596#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>minim</find>
+      <find>mapL</find>
+      <find>clea</find>
+      <find>gridPointsGra</find>
+      <find>calcula</find>
+      <find>userLi</find>
+      <find>calculate</find>
+      <find>drawLi</find>
+      <find>mapLines</find>
+      <find>recalculateAndD</find>
+      <find>userLineGra</find>
+      <find>userLineGr</find>
+      <find>drawLeg</find>
+      <find>setBac</find>
+      <find>clearUs</find>
+      <find>interpolat</find>
+      <find>mapModel.get</find>
+      <find>mapModel.getV</find>
+      <find>interpola</find>
+      <find>fill</find>
+      <find>interpo</find>
+      <find>interp</find>
+      <find>userLines =</find>
+      <find>userL</find>
+      <find>about</find>
+      <find>inter</find>
+      <find>drawUs</find>
+      <find>clear</find>
+      <find>gridPo</find>
+      <find>setGr</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>f4</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IntegerTextFieldKeyListener.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FloatTextFieldKeyListener.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Seeds.java" />
+        <option value="$PROJECT_DIR$/out/production/FIT_16201_Migranov_Isolines_Data/example2.txt" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/SeedLine.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Line.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Seed.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Model.java" />
+        <option value="$PROJECT_DIR$/out/production/FIT_16201_Migranov_Isolines_Data/example.txt" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LegendPanel.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/MapPanel.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IsolinesFrame.java" />
+        <option value="$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-10" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="FIT_16201_Migranov_Isolines_Data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="out" type="462c0819:PsiDirectoryNode" />
+              <item name="production" type="462c0819:PsiDirectoryNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="migranov" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="migranov" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="migranov" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Isolines" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Isolines" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="migranov" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ToolWindowDuplicate detector.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/FF_13312i_Nefedov_IS" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Code\ComputerGraphics\Isolines\src\ru\nsu\fit\g16201\migranov\view" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ru.nsu.fit.g16201.migranov.view" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.nsu.fit.g16201.migranov.view" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="IsolinesFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.nsu.fit.g16201.migranov.view.IsolinesFrame" />
+      <module name="Isolines" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.nsu.fit.g16201.migranov.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.IsolinesFrame" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c80b392e-e91e-411a-8a45-bd67608304de" name="Default Changelist" comment="" />
+      <created>1553237824393</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1553237824393</updated>
+      <workItem from="1553237828829" duration="3175000" />
+      <workItem from="1553420176659" duration="16883000" />
+      <workItem from="1553520181994" duration="10196000" />
+      <workItem from="1553618114058" duration="352000" />
+      <workItem from="1553691815452" duration="4768000" />
+      <workItem from="1553761273509" duration="8916000" />
+      <workItem from="1553777991415" duration="222000" />
+      <workItem from="1553779886721" duration="1548000" />
+      <workItem from="1553782279640" duration="6034000" />
+      <workItem from="1553857817305" duration="10179000" />
+      <workItem from="1553951381445" duration="7763000" />
+      <workItem from="1554011016020" duration="38442000" />
+      <workItem from="1554122999470" duration="13869000" />
+      <workItem from="1554171469949" duration="3087000" />
+      <workItem from="1554202426630" duration="12994000" />
+    </task>
+    <task id="LOCAL-00078" summary="trash">
+      <created>1554029719450</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1554029719450</updated>
+    </task>
+    <task id="LOCAL-00079" summary="fuck">
+      <created>1554030620385</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1554030620385</updated>
+    </task>
+    <task id="LOCAL-00080" summary="fuck">
+      <created>1554034166844</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1554034166844</updated>
+    </task>
+    <task id="LOCAL-00081" summary="interplation is trash">
+      <created>1554039122589</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1554039122589</updated>
+    </task>
+    <task id="LOCAL-00082" summary="fdgfdgfhhty5ht">
+      <created>1554041278694</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1554041278694</updated>
+    </task>
+    <task id="LOCAL-00083" summary="gfdhghhfd">
+      <created>1554044837088</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1554044837088</updated>
+    </task>
+    <task id="LOCAL-00084" summary="сделал попиксельную карту">
+      <created>1554045543645</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1554045543645</updated>
+    </task>
+    <task id="LOCAL-00085" summary="bad interpol">
+      <created>1554047457953</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1554047457953</updated>
+    </task>
+    <task id="LOCAL-00086" summary="bad rgb">
+      <created>1554047735365</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1554047735365</updated>
+    </task>
+    <task id="LOCAL-00087" summary="gfggdf">
+      <created>1554049711048</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1554049711048</updated>
+    </task>
+    <task id="LOCAL-00088" summary="ALMOST">
+      <created>1554050439442</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1554050439442</updated>
+    </task>
+    <task id="LOCAL-00089" summary="INTERPOLATION FOR LEGEND IS DONE FUCK YEAH">
+      <created>1554050803204</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1554050803204</updated>
+    </task>
+    <task id="LOCAL-00090" summary="enough&#10;damn">
+      <created>1554051260414</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1554051260414</updated>
+    </task>
+    <task id="LOCAL-00091" summary="something">
+      <created>1554123766608</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1554123766608</updated>
+    </task>
+    <task id="LOCAL-00092" summary="gonna do something">
+      <created>1554123969938</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1554123969938</updated>
+    </task>
+    <task id="LOCAL-00093" summary="step. gonna do something">
+      <created>1554124004737</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1554124004742</updated>
+    </task>
+    <task id="LOCAL-00094" summary="doing ssdfsdf">
+      <created>1554124223318</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1554124223318</updated>
+    </task>
+    <task id="LOCAL-00095" summary="dsfdsfsdsf">
+      <created>1554124457529</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1554124457529</updated>
+    </task>
+    <task id="LOCAL-00096" summary="bad">
+      <created>1554124783989</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1554124783989</updated>
+    </task>
+    <task id="LOCAL-00097" summary="fuck">
+      <created>1554125763995</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1554125763995</updated>
+    </task>
+    <task id="LOCAL-00098" summary="better but....">
+      <created>1554129255802</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1554129255802</updated>
+    </task>
+    <task id="LOCAL-00099" summary="FUCK YEAH">
+      <created>1554129926681</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1554129926681</updated>
+    </task>
+    <task id="LOCAL-00100" summary="okay......">
+      <created>1554130990650</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1554130990650</updated>
+    </task>
+    <task id="LOCAL-00101" summary="started text">
+      <created>1554131157847</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1554131157847</updated>
+    </task>
+    <task id="LOCAL-00102" summary="text">
+      <created>1554133239005</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1554133239005</updated>
+    </task>
+    <task id="LOCAL-00103" summary="gonna do something">
+      <created>1554133984316</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1554133984316</updated>
+    </task>
+    <task id="LOCAL-00104" summary="sdsfsdf">
+      <created>1554134016162</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1554134016162</updated>
+    </task>
+    <task id="LOCAL-00105" summary="опциональные изолинии готовы">
+      <created>1554135064498</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1554135064498</updated>
+    </task>
+    <task id="LOCAL-00106" summary="enough for today">
+      <created>1554136784699</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1554136784699</updated>
+    </task>
+    <task id="LOCAL-00107" summary="enough">
+      <created>1554137039958</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1554137039958</updated>
+    </task>
+    <task id="LOCAL-00108" summary="gonna do something">
+      <created>1554175609468</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1554175609468</updated>
+    </task>
+    <task id="LOCAL-00109" summary="исправил ошибку с пользовательскими линиями">
+      <created>1554176509773</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1554176509773</updated>
+    </task>
+    <task id="LOCAL-00110" summary="clear user lines">
+      <created>1554176886025</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1554176886025</updated>
+    </task>
+    <task id="LOCAL-00111" summary="gonna change interpolation">
+      <created>1554177066796</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1554177066796</updated>
+    </task>
+    <task id="LOCAL-00112" summary="enough for this mornung">
+      <created>1554177351349</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1554177351349</updated>
+    </task>
+    <task id="LOCAL-00113" summary="интерполяция похожа на правду но порезана на кусочки по вертикали и отражена">
+      <created>1554204172025</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1554204172025</updated>
+    </task>
+    <task id="LOCAL-00114" summary="added interpolation">
+      <created>1554204265305</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1554204265305</updated>
+    </task>
+    <task id="LOCAL-00115" summary="toggle buttons">
+      <created>1554205076411</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1554205076411</updated>
+    </task>
+    <task id="LOCAL-00116" summary="fdgfgdfgfd">
+      <created>1554205483081</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1554205483081</updated>
+    </task>
+    <task id="LOCAL-00117" summary="gonna change it">
+      <created>1554205809316</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1554205809316</updated>
+    </task>
+    <task id="LOCAL-00118" summary="gonna">
+      <created>1554207313505</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1554207313505</updated>
+    </task>
+    <task id="LOCAL-00119" summary="good choice now!">
+      <created>1554207518263</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1554207518263</updated>
+    </task>
+    <task id="LOCAL-00120" summary="deleted some">
+      <created>1554207552788</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1554207552788</updated>
+    </task>
+    <task id="LOCAL-00121" summary="лучшее построение изолинии при клике">
+      <created>1554210085495</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1554210085495</updated>
+    </task>
+    <task id="LOCAL-00122" summary="cool userlines very cool">
+      <created>1554212011912</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1554212011912</updated>
+    </task>
+    <task id="LOCAL-00123" summary="something">
+      <created>1554215213635</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1554215213635</updated>
+    </task>
+    <task id="LOCAL-00124" summary="fsdfsfdf">
+      <created>1554215743984</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1554215743984</updated>
+    </task>
+    <task id="LOCAL-00125" summary="gonna change something">
+      <created>1554216345800</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1554216345800</updated>
+    </task>
+    <task id="LOCAL-00126" summary="enough">
+      <created>1554216900865</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1554216900865</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="138428000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8399168" visible="true" weight="0.21879195" />
+      <window_info id="Structure" order="1" sideWeight="0.16075157" side_tool="true" weight="0.2080537" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72080535" weight="0.32152975" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.44697988" weight="0.39943343" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4899329" weight="0.3286119" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49932885" weight="0.3286119" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.57114094" side_tool="true" visible="true" weight="0.3186969" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.48926175" weight="0.32719547" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="12" sideWeight="0.42885906" visible="true" weight="0.3186969" />
+      <window_info anchor="bottom" id="Duplicate detector" order="13" sideWeight="0.4986577" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24966443" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Maven" order="6" weight="0.3295302" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="okay......" />
+    <MESSAGE value="started text" />
+    <MESSAGE value="text" />
+    <MESSAGE value="sdsfsdf" />
+    <MESSAGE value="опциональные изолинии готовы" />
+    <MESSAGE value="enough for today" />
+    <MESSAGE value="gonna do something" />
+    <MESSAGE value="исправил ошибку с пользовательскими линиями" />
+    <MESSAGE value="clear user lines" />
+    <MESSAGE value="gonna change interpolation" />
+    <MESSAGE value="enough for this mornung" />
+    <MESSAGE value="интерполяция похожа на правду но порезана на кусочки по вертикали и отражена" />
+    <MESSAGE value="added interpolation" />
+    <MESSAGE value="toggle buttons" />
+    <MESSAGE value="fdgfgdfgfd" />
+    <MESSAGE value="gonna change it" />
+    <MESSAGE value="gonna" />
+    <MESSAGE value="good choice now!" />
+    <MESSAGE value="deleted some" />
+    <MESSAGE value="лучшее построение изолинии при клике" />
+    <MESSAGE value="cool userlines very cool" />
+    <MESSAGE value="something" />
+    <MESSAGE value="fsdfsfdf" />
+    <MESSAGE value="gonna change something" />
+    <MESSAGE value="enough" />
+    <option name="LAST_COMMIT_MESSAGE" value="enough" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>legendPanel.getColor(legendX, 1)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>lineCanvas.getRGB(rx, y)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>colorCanvas.getRGB(rx, y)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>colorCanvas.getRGB(x, y)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../Filter/src/ru/nsu/fit/g16201/migranov/view/FilterFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/frametemplate/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.desktop/java/awt/image/BufferedImage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="916" selection-start-line="916" selection-end-line="916" />
+          <folding>
+            <element signature="e#38312#38313#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.desktop/sun/awt/image/IntegerInterleavedRaster.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="214" selection-start-line="214" selection-end-line="214" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.desktop/java/awt/event/ComponentAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IntegerTextFieldKeyListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.base/java/util/function/BiFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="52" column="6" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/FIT_16201_Migranov_Isolines_Data/example2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="5" selection-start-column="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.desktop/javax/swing/JComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="4836" selection-start-line="4836" selection-end-line="4836" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/jdk-11.0.2/lib/src.zip!/java.desktop/java/awt/Component.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="3394" selection-start-line="3394" selection-end-line="3394" />
+          <folding>
+            <element signature="e#117689#117690#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Seed.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-260">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+          <folding>
+            <element signature="e#485#486#0" expanded="true" />
+            <element signature="e#518#519#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/SeedLine.java" />
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/StatusTitleListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/out/production/FIT_16201_Migranov_Isolines_Data/example.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/model/Model.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1600">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2595#2596#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/IsolinesFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="83" column="107" selection-start-line="83" selection-start-column="107" selection-end-line="83" selection-end-column="107" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addMenuAndToolBarButton#0;class#IsolinesFrame#0" />
+            <element signature="e#13659#13660#0" expanded="true" />
+            <element signature="e#13684#13685#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/FloatTextFieldKeyListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="116" selection-start-line="10" selection-start-column="116" selection-end-line="10" selection-end-column="116" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/LegendPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1420">
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1733#1734#0" expanded="true" />
+            <element signature="e#1762#1763#0" expanded="true" />
+            <element signature="e#3104#3105#0" expanded="true" />
+            <element signature="e#3162#3163#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/view/MapPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-166">
+          <caret line="64" column="14" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6865#6866#0" expanded="true" />
+            <element signature="e#6914#6915#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/nsu/fit/g16201/migranov/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="821" column="25" selection-start-line="821" selection-start-column="25" selection-end-line="821" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#26273#26274#0" expanded="true" />
+            <element signature="e#26309#26310#0" expanded="true" />
+            <element signature="e#27881#27882#0" expanded="true" />
+            <element signature="e#27922#27923#0" expanded="true" />
+            <element signature="e#28152#28153#0" expanded="true" />
+            <element signature="e#28190#28191#0" expanded="true" />
+            <element signature="e#28215#28216#0" expanded="true" />
+            <element signature="e#28253#28254#0" expanded="true" />
+            <element signature="e#29027#29028#0" expanded="true" />
+            <element signature="e#29070#29071#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

@@ -49,7 +49,7 @@ public class Matrix {
         );
     }
 
-    //персективное, а не паралл
+    //перспективное, а не паралл
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
         return new Matrix(4, 4,
                 2/sw*zn, 0, 0, 0,

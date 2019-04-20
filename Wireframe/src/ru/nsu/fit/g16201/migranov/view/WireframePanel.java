@@ -9,16 +9,18 @@ public class WireframePanel extends JPanel {
     private BufferedImage canvas;
     private Graphics2D canvasGraphics;
 
-    public WireframePanel() {
+    private Color backgroundColor;
+
+    public WireframePanel(int width, int height) {
         super();
 //todo
-        //setPreferredSize(new Dimension(width, height));
-        /*canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        setPreferredSize(new Dimension(width, height));
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
         canvasGraphics.setBackground(Color.WHITE);
 
-        canvasGraphics.clearRect(0, 0, width, height);*/
+        canvasGraphics.clearRect(0, 0, width, height);
     }
 
     @Override

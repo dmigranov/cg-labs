@@ -44,9 +44,8 @@ public class WireframeFrame extends MainFrame {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-
+        wireframePanel = new WireframePanel(1, 1);
         splinePanel = new SplinePanel(501, 501);
-        wireframePanel = new WireframePanel();
         mainPanel.add(wireframePanel, BorderLayout.CENTER);
         controller = new Controller(splinePanel);
         addMenus();
@@ -404,7 +403,6 @@ public class WireframeFrame extends MainFrame {
         bSplineField = new JTextField();
         aSplineField.addKeyListener(new FloatTextFieldKeyListener());
         bSplineField.addKeyListener(new FloatTextFieldKeyListener());
-
 
         inputPanel.add(new JLabel("a: "));
         inputPanel.add(aSplineField);

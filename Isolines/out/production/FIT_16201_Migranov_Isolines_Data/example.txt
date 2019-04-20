@@ -1,0 +1,6 @@
+5 5//fghfg
+2       //gfhgfh
+255 0 0//hjgjhgj
+0 255 0 //ghjg
+0 0 255 //jkhjk
+0 0 0
