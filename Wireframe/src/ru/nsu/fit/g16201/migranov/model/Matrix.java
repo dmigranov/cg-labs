@@ -36,7 +36,8 @@ public class Matrix {
     }
 
     public static Matrix getViewMatrix(Point3D eye, Point3D ref, Point3D up) {
-
+        Point3D w = new Point3D(eye.x - ref.x, eye.y - ref.y, eye.z - ref.z).normalize();
+        Point3D rr = Point3D.getVectorProduct(up, w);
     }
 
     public void setRow(int rowNumber, double[] row)

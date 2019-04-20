@@ -10,8 +10,13 @@ public class Point3D {
         this.z = z;
     }
 
-    public Point3D normalize(Point3D p)
+    public static Point3D getVectorProduct(Point3D up, Point3D w) {
+
+    }
+
+    public Point3D normalize()
     {
-        double len = Math.sqrt(Math.pow(p.x, 2) + Math.pow(p.y, 2) + Math.pow(p.z, 2));
+        double len = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+        return new Point3D(x/len, y/len, z/len);
     }
 }
