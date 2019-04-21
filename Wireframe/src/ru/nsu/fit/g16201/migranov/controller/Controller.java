@@ -290,7 +290,7 @@ public class Controller {
                     if (nz > maxZ) maxZ = nz;
                 }
             }
-        }
+        //}
         //System.out.println(System.currentTimeMillis() - start);
 
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
@@ -310,7 +310,6 @@ public class Controller {
                                                                     0, 2/maxDim, 0, -(maxY-minY)/maxDim,
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
-
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
         /*Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
         Matrix nv = Matrix.multiply(boxMatrix, v);
@@ -320,9 +319,9 @@ public class Controller {
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
-        for (Figure figure : figures)
-        {
-            Point3D[][] modelPoints = figure.getModelPoints();
+        //for (Figure figure : figures)
+        //{
+            //Point3D[][] modelPoints = figure.getModelPoints();
             Color color = figure.getColor();
             for (int i = 0; i <= n*k; i+=k) {
                 Point vPrev = null;
