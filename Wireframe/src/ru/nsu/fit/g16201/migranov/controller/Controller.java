@@ -31,15 +31,16 @@ public class Controller {
     private int n, m, k;
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
+
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
     private Matrix cameraMatrix;
     private Matrix projectionMatrix;
+
     private List<Figure> figures;
     private Figure currentFigure = null;
     private int currentFigureIndex = 0;
 
-    //private Map<Point, Point2D> pointsMap = new HashMap<>();
     private List<Point> screenSplinePoints = new ArrayList<>();  //нужен только один, при смене текущего менять; нумерация такой же, как в текущем списке точек модели
     private boolean pointIsGrabbed = false, startedMoving = false;
     private int grabbedPointIndex;
@@ -48,7 +49,7 @@ public class Controller {
 
     private int width, height;
 
-    private boolean isFirstTimeLoad;
+    private boolean isFirstTimeDraw;
 
     public Controller(SplinePanel splinePanel, WireframePanel wireframePanel) {
         this.splinePanel = splinePanel;
@@ -153,7 +154,7 @@ public class Controller {
     }
 
     public int loadFile(File file) {
-        isFirstTimeLoad = true;
+        isFirstTimeDraw = true;
         int figureCount;
         currentFigureIndex = 0;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -246,7 +247,6 @@ public class Controller {
         double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //куда??!
 
         wireframePanel.clear();
-        //long start = System.currentTimeMillis();
         for (Figure figure : figures) {
             List<Point2D> splinePoints = figure.getSplinePoints();
             double length = calculateLength(splinePoints), tempLength = 0;
@@ -273,12 +273,6 @@ public class Controller {
                     Matrix X = Matrix.multiply(TM, Gx);
                     Matrix Y = Matrix.multiply(TM, Gy);
                     double x = X.get(0, 0), y = Y.get(0, 0);
-                    //должны получить, где на кривой находится точка - это u (не та u, что у меня обозначает пиксельные координаты) (КАК В calcLen)
-                    //a v = это по углу (это изи)
-                    //то есть на самом деле мне не надо итерироваться по всем t и точкам?
-                    //мне нужно найти k и t по значению u (u из [a, b] и их дискретное число n)
-                    //или лучше заранее найти все u и пробежась по циклу найти нужные k и t?
-                    //потому что как иначе я не представляю
 
                     if (xPrev != null)
                         tempLength += Math.sqrt(Math.pow(xPrev - x, 2) + Math.pow(yPrev - y, 2));
@@ -325,14 +319,10 @@ public class Controller {
                 }
             }
         //}
-        //System.out.println(System.currentTimeMillis() - start);
 
-        //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
         //todo: матрица поворота E! (думаю, её можно внизу)
         //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
-
         double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
-        //double nx = 2*(x - minX)/maxDim - 1;
 
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
@@ -344,9 +334,6 @@ public class Controller {
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
-        /*Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
-        Matrix nv = Matrix.multiply(boxMatrix, v);
-        System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
 
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
@@ -390,7 +377,7 @@ public class Controller {
                         uPrev[j] = null;
                     }
                 }
-                Point3D p0 = modelPoints[i][0];
+                /*Point3D p0 = modelPoints[i][0];
                 Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
                 Point3D p1 = modelPoints[i][n*k];
                 Matrix mp1 = new Matrix(4, 1, p1.x, p1.y, p1.z, 1);
@@ -398,7 +385,7 @@ public class Controller {
                 Point3D np1 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
                 Matrix nmp0 = Matrix.multiply(projViewBox, mp1);
                 Point3D np0 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
-                wireframePanel.drawLine((int)np0.x, (int)np0.y, (int)np1.x, (int)np1.y, color);
+                wireframePanel.drawLine((int)np0.x, (int)np0.y, (int)np1.x, (int)np1.y, color);*/
             }
 
         }
