@@ -300,7 +300,6 @@ public class Controller {
         double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
         //double nx = 2*(x - minX)/maxDim - 1;
 
-
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
@@ -326,12 +325,11 @@ public class Controller {
             Point[] uPrev = new Point[m*k+1];   //m*k
             for (int i = 0; i <= n*k; i+=k) {
                 Point vPrev = null;
+
                 for (int j = 0; j <= m * k; j+=k) {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
-
                     Matrix nmp = Matrix.multiply(projViewBox, mp);
-
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     //System.out.println(np.x + " " + np.y + " " + np.z);
                     //todo отсечь и разобраться с z!
@@ -357,9 +355,18 @@ public class Controller {
                         vPrev = null; //?
                         uPrev[j] = null;
                     }
-                    //todo: замкнуть
-
                 }
+                Point3D p0 = modelPoints[i][0];
+                Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
+                Point3D p1 = modelPoints[i][n*k];
+                Matrix mp1 = new Matrix(4, 1, p1.x, p1.y, p1.z, 1);
+                Matrix nmp1 = Matrix.multiply(projViewBox, mp1);
+                Point3D np1 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
+                Matrix nmp0 = Matrix.multiply(projViewBox, mp1);
+                Point3D np0 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
+                wireframePanel.drawLine((int)np0.x, (int)np0.y, (int)np1.x, (int)np1.y, color);
+
+
             }
 
         }
