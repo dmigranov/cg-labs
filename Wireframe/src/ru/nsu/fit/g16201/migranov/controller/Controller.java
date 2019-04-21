@@ -292,13 +292,16 @@ public class Controller {
         //todo: отобразить + матрица поворота E! (думаю, её можно внизу)
         //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции
         double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
-        double nx = 2*(x - minX)/maxDim - 1;
+        //double nx = 2*(x - minX)/maxDim - 1;
 
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
                                                                         0, 0, 0, 1);
-        Matrix boxScaleMatrix = new Matrix(4, 4);
+        Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1,
+                                                                    0, 2/maxDim, 0, -1,
+                                                                    0, 0, 2/maxDim, -1,
+                                                                    0, 0, 0, 1);
 
         for (Figure figure : figures)
         {
