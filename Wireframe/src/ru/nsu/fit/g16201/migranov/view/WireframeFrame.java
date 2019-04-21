@@ -49,11 +49,18 @@ public class WireframeFrame extends MainFrame {
                     return; //todo: Border?
                 int width = mainPanel.getWidth();
                 int height = mainPanel.getHeight();
-
                 double sw = controller.getSw(), sh = controller.getSh();
 
-                int nwidth = width;
-                int nheight = (int)Math.round(sh/sw*width);
+                int nwidth, nheight;
+                if(width < height) {
+                    nwidth = width;
+                    nheight = (int) Math.round(sh / sw * width);
+                }
+                else
+                {
+                    nheight = height;
+                    nwidth = (int) Math.round(sw / sh * height);
+                }
 
                 wireframePanel.setPreferredSize(new Dimension(nwidth, nheight));
                 mainPanel.revalidate();
