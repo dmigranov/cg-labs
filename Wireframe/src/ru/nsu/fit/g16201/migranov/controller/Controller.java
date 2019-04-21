@@ -298,9 +298,13 @@ public class Controller {
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
                                                                         0, 0, 0, 1);
-        Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1,
+        /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1,
                                                                     0, 2/maxDim, 0, -1,
                                                                     0, 0, 2/maxDim, -1,
+                                                                    0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
+        Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -(maxX-minX)/maxDim,
+                                                                    0, 2/maxDim, 0, -(maxY-minY)/maxDim,
+                                                                    0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
 
         for (Figure figure : figures)
