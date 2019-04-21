@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseWheelEvent;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -56,6 +57,20 @@ public class Controller {
 
         cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
         //cameraMatrix = new Matrix(4, 4, 1, 0, 0, +10, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+
+        wireframePanel.addMouseWheelListener(new MouseAdapter() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                super.mouseWheelMoved(e);
+                int count = e.getWheelRotation();
+
+                if(zf + 0.1*count > zn) {
+                    zf += 0.1 * count;
+                    projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+                    drawFigures();
+                }
+            }
+        });
 
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -265,7 +280,6 @@ public class Controller {
                 Point2D gu = Gu[i];
 
                 for (int j = 0; j <= m * k; j++) {
-                    //double v = c * (1 - j/m) + d * j/m;
                     double v = (d - c) * j / m / k + c;
                     double x = gu.y * Math.cos(v);
                     double y = gu.y * Math.sin(v);
