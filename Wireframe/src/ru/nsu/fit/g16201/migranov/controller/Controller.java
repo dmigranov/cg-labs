@@ -72,6 +72,16 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
+                int x = e.getX();
+                int y = e.getY();
+
+                int dx = x - prevX;
+                int dy = y - prevY;
+
+                double xAngle = 0.01 * dx;
+                double yAngle = 0.01 * dy;
+
+                Matrix xRot = Matrix.getXRotateMatrix(xAngle);
 
             }
         });

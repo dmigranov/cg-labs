@@ -69,6 +69,14 @@ public class Matrix {
                 0, 0, 0, 1);       //пар
     }
 
+    public static Matrix getXRotateMatrix(double xAngle) {
+        return new Matrix(4, 4,
+                2/sw, 0, 0, 0,
+                0, 2/sh, 0, 0,
+                0, 0, 1/(zf - zn), -zn/(zf - zn),
+                0, 0, 0, 1);       //пар
+    }
+
     public void setRow(int rowNumber, double[] row)
     {
         if(row.length != cols || rowNumber >= rows)
