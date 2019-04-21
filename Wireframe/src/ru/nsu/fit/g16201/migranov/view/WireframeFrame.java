@@ -55,6 +55,7 @@ public class WireframeFrame extends MainFrame {
                 int nwidth = width;
                 int nheight = (int)Math.round(sh/sw*width);
 
+                System.out.println(nwidth + " " + nheight);
                 splinePanel.setPreferredSize(new Dimension(nwidth, nheight));
                 mainPanel.revalidate();
             }

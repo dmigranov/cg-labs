@@ -29,7 +29,25 @@ public class WireframePanel extends JPanel {
     {
         super.paintComponent(g);
 
+        canvasGraphics.drawLine(0, 0, width - 1, height - 1);
 
+        g.drawImage(canvas, 0, 0, null, null);
+    }
+
+    @Override
+    public void setPreferredSize(Dimension d)
+    {
+        super.setPreferredSize(d);
+
+        width = d.width;
+        height = d.height;
+
+        canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        canvasGraphics = canvas.createGraphics();
+        canvasGraphics.setColor(Color.BLACK);
+        canvasGraphics.setBackground(Color.WHITE);
+
+        canvasGraphics.clearRect(0, 0, width, height);
 
     }
 }
