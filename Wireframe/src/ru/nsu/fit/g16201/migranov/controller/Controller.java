@@ -152,7 +152,7 @@ public class Controller {
 
             substrings = readLineAndSplit(br);
             backgroundColor = new Color(Integer.parseInt(substrings[0]), Integer.parseInt(substrings[1]), Integer.parseInt(substrings[2]));
-
+            wireframePanel.setBackgroundColor(backgroundColor);
             substrings = readLineAndSplit(br);
             figureCount = Integer.parseInt(substrings[0]);
             figures = new ArrayList<>();

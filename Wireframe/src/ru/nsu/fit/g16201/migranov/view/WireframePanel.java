@@ -45,8 +45,11 @@ public class WireframePanel extends JPanel {
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
-        canvasGraphics.setBackground(Color.WHITE);
-
+        canvasGraphics.setBackground(backgroundColor);
         canvasGraphics.clearRect(0, 0, width, height);
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 }
