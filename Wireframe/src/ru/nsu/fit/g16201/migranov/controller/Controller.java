@@ -323,9 +323,9 @@ public class Controller {
         //{
             //Point3D[][] modelPoints = figure.getModelPoints();
             Color color = figure.getColor();
+            Point[] uPrev = new Point[m*k+1];   //m*k
             for (int i = 0; i <= n*k; i+=k) {
                 Point vPrev = null;
-                Point[] uPrev = new Point[m*k+1];   //m*k
                 for (int j = 0; j <= m * k; j+=k) {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
@@ -350,7 +350,7 @@ public class Controller {
                         {
                             wireframePanel.drawLine(uPrev[j].x, uPrev[j].y, x, y, color);
                         }
-                        uPrev[j] = new Point(x, y);;
+                        uPrev[j] = new Point(x, y);
                     }
                     else
                     {
