@@ -69,12 +69,20 @@ public class Matrix {
                 0, 0, 0, 1);       //пар
     }
 
-    public static Matrix getXRotateMatrix(double xAngle) {
+    public static Matrix getXRotateMatrix(double angle) {
         return new Matrix(4, 4,
-                2/sw, 0, 0, 0,
-                0, 2/sh, 0, 0,
-                0, 0, 1/(zf - zn), -zn/(zf - zn),
-                0, 0, 0, 1);       //пар
+                1, 0, 0, 0
+                        0, Math.cos(angle), -Math.sin(angle), 0,
+                        0, Math.sin(angle), Math.cos(angle), 0,
+                        0, 0, 0, 1);
+    }
+
+    public static Matrix getYRotateMatrix(double angle) {
+        return new Matrix(4, 4,
+                1, 0, 0, 0
+                0, Math.cos(angle), -Math.sin(angle), 0,
+                0, Math.sin(angle), Math.cos(angle), 0,
+                0, 0, 0, 1);
     }
 
     public void setRow(int rowNumber, double[] row)
