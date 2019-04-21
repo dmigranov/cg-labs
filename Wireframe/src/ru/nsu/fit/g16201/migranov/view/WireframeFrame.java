@@ -77,7 +77,7 @@ public class WireframeFrame extends MainFrame {
         double sw = controller.getSw(), sh = controller.getSh();
 
         //todo: это неправильно
-        int nwidth, nheight;
+        double nwidth, nheight;
         if(width < height) {
             nheight = height;
             nwidth = (int) Math.round(sw / sh * height);
@@ -89,25 +89,22 @@ public class WireframeFrame extends MainFrame {
             }
             else
                 System.out.println(2);
-
         }
         else
         {
-            System.out.println(3);
-
             nwidth = width;
             nheight = (int) Math.round(sh / sw * width);
             if(nheight > height)
             {
                 nheight = height;
                 nwidth = nwidth/ nheight * height;
+                System.out.println(sw/sh + " " + nwidth/nheight);
             }
             else
                 System.out.println(4);
-
         }
 
-        wireframePanel.setPreferredSize(new Dimension(nwidth, nheight));
+        wireframePanel.setPreferredSize(new Dimension((int)Math.round(nwidth), (int)Math.round(nheight)));
         mainPanel.revalidate();
     }
 
