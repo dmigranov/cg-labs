@@ -48,6 +48,8 @@ public class Controller {
 
     private int width, height;
 
+    private boolean isFirstTimeLoad;
+
     public Controller(SplinePanel splinePanel, WireframePanel wireframePanel) {
         this.splinePanel = splinePanel;
         this.wireframePanel = wireframePanel;
@@ -100,7 +102,7 @@ public class Controller {
                     movedPoint.x = newCoords.x;
                     movedPoint.y = newCoords.y;
                     drawSplineLine();
-                    //drawFigures();
+                    drawFigures();
                 }
             }
         });
@@ -116,6 +118,7 @@ public class Controller {
     }
 
     public int loadFile(File file) {
+        isFirstTimeLoad = true;
         int figureCount;
         currentFigureIndex = 0;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -207,6 +210,7 @@ public class Controller {
     public void drawFigures() {
         double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //крайние точки - габаритный бокс!
 
+        wireframePanel.clear();
         //long start = System.currentTimeMillis();
         for (Figure figure : figures) {
             List<Point2D> splinePoints = figure.getSplinePoints();
@@ -292,21 +296,29 @@ public class Controller {
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
         //todo: матрица поворота E! (думаю, её можно внизу)
         //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
-        double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
-        //double nx = 2*(x - minX)/maxDim - 1;
+        Matrix boxMatrix;
+        if(isFirstTimeLoad) {
+            double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
+            //double nx = 2*(x - minX)/maxDim - 1;
 
 
-        Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
-                                                                        0, 1, 0, -minY,
-                                                                        0, 0, 1, -minZ,
-                                                                        0, 0, 0, 1);
-        /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
-        Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -(maxX-minX)/maxDim,
-                                                                    0, 2/maxDim, 0, -(maxY-minY)/maxDim,
-                                                                    0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
-                                                                    0, 0, 0, 1);
+            Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
+                    0, 1, 0, -minY,
+                    0, 0, 1, -minZ,
+                    0, 0, 0, 1);
+            /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
+            Matrix boxScaleMatrix = new Matrix(4, 4, 2 / maxDim, 0, 0, -(maxX - minX) / maxDim,
+                    0, 2 / maxDim, 0, -(maxY - minY) / maxDim,
+                    0, 0, 2 / maxDim, -(maxZ - minZ) / maxDim,
+                    0, 0, 0, 1);
 
-        Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+            boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        }
+        else {
+            boxMatrix = new Matrix(4, 4, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+            isFirstTimeLoad = false;
+        }
+
         /*Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
         Matrix nv = Matrix.multiply(boxMatrix, v);
         System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
@@ -319,8 +331,9 @@ public class Controller {
         {
             Point3D[][] modelPoints = figure.getModelPoints();
             Color color = figure.getColor();
-            Point prev = null, cur = null;
             for (int i = 0; i <= n*k; i+=k) {
+                Point vPrev = null;
+                Point[] uPrev = new Point[m*k+1];   //m*k
                 for (int j = 0; j <= m * k; j+=k) {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
@@ -335,16 +348,21 @@ public class Controller {
                         int x = (int)((np.x + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((np.y + 1)/2*wireframePanel.getCanvasHeight());
 
-                        if(prev != null)
+                        if(vPrev != null)
                         {
-                            wireframePanel.drawLine(prev.x, prev.y, x, y, color);
+                            wireframePanel.drawLine(vPrev.x, vPrev.y, x, y, color);
                         }
-                        prev = new Point(x, y);
+                        vPrev = new Point(x, y);
 
+                        if(uPrev[j] != null)
+                        {
+                            wireframePanel.drawLine(uPrev[j].x, uPrev[j].y, x, y, color);
+                        }
+                        uPrev[j] = new Point(x, y);;
                     }
                     else
                     {
-                        prev = null; //?
+                        vPrev = null; //?
                     }
 
                 }

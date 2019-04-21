@@ -66,4 +66,8 @@ public class WireframePanel extends JPanel {
     public int getCanvasHeight() {
         return height;
     }
+
+    public void clear() {
+        canvasGraphics.clearRect(0, 0, width, height);
+    }
 }
