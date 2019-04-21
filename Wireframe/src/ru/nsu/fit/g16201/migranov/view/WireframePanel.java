@@ -11,10 +11,11 @@ public class WireframePanel extends JPanel {
 
     private Color backgroundColor;
 
-    public WireframePanel(int width, int height) {
+    public WireframePanel() {
         super();
-//todo
-        setPreferredSize(new Dimension(width, height));
+        width = 1;
+        height = 1;
+        //setPreferredSize(new Dimension(width, height));
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);

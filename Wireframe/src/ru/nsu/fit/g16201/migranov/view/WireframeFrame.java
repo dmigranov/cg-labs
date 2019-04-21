@@ -9,9 +9,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -34,6 +32,7 @@ public class WireframeFrame extends MainFrame {
     private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField;
     private JButton confirmButton;
     private int figureCount;
+    private boolean fileIsLoaded = false;
 
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
@@ -43,7 +42,20 @@ public class WireframeFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        wireframePanel = new WireframePanel(1, 1);
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                if(!fileIsLoaded)
+                    return;
+                int width = mainPanel.getWidth();
+                int height = mainPanel.getHeight();
+
+
+                System.out.println(width + " " + height);
+
+            }
+        });
+        wireframePanel = new WireframePanel();
         wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         splinePanel = new SplinePanel(501, 501);
         mainPanel.add(wireframePanel);
@@ -328,9 +340,11 @@ public class WireframeFrame extends MainFrame {
                 {
                     b.setEnabled(true);
                 }
+                fileIsLoaded = true;
             }
             else
             {
+                fileIsLoaded = false;
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
