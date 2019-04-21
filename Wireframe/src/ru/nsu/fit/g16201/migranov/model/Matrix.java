@@ -42,16 +42,16 @@ public class Matrix {
         Point3D v = Point3D.getVectorProduct(w, u);
 
         /*return new Matrix(4, 4,
-                u.x, u.y, u.z, -u.x*up.x,
-                        v.x, v.y, v.z, -u.y*up.y,
-                        w.x, w.y, w.z, -u.z*up.z,
+                u.x, u.y, u.z, -u.x*eye.x,
+                        v.x, v.y, v.z, -u.y*eye.y,
+                        w.x, w.y, w.z, -u.z*eye.z,
                         0, 0, 0, 1
         );*/
 
         return new Matrix(4, 4,
-                u.x, u.y, u.z, -(u.x*up.x + u.y*up.y + u.z* up.z),
-                v.x, v.y, v.z, -(v.x*up.x + v.y*up.y + v.z* up.z),
-                w.x, w.y, w.z, -(w.x*up.x + w.y*up.y + w.z* up.z),
+                u.x, u.y, u.z, -(u.x*eye.x + u.y*eye.y + u.z* eye.z),
+                v.x, v.y, v.z, -(v.x*eye.x + v.y*eye.y + v.z* eye.z),
+                w.x, w.y, w.z, -(w.x*eye.x + w.y*eye.y + w.z* eye.z),
                 0, 0, 0, 1
         );
     }

@@ -53,6 +53,7 @@ public class Controller {
         this.wireframePanel = wireframePanel;
 
         cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+        //cameraMatrix = new Matrix(4, 4, 1, 0, 0, +10, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
         splinePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -311,7 +312,7 @@ public class Controller {
         System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
 
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
-        Matrix projViewBox = Matrix.multiply(cameraMatrix, boxMatrix);
+        Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         for (Figure figure : figures)
