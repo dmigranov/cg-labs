@@ -24,7 +24,7 @@ public class WireframeFrame extends MainFrame {
     private Controller controller;
 
     private SplinePanel splinePanel;
-    private JPanel splineConfigurationPanel;
+    private JPanel splineConfigurationPanel, mainPanel;
     private JTabbedPane tabbedPane;
 
     private WireframePanel wireframePanel;
@@ -41,33 +41,14 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        JPanel mainPanel = new JPanel(new FlowLayout());
+        mainPanel = new JPanel(new FlowLayout());
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                if(!fileIsLoaded)
-                    return; //todo: Border?
-                int width = mainPanel.getWidth();
-                int height = mainPanel.getHeight();
-                double sw = controller.getSw(), sh = controller.getSh();
-
-                int nwidth, nheight;
-                if(width < height) {
-                    nwidth = width;
-                    nheight = (int) Math.round(sh / sw * width);
-                }
-                else
-                {
-                    nheight = height;
-                    nwidth = (int) Math.round(sw / sh * height);
-                }
-
-                wireframePanel.setPreferredSize(new Dimension(nwidth, nheight));
-                mainPanel.revalidate();
+                resize();
             }
         });
         wireframePanel = new WireframePanel();
-        wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         splinePanel = new SplinePanel(501, 501);
         mainPanel.add(wireframePanel);
         controller = new Controller(splinePanel, wireframePanel);
@@ -86,6 +67,29 @@ public class WireframeFrame extends MainFrame {
         setMinimumSize(new Dimension(800, 600));
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private void resize() {
+        if(!fileIsLoaded)
+            return;
+        int width = mainPanel.getWidth();
+        int height = mainPanel.getHeight();
+        double sw = controller.getSw(), sh = controller.getSh();
+
+        //todo: это неправильно
+        int nwidth, nheight;
+        if(width < height) {
+            nwidth = width;
+            nheight = (int) Math.round(sh / sw * width);
+        }
+        else
+        {
+            nheight = height;
+            nwidth = (int) Math.round(sw / sh * height);
+        }
+
+        wireframePanel.setPreferredSize(new Dimension(nwidth, nheight));
+        mainPanel.revalidate();
     }
 
     private void createCommonConfigurationPanel() {
@@ -352,9 +356,13 @@ public class WireframeFrame extends MainFrame {
                     b.setEnabled(true);
                 }
                 fileIsLoaded = true;
+                wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                resize();
             }
             else
             {
+                wireframePanel.setBorder(BorderFactory.createEmptyBorder());
+
                 fileIsLoaded = false;
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
