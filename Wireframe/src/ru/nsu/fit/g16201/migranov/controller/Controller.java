@@ -8,10 +8,7 @@ import ru.nsu.fit.g16201.migranov.view.SplinePanel;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseWheelEvent;
+import java.awt.event.*;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -47,6 +44,8 @@ public class Controller {
     private boolean pointIsGrabbed = false, startedMoving = false;
     private int grabbedPointIndex;
 
+    private int prevX, prevY;
+
     private int width, height;
 
     private boolean isFirstTimeLoad;
@@ -58,17 +57,22 @@ public class Controller {
         cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
         //cameraMatrix = new Matrix(4, 4, 1, 0, 0, +10, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
-        wireframePanel.addMouseWheelListener(new MouseAdapter() {
-            @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
-                super.mouseWheelMoved(e);
-                int count = e.getWheelRotation();
+        wireframePanel.addMouseWheelListener(e -> {
+            int count = e.getWheelRotation();
 
-                if(zf + 0.1*count > zn) {
-                    zf += 0.1 * count;
-                    projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
-                    drawFigures();
-                }
+            if(zf + 0.1*count > zn) {
+                zf += 0.1 * count;
+                projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+                drawFigures();
+            }
+        });
+
+        wireframePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+
+
             }
         });
 
@@ -91,7 +95,7 @@ public class Controller {
                             if (Math.abs(p.x - x) <= radius && Math.abs(p.y - y) <= radius) {
                                 pointIsGrabbed = true;
                                 grabbedPoint = p;
-                                break;                             //todo? искать не первый, а наиболее близкий
+                                break;
                             }
                         }
                         if (grabbedPoint == null)
@@ -379,14 +383,10 @@ public class Controller {
                 Matrix nmp0 = Matrix.multiply(projViewBox, mp1);
                 Point3D np0 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
                 wireframePanel.drawLine((int)np0.x, (int)np0.y, (int)np1.x, (int)np1.y, color);
-
-
             }
 
         }
         wireframePanel.repaint();
-
-
     }
 
     //область определения сплайна (чтобы знать как масштабировать)
@@ -517,10 +517,8 @@ public class Controller {
             u = (int)((x + xm)/2/xm * width);
             v = (int)((-y + ym)/2/xm * height + (height - ym*width/xm)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
-        //==?
         else
         {
-            //todo проверить
             v = (int)((-y + ym)/2/ym * height);
             u = (int)((x + xm)/2/ym * width + (width - xm*height/ym)/2);  //от 0 до h' < height - непраивльно (смотри картнку) - надо сдвинуть вниз
         }
