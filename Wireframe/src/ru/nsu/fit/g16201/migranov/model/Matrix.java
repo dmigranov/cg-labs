@@ -117,4 +117,9 @@ public class Matrix {
     public double get(int row, int col) {
         return data[row * cols + col];
     }
+
+    public static Matrix getVector4(double x, double y, double z)
+    {
+        return new Matrix(4, 1, x, y, z, 1);
+    }
 }

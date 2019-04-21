@@ -284,28 +284,30 @@ public class Controller {
 
                 }
             }
-
         }
         //System.out.println(System.currentTimeMillis() - start);
 
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
-        //todo: отобразить + матрица поворота E! (думаю, её можно внизу)
-        //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции
+        //todo: матрица поворота E! (думаю, её можно внизу)
+        //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
         double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
         //double nx = 2*(x - minX)/maxDim - 1;
+
 
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
                                                                         0, 0, 0, 1);
-        /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1,
-                                                                    0, 2/maxDim, 0, -1,
-                                                                    0, 0, 2/maxDim, -1,
-                                                                    0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
+        /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
         Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -(maxX-minX)/maxDim,
                                                                     0, 2/maxDim, 0, -(maxY-minY)/maxDim,
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
+
+        /*Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
+        Matrix nv = Matrix.multiply(boxMatrix, v);
+        System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
 
         for (Figure figure : figures)
         {
@@ -329,7 +331,7 @@ public class Controller {
                     Matrix nmp = Matrix.multiply(projView, mp);
 
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
-                    System.out.println(np.x + " " + np.y + " " + np.z);
+                    //System.out.println(np.x + " " + np.y + " " + np.z);
                 }
             }
 
