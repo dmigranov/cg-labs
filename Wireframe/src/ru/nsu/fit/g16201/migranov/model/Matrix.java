@@ -66,7 +66,11 @@ public class Matrix {
                 2/sw, 0, 0, 0,
                 0, 2/sh, 0, 0,
                 0, 0, 1/(zf - zn), -zn/(zf - zn),
-                0, 0, 0, 1);       //пар
+                0, 0, 0, 1);       //па
+        /*return new Matrix (4, 4, 1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 1);*/
     }
 
     public static Matrix getXRotateMatrix(double angle) {

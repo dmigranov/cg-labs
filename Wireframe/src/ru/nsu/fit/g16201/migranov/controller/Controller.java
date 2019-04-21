@@ -55,8 +55,8 @@ public class Controller {
         this.splinePanel = splinePanel;
         this.wireframePanel = wireframePanel;
 
-        cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
-        //cameraMatrix = new Matrix(4, 4, 1, 0, 0, +10, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+        //cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+        cameraMatrix = new Matrix(4, 4, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 10, 0, 0, 0, 1);
 
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
@@ -333,7 +333,7 @@ public class Controller {
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
         //Matrix boxMatrix = new Matrix(4, 4, 1, 0, 0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
-        Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
+        Matrix projView = Matrix.multiply(projectionMatrix, cameraMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
 
         Point3D[][] m0 = figures.get(0).getModelPoints();
