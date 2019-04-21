@@ -625,4 +625,20 @@ public class Controller {
         drawSplineLine();
         //todo: пересчитать 3d
     }
+
+    public double getSw() {
+        return sw;
+    }
+
+    public void setSw(double sw) {
+        this.sw = sw;
+    }
+
+    public double getSh() {
+        return sh;
+    }
+
+    public void setSh(double sh) {
+        this.sh = sh;
+    }
 }

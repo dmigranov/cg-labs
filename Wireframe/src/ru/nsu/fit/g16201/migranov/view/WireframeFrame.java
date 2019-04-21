@@ -41,18 +41,22 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new FlowLayout());
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 if(!fileIsLoaded)
-                    return;
+                    return; //todo: Border?
                 int width = mainPanel.getWidth();
                 int height = mainPanel.getHeight();
 
+                double sw = controller.getSw(), sh = controller.getSh();
 
-                System.out.println(width + " " + height);
+                int nwidth = width;
+                int nheight = (int)Math.round(sh/sw*width);
 
+                splinePanel.setPreferredSize(new Dimension(nwidth, nheight));
+                mainPanel.revalidate();
             }
         });
         wireframePanel = new WireframePanel();
