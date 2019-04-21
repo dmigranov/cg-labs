@@ -85,7 +85,6 @@ public class Controller {
                     Matrix xRot = Matrix.getXRotateMatrix(xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
                 }
-
                 prevX = x;
                 prevY = y;
 
@@ -299,16 +298,14 @@ public class Controller {
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
 
-                    //по идее в ЭТОМ моменте их надо сложить, а потом на результируюзая матрицу умнржить
+                    //todo: по идее в ЭТОМ моменте их надо сложить, а потом в конце самом на результируюзая матрицу умнржить
 
-                    //это сохранять? или сразу применять на эту точку матрицы все дела?
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
                     //на самом деле произведение r и t имеет простой вид - можно упростить так что
 
                     Matrix np = Matrix.multiply(rtm, p);
                     double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
                     modelPoints[i][j] = new Point3D(nx, ny, nz);
-
 
                     if (nx < minX) minX = nx;
                     if (nx > maxX) maxX = nx;
@@ -334,9 +331,22 @@ public class Controller {
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        //Matrix boxMatrix = new Matrix(4, 4, 1, 0, 0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
+
+        Point3D[][] m0 = figures.get(0).getModelPoints();
+        for (int i = 0; i <= n*k; i+=k) {
+
+            for (int j = 0; j <= m * k; j+=k) {
+                Point3D p = m0[i][j];
+                Matrix pm = new Matrix(4, 1, p.x, p.y, p.z, 1);
+                Matrix rpm = Matrix.multiply(projViewBox, pm);
+                Point3D rp = new Point3D(rpm.get(0, 0), rpm.get(1, 0), rpm.get(2, 0));
+                System.out.println(rp.x + " " + rp.y + " " + rp.z);
+            }
+        }
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         //for (Figure figure : figures)
