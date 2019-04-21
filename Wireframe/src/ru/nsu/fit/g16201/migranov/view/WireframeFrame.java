@@ -81,17 +81,30 @@ public class WireframeFrame extends MainFrame {
         if(width < height) {
             nheight = height;
             nwidth = (int) Math.round(sw / sh * height);
-
             if(nwidth > width)
             {
+                System.out.println(1);
                 nwidth = width;
                 nheight = nheight / nwidth * width;
             }
+            else
+                System.out.println(2);
+
         }
         else
         {
+            System.out.println(3);
+
             nwidth = width;
             nheight = (int) Math.round(sh / sw * width);
+            if(nheight > height)
+            {
+                nheight = height;
+                nwidth = nwidth/ nheight * height;
+            }
+            else
+                System.out.println(4);
+
         }
 
         wireframePanel.setPreferredSize(new Dimension(nwidth, nheight));
