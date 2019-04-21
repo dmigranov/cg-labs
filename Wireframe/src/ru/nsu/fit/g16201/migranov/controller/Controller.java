@@ -44,7 +44,7 @@ public class Controller {
     private boolean pointIsGrabbed = false, startedMoving = false;
     private int grabbedPointIndex;
 
-    private int prevX, prevY;
+    private Integer prevX = null, prevY = null;
 
     private int width, height;
 
@@ -71,17 +71,23 @@ public class Controller {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-
                 int x = e.getX();
                 int y = e.getY();
+                if(prevX != null) {
+                    int dx = x - prevX;
+                    int dy = y - prevY;
 
-                int dx = x - prevX;
-                int dy = y - prevY;
+                    System.out.println(dx);
+                    double xAngle = 0.01 * dx;
+                    double yAngle = 0.01 * dy;
 
-                double xAngle = 0.01 * dx;
-                double yAngle = 0.01 * dy;
+                    Matrix xRot = Matrix.getXRotateMatrix(xAngle);
+                    Matrix yRot = Matrix.getYRotateMatrix(yAngle);
+                }
 
-                Matrix xRot = Matrix.getXRotateMatrix(xAngle);
+                prevX = x;
+                prevY = y;
+
 
             }
         });
