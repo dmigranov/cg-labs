@@ -48,7 +48,5 @@ public class WireframePanel extends JPanel {
         canvasGraphics.setBackground(Color.WHITE);
 
         canvasGraphics.clearRect(0, 0, width, height);
-        repaint();
-
     }
 }
