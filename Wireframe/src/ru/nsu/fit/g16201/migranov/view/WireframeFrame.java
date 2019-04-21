@@ -41,7 +41,6 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        JPanel gapPanel = new JPanel(new GridBagLayout());
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
@@ -55,13 +54,7 @@ public class WireframeFrame extends MainFrame {
         controller = new Controller(splinePanel, wireframePanel);
         addMenus();
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 0;
-
-        gapPanel.add(mainPanel, c);
-        add(gapPanel);
+        add(mainPanel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -103,7 +96,7 @@ public class WireframeFrame extends MainFrame {
                 nheight = height;
             }
         }
-        wireframePanel.setPreferredSize(new Dimension((int)Math.round(nwidth), (int)Math.round(nheight)));
+        wireframePanel.setPreferredSize(new Dimension((int)Math.round(nwidth) - 20, (int)Math.round(nheight) - 20));
         mainPanel.revalidate();
     }
 
