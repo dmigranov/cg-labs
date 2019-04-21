@@ -204,7 +204,7 @@ public class Controller {
         return figureCount;
     }
 
-    private void drawFigures() {
+    public void drawFigures() {
         double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //крайние точки - габаритный бокс!
 
         //long start = System.currentTimeMillis();
@@ -318,20 +318,40 @@ public class Controller {
         for (Figure figure : figures)
         {
             Point3D[][] modelPoints = figure.getModelPoints();
-
-            for (int i = 0; i <= n*k; i++) {
-                for (int j = 0; j <= m * k; j++) {
+            Color color = figure.getColor();
+            Point prev = null, cur = null;
+            for (int i = 0; i <= n*k; i+=k) {
+                for (int j = 0; j <= m * k; j+=k) {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
 
                     Matrix nmp = Matrix.multiply(projViewBox, mp);
 
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
-                    System.out.println(np.x + " " + np.y + " " + np.z);
+                    //System.out.println(np.x + " " + np.y + " " + np.z);
+                    //todo отсечь и разобраться с z!
+                    if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
+                    {
+                        int x = (int)((np.x + 1)/2*wireframePanel.getWidth());
+                        int y = (int)((np.y + 1)/2*wireframePanel.getHeight());
+
+                        if(prev != null)
+                        {
+                            wireframePanel.drawLine(prev.x, prev.y, x, y, color);
+                        }
+                        prev = new Point(x, y);
+
+                    }
+                    else
+                    {
+                        prev = null; //?
+                    }
+
                 }
             }
 
         }
+        wireframePanel.repaint();
 
 
     }

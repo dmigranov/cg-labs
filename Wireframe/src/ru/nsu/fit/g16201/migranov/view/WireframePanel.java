@@ -29,7 +29,7 @@ public class WireframePanel extends JPanel {
     {
         super.paintComponent(g);
 
-        canvasGraphics.drawLine(0, 0, width - 1, height - 1);
+        //canvasGraphics.drawLine(0, 0, width - 1, height - 1);
 
         g.drawImage(canvas, 0, 0, null, null);
     }
@@ -51,5 +51,11 @@ public class WireframePanel extends JPanel {
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+    }
+
+    public void drawLine(int x1, int y1, int x2, int y2, Color color) {
+        canvasGraphics.setColor(color);
+        canvasGraphics.drawLine(x1, y1, x2, y2);
+
     }
 }
