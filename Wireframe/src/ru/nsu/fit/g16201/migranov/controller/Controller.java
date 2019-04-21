@@ -55,8 +55,8 @@ public class Controller {
         this.splinePanel = splinePanel;
         this.wireframePanel = wireframePanel;
 
-        //cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
-        cameraMatrix = new Matrix(4, 4, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 10, 0, 0, 0, 1);
+        cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
+        //cameraMatrix = new Matrix(4, 4, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 10, 0, 0, 0, 1);
 
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
@@ -288,7 +288,8 @@ public class Controller {
 
             Point3D[][] modelPoints = figure.getModelPoints();
             Matrix translateMatrix = Matrix.getTranslationMatrix(figure.getCenter());
-            Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
+            //Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
+            Matrix rtm = Matrix.multiply(translateMatrix, figure.getRotateMatrix());
             for (int i = 0; i < Gu.length; i++) {
                 Point2D gu = Gu[i];
 
@@ -325,7 +326,7 @@ public class Controller {
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
                                                                         0, 0, 0, 1);
-        /*Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);*/  //это несимметрично относительно отн нуля
+        //Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);  //это несимметрично относительно отн нуля
         Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -(maxX-minX)/maxDim,
                                                                     0, 2/maxDim, 0, -(maxY-minY)/maxDim,
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
@@ -338,13 +339,12 @@ public class Controller {
 
         Point3D[][] m0 = figures.get(0).getModelPoints();
         for (int i = 0; i <= n*k; i+=k) {
-
             for (int j = 0; j <= m * k; j+=k) {
                 Point3D p = m0[i][j];
                 Matrix pm = new Matrix(4, 1, p.x, p.y, p.z, 1);
-                Matrix rpm = Matrix.multiply(projViewBox, pm);
+                Matrix rpm = Matrix.multiply(cameraMatrix, pm);
                 Point3D rp = new Point3D(rpm.get(0, 0), rpm.get(1, 0), rpm.get(2, 0));
-                System.out.println(rp.x + " " + rp.y + " " + rp.z);
+                //System.out.println(rp.x + " " + rp.y + " " + rp.z);
             }
         }
 
@@ -362,7 +362,7 @@ public class Controller {
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
                     Matrix nmp = Matrix.multiply(projViewBox, mp);
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
-                    //System.out.println(np.x + " " + np.y + " " + np.z);
+                    System.out.println(np.x + " " + np.y + " " + np.z);
                     //todo отсечь и разобраться с z!
                     if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
