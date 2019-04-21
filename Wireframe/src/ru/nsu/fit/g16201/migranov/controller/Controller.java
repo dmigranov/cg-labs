@@ -362,7 +362,7 @@ public class Controller {
                         if(vPrev != null)
                         {
                             wireframePanel.drawLine(vPrev.x, vPrev.y, x, y, color);
-                            System.out.println("DRAW M LINE");
+                            //System.out.println("DRAW M LINE " + vPrev.x + " " + vPrev.y + " " + x + " " + y );
                         }
                         vPrev = new Point(x, y);
 
