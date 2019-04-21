@@ -266,6 +266,8 @@ public class Controller {
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
 
+                    //по идее в ЭТОМ моменте их надо сложить, а потом на результируюзая матрицу умнржить
+
                     //это сохранять? или сразу применять на эту точку матрицы все дела?
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
                     //на самом деле произведение r и t имеет простой вид - можно упростить так что
@@ -309,13 +311,6 @@ public class Controller {
         Matrix nv = Matrix.multiply(boxMatrix, v);
         System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
 
-        for (Figure figure : figures)
-        {
-            Point3D[][] modelPoints = figure.getModelPoints();
-
-
-        }
-
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
@@ -331,7 +326,7 @@ public class Controller {
                     Matrix nmp = Matrix.multiply(projView, mp);
 
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
-                    //System.out.println(np.x + " " + np.y + " " + np.z);
+                    System.out.println(np.x + " " + np.y + " " + np.z);
                 }
             }
 
