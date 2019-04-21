@@ -5,6 +5,7 @@ import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point2D;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.view.SplinePanel;
+import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -18,6 +19,7 @@ public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
 
     private SplinePanel splinePanel;
+    private WireframePanel wireframePanel;
     //private double xm, ym;
     //private double scale;
 
@@ -46,8 +48,9 @@ public class Controller {
 
     private int width, height;
 
-    public Controller(SplinePanel splinePanel) {
-        this.splinePanel = splinePanel;             //todo: resize
+    public Controller(SplinePanel splinePanel, WireframePanel wireframePanel) {
+        this.splinePanel = splinePanel;
+        this.wireframePanel = wireframePanel;
 
         cameraMatrix = Matrix.getViewMatrix(eye, ref, up);  //c 153
 

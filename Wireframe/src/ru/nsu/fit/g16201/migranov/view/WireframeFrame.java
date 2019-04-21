@@ -42,12 +42,12 @@ public class WireframeFrame extends MainFrame {
     private WireframeFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        JPanel mainPanel = new JPanel(new GridBagLayout());
         wireframePanel = new WireframePanel(1, 1);
+        wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         splinePanel = new SplinePanel(501, 501);
-        mainPanel.add(wireframePanel, BorderLayout.CENTER);
-        controller = new Controller(splinePanel);
+        mainPanel.add(wireframePanel);
+        controller = new Controller(splinePanel, wireframePanel);
         addMenus();
 
         add(mainPanel);
