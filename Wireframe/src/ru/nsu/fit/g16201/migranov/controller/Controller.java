@@ -208,7 +208,7 @@ public class Controller {
     }
 
     public void drawFigures() {
-        double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //крайние точки - габаритный бокс!
+        double minX = Double.MAX_VALUE, maxX = Double.MIN_VALUE, minY = Double.MAX_VALUE, maxY = Double.MIN_VALUE, minZ = Double.MAX_VALUE, maxZ = Double.MIN_VALUE;      //куда??!
 
         wireframePanel.clear();
         //long start = System.currentTimeMillis();
@@ -355,7 +355,9 @@ public class Controller {
                     else
                     {
                         vPrev = null; //?
+                        uPrev[j] = null;
                     }
+                    //todo: замкнуть
 
                 }
             }
