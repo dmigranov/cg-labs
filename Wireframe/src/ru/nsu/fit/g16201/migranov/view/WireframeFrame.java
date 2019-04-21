@@ -76,32 +76,25 @@ public class WireframeFrame extends MainFrame {
         int height = mainPanel.getHeight();
         double sw = controller.getSw(), sh = controller.getSh();
 
-        //todo: это неправильно
         double nwidth, nheight;
         if(width < height) {
             nheight = height;
-            nwidth = (int) Math.round(sw / sh * height);
+            nwidth = sw / sh * height;
             if(nwidth > width)
             {
-                System.out.println(1);
-                nwidth = width;
                 nheight = nheight / nwidth * width;
+                nwidth = width;
             }
-            else
-                System.out.println(2);
         }
         else
         {
             nwidth = width;
-            nheight = (int) Math.round(sh / sw * width);
+            nheight = sh / sw * width;
             if(nheight > height)
             {
-                nheight = height;
                 nwidth = nwidth/ nheight * height;
-                System.out.println(sw/sh + " " + nwidth/nheight);
+                nheight = height;
             }
-            else
-                System.out.println(4);
         }
 
         wireframePanel.setPreferredSize(new Dimension((int)Math.round(nwidth), (int)Math.round(nheight)));
