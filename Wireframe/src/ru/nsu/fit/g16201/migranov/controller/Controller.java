@@ -354,7 +354,7 @@ public class Controller {
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     //System.out.println(np.x + " " + np.y + " " + np.z);
                     //todo отсечь и разобраться с z!
-                    if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
+                    //if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
                         int x = (int)((np.x + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((np.y + 1)/2*wireframePanel.getCanvasHeight());
@@ -371,11 +371,11 @@ public class Controller {
                         }
                         uPrev[j] = new Point(x, y);
                     }
-                    else
+                    /*else
                     {
                         vPrev = null; //?
                         uPrev[j] = null;
-                    }
+                    }*/
                 }
                 /*Point3D p0 = modelPoints[i][0];
                 Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
@@ -668,13 +668,16 @@ public class Controller {
         this.m = m;
         this.k = k;
 
+        for(Figure figure : figures)
+            figure.setModelPoints(new Point3D[n*k + 1][m*k + 1]);
+
         this.a = a;
         this.b = b;
         this.c = c;
         this.d = d;
 
         drawSplineLine();
-        //todo: пересчитать 3д
+        drawFigures();
     }
 
     public void changeScale(double ds) {
