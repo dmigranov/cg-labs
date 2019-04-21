@@ -283,7 +283,6 @@ public class Controller {
                     if (ny > maxY) maxY = ny;
                     if (nz < minZ) minZ = nz;
                     if (nz > maxZ) maxZ = nz;
-
                 }
             }
         }
@@ -306,12 +305,13 @@ public class Controller {
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
 
-        /*Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
-        Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
+        Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        /*Matrix v = Matrix.getVector4(maxX, maxY, maxZ);
         Matrix nv = Matrix.multiply(boxMatrix, v);
         System.out.println(nv.get(0, 0) + " " + nv.get(1, 0) + " " + nv.get(2, 0));*/
 
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
+        Matrix projViewBox = Matrix.multiply(cameraMatrix, boxMatrix);
 
         //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         for (Figure figure : figures)
@@ -323,7 +323,7 @@ public class Controller {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
 
-                    Matrix nmp = Matrix.multiply(projView, mp);
+                    Matrix nmp = Matrix.multiply(projViewBox, mp);
 
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     System.out.println(np.x + " " + np.y + " " + np.z);

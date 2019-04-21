@@ -41,21 +41,32 @@ public class Matrix {
         Point3D u = rr.normalize();
         Point3D v = Point3D.getVectorProduct(w, u);
 
-        return new Matrix(4, 4,
+        /*return new Matrix(4, 4,
                 u.x, u.y, u.z, -u.x*up.x,
                         v.x, v.y, v.z, -u.y*up.y,
                         w.x, w.y, w.z, -u.z*up.z,
                         0, 0, 0, 1
+        );*/
+
+        return new Matrix(4, 4,
+                u.x, u.y, u.z, -(u.x*up.x + u.y*up.y + u.z* up.z),
+                v.x, v.y, v.z, -(v.x*up.x + v.y*up.y + v.z* up.z),
+                w.x, w.y, w.z, -(w.x*up.x + w.y*up.y + w.z* up.z),
+                0, 0, 0, 1
         );
     }
 
-    //перспективное, а не паралл
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
-        return new Matrix(4, 4,
+        /*return new Matrix(4, 4,
                 2/sw*zn, 0, 0, 0,
                         0, 2/sh*zn, 0, 0,
                         0, 0, zn/(zf - zn), -zn*zf/(zf - zn),
-                        0, 0, 1, 0);
+                        0, 0, 1, 0);*/      //проекц
+        return new Matrix(4, 4,
+                2/sw, 0, 0, 0,
+                0, 2/sh, 0, 0,
+                0, 0, 1/(zf - zn), -zn/(zf - zn),
+                0, 0, 0, 1);       //пар
     }
 
     public void setRow(int rowNumber, double[] row)
