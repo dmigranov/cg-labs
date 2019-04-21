@@ -307,8 +307,8 @@ public class Controller {
 
                     Matrix np = Matrix.multiply(rtm, p);
                     double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
-
                     modelPoints[i][j] = new Point3D(nx, ny, nz);
+
 
                     if (nx < minX) minX = nx;
                     if (nx > maxX) maxX = nx;
@@ -354,7 +354,7 @@ public class Controller {
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     //System.out.println(np.x + " " + np.y + " " + np.z);
                     //todo отсечь и разобраться с z!
-                    //if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
+                    if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
                         int x = (int)((np.x + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((np.y + 1)/2*wireframePanel.getCanvasHeight());
@@ -362,6 +362,7 @@ public class Controller {
                         if(vPrev != null)
                         {
                             wireframePanel.drawLine(vPrev.x, vPrev.y, x, y, color);
+                            System.out.println("DRAW M LINE");
                         }
                         vPrev = new Point(x, y);
 
@@ -371,11 +372,11 @@ public class Controller {
                         }
                         uPrev[j] = new Point(x, y);
                     }
-                    /*else
+                    else
                     {
                         vPrev = null; //?
                         uPrev[j] = null;
-                    }*/
+                    }
                 }
                 /*Point3D p0 = modelPoints[i][0];
                 Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
