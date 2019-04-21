@@ -290,6 +290,15 @@ public class Controller {
 
         //построили отрезки в модельной с.к. теперь надо с сохр. проп. отобр. в [-1,1]^2 * х [0,1]
         //todo: отобразить + матрица поворота E! (думаю, её можно внизу)
+        //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции
+        double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
+
+        for (Figure figure : figures)
+        {
+            Point3D[][] modelPoints = figure.getModelPoints();
+
+
+        }
 
         Matrix projView = Matrix.multiply(cameraMatrix, projectionMatrix);
 
