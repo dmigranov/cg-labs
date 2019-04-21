@@ -58,4 +58,12 @@ public class WireframePanel extends JPanel {
         canvasGraphics.drawLine(x1, y1, x2, y2);
 
     }
+
+    public int getCanvasWidth() {
+        return width;
+    }
+
+    public int getCanvasHeight() {
+        return height;
+    }
 }

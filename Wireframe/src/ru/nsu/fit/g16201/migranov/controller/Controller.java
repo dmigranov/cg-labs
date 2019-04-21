@@ -332,8 +332,8 @@ public class Controller {
                     //todo отсечь и разобраться с z!
                     if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
-                        int x = (int)((np.x + 1)/2*wireframePanel.getWidth());
-                        int y = (int)((np.y + 1)/2*wireframePanel.getHeight());
+                        int x = (int)((np.x + 1)/2*wireframePanel.getCanvasWidth());
+                        int y = (int)((np.y + 1)/2*wireframePanel.getCanvasHeight());
 
                         if(prev != null)
                         {
