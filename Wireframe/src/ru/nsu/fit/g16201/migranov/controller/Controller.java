@@ -80,14 +80,18 @@ public class Controller {
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
-                    Matrix xRot = Matrix.getYRotateMatrix(xAngle);
-                    Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
-
-                    Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
-                    Matrix xyr = Matrix.multiply(yRot, xr);
-                    Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
-                    sceneRotateMatrix = xyr;
-
+                    if(currentRotateFigure < 0) {
+                        Matrix xRot = Matrix.getYRotateMatrix(xAngle);
+                        Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
+                        Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
+                        Matrix xyr = Matrix.multiply(yRot, xr);
+                        Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
+                        sceneRotateMatrix = xyr;
+                    }
+                    else
+                    {
+                        Matrix rot = figures.get(currentRotateFigure).getRotateMatrix();
+                    }
                     drawFigures();
                 }
                 prevX = x;
@@ -167,6 +171,7 @@ public class Controller {
     }
 
     public int loadFile(File file) {
+        currentRotateFigure = -1;
         isFirstTimeDraw = true;
         int figureCount;
         currentFigureIndex = 0;
