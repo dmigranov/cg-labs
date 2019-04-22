@@ -398,7 +398,6 @@ public class WireframeFrame extends MainFrame {
         {
             addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", false, false, false);
         }
-
     }
 
     public void onSave()
@@ -421,8 +420,6 @@ public class WireframeFrame extends MainFrame {
 
     public void onConfigureSplines()
     {
-        //splinePanel - непосредственно для отрисовки, кнопки в другом
-
         updateFields();
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
@@ -490,7 +487,6 @@ public class WireframeFrame extends MainFrame {
             if(button.isSelected())
                 break;
         }
-        //i - индекс выбранной кнопки
         controller.setCurrentRotateFigure(i-1);
     }
 }

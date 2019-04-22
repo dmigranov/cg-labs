@@ -101,8 +101,28 @@ public class Controller {
                 }
                 prevX = x;
                 prevY = y;
+            }
+        });
 
+        wireframePanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
 
+                Point3D p = figures.get(currentRotateFigure).getCenter();
+                double x = p.x, y = p.y, z = p.z;
+
+                int location = e.getKeyLocation();
+                //todo
+                /*if (location == KeyEvent.KEY_LOCATION_LEFT) {
+                    x -= ;
+                } else if (location == KeyEvent.KEY_LOCATION_RIGHT) {
+                    locationString += "right";
+                } else if (location == KeyEvent.KEY_LOCATION_NUMPAD) {
+                    locationString += "numpad";
+                } else { // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
+                    locationString += "unknown";
+                }*/
             }
         });
 
@@ -305,7 +325,7 @@ public class Controller {
                     if (tempLength >= u[uIndex]) {
                         Gu[uIndex] = new Point2D(x, y);
                         uIndex++;
-                    }   //todo проверить (не xPrev?)
+                    }
 
                     xPrev = x;
                     yPrev = y;
