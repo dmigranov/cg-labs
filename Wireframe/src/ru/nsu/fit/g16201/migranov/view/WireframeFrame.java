@@ -132,7 +132,7 @@ public class WireframeFrame extends MainFrame {
             }
         });
 
-        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));    //todo: сделать красиво
+        commonPanel.setLayout(new GridLayout(3, 4));    //todo: сделать красиво
 
         aField = new JTextField();
         bField = new JTextField();
@@ -154,7 +154,17 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("sw: ", swField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("sh: ", shField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("Zfar: ", zfField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("Znear: ", znField, new FloatTextFieldKeyListener()));
 
+        JButton addFigureButton = new JButton("Add a new figure");
+        addFigureButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        commonPanel.add(addFigureButton);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
