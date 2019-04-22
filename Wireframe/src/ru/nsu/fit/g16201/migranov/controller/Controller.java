@@ -12,6 +12,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Controller {
     private static Matrix splineMatrix = Matrix.multiplyByScalar(1.0/6, new Matrix(4, 4, -1, 3, -3, 1, 3, -6, 3, 0, -3, 0, 3, 0, 1, 4, 1, 0));
@@ -298,6 +299,8 @@ public class Controller {
         wireframePanel.clear();
         for (Figure figure : figures) {
             List<Point2D> splinePoints = figure.getSplinePoints();
+            if(splinePoints.size() < 4)
+                continue;
             double length = calculateLength(splinePoints), tempLength = 0;
             figure.setLength(length);
 
@@ -391,6 +394,8 @@ public class Controller {
 
         for (Figure figure : figures)
         {
+            if(figure.getSplinePoints().size() < 4)
+                continue;
             Point3D[][] modelPoints = figure.getModelPoints();
             Color color = figure.getColor();
             Point[] uPrev = new Point[m*k+1];   //m*k
@@ -783,5 +788,28 @@ public class Controller {
 
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    public void addFigure() {
+        Random random = new Random();
+        Figure figure = new Figure(new Point3D(0, 0, 0), new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)), new Matrix(4,4, 1, 0, 0, 0, 0, 1,0,0,0,0,1,0,0,0,0,1), new ArrayList<Point2D>());
+        figures.add(figure);
+        figure.setModelPoints(new Point3D[n*k + 1][m*k + 1]);
+        figure.getSplinePoints().add(new Point2D(1, 1));
+        figure.getSplinePoints().add(new Point2D(1, -1));
+        figure.getSplinePoints().add(new Point2D(-1, 1));
+        figure.getSplinePoints().add(new Point2D(-1, -1));
+
+        Double[] nxm = new Double[figures.size()], nym = new Double[figures.size()];
+        double[] nScale = new double[figures.size()];
+        System.arraycopy(xm, 0, nxm, 0, xm.length);
+        System.arraycopy(ym, 0, nym, 0, ym.length);
+        System.arraycopy(scale, 0, nScale, 0, scale.length);
+        nScale[nScale.length - 1] = 1.1;
+        scale = nScale;
+        xm = nxm;
+        ym = nym;
+
+        drawFigures();
     }
 }

@@ -176,7 +176,11 @@ public class WireframeFrame extends MainFrame {
         addFigureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo
+                controller.addFigure();
+                figureCount++;
+                JPanel panel = new JPanel();
+                panel.setPreferredSize(splineConfigurationPanel.getPreferredSize());
+                tabbedPane.add("Figure " + figureCount, panel);
             }
         });
         //commonPanel.add(addFigureButton);
@@ -477,6 +481,7 @@ public class WireframeFrame extends MainFrame {
             public void actionPerformed(ActionEvent e) {
                 int selected = tabbedPane.getSelectedIndex();
                 controller.deleteFigure(selected - 1);
+                figureCount--;
                 tabbedPane.remove(selected);
             }
         });
