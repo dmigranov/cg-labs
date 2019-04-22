@@ -30,6 +30,8 @@ public class Controller {
     private double a, b, c, d;
     private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
 
+    private Matrix boxMatrix;
+
     private Color backgroundColor;
     private Matrix sceneRotateMatrix;
     private Matrix cameraMatrix;
@@ -47,7 +49,7 @@ public class Controller {
 
     private int width, height;
 
-    private boolean isFirstTimeDraw;
+    private boolean isDrawingFirstTime = true;
     private int currentRotateFigure;
 
     public Controller(SplinePanel splinePanel, WireframePanel wireframePanel) {
@@ -90,6 +92,7 @@ public class Controller {
                     }
                     else
                     {
+                        //todo: это неправильно, вращать их надо в модельных координатах! (это с миров все ппросто)
                         Matrix rot = figures.get(currentRotateFigure).getRotateMatrix();
                         Matrix xRot = Matrix.getYRotateMatrix(xAngle);
                         Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
@@ -197,7 +200,7 @@ public class Controller {
 
     public int loadFile(File file) {
         currentRotateFigure = -1;
-        isFirstTimeDraw = true;
+        isDrawingFirstTime = true;
         int figureCount;
         currentFigureIndex = 0;
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -227,12 +230,10 @@ public class Controller {
             zf = Double.parseDouble(substrings[1]);
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
-
             if(!(zn > 0 && zf > zn))
                 throw new IOException("Wrong clipping");
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
-
             sceneRotateMatrix = read3x3MatrixByRow(br);
 
             substrings = readLineAndSplit(br);
@@ -266,14 +267,12 @@ public class Controller {
                 Figure figure  = new Figure(center, color, rotateMatrix, splinePoints);
                 figures.add(figure);
                 figure.setModelPoints(new Point3D[n*k + 1][m*k + 1]);
-
             }
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
         {
             return -1;
         }
-
         xm = new Double[figureCount];
         ym = new Double[figureCount];
         scale = new double[figureCount];
@@ -361,28 +360,33 @@ public class Controller {
                     if (nz > maxZ) maxZ = nz;
                 }
             }
-        //}
+        }
 
-        double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);          //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
-        Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
-                                                                        0, 1, 0, -minY,
-                                                                        0, 0, 1, -minZ,
-                                                                        0, 0, 0, 1);
-        //Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);  //это несимметрично относительно отн нуля
-        Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -(maxX-minX)/maxDim,
-                                                                    0, 2/maxDim, 0, -(maxY-minY)/maxDim,
-                                                                    0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
-                                                                    0, 0, 0, 1);
-        Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        //считаю только один раз, при запуске, чтобы при перемещении точек одной фигуры остальные остальные фигуры оставались на местах
+        if(isDrawingFirstTime) {
+            double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);          //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
+            isDrawingFirstTime = false;
+
+            Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
+                    0, 1, 0, -minY,
+                    0, 0, 1, -minZ,
+                    0, 0, 0, 1);
+            //Matrix boxScaleMatrix = new Matrix(4, 4, 2/maxDim, 0, 0, -1, 0, 2/maxDim, 0, -1, 0, 0, 2/maxDim, -1, 0, 0, 0, 1);  //это несимметрично относительно отн нуля
+            Matrix boxScaleMatrix = new Matrix(4, 4, 2 / maxDim, 0, 0, -(maxX - minX) / maxDim,
+                    0, 2 / maxDim, 0, -(maxY - minY) / maxDim,
+                    0, 0, 2 / maxDim, -(maxZ - minZ) / maxDim,
+                    0, 0, 0, 1);
+            boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
+        }
 
         //todo: сделать нормальынй поворот
         Matrix projView = Matrix.multiply(projectionMatrix, cameraMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
         Matrix projViewBoxRot = Matrix.multiply(projViewBox, sceneRotateMatrix);
 
-        //for (Figure figure : figures)
-        //{
-            //Point3D[][] modelPoints = figure.getModelPoints();
+        for (Figure figure : figures)
+        {
+            Point3D[][] modelPoints = figure.getModelPoints();
             Color color = figure.getColor();
             Point[] uPrev = new Point[m*k+1];   //m*k
             for (int i = 0; i <= n*k; i+=k) {
@@ -567,12 +571,12 @@ public class Controller {
             x = xm*(2.0*u/width - 1);
             y = -2*xm*v/height - ym*width/height + xm + ym;
         }
-        //==? todo
         else
         {
             y = -ym*(2.0*v/height - 1);
             x = (xm*height + 2*ym*u)/width - xm - ym;
         }
+        //при одинаковых width И height случай xm = ym входит
         return new Point2D(x, y);
     }
 
@@ -717,8 +721,6 @@ public class Controller {
     }
 
     public void setCurrentFigure(int index) {
-        //todo: Проверка?
-
         //масштаб при изначальной загрузке такой, чтобы всё было красиво вписано (он не одинаковый для разных вкладок!)
         currentFigureIndex = index;
         currentFigure = figures.get(index);
@@ -731,7 +733,7 @@ public class Controller {
         this.b = b;
 
         drawSplineLine();
-        //todo: пересчитать 3d
+        drawFigures();
     }
 
     public double getSw() {
