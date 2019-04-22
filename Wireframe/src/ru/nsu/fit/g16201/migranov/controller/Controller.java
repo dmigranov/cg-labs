@@ -80,11 +80,12 @@ public class Controller {
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
-                    Matrix xRot = Matrix.getXRotateMatrix(xAngle);
-                    Matrix yRot = Matrix.getYRotateMatrix(yAngle);
+                    Matrix xRot = Matrix.getYRotateMatrix(xAngle);
+                    Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
 
                     Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
                     Matrix xyr = Matrix.multiply(yRot, xr);
+                    Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                     sceneRotateMatrix = xyr;
 
                     drawFigures();
@@ -93,6 +94,15 @@ public class Controller {
                 prevY = y;
 
 
+            }
+        });
+
+        wireframePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                prevX = null;
+                prevY = null;
             }
         });
 

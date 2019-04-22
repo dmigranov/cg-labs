@@ -56,6 +56,23 @@ public class Matrix {
         );
     }
 
+    public static Matrix getViewTranslationMatrix(Point3D eye, Point3D ref, Point3D up) {
+        return Matrix.transpose(getViewMatrix(eye, ref, up));
+    }
+
+    private static Matrix transpose(Matrix a) {
+        Matrix b = new Matrix(a.cols, a.rows);
+
+        double[] adata = a.data;
+        double[] bdata = b.data;
+        for(int i = 0; i < a.rows; i++)
+            for(int j = 0; j < a.cols; j++)
+            {
+                bdata[j * a.rows + i] = adata[i * a.cols + j];
+            }
+        return b;
+    }
+
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
         return new Matrix(4, 4,
                 2/sw*zn, 0, 0, 0,
@@ -78,6 +95,14 @@ public class Matrix {
                         0, 1, 0, 0,
                         -Math.sin(angle), 0, Math.cos(angle), 0,
                         0, 0, 0, 1);
+    }
+
+    public static Matrix getZRotateMatrix(double angle) {
+        return new Matrix(4, 4,
+                Math.cos(angle), -Math.sin(angle), 0, 0,
+                Math.sin(angle), Math.cos(angle), 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1);
     }
 
     public void setRow(int rowNumber, double[] row)
