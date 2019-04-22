@@ -22,7 +22,7 @@ import javax.swing.event.MenuDragMouseListener;
  */
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	private JMenuBar menuBar;
+	protected JMenuBar menuBar;
 	protected JToolBar toolBar;
 
 	/**

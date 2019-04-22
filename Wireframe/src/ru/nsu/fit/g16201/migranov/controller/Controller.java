@@ -76,7 +76,6 @@ public class Controller {
                     int dx = x - prevX;
                     int dy = y - prevY;
 
-                    //System.out.println(dx);
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 

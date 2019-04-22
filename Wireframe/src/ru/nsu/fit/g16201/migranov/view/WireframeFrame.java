@@ -365,7 +365,7 @@ public class WireframeFrame extends MainFrame {
                     b.setEnabled(true);
                 }
                 fileIsLoaded = true;
-                //todo: создать меню с radiobutton списком фигур для выбора
+                createFigureChoiceMenu();
                 wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 resize();
             }
@@ -377,6 +377,19 @@ public class WireframeFrame extends MainFrame {
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void createFigureChoiceMenu() {
+        if(menuBar.getMenuCount() > 3)
+            menuBar.remove(3);
+        addSubMenu("Rotation", KeyEvent.VK_F);
+        int key = KeyEvent.VK_A;
+        ButtonGroup group = new ButtonGroup();
+        for (int i = 0; i < figureCount; i++)
+        {
+            addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", 0, key++, 2);
+        }
+
     }
 
     public void onSave()
