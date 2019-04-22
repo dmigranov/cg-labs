@@ -147,6 +147,8 @@ public class WireframeFrame extends MainFrame {
         kField = new JTextField();
         swField = new JTextField();
         shField = new JTextField();
+        zfField = new JTextField();
+        znField = new JTextField();
         commonPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
