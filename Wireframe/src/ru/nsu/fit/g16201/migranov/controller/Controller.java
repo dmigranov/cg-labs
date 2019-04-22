@@ -48,6 +48,7 @@ public class Controller {
     private int width, height;
 
     private boolean isFirstTimeDraw;
+    private int currentRotateFigure;
 
     public Controller(SplinePanel splinePanel, WireframePanel wireframePanel) {
         this.splinePanel = splinePanel;
@@ -717,5 +718,9 @@ public class Controller {
 
     public void setSh(double sh) {
         this.sh = sh;
+    }
+
+    public void setCurrentRotateFigure(int i) {
+        currentRotateFigure = i;
     }
 }

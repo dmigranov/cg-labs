@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 public class WireframeFrame extends MainFrame {
@@ -477,6 +478,14 @@ public class WireframeFrame extends MainFrame {
 
     public void onRotateChoose()
     {
-
+        int i = 0;
+        for(Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements(); i++)
+        {
+            AbstractButton button = buttons.nextElement();
+            if(button.isSelected())
+                break;
+        }
+        //i - индекс выбранной кнопки
+        controller.setCurrentRotateFigure(i-1);
     }
 }
