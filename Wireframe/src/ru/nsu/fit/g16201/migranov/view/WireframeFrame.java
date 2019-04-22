@@ -161,10 +161,10 @@ public class WireframeFrame extends MainFrame {
         addFigureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //todo
             }
         });
-        commonPanel.add(addFigureButton);
+        //commonPanel.add(addFigureButton);
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
@@ -438,7 +438,7 @@ public class WireframeFrame extends MainFrame {
         updateFields();
 
         //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton}, confirmButton);
+        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton, addFigureButton}, confirmButton);
     }
 
     private void updateFields() {
@@ -501,8 +501,6 @@ public class WireframeFrame extends MainFrame {
                 tabbedPane.remove(selected);
             }
         });
-
-        deleteFigureButton.setAlignmentX(CENTER_ALIGNMENT);
 
         inputButtonPanel.add(deleteFigureButton);
     }
