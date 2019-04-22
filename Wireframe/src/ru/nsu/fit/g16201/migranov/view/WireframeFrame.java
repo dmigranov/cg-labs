@@ -132,7 +132,7 @@ public class WireframeFrame extends MainFrame {
             }
         });
 
-        commonPanel.setLayout(new GridLayout(3, 4));    //todo: сделать красиво
+        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));    //todo: сделать красиво
 
         aField = new JTextField();
         bField = new JTextField();
@@ -145,17 +145,25 @@ public class WireframeFrame extends MainFrame {
         shField = new JTextField();
         zfField = new JTextField();
         znField = new JTextField();
-        commonPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("d: ", dField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("sw: ", swField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("sh: ", shField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("Zfar: ", zfField, new FloatTextFieldKeyListener()));
-        commonPanel.add(new LabelTextField("Znear: ", znField, new FloatTextFieldKeyListener()));
+
+        JPanel abcdPanel = new JPanel(new GridLayout(1, 4)), mnkPanel = new JPanel(new GridLayout(1, 3)), clippingPanel = new JPanel(new GridLayout(1, 4));
+
+        abcdPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
+        abcdPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
+        abcdPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
+        abcdPanel.add(new LabelTextField("d: ", dField, new FloatTextFieldKeyListener()));
+        mnkPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
+        mnkPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
+        mnkPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
+        clippingPanel.add(new LabelTextField("sw: ", swField, new FloatTextFieldKeyListener()));
+        clippingPanel.add(new LabelTextField("sh: ", shField, new FloatTextFieldKeyListener()));
+        clippingPanel.add(new LabelTextField("Zfar: ", zfField, new FloatTextFieldKeyListener()));
+        clippingPanel.add(new LabelTextField("Znear: ", znField, new FloatTextFieldKeyListener()));
+
+        commonPanel.add(Box.createVerticalStrut(20));
+        commonPanel.add(abcdPanel);
+        commonPanel.add(mnkPanel);
+        commonPanel.add(clippingPanel);
 
         addFigureButton = new JButton("Add a new figure");
         addFigureButton.addActionListener(new ActionListener() {
