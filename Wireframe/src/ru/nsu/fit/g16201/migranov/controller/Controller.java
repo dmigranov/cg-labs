@@ -175,6 +175,8 @@ public class Controller {
             d = Double.parseDouble(substrings[6]);
             if(!(d > c && c >= 0 && 2*Math.PI >= d))
                 throw new IOException("Wrong c or d");
+            if(d >= 6.28)
+                d = 2*Math.PI;
 
             substrings = readLineAndSplit(br);
             zn = Double.parseDouble(substrings[0]);
@@ -288,7 +290,7 @@ public class Controller {
 
             Point3D[][] modelPoints = figure.getModelPoints();
             Matrix translateMatrix = Matrix.getTranslationMatrix(figure.getCenter());
-            //Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);
+            //Matrix rtm = Matrix.multiply(figure.getRotateMatrix(), translateMatrix);  //?
             Matrix rtm = Matrix.multiply(translateMatrix, figure.getRotateMatrix());
             for (int i = 0; i < Gu.length; i++) {
                 Point2D gu = Gu[i];
@@ -302,7 +304,7 @@ public class Controller {
                     //todo: по идее в ЭТОМ моменте их надо сложить, а потом в конце самом на результируюзая матрицу умнржить
 
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
-                    //на самом деле произведение r и t имеет простой вид - можно упростить так что
+                    //на самом деле произведение r и t имеет простой вид - можно упростить
 
                     Matrix np = Matrix.multiply(rtm, p);
                     double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
@@ -319,9 +321,7 @@ public class Controller {
         //}
 
         //todo: матрица поворота E! (думаю, её можно внизу)
-        //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
-        double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);
-
+        double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);          //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
                                                                         0, 0, 1, -minZ,
@@ -332,7 +332,6 @@ public class Controller {
                                                                     0, 0, 2/maxDim, -(maxZ-minZ)/maxDim,
                                                                     0, 0, 0, 1);
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
-        //Matrix boxMatrix = new Matrix(4, 4, 1, 0, 0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
         System.out.println(projectionMatrix.get(0,0));
         Matrix projView = Matrix.multiply(projectionMatrix, cameraMatrix);
@@ -363,7 +362,7 @@ public class Controller {
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     double w = nmp.get(3, 0);
                     //System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
-                    //todo отсечь и разобраться с z!
+                    //todo отсечь и разобраться с z и размерами!
                     //if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
                         int x = (int)((np.x/w + 1)/2*wireframePanel.getCanvasWidth());
@@ -372,7 +371,6 @@ public class Controller {
                         if(vPrev != null)
                         {
                             wireframePanel.drawLine(vPrev.x, vPrev.y, x, y, color);
-                            //System.out.println("DRAW M LINE " + vPrev.x + " " + vPrev.y + " " + x + " " + y );
                         }
                         vPrev = new Point(x, y);
 
@@ -388,15 +386,6 @@ public class Controller {
                         uPrev[j] = null;
                     }*/
                 }
-                /*Point3D p0 = modelPoints[i][0];
-                Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
-                Point3D p1 = modelPoints[i][n*k];
-                Matrix mp1 = new Matrix(4, 1, p1.x, p1.y, p1.z, 1);
-                Matrix nmp1 = Matrix.multiply(projViewBox, mp1);
-                Point3D np1 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
-                Matrix nmp0 = Matrix.multiply(projViewBox, mp1);
-                Point3D np0 = new Point3D(nmp1.get(0, 0), nmp1.get(1, 0), nmp1.get(2, 0));
-                wireframePanel.drawLine((int)np0.x, (int)np0.y, (int)np1.x, (int)np1.y, color);*/
             }
 
         }
@@ -685,6 +674,8 @@ public class Controller {
         this.a = a;
         this.b = b;
         this.c = c;
+        if(d >= 6.28)
+            d = 2*Math.PI;
         this.d = d;
 
         drawSplineLine();
