@@ -34,6 +34,8 @@ public class WireframeFrame extends MainFrame {
     private int figureCount;
     private boolean fileIsLoaded = false;
 
+    private ButtonGroup group;
+
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
     }
@@ -350,7 +352,7 @@ public class WireframeFrame extends MainFrame {
         }
     }
 
-    public void onOpen()
+    public void onOpen() throws NoSuchMethodException
     {
         File file = getOpenFileName("txt", "A function description file");
         if(file != null) {
@@ -379,15 +381,16 @@ public class WireframeFrame extends MainFrame {
         }
     }
 
-    private void createFigureChoiceMenu() {
+    private void createFigureChoiceMenu() throws NoSuchMethodException {
         if(menuBar.getMenuCount() > 3)
             menuBar.remove(3);
         addSubMenu("Rotation", KeyEvent.VK_F);
         int key = KeyEvent.VK_A;
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
+        addRadioButtonMenuAndToolBarButton("Rotation/World", "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", true, false);
         for (int i = 0; i < figureCount; i++)
         {
-            addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", 0, key++, 2);
+            addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", false, false);
         }
 
     }
@@ -470,5 +473,10 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(deleteLastPointButton);
         inputPanel.add(zoomInButton);
         inputPanel.add(zoomOutButton);
+    }
+
+    public void onRotateChoose()
+    {
+
     }
 }
