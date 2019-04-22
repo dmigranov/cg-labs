@@ -186,8 +186,8 @@ public class WireframeFrame extends MainFrame {
             try
             {
                 if(tabbedPane.getSelectedIndex() == 0) {
-                    double a, b, c, d;
-                    int n, m, k;
+                    double a, b, c, d, zf, zn, sw, sh;
+                    int n, m, k, backgroundR, backgroundG, backgroundB;
                     n = Integer.parseInt(nField.getText());
                     k = Integer.parseInt(kField.getText());
                     m = Integer.parseInt(mField.getText());
@@ -195,6 +195,10 @@ public class WireframeFrame extends MainFrame {
                     b = Double.parseDouble(bField.getText());
                     c = Double.parseDouble(cField.getText());
                     d = Double.parseDouble(dField.getText());
+                    sw = Double.parseDouble(swField.getText());
+                    sh = Double.parseDouble(shField.getText());
+                    zf = Double.parseDouble(zfField.getText());
+                    zn = Double.parseDouble(znField.getText());
 
                     if(m <= 0 || n <= 0 || k <= 0)
                         throw new NumberFormatException("Wrong m, n, or k");
@@ -202,7 +206,8 @@ public class WireframeFrame extends MainFrame {
                         throw new NumberFormatException("Wrong a or b");
                     if (!(d > c && c >= 0 && 2 * Math.PI >= d))
                         throw new NumberFormatException("Wrong c or d");
-                    //todo: clipping const
+                    if(!(zn > 0 && zf > zn && sw > 0 && sh > 0))
+                        throw new NumberFormatException("Wrong clipping");
 
                     controller.setConstants(n, m, k, a, b, c, d);
                 }
@@ -421,8 +426,9 @@ public class WireframeFrame extends MainFrame {
         backgroundColorFields[2].setText(color.getBlue() + "");
     }
 
-    public void createSplineConfigurationPanel()
+    private void createSplineConfigurationPanel()
     {
+        //todo: добавить изменение цвета (+возмонжо центра)
         splineConfigurationPanel = new JPanel();   //tabs...
         splineConfigurationPanel.add(splinePanel);
         JPanel inputPanel = new JPanel(), inputButtonPanel = new JPanel();
