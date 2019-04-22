@@ -364,7 +364,7 @@ public class Controller {
                     double w = nmp.get(3, 0);
                     //System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
                     //todo отсечь и разобраться с z!
-                    if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
+                    //if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
                         int x = (int)((np.x/w + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((np.y/w + 1)/2*wireframePanel.getCanvasHeight());
@@ -382,11 +382,11 @@ public class Controller {
                         }
                         uPrev[j] = new Point(x, y);
                     }
-                    else
+                    /*else
                     {
                         vPrev = null; //?
                         uPrev[j] = null;
-                    }
+                    }*/
                 }
                 /*Point3D p0 = modelPoints[i][0];
                 Matrix mp0 = new Matrix(4, 1, p0.x, p0.y, p0.z, 1);
