@@ -373,35 +373,6 @@ public class WireframeFrame extends MainFrame {
         }
     }
 
-    public void onOpen() throws NoSuchMethodException
-    {
-        File file = getOpenFileName("txt", "A function description file");
-        if(file != null) {
-            setTitle(file.getName() + " | Denis Migranov, 16201");
-            int r = controller.loadFile(file);
-            if(r > 0)
-            {
-                figureCount = r;
-                createCommonConfigurationPanel();
-                for (AbstractButton b : deactivatedButtons)
-                {
-                    b.setEnabled(true);
-                }
-                fileIsLoaded = true;
-                createFigureChoiceMenu();
-                wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                resize();
-            }
-            else
-            {
-                wireframePanel.setBorder(BorderFactory.createEmptyBorder());
-
-                fileIsLoaded = false;
-                JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
     private void createFigureChoiceMenu() throws NoSuchMethodException {
         if(menuBar.getMenuCount() > 3)
             menuBar.remove(3);
@@ -413,32 +384,6 @@ public class WireframeFrame extends MainFrame {
         {
             addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", false, false, false);
         }
-    }
-
-    public void onSave()
-    {
-        File file = getSaveFileName("png", "A PNG file");
-        if (file != null) {
-            controller.saveFile(file);
-        }
-    }
-
-    public void onAbout()
-    {
-        JPanel aboutPanel = new JPanel();
-        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
-        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
-        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
-        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection and icons8.com"));
-        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Wireframe", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public void onConfigureSplines()
-    {
-        updateFields();
-
-        //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
-        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton, addFigureButton}, confirmButton);
     }
 
     private void updateFields() {
@@ -503,6 +448,61 @@ public class WireframeFrame extends MainFrame {
         });
 
         inputButtonPanel.add(deleteFigureButton);
+    }
+
+    public void onOpen() throws NoSuchMethodException
+    {
+        File file = getOpenFileName("txt", "A function description file");
+        if(file != null) {
+            setTitle(file.getName() + " | Denis Migranov, 16201");
+            int r = controller.loadFile(file);
+            if(r > 0)
+            {
+                figureCount = r;
+                createCommonConfigurationPanel();
+                for (AbstractButton b : deactivatedButtons)
+                {
+                    b.setEnabled(true);
+                }
+                fileIsLoaded = true;
+                createFigureChoiceMenu();
+                wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                resize();
+            }
+            else
+            {
+                wireframePanel.setBorder(BorderFactory.createEmptyBorder());
+
+                fileIsLoaded = false;
+                JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public void onSave()
+    {
+        File file = getSaveFileName("png", "A PNG file");
+        if (file != null) {
+            controller.saveFile(file);
+        }
+    }
+
+    public void onAbout()
+    {
+        JPanel aboutPanel = new JPanel();
+        aboutPanel.setLayout(new BoxLayout(aboutPanel, BoxLayout.Y_AXIS));
+        aboutPanel.add(new JLabel("Made as a part of NSU Computer Graphics course"));
+        aboutPanel.add(new JLabel("Denis Migranov, group 16201, 2019"));
+        aboutPanel.add(new JLabel("Icons used are from www.flaticon.com/packs/multimedia-collection and icons8.com"));
+        JOptionPane.showMessageDialog(this, aboutPanel, "About FIT_16201_Migranov_Wireframe", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void onConfigureSplines()
+    {
+        updateFields();
+
+        //JOptionPane.showOptionDialog(this, configurationPanel, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        JOptionPane.showOptionDialog(this, tabbedPane, "Configuration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{confirmButton, addFigureButton}, confirmButton);
     }
 
     public void onRotateChoose()
