@@ -61,8 +61,8 @@ public class Controller {
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
 
-            if(zf + 0.1*count > zn) {
-                zf += 0.1 * count;
+            if(zn + 0.1*count < zf) {
+                zn += 0.1 * count;
                 projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
                 drawFigures();
             }
@@ -78,7 +78,7 @@ public class Controller {
                     int dx = x - prevX;
                     int dy = y - prevY;
 
-                    System.out.println(dx);
+                    //System.out.println(dx);
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
@@ -334,6 +334,7 @@ public class Controller {
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
         //Matrix boxMatrix = new Matrix(4, 4, 1, 0, 0,0,0,1,0,0,0,0,1,0,0,0,0,1);
 
+        System.out.println(projectionMatrix.get(0,0));
         Matrix projView = Matrix.multiply(projectionMatrix, cameraMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
 
@@ -347,7 +348,6 @@ public class Controller {
             }
         }
 
-        //считаю, что в modelPoints лежат уже отображенные в указанные пределы
         //for (Figure figure : figures)
         //{
             //Point3D[][] modelPoints = figure.getModelPoints();
@@ -362,7 +362,7 @@ public class Controller {
                     Matrix nmp = Matrix.multiply(projViewBox, mp);
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     double w = nmp.get(3, 0);
-                    System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
+                    //System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
                     //todo отсечь и разобраться с z!
                     if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
