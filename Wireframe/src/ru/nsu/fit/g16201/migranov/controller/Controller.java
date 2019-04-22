@@ -61,8 +61,8 @@ public class Controller {
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
 
-            if(zn + 0.1*count < zf) {
-                zn += 0.1 * count;
+            if(zn - 0.1*count < zf && zn - 0.1*count > 0) {
+                zn -= 0.1 * count;
                 projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
                 drawFigures();
             }
