@@ -33,6 +33,7 @@ public class WireframeFrame extends MainFrame {
     private boolean fileIsLoaded = false;
 
     private ButtonGroup group;
+    private Dimension panelSize = null;
 
     public static void main(String[] args) throws Exception {
         new WireframeFrame();
@@ -116,9 +117,11 @@ public class WireframeFrame extends MainFrame {
         JPanel commonPanel = new JPanel();
         tabbedPane.add("Common", commonPanel);
         createSplineConfigurationPanel();
+        if(panelSize == null)
+            panelSize = splineConfigurationPanel.getPreferredSize();
         for(int i = 0; i < figureCount; i++) {
             JPanel panel = new JPanel();
-            panel.setPreferredSize(splineConfigurationPanel.getPreferredSize());
+            panel.setPreferredSize(panelSize);
             tabbedPane.add("Figure " + (i + 1), panel);
         }
         tabbedPane.addChangeListener(e -> {
@@ -173,16 +176,18 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(colorPanel);
 
         addFigureButton = new JButton("Add a new figure");
+
         addFigureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.addFigure();
                 figureCount++;
                 JPanel panel = new JPanel();
-                panel.setPreferredSize(splineConfigurationPanel.getPreferredSize());
+                panel.setPreferredSize(panelSize);
                 tabbedPane.add("Figure " + figureCount, panel);
             }
         });
+
         //commonPanel.add(addFigureButton);
 
         confirmButton = new JButton("Confirm");

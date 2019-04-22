@@ -805,6 +805,7 @@ public class Controller {
         System.arraycopy(xm, 0, nxm, 0, xm.length);
         System.arraycopy(ym, 0, nym, 0, ym.length);
         System.arraycopy(scale, 0, nScale, 0, scale.length);
+        //todo: исправить ошибку (проблема в том, что при удалении мы эти массивы-то не трогаем!
         nScale[nScale.length - 1] = 1.1;
         scale = nScale;
         xm = nxm;
