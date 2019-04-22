@@ -187,7 +187,7 @@ public class WireframeFrame extends MainFrame {
             {
                 if(tabbedPane.getSelectedIndex() == 0) {
                     double a, b, c, d, zf, zn, sw, sh;
-                    int n, m, k, backgroundR, backgroundG, backgroundB;
+                    int n, m, k, cR, cG, cB;
                     n = Integer.parseInt(nField.getText());
                     k = Integer.parseInt(kField.getText());
                     m = Integer.parseInt(mField.getText());
@@ -199,6 +199,9 @@ public class WireframeFrame extends MainFrame {
                     sh = Double.parseDouble(shField.getText());
                     zf = Double.parseDouble(zfField.getText());
                     zn = Double.parseDouble(znField.getText());
+                    cR = Integer.parseInt(backgroundColorFields[0].getText());
+                    cG = Integer.parseInt(backgroundColorFields[1].getText());
+                    cB = Integer.parseInt(backgroundColorFields[2].getText());
 
                     if(m <= 0 || n <= 0 || k <= 0)
                         throw new NumberFormatException("Wrong m, n, or k");
@@ -208,8 +211,10 @@ public class WireframeFrame extends MainFrame {
                         throw new NumberFormatException("Wrong c or d");
                     if(!(zn > 0 && zf > zn && sw > 0 && sh > 0))
                         throw new NumberFormatException("Wrong clipping");
+                    if(cR < 0 || cR > 255 || cG < 0 || cG > 255 || cB < 0 || cB > 255)
+                        throw new NumberFormatException("Wrong color");
 
-                    controller.setConstants(n, m, k, a, b, c, d);
+                    controller.setConstants(n, m, k, a, b, c, d, sw, sh, zn, zf, new Color(cR, cG, cB));
                 }
                 else
                 {

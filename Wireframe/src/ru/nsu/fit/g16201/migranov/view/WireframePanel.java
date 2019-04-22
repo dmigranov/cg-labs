@@ -51,6 +51,7 @@ public class WireframePanel extends JPanel {
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+        canvasGraphics.setBackground(backgroundColor);
     }
 
     public void drawLine(int x1, int y1, int x2, int y2, Color color) {

@@ -26,9 +26,14 @@ public class Controller {
     private Point3D ref = new Point3D(10, 0, 0);
     private Point3D up = new Point3D(0, 1, 0);
 
-    private int n, m, k;
+    private int n;
+    private int m;
+    private int k;
     private double a, b, c, d;
-    private double zn, zf, sw, sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
+    private double zn;
+    private double zf;
+    private double sw;
+    private double sh;  //расстояние до ближней/дальней клиппирующей плоскости; размеры грани объёма визуализации на ближней плоскости
 
     private Matrix boxMatrix;
 
@@ -695,7 +700,7 @@ public class Controller {
         return k;
     }
 
-    public void setConstants(int n, int m, int k, double a, double b, double c, double d) {
+    public void setConstants(int n, int m, int k, double a, double b, double c, double d, double sw, double sh, double zn, double zf, Color color) {
         this.n = n;
         this.m = m;
         this.k = k;
@@ -709,6 +714,13 @@ public class Controller {
         if(d >= 6.28)
             d = 2*Math.PI;
         this.d = d;
+
+        this.sw = sw;
+        this.sh = sh;
+        this.zn = zn;
+        this.zf = zf;
+        this.backgroundColor = color;
+        wireframePanel.setBackgroundColor(backgroundColor);
 
         drawSplineLine();
         drawFigures();
