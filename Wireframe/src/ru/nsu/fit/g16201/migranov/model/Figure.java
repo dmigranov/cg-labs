@@ -25,7 +25,6 @@ public class Figure {
         return splinePoints;
     }
 
-
     public Color getColor() {
         return color;
     }
