@@ -85,12 +85,17 @@ public class Controller {
                         Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
                         Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
                         Matrix xyr = Matrix.multiply(yRot, xr);
-                        Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
+                        //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                         sceneRotateMatrix = xyr;
                     }
                     else
                     {
                         Matrix rot = figures.get(currentRotateFigure).getRotateMatrix();
+                        Matrix xRot = Matrix.getYRotateMatrix(xAngle);
+                        Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
+                        Matrix xr = Matrix.multiply(xRot, rot);
+                        Matrix xyr = Matrix.multiply(yRot, xr);
+                        figures.get(currentRotateFigure).setRotateMatrix(xyr);
                     }
                     drawFigures();
                 }

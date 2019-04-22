@@ -300,7 +300,7 @@ public class WireframeFrame extends MainFrame {
         }
     }
 
-    private void addRadioButtonMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, ButtonGroup group,  String actionMethod, boolean state, boolean isDeactivated) throws NoSuchMethodException
+    private void addRadioButtonMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, ButtonGroup group,  String actionMethod, boolean state, boolean isDeactivated, boolean areToolBarButtonsAdded) throws NoSuchMethodException
     {
         MenuElement element = getParentMenuElement(path);
         if(element == null)
@@ -335,21 +335,26 @@ public class WireframeFrame extends MainFrame {
 
         group.add(item);
 
-        JToggleButton button = new JToggleButton(item.getIcon());
+        if(areToolBarButtonsAdded) {
+            JToggleButton button = new JToggleButton(item.getIcon());
 
-        if(icon != null)
-            button.setIcon(new ImageIcon(getClass().getResource("resources/"+icon), title));
-        button.setToolTipText(item.getToolTipText());
-        button.setModel(item.getModel());   //кнопки повторяют поведение меню, включая "зажатость"
-        toolBar.add(button);
-        button.addMouseListener(new StatusTitleListener(statusLabel));
+            if (icon != null)
+                button.setIcon(new ImageIcon(getClass().getResource("resources/" + icon), title));
+            button.setToolTipText(item.getToolTipText());
+            button.setModel(item.getModel());   //кнопки повторяют поведение меню, включая "зажатость"
+            toolBar.add(button);
+            button.addMouseListener(new StatusTitleListener(statusLabel));
+            if(isDeactivated)
+            {
+                button.setEnabled(false);
+                deactivatedButtons.add(button);
+            }
+        }
 
         if(isDeactivated)
         {
             item.setEnabled(false);
-            button.setEnabled(false);
             deactivatedButtons.add(item);
-            deactivatedButtons.add(button);
         }
     }
 
@@ -388,10 +393,10 @@ public class WireframeFrame extends MainFrame {
         addSubMenu("Rotation", KeyEvent.VK_F);
         int key = KeyEvent.VK_A;
         group = new ButtonGroup();
-        addRadioButtonMenuAndToolBarButton("Rotation/World", "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", true, false);
+        addRadioButtonMenuAndToolBarButton("Rotation/World", "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", true, false, false);
         for (int i = 0; i < figureCount; i++)
         {
-            addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", false, false);
+            addRadioButtonMenuAndToolBarButton("Rotation/Figure " + (i+1), "Choose what to rotate", key++,"rotate.png", group, "onRotateChoose", false, false, false);
         }
 
     }
