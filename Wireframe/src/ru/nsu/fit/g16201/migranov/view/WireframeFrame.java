@@ -365,6 +365,7 @@ public class WireframeFrame extends MainFrame {
                     b.setEnabled(true);
                 }
                 fileIsLoaded = true;
+                //todo: создать меню с radiobutton списком фигур для выбора
                 wireframePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 resize();
             }
@@ -433,13 +434,13 @@ public class WireframeFrame extends MainFrame {
         zoomInButton.addActionListener(e -> controller.changeScale(-0.2));
         zoomOutButton.addActionListener(e -> controller.changeScale(0.2));
         JButton addFirstPointButton = new JButton("Add new point in the beginning");
-        addFirstPointButton.addActionListener(e -> controller.addSplinePoint(0));
+        addFirstPointButton.addActionListener(e -> {controller.addSplinePoint(0); controller.drawFigures();});
         JButton addLastPointButton = new JButton("Add new point in the end");
-        addLastPointButton.addActionListener(e -> controller.addSplinePoint(controller.getSplinePointsCount()));
+        addLastPointButton.addActionListener(e -> {controller.addSplinePoint(controller.getSplinePointsCount()); controller.drawFigures();});
         JButton deleteFirstPointButton = new JButton("Delete the point in the beginning");
-        deleteFirstPointButton.addActionListener(e -> controller.deleteSplinePoint(0));
+        deleteFirstPointButton.addActionListener(e -> {controller.deleteSplinePoint(0); controller.drawFigures();});
         JButton deleteLastPointButton = new JButton("Delete the point in the end");
-        deleteLastPointButton.addActionListener(e -> controller.deleteSplinePoint(controller.getSplinePointsCount() - 1));
+        deleteLastPointButton.addActionListener(e -> {controller.deleteSplinePoint(controller.getSplinePointsCount() - 1); controller.drawFigures();});
 
         aSplineField = new JTextField();
         bSplineField = new JTextField();

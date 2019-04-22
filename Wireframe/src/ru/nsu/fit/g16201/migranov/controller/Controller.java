@@ -18,8 +18,6 @@ public class Controller {
 
     private SplinePanel splinePanel;
     private WireframePanel wireframePanel;
-    //private double xm, ym;
-    //private double scale;
 
     private Double[] xm, ym;
     private double[] scale;
@@ -84,6 +82,12 @@ public class Controller {
 
                     Matrix xRot = Matrix.getXRotateMatrix(xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
+
+                    Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
+                    Matrix xyr = Matrix.multiply(yRot, xr);
+                    sceneRotateMatrix = xyr;
+
+                    drawFigures();
                 }
                 prevX = x;
                 prevY = y;
@@ -301,12 +305,11 @@ public class Controller {
                     double y = gu.y * Math.sin(v);
                     double z = gu.x;
 
-                    //todo: по идее в ЭТОМ моменте их надо сложить, а потом в конце самом на результируюзая матрицу умнржить
+                    //todo: по идее в ЭТОМ моменте их надо сложить в массив, а потом в конце самом на результируюзая матрицу умнржить
 
                     Matrix p = new Matrix(4, 1, x, y, z, 1);
-                    //на самом деле произведение r и t имеет простой вид - можно упростить
 
-                    Matrix np = Matrix.multiply(rtm, p);
+                    Matrix np = Matrix.multiply(rtm, p);                        //на самом деле произведение r и t имеет простой вид - можно упростить
                     double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
                     modelPoints[i][j] = new Point3D(nx, ny, nz);
 
@@ -320,7 +323,6 @@ public class Controller {
             }
         //}
 
-        //todo: матрица поворота E! (думаю, её можно внизу)
         double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);          //nx = 2 * (x - minX)/(maxx- minx) - 1 и для других - но так не сохр пропорции; поэтому делю на одно и то же
         Matrix boxTranslateMatrix = new Matrix(4, 4, 1, 0, 0, -minX,
                                                                         0, 1, 0, -minY,
@@ -333,19 +335,10 @@ public class Controller {
                                                                     0, 0, 0, 1);
         Matrix boxMatrix = Matrix.multiply(boxScaleMatrix, boxTranslateMatrix);
 
-        System.out.println(projectionMatrix.get(0,0));
+        //todo: сделать нормальынй поворот
         Matrix projView = Matrix.multiply(projectionMatrix, cameraMatrix);
         Matrix projViewBox = Matrix.multiply(projView, boxMatrix);
-
-        Point3D[][] m0 = figures.get(0).getModelPoints();
-        for (int i = 0; i <= n*k; i+=k) {
-            for (int j = 0; j <= m * k; j+=k) {
-                Point3D p = m0[i][j];
-                Matrix pm = new Matrix(4, 1, p.x, p.y, p.z, 1);
-                Matrix rpm = Matrix.multiply(cameraMatrix, pm);
-                Point3D rp = new Point3D(rpm.get(0, 0), rpm.get(1, 0), rpm.get(2, 0));
-            }
-        }
+        Matrix projViewBoxRot = Matrix.multiply(projViewBox, sceneRotateMatrix);
 
         //for (Figure figure : figures)
         //{
@@ -358,7 +351,7 @@ public class Controller {
                 for (int j = 0; j <= m * k; j+=k) {
                     Point3D p = modelPoints[i][j];
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
-                    Matrix nmp = Matrix.multiply(projViewBox, mp);
+                    Matrix nmp = Matrix.multiply(projViewBoxRot, mp);
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
                     double w = nmp.get(3, 0);
                     //System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
@@ -387,7 +380,6 @@ public class Controller {
                     }*/
                 }
             }
-
         }
         wireframePanel.repaint();
     }
@@ -428,9 +420,7 @@ public class Controller {
 
         double length = calculateLength(splinePoints);
         Double xPrev = null, yPrev = null;
-
         Point uv, uvPrev = null;
-
         double tempLength = 0;
 
         for(int i = 1; i < splinePoints.size() - 2; i++)
@@ -466,11 +456,9 @@ public class Controller {
                 yPrev = y;
             }
         }
-
         splinePanel.repaint();
     }
 
-    //тогда можно уж возвращать ещё и точку, где начинается a..
     private double calculateLength(List<Point2D> splinePoints)
     {
         Double xPrev = null, yPrev = null;
