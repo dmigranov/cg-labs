@@ -760,4 +760,16 @@ public class Controller {
         figures.remove(i);
         drawFigures();
     }
+
+    public double getZf() {
+        return zf;
+    }
+
+    public double getZn() {
+        return zn;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
 }

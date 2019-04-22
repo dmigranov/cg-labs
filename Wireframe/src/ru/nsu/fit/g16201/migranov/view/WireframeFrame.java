@@ -27,7 +27,7 @@ public class WireframeFrame extends MainFrame {
 
     private WireframePanel wireframePanel;
 
-    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField, backgroundColor[];
+    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField, backgroundColorFields[];
     private JButton confirmButton, addFigureButton;
     private int figureCount;
     private boolean fileIsLoaded = false;
@@ -145,14 +145,14 @@ public class WireframeFrame extends MainFrame {
         shField = new JTextField();
         zfField = new JTextField();
         znField = new JTextField();
-        backgroundColor = new JTextField[3];
+        backgroundColorFields = new JTextField[3];
         String colorTextFieldDescriptions[] = new String[] {"Background R:", "Background G:", "Background B:"};
 
         JPanel abcdPanel = new JPanel(new GridLayout(1, 4)), mnkPanel = new JPanel(new GridLayout(1, 3)), clippingPanel = new JPanel(new GridLayout(1, 4)), colorPanel = new JPanel(new GridLayout(1, 3));
 
         for(int i = 0; i < 3; i++) {
-            backgroundColor[i] = new JTextField();
-            colorPanel.add(new LabelTextField(colorTextFieldDescriptions[i], backgroundColor[i], new IntegerTextFieldKeyListener()));
+            backgroundColorFields[i] = new JTextField();
+            colorPanel.add(new LabelTextField(colorTextFieldDescriptions[i], backgroundColorFields[i], new IntegerTextFieldKeyListener()));
         }
         abcdPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
         abcdPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
@@ -411,6 +411,14 @@ public class WireframeFrame extends MainFrame {
         nField.setText(controller.getN() + "");
         mField.setText(controller.getM() + "");
         kField.setText(controller.getK() + "");
+        zfField.setText(controller.getZf() + "");
+        znField.setText(controller.getZn() + "");
+        shField.setText(controller.getSh() + "");
+        swField.setText(controller.getSw() + "");
+        Color color = controller.getBackgroundColor();
+        backgroundColorFields[0].setText(color.getRed() + "");
+        backgroundColorFields[1].setText(color.getGreen() + "");
+        backgroundColorFields[2].setText(color.getBlue() + "");
     }
 
     public void createSplineConfigurationPanel()
