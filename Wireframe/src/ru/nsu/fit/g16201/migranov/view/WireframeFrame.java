@@ -476,6 +476,20 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(deleteLastPointButton);
         inputPanel.add(zoomInButton);
         inputPanel.add(zoomOutButton);
+
+        JButton deleteFigureButton = new JButton("Delete this figure");
+        deleteFigureButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selected = tabbedPane.getSelectedIndex();
+                controller.deleteFigure(selected - 1);
+                tabbedPane.remove(selected);
+            }
+        });
+
+        deleteFigureButton.setAlignmentX(CENTER_ALIGNMENT);
+
+        inputButtonPanel.add(deleteFigureButton);
     }
 
     public void onRotateChoose()

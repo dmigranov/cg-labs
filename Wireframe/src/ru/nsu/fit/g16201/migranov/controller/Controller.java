@@ -755,4 +755,9 @@ public class Controller {
     public void setCurrentRotateFigure(int i) {
         currentRotateFigure = i;
     }
+
+    public void deleteFigure(int i) {
+        figures.remove(i);
+        drawFigures();
+    }
 }
