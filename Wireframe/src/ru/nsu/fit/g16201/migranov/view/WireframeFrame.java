@@ -28,7 +28,7 @@ public class WireframeFrame extends MainFrame {
     private WireframePanel wireframePanel;
 
     private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField;
-    private JButton confirmButton;
+    private JButton confirmButton, addFigureButton;
     private int figureCount;
     private boolean fileIsLoaded = false;
 
@@ -157,7 +157,7 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("Zfar: ", zfField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("Znear: ", znField, new FloatTextFieldKeyListener()));
 
-        JButton addFigureButton = new JButton("Add a new figure");
+        addFigureButton = new JButton("Add a new figure");
         addFigureButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -187,6 +187,8 @@ public class WireframeFrame extends MainFrame {
                         throw new NumberFormatException("Wrong a or b");
                     if (!(d > c && c >= 0 && 2 * Math.PI >= d))
                         throw new NumberFormatException("Wrong c or d");
+                    //todo: clipping const
+
                     controller.setConstants(n, m, k, a, b, c, d);
                 }
                 else
@@ -207,7 +209,6 @@ public class WireframeFrame extends MainFrame {
             }
         });
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //inputButtonPanel add confirmButton
     }
 
     private void addMenus() throws NoSuchMethodException {
