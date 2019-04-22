@@ -1,18 +1,14 @@
 package ru.nsu.fit.g16201.migranov.view;
 
-import org.graalvm.compiler.hotspot.nodes.JumpToExceptionHandlerInCallerNode;
 import ru.nsu.fit.g16201.migranov.controller.Controller;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -156,6 +152,9 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(new LabelTextField("n: ", nField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("m: ", mField, new IntegerTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("k: ", kField, new IntegerTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("sw: ", swField, new FloatTextFieldKeyListener()));
+        commonPanel.add(new LabelTextField("sh: ", shField, new FloatTextFieldKeyListener()));
+
 
         confirmButton = new JButton("Confirm");
         confirmButton.addActionListener(e -> {
