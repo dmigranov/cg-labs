@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 public class LabelTextField extends JPanel {
     LabelTextField(String s, JTextField textField, KeyListener listener)
     {
-        textField.setPreferredSize(new Dimension(60, 30));
+        textField.setPreferredSize(new Dimension(100, 30));
         JLabel label = new JLabel(s);
         add(label);
         add(textField);

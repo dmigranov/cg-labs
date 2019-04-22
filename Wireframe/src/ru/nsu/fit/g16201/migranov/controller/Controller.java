@@ -230,7 +230,7 @@ public class Controller {
             zf = Double.parseDouble(substrings[1]);
             sw = Double.parseDouble(substrings[2]);
             sh = Double.parseDouble(substrings[3]);
-            if(!(zn > 0 && zf > zn))
+            if(!(zn > 0 && zf > zn && sw > 0 && sh > 0))
                 throw new IOException("Wrong clipping");
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);

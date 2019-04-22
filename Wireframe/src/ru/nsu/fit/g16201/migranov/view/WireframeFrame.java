@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.view;
 
+import org.graalvm.compiler.hotspot.nodes.JumpToExceptionHandlerInCallerNode;
 import ru.nsu.fit.g16201.migranov.controller.Controller;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
@@ -30,7 +31,7 @@ public class WireframeFrame extends MainFrame {
 
     private WireframePanel wireframePanel;
 
-    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField;
+    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField;
     private JButton confirmButton;
     private int figureCount;
     private boolean fileIsLoaded = false;
@@ -144,6 +145,8 @@ public class WireframeFrame extends MainFrame {
         nField = new JTextField();
         mField = new JTextField();
         kField = new JTextField();
+        swField = new JTextField();
+        shField = new JTextField();
         commonPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
         commonPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
