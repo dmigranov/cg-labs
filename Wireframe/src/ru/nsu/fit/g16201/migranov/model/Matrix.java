@@ -57,16 +57,16 @@ public class Matrix {
     }
 
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
-        /*return new Matrix(4, 4,
+        return new Matrix(4, 4,
                 2/sw*zn, 0, 0, 0,
                         0, 2/sh*zn, 0, 0,
                         0, 0, zn/(zf - zn), -zn*zf/(zf - zn),
-                        0, 0, 1, 0);*/      //проекц
-        return new Matrix(4, 4,
+                        0, 0, 1, 0);      //проекц
+        /*return new Matrix(4, 4,
                 2/sw, 0, 0, 0,
                 0, 2/sh, 0, 0,
                 0, 0, 1/(zf - zn), -zn/(zf - zn),
-                0, 0, 0, 1);       //па
+                0, 0, 0, 1);       //па*/
         /*return new Matrix (4, 4, 1, 0, 0, 0,
                 0, 1, 0, 0,
                 0, 0, 0, 0,

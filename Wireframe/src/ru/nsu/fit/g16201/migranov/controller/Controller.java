@@ -344,7 +344,6 @@ public class Controller {
                 Matrix pm = new Matrix(4, 1, p.x, p.y, p.z, 1);
                 Matrix rpm = Matrix.multiply(cameraMatrix, pm);
                 Point3D rp = new Point3D(rpm.get(0, 0), rpm.get(1, 0), rpm.get(2, 0));
-                //System.out.println(rp.x + " " + rp.y + " " + rp.z);
             }
         }
 
@@ -362,12 +361,13 @@ public class Controller {
                     Matrix mp = new Matrix(4, 1, p.x, p.y, p.z, 1);
                     Matrix nmp = Matrix.multiply(projViewBox, mp);
                     Point3D np = new Point3D(nmp.get(0, 0), nmp.get(1, 0), nmp.get(2, 0));
-                    System.out.println(np.x + " " + np.y + " " + np.z);
+                    double w = nmp.get(3, 0);
+                    System.out.println(np.x/w + " " + np.y/w + " " + np.z/w);
                     //todo отсечь и разобраться с z!
                     if(np.x >= -1 && np.x <= 1 && np.y >= -1 && np.y <= 1)
                     {
-                        int x = (int)((np.x + 1)/2*wireframePanel.getCanvasWidth());
-                        int y = (int)((np.y + 1)/2*wireframePanel.getCanvasHeight());
+                        int x = (int)((np.x/w + 1)/2*wireframePanel.getCanvasWidth());
+                        int y = (int)((np.y/w + 1)/2*wireframePanel.getCanvasHeight());
 
                         if(vPrev != null)
                         {
