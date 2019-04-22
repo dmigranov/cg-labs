@@ -27,7 +27,7 @@ public class WireframeFrame extends MainFrame {
 
     private WireframePanel wireframePanel;
 
-    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField;
+    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField, backgroundColor[];
     private JButton confirmButton, addFigureButton;
     private int figureCount;
     private boolean fileIsLoaded = false;
@@ -132,7 +132,7 @@ public class WireframeFrame extends MainFrame {
             }
         });
 
-        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));    //todo: сделать красиво
+        commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
 
         aField = new JTextField();
         bField = new JTextField();
@@ -145,9 +145,15 @@ public class WireframeFrame extends MainFrame {
         shField = new JTextField();
         zfField = new JTextField();
         znField = new JTextField();
+        backgroundColor = new JTextField[3];
+        String colorTextFieldDescriptions[] = new String[] {"Background R:", "Background G:", "Background B:"};
 
-        JPanel abcdPanel = new JPanel(new GridLayout(1, 4)), mnkPanel = new JPanel(new GridLayout(1, 3)), clippingPanel = new JPanel(new GridLayout(1, 4));
+        JPanel abcdPanel = new JPanel(new GridLayout(1, 4)), mnkPanel = new JPanel(new GridLayout(1, 3)), clippingPanel = new JPanel(new GridLayout(1, 4)), colorPanel = new JPanel(new GridLayout(1, 3));
 
+        for(int i = 0; i < 3; i++) {
+            backgroundColor[i] = new JTextField();
+            colorPanel.add(new LabelTextField(colorTextFieldDescriptions[i], backgroundColor[i], new IntegerTextFieldKeyListener()));
+        }
         abcdPanel.add(new LabelTextField("a: ", aField, new FloatTextFieldKeyListener()));
         abcdPanel.add(new LabelTextField("b: ", bField, new FloatTextFieldKeyListener()));
         abcdPanel.add(new LabelTextField("c: ", cField, new FloatTextFieldKeyListener()));
@@ -164,6 +170,7 @@ public class WireframeFrame extends MainFrame {
         commonPanel.add(abcdPanel);
         commonPanel.add(mnkPanel);
         commonPanel.add(clippingPanel);
+        commonPanel.add(colorPanel);
 
         addFigureButton = new JButton("Add a new figure");
         addFigureButton.addActionListener(new ActionListener() {
