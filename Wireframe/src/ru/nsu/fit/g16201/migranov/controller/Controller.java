@@ -794,11 +794,6 @@ public class Controller {
         currentRotateFigure = i;
     }
 
-    public void deleteFigure(int i) {
-        figures.remove(i);
-        drawFigures();
-    }
-
     public double getZf() {
         return zf;
     }
@@ -811,6 +806,16 @@ public class Controller {
         return backgroundColor;
     }
 
+    public void deleteFigure(int i) {
+        if(figures.size() > 0) {
+            figures.remove(i);
+            xm.remove(i);
+            ym.remove(i);
+            scale.remove(i);
+            drawFigures();
+        }
+    }
+
     public void addFigure() {
         Random random = new Random();
         Figure figure = new Figure(new Point3D(0, 0, 0), new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)), new Matrix(4,4, 1, 0, 0, 0, 0, 1,0,0,0,0,1,0,0,0,0,1), new ArrayList<Point2D>());
@@ -821,16 +826,19 @@ public class Controller {
         figure.getSplinePoints().add(new Point2D(-1, 1));
         figure.getSplinePoints().add(new Point2D(-1, -1));
 
-        Double[] nxm = new Double[figures.size()], nym = new Double[figures.size()];
+        /*Double[] nxm = new Double[figures.size()], nym = new Double[figures.size()];
         double[] nScale = new double[figures.size()];
         System.arraycopy(xm, 0, nxm, 0, xm.length);
         System.arraycopy(ym, 0, nym, 0, ym.length);
         System.arraycopy(scale, 0, nScale, 0, scale.length);
-        //todo: исправить ошибку (проблема в том, что при удалении мы эти массивы-то не трогаем!
         nScale[nScale.length - 1] = 1.1;
         scale = nScale;
         xm = nxm;
-        ym = nym;
+        ym = nym;*/
+
+        xm.add(null);
+        ym.add(null);
+        scale.add(1.1);
 
         drawFigures();
     }
