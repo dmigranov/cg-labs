@@ -281,9 +281,7 @@ public class Controller {
         {
             return -1;
         }
-        //xm = new Double[figureCount];
-        //ym = new Double[figureCount];
-        //scale = new double[figureCount];
+
         xm = new ArrayList<>(figureCount);
         ym = new ArrayList<>(figureCount);
         scale = new ArrayList<>(figureCount);
@@ -293,7 +291,6 @@ public class Controller {
             xm.add(null);
             ym.add(null);
         }
-            //scale[i] = 1.1;
 
         currentFigure = figures.get(0);
         calculateSplineArea();
@@ -450,7 +447,6 @@ public class Controller {
 
     //область определения сплайна (чтобы знать как масштабировать)
     private void calculateSplineArea() {
-        //if(xm[currentFigureIndex] != null)
         if(xm.get(currentFigureIndex) != null)
             return;
 
@@ -467,8 +463,6 @@ public class Controller {
             yMin = p.y < yMin ? p.y : yMin;
         }
 
-        //xm[currentFigureIndex] = Math.max(Math.abs(xMax), Math.abs(xMin));
-        //ym[currentFigureIndex] = Math.max(Math.abs(yMax), Math.abs(yMin));
         xm.set(currentFigureIndex, Math.max(Math.abs(xMax), Math.abs(xMin)));
         ym.set(currentFigureIndex, Math.max(Math.abs(yMax), Math.abs(yMin)));
     }
@@ -568,8 +562,6 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        //double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];
-        //double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
         double xm = this.xm.get(currentFigureIndex)*scale.get(currentFigureIndex);
         double ym = this.ym.get(currentFigureIndex)*scale.get(currentFigureIndex);
         if(xm > ym)
@@ -589,9 +581,7 @@ public class Controller {
     private Point2D getXY(int u, int v)
     {
         double x, y;
-        //double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
-        //double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
-        double xm = this.xm.get(currentFigureIndex)*scale.get(currentFigureIndex);
+        double xm = this.xm.get(currentFigureIndex)*scale.get(currentFigureIndex);  //чтобы оставалось пространство по бокам
         double ym = this.ym.get(currentFigureIndex)*scale.get(currentFigureIndex);
 
         if(xm > ym)
@@ -648,7 +638,6 @@ public class Controller {
     public int getSplinePointsCount() {
         return currentFigure.getSplinePoints().size();
     }
-
 
     public void saveFile(File file) {
         try(PrintWriter pw = new PrintWriter(file)) {
@@ -750,9 +739,6 @@ public class Controller {
     }
 
     public void changeScale(double ds) {
-        //if(this.scale[currentFigureIndex] + ds > 0)
-        //    this.scale[currentFigureIndex] += ds;
-
         if(scale.get(currentFigureIndex) + ds > 0)
             scale.set(currentFigureIndex, scale.get(currentFigureIndex) + ds);
         drawSplineLine();
@@ -825,16 +811,6 @@ public class Controller {
         figure.getSplinePoints().add(new Point2D(1, -1));
         figure.getSplinePoints().add(new Point2D(-1, 1));
         figure.getSplinePoints().add(new Point2D(-1, -1));
-
-        /*Double[] nxm = new Double[figures.size()], nym = new Double[figures.size()];
-        double[] nScale = new double[figures.size()];
-        System.arraycopy(xm, 0, nxm, 0, xm.length);
-        System.arraycopy(ym, 0, nym, 0, ym.length);
-        System.arraycopy(scale, 0, nScale, 0, scale.length);
-        nScale[nScale.length - 1] = 1.1;
-        scale = nScale;
-        xm = nxm;
-        ym = nym;*/
 
         xm.add(null);
         ym.add(null);
