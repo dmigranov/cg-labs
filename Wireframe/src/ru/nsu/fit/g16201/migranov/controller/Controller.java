@@ -20,8 +20,10 @@ public class Controller {
     private SplinePanel splinePanel;
     private WireframePanel wireframePanel;
 
-    private Double[] xm, ym;
-    private double[] scale;
+    //private Double[] xm, ym;
+    //private double[] scale;
+    private List<Double> xm, ym;
+    private List<Double> scale;
 
     private Point3D eye = new Point3D(-10, 0, 0);
     private Point3D ref = new Point3D(10, 0, 0);
@@ -279,9 +281,13 @@ public class Controller {
         {
             return -1;
         }
-        xm = new Double[figureCount];
-        ym = new Double[figureCount];
-        scale = new double[figureCount];
+        //xm = new Double[figureCount];
+        //ym = new Double[figureCount];
+        //scale = new double[figureCount];
+        xm = new ArrayList<>(figureCount);
+        ym = new ArrayList<>(figureCount);
+        scale = new ArrayList<>(figureCount);
+
         for (int i = 0; i < figureCount; i++)
             scale[i] = 1.1;
 
