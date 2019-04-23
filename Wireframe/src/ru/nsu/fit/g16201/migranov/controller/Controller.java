@@ -100,7 +100,7 @@ public class Controller {
                     }
                     else
                     {
-                        //todo: это неправильно, вращать их надо в модельных координатах! (это с миров все ппросто)
+                        //todo: это неправильно, вращать их надо в модельных координатах! (это с миром все типа просто)
                         Matrix rot = figures.get(currentRotateFigure).getRotateMatrix();
                         Matrix xRot = Matrix.getYRotateMatrix(xAngle);
                         Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
@@ -156,6 +156,8 @@ public class Controller {
                 startedMoving = true;
 
                 int x = e.getX(), y = e.getY();
+                if(x < 0 || y < 0 || x >= splinePanel.getWidth() || y >= splinePanel.getHeight())
+                    return;
 
                 if(!pointIsGrabbed) {
                     if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
