@@ -288,8 +288,12 @@ public class Controller {
         ym = new ArrayList<>(figureCount);
         scale = new ArrayList<>(figureCount);
 
-        for (int i = 0; i < figureCount; i++)
-            scale[i] = 1.1;
+        for (int i = 0; i < figureCount; i++) {
+            scale.add(1.1);
+            xm.add(null);
+            ym.add(null);
+        }
+            //scale[i] = 1.1;
 
         currentFigure = figures.get(0);
         calculateSplineArea();
@@ -446,7 +450,8 @@ public class Controller {
 
     //область определения сплайна (чтобы знать как масштабировать)
     private void calculateSplineArea() {
-        if(xm[currentFigureIndex] != null)
+        //if(xm[currentFigureIndex] != null)
+        if(xm.get(currentFigureIndex) != null)
             return;
 
         double xMin = Double.MAX_VALUE, xMax = Double.MIN_VALUE, yMin = Double.MAX_VALUE, yMax = Double.MIN_VALUE;
@@ -462,8 +467,10 @@ public class Controller {
             yMin = p.y < yMin ? p.y : yMin;
         }
 
-        xm[currentFigureIndex] = Math.max(Math.abs(xMax), Math.abs(xMin));
-        ym[currentFigureIndex] = Math.max(Math.abs(yMax), Math.abs(yMin));
+        //xm[currentFigureIndex] = Math.max(Math.abs(xMax), Math.abs(xMin));
+        //ym[currentFigureIndex] = Math.max(Math.abs(yMax), Math.abs(yMin));
+        xm.set(currentFigureIndex, Math.max(Math.abs(xMax), Math.abs(xMin)));
+        ym.set(currentFigureIndex, Math.max(Math.abs(yMax), Math.abs(yMin)));
     }
 
     private void drawSplineLine() {
