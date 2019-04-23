@@ -156,11 +156,9 @@ public class Controller {
                 startedMoving = true;
 
                 int x = e.getX(), y = e.getY();
-                if(x < 0 || y < 0 || x >= splinePanel.getWidth() || y >= splinePanel.getHeight())
-                    return;
 
                 if(!pointIsGrabbed) {
-                    if (splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
+                    if (!(x < 0 || y < 0 || x >= splinePanel.getWidth() || y >= splinePanel.getHeight()) && splinePanel.getRGB(x, y) == splinePanel.getSplinePointColor()) {
                         int radius = splinePanel.getSplinePointRadius();
                         Point grabbedPoint = null;
                         for (Point p : screenSplinePoints) {
