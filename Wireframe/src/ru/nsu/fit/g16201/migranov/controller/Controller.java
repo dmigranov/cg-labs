@@ -754,14 +754,6 @@ public class Controller {
         drawSplineLine();
     }
 
-    public void setAB(double a, double b) {
-        this.a = a;
-        this.b = b;
-
-        drawSplineLine();
-        drawFigures();
-    }
-
     public double getSw() {
         return sw;
     }
@@ -818,6 +810,28 @@ public class Controller {
         ym.add(null);
         scale.add(1.1);
 
+        drawFigures();
+    }
+
+    public Color getCurrentColor() {
+        return figures.get(currentFigureIndex).getColor();
+    }
+
+    public void setAB(double a, double b) {
+        this.a = a;
+        this.b = b;
+
+        drawSplineLine();
+        drawFigures();
+    }
+
+    public void setABAndColor(double a, double b, Color color) {
+        this.a = a;
+        this.b = b;
+
+        figures.get(currentFigureIndex).setColor(color);
+
+        drawSplineLine();
         drawFigures();
     }
 }

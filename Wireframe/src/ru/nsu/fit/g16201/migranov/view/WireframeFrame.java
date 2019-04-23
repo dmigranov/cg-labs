@@ -132,6 +132,10 @@ public class WireframeFrame extends MainFrame {
                 panel.add(splineConfigurationPanel);
                 panel.revalidate();
                 controller.setCurrentFigure(selected - 1);
+                Color color = controller.getCurrentColor();
+                figureColorFields[0].setText(color.getRed() + "");
+                figureColorFields[1].setText(color.getGreen() + "");
+                figureColorFields[2].setText(color.getBlue() + "");
             }
         });
 
@@ -227,13 +231,18 @@ public class WireframeFrame extends MainFrame {
                 }
                 else
                 {
+                    //todo: color
                     double a, b;
+                    int cR, cG, cB;
                     a = Double.parseDouble(aSplineField.getText());
                     b = Double.parseDouble(bSplineField.getText());
+                    cR = Integer.parseInt(figureColorFields[0].getText());
+                    cG = Integer.parseInt(figureColorFields[1].getText());
+                    cB = Integer.parseInt(figureColorFields[2].getText());
 
-                    if (!(b > a && a >= 0 && 1 >= b))
-                        throw new NumberFormatException("Wrong a or b");
-                    controller.setAB(a, b);
+                    if(cR < 0 || cR > 255 || cG < 0 || cG > 255 || cB < 0 || cB > 255)
+                        throw new NumberFormatException("Wrong color");
+                    controller.setABAndColor(a, b, new Color(cR, cG, cB));
                 }
                 updateFields();
             }
@@ -469,11 +478,6 @@ public class WireframeFrame extends MainFrame {
         figureColorFields = new JTextField[3];
         aSplineField.addKeyListener(new FloatTextFieldKeyListener());
         bSplineField.addKeyListener(new FloatTextFieldKeyListener());
-        for(int i = 0; i < 3; i++)
-        {
-            figureColorFields[i] = new JTextField();
-            figureColorFields[i].addKeyListener(new IntegerTextFieldKeyListener());
-        }
 
         inputPanel.add(new JLabel("a: "));
         inputPanel.add(aSplineField);
@@ -486,6 +490,16 @@ public class WireframeFrame extends MainFrame {
         inputPanel.add(zoomInButton);
         inputPanel.add(zoomOutButton);
 
+        for(int i = 0; i < 3; i++)
+        {
+            figureColorFields[i] = new JTextField();
+            //figureColorFields[i].addKeyListener(new IntegerTextFieldKeyListener());
+        }
+        //todo: сделать покрасивше
+        inputButtonPanel.add(new LabelTextField("R: ", figureColorFields[0], new IntegerTextFieldKeyListener()));
+        inputButtonPanel.add(new LabelTextField("G: ", figureColorFields[1], new IntegerTextFieldKeyListener()));
+        inputButtonPanel.add(new LabelTextField("B: ", figureColorFields[2], new IntegerTextFieldKeyListener()));
+
         JButton deleteFigureButton = new JButton("Delete this figure");
         deleteFigureButton.addActionListener(new ActionListener() {
             @Override
@@ -496,6 +510,7 @@ public class WireframeFrame extends MainFrame {
                 tabbedPane.remove(selected);
             }
         });
+
 
         inputButtonPanel.add(deleteFigureButton);
     }
