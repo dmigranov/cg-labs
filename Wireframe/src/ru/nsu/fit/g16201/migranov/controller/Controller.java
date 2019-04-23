@@ -568,8 +568,10 @@ public class Controller {
     private Point getUV(double x, double y) {
         //width = height!
         int u, v;
-        double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
-        double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
+        //double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];
+        //double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
+        double xm = this.xm.get(currentFigureIndex)*scale.get(currentFigureIndex);
+        double ym = this.ym.get(currentFigureIndex)*scale.get(currentFigureIndex);
         if(xm > ym)
         {
             u = (int)((x + xm)/2/xm * width);
@@ -587,8 +589,11 @@ public class Controller {
     private Point2D getXY(int u, int v)
     {
         double x, y;
-        double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
-        double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
+        //double xm = this.xm[currentFigureIndex]*scale[currentFigureIndex];    //чтобы оставалось пространство по бокам
+        //double ym = this.ym[currentFigureIndex]*scale[currentFigureIndex];
+        double xm = this.xm.get(currentFigureIndex)*scale.get(currentFigureIndex);
+        double ym = this.ym.get(currentFigureIndex)*scale.get(currentFigureIndex);
+
         if(xm > ym)
         {
             x = xm*(2.0*u/width - 1);
@@ -745,8 +750,11 @@ public class Controller {
     }
 
     public void changeScale(double ds) {
-        if(this.scale[currentFigureIndex] + ds > 0)
-            this.scale[currentFigureIndex] += ds;
+        //if(this.scale[currentFigureIndex] + ds > 0)
+        //    this.scale[currentFigureIndex] += ds;
+
+        if(scale.get(currentFigureIndex) + ds > 0)
+            scale.set(currentFigureIndex, scale.get(currentFigureIndex) + ds);
         drawSplineLine();
     }
 
