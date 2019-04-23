@@ -27,7 +27,7 @@ public class WireframeFrame extends MainFrame {
 
     private WireframePanel wireframePanel;
 
-    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField, backgroundColorFields[];
+    private JTextField aField, bField, cField, dField, nField, mField, kField, aSplineField, bSplineField, swField, shField, znField, zfField, backgroundColorFields[], figureColorFields[];
     private JButton confirmButton, addFigureButton;
     private int figureCount;
     private boolean fileIsLoaded = false;
@@ -466,8 +466,14 @@ public class WireframeFrame extends MainFrame {
 
         aSplineField = new JTextField();
         bSplineField = new JTextField();
+        figureColorFields = new JTextField[3];
         aSplineField.addKeyListener(new FloatTextFieldKeyListener());
         bSplineField.addKeyListener(new FloatTextFieldKeyListener());
+        for(int i = 0; i < 3; i++)
+        {
+            figureColorFields[i] = new JTextField();
+            figureColorFields[i].addKeyListener(new IntegerTextFieldKeyListener());
+        }
 
         inputPanel.add(new JLabel("a: "));
         inputPanel.add(aSplineField);
