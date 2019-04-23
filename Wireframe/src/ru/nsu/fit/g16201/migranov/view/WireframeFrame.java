@@ -231,7 +231,6 @@ public class WireframeFrame extends MainFrame {
                 }
                 else
                 {
-                    //todo: color
                     double a, b;
                     int cR, cG, cB;
                     a = Double.parseDouble(aSplineField.getText());
