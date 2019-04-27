@@ -10,6 +10,8 @@ public class Controller {
 
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
+            readLineAndSplit(br);
+            readLineAndSplit(br);
 
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
@@ -24,8 +26,13 @@ public class Controller {
     private String[] readLineAndSplit(BufferedReader br) throws IOException
     {
         String line;
-        line = br.readLine();
-        line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
-        return line.split("\\s+");
+        String[] substrings;
+        do {
+            line = br.readLine();
+            line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
+            substrings = line.split("\\s+");
+        }
+        while(substrings.length == 0 || "".equals(substrings[0]));
+        return substrings;
     }
 }
