@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.view;
 
+import ru.nsu.fit.g16201.migranov.controller.Controller;
 import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -16,12 +18,16 @@ public class RaytracingFrame extends MainFrame {
     private JLabel statusLabel = new JLabel("");
     private List<AbstractButton> deactivatedButtons = new ArrayList<>();
 
+    private Controller controller;
+
     public static void main(String[] args) throws Exception {
         new RaytracingFrame();
     }
 
     private RaytracingFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
+
+        controller = new Controller();
 
         addMenus();
 
@@ -45,6 +51,24 @@ public class RaytracingFrame extends MainFrame {
         addMenuAndToolBarButton("File/Load render settings", "Load render settings from file", KeyEvent.VK_R, "upload.png", "onOpenRenderSettings", true);
         addMenuAndToolBarButton("File/Save render settings as", "Save render settings to specified file", KeyEvent.VK_S, "download.png", "onSaveRenderSettings", true);
 
+        addSubMenu("View", KeyEvent.VK_V);
+        addMenuAndToolBarButton("View/Init", "Reset camera", KeyEvent.VK_I, "reload.png", "onInit", true);
+
+
+    }
+
+    public void onOpen()
+    {
+        File file = getOpenFileName("txt", "A scene description file");
+        if(file != null) {
+            setTitle(file.getName() + " | Denis Migranov, 16201");
+            int r = controller.loadFile(file);
+            if(r != 0)
+            {
+                JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            //something...
+        }
     }
 
     public void onOpenRenderSettings()
@@ -52,12 +76,12 @@ public class RaytracingFrame extends MainFrame {
 
     }
 
-    public void onOpen()
+    public void onSaveRenderSettings()
     {
 
     }
 
-    public void onSaveRenderSettings()
+    public void onInit()
     {
 
     }
