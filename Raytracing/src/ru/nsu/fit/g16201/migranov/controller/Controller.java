@@ -1,17 +1,35 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Controller {
+    private Color ambientLightColor;
+
     public int loadFile(File file) {
 
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
-            readLineAndSplit(br);
-            readLineAndSplit(br);
+            String[] substrings;
+
+            substrings = readLineAndSplit(br);
+            int ar = Integer.parseInt(substrings[0]);
+            int ag = Integer.parseInt(substrings[1]);
+            int ab = Integer.parseInt(substrings[2]);
+            //todo: проверить границы
+            ambientLightColor = new Color(ar, ag, ab);
+
+            substrings = readLineAndSplit(br);
+            int nl = Integer.parseInt(substrings[0]);       //число источников в сцене
+
+            for (int i = 0; i < nl; i++)
+            {
+
+            }
+
 
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
