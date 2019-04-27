@@ -20,6 +20,7 @@ import javax.swing.event.MenuDragMouseListener;
  * Application should subclass it to create its own implementation 
  * @author Tagir F. Valeev
  */
+@SuppressWarnings("JavadocReference")
 public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	protected JMenuBar menuBar;

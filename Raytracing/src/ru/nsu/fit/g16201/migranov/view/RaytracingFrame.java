@@ -15,7 +15,13 @@ public class RaytracingFrame extends MainFrame {
     }
 
     private RaytracingFrame() throws Exception {
+        super(800, 600, "Untitled | Denis Migranov, 16201");
 
+        addMenus();
+
+    }
+
+    private void addMenus() {
 
     }
 }
