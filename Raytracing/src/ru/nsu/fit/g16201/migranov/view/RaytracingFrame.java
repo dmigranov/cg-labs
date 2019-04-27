@@ -53,6 +53,7 @@ public class RaytracingFrame extends MainFrame {
 
         addSubMenu("View", KeyEvent.VK_V);
         addMenuAndToolBarButton("View/Init", "Reset camera", KeyEvent.VK_I, "reload.png", "onInit", true);
+        addMenuAndToolBarButton("View/Settings", "Rendering settings", KeyEvent.VK_I, "settings.png", "onShowSettings", true);
 
 
     }
@@ -85,6 +86,12 @@ public class RaytracingFrame extends MainFrame {
     {
 
     }
+
+    public void onShowSettings()
+    {
+
+    }
+
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {
