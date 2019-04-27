@@ -1,16 +1,22 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.model.Light;
+import ru.nsu.fit.g16201.migranov.model.Point3D;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
     private Color ambientLightColor;
 
-    public int loadFile(File file) {
+    private List<Light> lights;
 
+    public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
             String[] substrings;
@@ -24,10 +30,18 @@ public class Controller {
 
             substrings = readLineAndSplit(br);
             int nl = Integer.parseInt(substrings[0]);       //число источников в сцене
-
+            lights = new ArrayList<>(nl);
             for (int i = 0; i < nl; i++)
             {
-
+                substrings = readLineAndSplit(br);
+                double lx = Double.parseDouble(substrings[0]);
+                double ly = Double.parseDouble(substrings[1]);
+                double lz = Double.parseDouble(substrings[2]);
+                int lr = Integer.parseInt(substrings[3]);
+                int lg = Integer.parseInt(substrings[4]);
+                int lb = Integer.parseInt(substrings[5]);
+                //todo: проверить цвета
+                lights.add(new Light(new Point3D(lx, ly, lz), new Color(lr, lg, lb)));
             }
 
 
