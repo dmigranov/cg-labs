@@ -25,7 +25,10 @@ public class Controller {
             int ar = Integer.parseInt(substrings[0]);
             int ag = Integer.parseInt(substrings[1]);
             int ab = Integer.parseInt(substrings[2]);
-            //todo: проверить границы
+
+            if(ar < 0 || ar > 255 || ag < 0 || ag > 255 || ab < 0 || ab > 255)
+                throw new IOException("Wrong ambient color");
+
             ambientLightColor = new Color(ar, ag, ab);
 
             substrings = readLineAndSplit(br);
@@ -40,9 +43,14 @@ public class Controller {
                 int lr = Integer.parseInt(substrings[3]);
                 int lg = Integer.parseInt(substrings[4]);
                 int lb = Integer.parseInt(substrings[5]);
-                //todo: проверить цвета
+
+                if(lr < 0 || lr > 255 || lg < 0 || lg > 255 || lb < 0 || lb > 255)
+                    throw new IOException("Wrong light color");
+
                 lights.add(new Light(new Point3D(lx, ly, lz), new Color(lr, lg, lb)));
             }
+
+            while((line))
 
 
         }
