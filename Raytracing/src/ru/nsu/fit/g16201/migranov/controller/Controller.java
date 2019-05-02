@@ -2,6 +2,8 @@ package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
+import ru.nsu.fit.g16201.migranov.model.primitives.Sphere;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -15,6 +17,7 @@ public class Controller {
     private Color ambientLightColor;
 
     private List<Light> lights;
+    private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -50,11 +53,44 @@ public class Controller {
                 lights.add(new Light(new Point3D(lx, ly, lz), new Color(lr, lg, lb)));
             }
 
-            while((line))
+            primitives = new ArrayList<>();
+            while((substrings = readLineAndSplit(br)) != null)
+            {
+                String primitiveType = substrings[0];
+
+                Primitive primitive = null;
+
+                switch (primitiveType)
+                {
+                    case "SPHERE":
+                        substrings = readLineAndSplit(br);
+                        Point3D center = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+                        substrings = readLineAndSplit(br);
+                        double radius = Double.parseDouble(substrings[0]);
+
+                        primitive = new Sphere(center, radius);
+                        break;
+                    case "BOX":
+
+                        break;
+                }
+
+                substrings = readLineAndSplit(br);
+                double kDR = Double.parseDouble(substrings[0]);
+                double kDG = Double.parseDouble(substrings[1]);
+                double kDB = Double.parseDouble(substrings[2]);
+                double kSR = Double.parseDouble(substrings[3]);
+                double kSG = Double.parseDouble(substrings[4]);
+                double kSB = Double.parseDouble(substrings[5]);
+                double power = Double.parseDouble(substrings[6]);
+
+                primitive.setOpticParameters(kDR, kDG, kDB, kSR, kSG, kSB, power);
+            }
 
 
         }
-        catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException e)
+        catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
             return -1;
         }
@@ -69,6 +105,8 @@ public class Controller {
         String[] substrings;
         do {
             line = br.readLine();
+            if(line == null)
+                return null;
             line = line.substring(0, line.indexOf('/') != -1 ? line.indexOf('/') : line.length());
             substrings = line.split("\\s+");
         }

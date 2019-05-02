@@ -60,7 +60,7 @@ public class RaytracingFrame extends MainFrame {
 
     public void onOpen()
     {
-        File file = getOpenFileName("txt", "A scene description file");
+        File file = getOpenFileName("scene", "A scene description file");
         if(file != null) {
             setTitle(file.getName() + " | Denis Migranov, 16201");
             int r = controller.loadFile(file);
