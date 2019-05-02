@@ -2,6 +2,7 @@ package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.primitives.Box;
 import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
 import ru.nsu.fit.g16201.migranov.model.primitives.Sphere;
 
@@ -72,7 +73,13 @@ public class Controller {
                         primitive = new Sphere(center, radius);
                         break;
                     case "BOX":
+                        substrings = readLineAndSplit(br);
+                        Point3D minPoint = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
+                        substrings = readLineAndSplit(br);
+                        Point3D maxPoint = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+                        primitive = new Box(minPoint, maxPoint);
                         break;
                 }
 
@@ -86,6 +93,7 @@ public class Controller {
                 double power = Double.parseDouble(substrings[6]);
 
                 primitive.setOpticParameters(kDR, kDG, kDB, kSR, kSG, kSB, power);
+                primitives.add(primitive);
             }
 
 
