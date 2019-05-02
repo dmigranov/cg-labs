@@ -2,9 +2,7 @@ package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
-import ru.nsu.fit.g16201.migranov.model.primitives.Box;
-import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
-import ru.nsu.fit.g16201.migranov.model.primitives.Sphere;
+import ru.nsu.fit.g16201.migranov.model.primitives.*;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -83,6 +81,29 @@ public class Controller {
 
                         primitive = new Box(minPoint, maxPoint);
                         break;
+                    case "TRIANGLE":
+                        substrings = readLineAndSplit(br);
+                        Point3D tp1 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+                        substrings = readLineAndSplit(br);
+                        Point3D tp2 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+                        substrings = readLineAndSplit(br);
+                        Point3D tp3 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+                        primitive = new Triangle(tp1, tp2, tp3);
+                        break;
+
+                    case "QUADRANGLE":
+                        substrings = readLineAndSplit(br);
+                        Point3D qp1 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+                        substrings = readLineAndSplit(br);
+                        Point3D qp2 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+                        substrings = readLineAndSplit(br);
+                        Point3D qp3 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+                        substrings = readLineAndSplit(br);
+                        Point3D qp4 = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+                        primitive = new Quadrangle(qp1, qp2, qp3, qp4);
+                        break;
                 }
 
                 substrings = readLineAndSplit(br);
@@ -105,7 +126,6 @@ public class Controller {
             return -1;
         }
 
-
         return 0;
     }
 
@@ -118,6 +138,15 @@ public class Controller {
 
     public void drawWireFigures()
     {
+        if(!isRenderFileLoaded) //todo: + при нажатии init
+        {
+            double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
+
+            //todo: габаритный бокс
+            Point3D up = new Point3D(0, 0, 1);
+
+
+        }
     }
 
 
