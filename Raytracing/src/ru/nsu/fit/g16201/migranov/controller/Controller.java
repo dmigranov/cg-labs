@@ -20,6 +20,8 @@ public class Controller {
     private List<Light> lights;
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
+    private boolean isRenderFileLoaded = false;
+
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
         {
@@ -103,7 +105,19 @@ public class Controller {
             return -1;
         }
 
+
         return 0;
+    }
+
+    public int loadRenderFile(File file)
+    {
+
+        isRenderFileLoaded = true;
+        return 0;
+    }
+
+    public void drawWireFigures()
+    {
     }
 
 

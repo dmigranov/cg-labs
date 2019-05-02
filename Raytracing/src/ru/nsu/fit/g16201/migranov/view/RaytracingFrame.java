@@ -68,7 +68,10 @@ public class RaytracingFrame extends MainFrame {
             {
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            //something...
+            String fileName = file.getName().replaceFirst("[.][^.]+$", "");
+            //todo: renderFile
+
+            controller.drawWireFigures();
         }
     }
 
