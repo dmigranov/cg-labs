@@ -119,7 +119,6 @@ public class Controller {
                 primitives.add(primitive);
             }
 
-
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -140,10 +139,11 @@ public class Controller {
     {
         if(!isRenderFileLoaded) //todo: + при нажатии init
         {
+            Point3D up = new Point3D(0, 0, 1);
+
             double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
 
             //todo: габаритный бокс
-            Point3D up = new Point3D(0, 0, 1);
 
 
         }
