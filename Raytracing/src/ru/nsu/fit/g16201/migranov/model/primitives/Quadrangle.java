@@ -14,4 +14,22 @@ public class Quadrangle extends Primitive {
         this.p3 = p3;
         this.p4 = p4;
     }
+
+    @Override
+    public Point3D getMinPoint() {
+        double x = Math.min(Math.min(p1.x, p2.x), Math.min(p3.x, p4.x));
+        double y = Math.min(Math.min(p1.y, p2.y), Math.min(p3.y, p4.y));
+        double z = Math.min(Math.min(p1.z, p2.z), Math.min(p3.z, p4.z));
+
+        return new Point3D(x, y, z);
+    }
+
+    @Override
+    public Point3D getMaxPoint() {
+        double x = Math.max(Math.max(p1.x, p2.x), Math.max(p3.x, p4.x));
+        double y = Math.max(Math.max(p1.y, p2.y), Math.max(p3.y, p4.y));
+        double z = Math.max(Math.min(p1.z, p2.z), Math.max(p3.z, p4.z));
+
+        return new Point3D(x, y, z);
+    }
 }
