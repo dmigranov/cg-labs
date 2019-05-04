@@ -20,7 +20,7 @@ public abstract class Primitive {
         this.power = power;
     }
 
-    public Primitive()
+    Primitive()
     {
 
     }
@@ -35,6 +35,9 @@ public abstract class Primitive {
         this.kSB = kSB;
         this.power = power;
     }
+
+    public abstract double getMinPoint();
+    public abstract double getMaxPoint();
 
 
 

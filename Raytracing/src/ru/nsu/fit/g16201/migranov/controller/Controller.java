@@ -143,10 +143,14 @@ public class Controller {
 
             double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
 
-            //todo: габаритный бокс
+            for(Primitive primitive : primitives)
+            {
 
+            }
 
         }
+
+        //todo
     }
 
 
