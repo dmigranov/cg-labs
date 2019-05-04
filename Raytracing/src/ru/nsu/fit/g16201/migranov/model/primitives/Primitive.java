@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
+import ru.nsu.fit.g16201.migranov.model.Point3D;
+
 public abstract class Primitive {
     private double kDR;
     private double kDG;
@@ -36,8 +38,8 @@ public abstract class Primitive {
         this.power = power;
     }
 
-    public abstract double getMinPoint();
-    public abstract double getMaxPoint();
+    public abstract Point3D getMinPoint();
+    public abstract Point3D getMaxPoint();
 
 
 

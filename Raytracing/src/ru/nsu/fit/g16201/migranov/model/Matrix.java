@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import java.util.Arrays;
+
 public class Matrix {
     private double[] data;
 
@@ -28,13 +30,14 @@ public class Matrix {
     public static Matrix getTranslationMatrix(Point3D where) {
         return new Matrix(4, 4,
                 1, 0, 0, where.x,
-                        0, 1, 0, where.y,
-                        0, 0, 1, where.z,
-                        0, 0, 0, 1);
+                0, 1, 0, where.y,
+                0, 0, 1, where.z,
+                0, 0, 0, 1);
     }
 
     public static Matrix getViewMatrix(Point3D eye, Point3D ref, Point3D up) {
         Point3D w = new Point3D(eye.x - ref.x, eye.y - ref.y, eye.z - ref.z).normalize();
+        //Point3D w = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();
         Point3D rr = Point3D.getVectorProduct(up, w);
         Point3D u = rr.normalize();
         Point3D v = Point3D.getVectorProduct(w, u);
@@ -53,6 +56,22 @@ public class Matrix {
                 0, 0, 0, 1
         );
     }
+
+    //в левосторонней ск вроде верно
+    public static Matrix getViewMatrixNew(Point3D eye, Point3D ref, Point3D up) {
+        Point3D z = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();
+
+        Point3D x = Point3D.getVectorProduct(up, z).normalize();
+        Point3D y = Point3D.getVectorProduct(z, x);
+
+        return new Matrix(4, 4,
+                x.x, x.y, x.z, -(x.x*eye.x + x.y*eye.y + x.z* eye.z),
+                y.x, y.y, y.z, -(y.x*eye.x + y.y*eye.y + y.z* eye.z),
+                z.x, z.y, z.z, -(z.x*eye.x + z.y*eye.y + z.z* eye.z),
+                0, 0, 0, 1
+        );
+    }
+
 
     public static Matrix getViewTranslationMatrix(Point3D eye, Point3D ref, Point3D up) {
         return Matrix.transpose(getViewMatrix(eye, ref, up));
@@ -86,26 +105,26 @@ public class Matrix {
     public static Matrix getProjectionMatrix(double sw, double sh, double zf, double zn) {
         return new Matrix(4, 4,
                 2/sw*zn, 0, 0, 0,
-                        0, 2/sh*zn, 0, 0,
-                        0, 0, zf/(zf - zn), -zn*zf/(zf - zn),
-                        0, 0, 1, 0);      //проекц
+                0, 2/sh*zn, 0, 0,
+                0, 0, zf/(zf - zn), -zn*zf/(zf - zn),
+                0, 0, 1, 0);      //проекц
 
     }
 
     public static Matrix getXRotateMatrix(double angle) {
         return new Matrix(4, 4,
                 1, 0, 0, 0,
-                        0, Math.cos(angle), -Math.sin(angle), 0,
-                        0, Math.sin(angle), Math.cos(angle), 0,
-                        0, 0, 0, 1);
+                0, Math.cos(angle), -Math.sin(angle), 0,
+                0, Math.sin(angle), Math.cos(angle), 0,
+                0, 0, 0, 1);
     }
 
     public static Matrix getYRotateMatrix(double angle) {
         return new Matrix(4, 4,
                 Math.cos(angle), 0, Math.sin(angle), 0,
-                        0, 1, 0, 0,
-                        -Math.sin(angle), 0, Math.cos(angle), 0,
-                        0, 0, 0, 1);
+                0, 1, 0, 0,
+                -Math.sin(angle), 0, Math.cos(angle), 0,
+                0, 0, 0, 1);
     }
 
     public static Matrix getZRotateMatrix(double angle) {

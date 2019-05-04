@@ -10,4 +10,14 @@ public class Box extends Primitive {
         this.minPoint = minPoint;
         this.maxPoint = maxPoint;
     }
+
+    @Override
+    public Point3D getMinPoint() {
+        return minPoint;
+    }
+
+    @Override
+    public Point3D getMaxPoint() {
+        return maxPoint;
+    }
 }

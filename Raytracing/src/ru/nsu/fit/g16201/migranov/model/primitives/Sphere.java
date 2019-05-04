@@ -17,4 +17,14 @@ public class Sphere extends Primitive {
         this.center = center;
         this.radius = radius;
     }
+
+    @Override
+    public Point3D getMinPoint() {
+        return Point3D.add();
+    }
+
+    @Override
+    public Point3D getMaxPoint() {
+        return null;
+    }
 }
