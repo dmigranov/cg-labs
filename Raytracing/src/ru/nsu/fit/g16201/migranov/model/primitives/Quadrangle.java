@@ -2,6 +2,9 @@ package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Quadrangle extends Primitive {
     private Point3D p1;
     private Point3D p2;
@@ -31,5 +34,17 @@ public class Quadrangle extends Primitive {
         double z = Math.max(Math.min(p1.z, p2.z), Math.max(p3.z, p4.z));
 
         return new Point3D(x, y, z);
+    }
+
+    @Override
+    public List<List<Point3D>> getWireframeLines() {
+        List<List<Point3D>> lines = new ArrayList<>();
+        List<Point3D> line = new ArrayList<>();
+        line.add(p1);
+        line.add(p2);
+        line.add(p3);
+        line.add(p4);
+        lines.add(line);
+        return lines;
     }
 }

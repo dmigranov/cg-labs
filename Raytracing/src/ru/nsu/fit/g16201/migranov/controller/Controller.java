@@ -184,6 +184,10 @@ public class Controller {
         //иначе - файл загружен, и матрицы proj и view уже заданы
 
 
+        for(Primitive primitive : primitives)
+        {
+            List<List<Point3D>> lines = primitive.getWireframeLines();
+        }
 
 
         //todo

@@ -2,6 +2,8 @@ package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 
+import java.util.List;
+
 public abstract class Primitive {
     private double kDR;
     private double kDG;
@@ -42,6 +44,6 @@ public abstract class Primitive {
     public abstract Point3D getMinPoint();
     public abstract Point3D getMaxPoint();
 
-
-
+    //по идее, можно считать один раз при загрузке
+    public abstract List<List<Point3D>> getWireframeLines();
 }

@@ -2,6 +2,9 @@ package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Triangle extends Primitive {
     private Point3D p1;
     private Point3D p2;
@@ -9,7 +12,6 @@ public class Triangle extends Primitive {
 
     public Triangle(Point3D p1, Point3D p2, Point3D p3)
     {
-
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
@@ -31,5 +33,16 @@ public class Triangle extends Primitive {
         double z = Math.max(Math.max(p1.z, p2.z), p3.z);
 
         return new Point3D(x, y, z);
+    }
+
+    @Override
+    public List<List<Point3D>> getWireframeLines() {
+        List<List<Point3D>> lines = new ArrayList<>();
+        List<Point3D> line = new ArrayList<>();
+        line.add(p1);
+        line.add(p2);
+        line.add(p3);
+        lines.add(line);
+        return lines;
     }
 }
