@@ -156,9 +156,23 @@ public class Controller {
                 maxY = (max.y > maxY ? max.y : maxY);
                 maxZ = (max.z > maxZ ? max.z : maxZ);
             }
-
-            //todo: прибавить 5%
+            //это же ref для матрицы view
             Point3D boxCenter = new Point3D((minX + maxX)/2, (minY + maxY)/2, (minZ + maxZ)/2);
+            //double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);    //пропорц?
+
+            double addX = (maxX - minX)/2 * 1.05;
+            maxX = boxCenter.x + addX;
+            minX = boxCenter.x - addX;
+            double addY = (maxY - minY)/2 * 1.05;
+            maxY = boxCenter.y + addY;
+            minY = boxCenter.y - addY;
+            double addZ = (maxZ - minZ)/2 * 1.05;
+            maxZ = boxCenter.z + addZ;
+            minZ = boxCenter.z - addZ;
+
+
+            Point3D eye = new Point3D(0, boxCenter.y, boxCenter.z);
+
         }
 
         //todo
