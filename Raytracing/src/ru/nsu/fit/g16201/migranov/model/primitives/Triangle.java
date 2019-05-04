@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,11 @@ public class Triangle extends Primitive {
     }
 
     @Override
-    public List<List<Point3D>> getWireframeLines() {
-        List<List<Point3D>> lines = new ArrayList<>();
-        List<Point3D> line = new ArrayList<>();
-        line.add(p1);
-        line.add(p2);
-        line.add(p3);
-        lines.add(line);
+    public List<WireframeLine> getWireframeLines() {
+        List<WireframeLine> lines = new ArrayList<>();
+        lines.add(new WireframeLine(p1, p2));
+        lines.add(new WireframeLine(p2, p3));
+        lines.add(new WireframeLine(p3, p1));
         return lines;
     }
 }

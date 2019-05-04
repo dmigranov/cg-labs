@@ -3,6 +3,7 @@ package ru.nsu.fit.g16201.migranov.controller;
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 import ru.nsu.fit.g16201.migranov.model.primitives.*;
 
 import java.awt.*;
@@ -186,15 +187,8 @@ public class Controller {
 
         for(Primitive primitive : primitives)
         {
-            List<List<Point3D>> lines = primitive.getWireframeLines();
+            List<WireframeLine> lines = primitive.getWireframeLines();
 
-            for(List<Point3D> line : lines)
-            {
-                for(int i = 0; i <= lines.size(); i++)
-                {
-
-                }
-            }
         }
 
 

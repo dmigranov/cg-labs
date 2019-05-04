@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +26,9 @@ public class Box extends Primitive {
     }
 
     @Override
-    public List<List<Point3D>> getWireframeLines() {
+    public List<WireframeLine> getWireframeLines() {
         Point3D p000 = minPoint, p111 = maxPoint;
-        Point3D
 
-        List<List<Point3D>> lines = new ArrayList<>();
-        List<Point3D> line1 = new ArrayList<>();
-        line1.add(p1);
-        line1.add(p2);
-        line1.add(p3);
-        line1.add(p4);
-        lines.add(line);
-        return lines;
+
     }
 }
