@@ -28,7 +28,8 @@ public class Box extends Primitive {
     @Override
     public List<WireframeLine> getWireframeLines() {
         Point3D p000 = minPoint, p111 = maxPoint;
+        //todo
 
-
+        return null;
     }
 }

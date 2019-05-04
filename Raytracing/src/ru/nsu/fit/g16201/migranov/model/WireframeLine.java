@@ -1,19 +1,20 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import java.util.List;
+
 public class WireframeLine {
-    private Point3D p1;
-    private Point3D p2;
-    public WireframeLine(Point3D p1, Point3D p2)
+    //private Point3D p1;
+    //private Point3D p2;
+
+    private Point3D[] line;
+
+    public WireframeLine(Point3D ... points)
     {
-        this.p1 = p1;
-        this.p2 = p2;
+        line = points;
     }
 
-    public Point3D getP1() {
-        return p1;
+    public Point3D[] getPoints() {
+        return line;
     }
 
-    public Point3D getP2() {
-        return p2;
-    }
 }

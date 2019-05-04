@@ -46,5 +46,6 @@ public abstract class Primitive {
     public abstract Point3D getMaxPoint();
 
     //по идее, можно считать один раз при загрузке
+    //а WireframeLine плохо в том отношении, что два раза для одной точки будем переводить матрицами!
     public abstract List<WireframeLine> getWireframeLines();
 }

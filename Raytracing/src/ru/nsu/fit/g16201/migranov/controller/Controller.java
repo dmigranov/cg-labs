@@ -184,11 +184,15 @@ public class Controller {
         }
         //иначе - файл загружен, и матрицы proj и view уже заданы
 
-
+        WireframeLine l = primitives.get(0).getWireframeLines().get(0);
         for(Primitive primitive : primitives)
         {
             List<WireframeLine> lines = primitive.getWireframeLines();
 
+            for (WireframeLine line : lines)
+            {
+                //todo
+            }
         }
 
 

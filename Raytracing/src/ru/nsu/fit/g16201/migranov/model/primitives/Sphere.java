@@ -1,6 +1,9 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
 import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.WireframeLine;
+
+import java.util.List;
 
 public class Sphere extends Primitive {
     private Point3D center;
@@ -26,5 +29,11 @@ public class Sphere extends Primitive {
     @Override
     public Point3D getMaxPoint() {
         return new Point3D(center.x + radius, center.y + radius, center.z + radius);
+    }
+
+    @Override
+    public List<WireframeLine> getWireframeLines() {
+        //todo
+        return null;
     }
 }

@@ -40,10 +40,8 @@ public class Quadrangle extends Primitive {
     @Override
     public List<WireframeLine> getWireframeLines() {
         List<WireframeLine> lines = new ArrayList<>();
-        lines.add(new WireframeLine(p1, p2));
-        lines.add(new WireframeLine(p2, p3));
-        lines.add(new WireframeLine(p3, p4));
-        lines.add(new WireframeLine(p4, p1));
+        lines.add(new WireframeLine(p1, p2, p3, p4, p1));
+
         return lines;
     }
 }
