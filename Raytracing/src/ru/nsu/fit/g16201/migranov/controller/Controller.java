@@ -133,7 +133,7 @@ public class Controller {
 
     public int loadRenderFile(File file)
     {
-
+        //todo
         isRenderFileLoaded = true;
         return 0;
     }
@@ -177,7 +177,13 @@ public class Controller {
 
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
 
+            double zn = (minX - eye.x)/2;
+            double zf = maxX - eye.x + (maxX - minX)/2;
+            //todo: sq, sh + proj
         }
+        //иначе - файл загружен, и матрицы proj и view уже заданы
+
+
 
 
         //todo
