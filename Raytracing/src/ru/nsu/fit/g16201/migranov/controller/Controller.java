@@ -157,6 +157,8 @@ public class Controller {
                 maxZ = (max.z > maxZ ? max.z : maxZ);
             }
 
+            //todo: прибавить 5%
+            Point3D boxCenter = new Point3D((minX + maxX)/2, (minY + maxY)/2, (minZ + maxZ)/2);
         }
 
         //todo
