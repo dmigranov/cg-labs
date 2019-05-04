@@ -38,6 +38,7 @@ public abstract class Primitive {
         this.power = power;
     }
 
+    //вовзращают минимальные и максимальные координаты (понятно, по отдельности)
     public abstract Point3D getMinPoint();
     public abstract Point3D getMaxPoint();
 

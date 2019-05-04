@@ -20,11 +20,11 @@ public class Sphere extends Primitive {
 
     @Override
     public Point3D getMinPoint() {
-        return Point3D.add();
+        return new Point3D(center.x - radius, center.y - radius, center.z - radius);
     }
 
     @Override
     public Point3D getMaxPoint() {
-        return null;
+        return new Point3D(center.x + radius, center.y + radius, center.z + radius);
     }
 }
