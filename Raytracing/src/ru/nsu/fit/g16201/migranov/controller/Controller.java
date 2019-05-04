@@ -187,6 +187,14 @@ public class Controller {
         for(Primitive primitive : primitives)
         {
             List<List<Point3D>> lines = primitive.getWireframeLines();
+
+            for(List<Point3D> line : lines)
+            {
+                for(int i = 0; i <= lines.size(); i++)
+                {
+
+                }
+            }
         }
 
 
