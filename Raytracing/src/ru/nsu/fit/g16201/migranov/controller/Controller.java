@@ -145,7 +145,16 @@ public class Controller {
 
             for(Primitive primitive : primitives)
             {
+                Point3D min = primitive.getMinPoint();
+                Point3D max = primitive.getMaxPoint();
 
+                minX = (min.x < minX ? min.x : minX);
+                minY = (min.y < minY ? min.y : minY);
+                minZ = (min.z < minZ ? min.z : minZ);
+
+                maxX = (max.x > maxX ? max.x : maxX);
+                maxY = (max.y > maxY ? max.y : maxY);
+                maxZ = (max.z > maxZ ? max.z : maxZ);
             }
 
         }
