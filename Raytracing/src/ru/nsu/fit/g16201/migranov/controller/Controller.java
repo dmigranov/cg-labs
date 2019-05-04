@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Light;
+import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.primitives.*;
 
@@ -19,6 +20,8 @@ public class Controller {
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
     private boolean isRenderFileLoaded = false;
+
+    private Matrix viewMatrix, projectionMatrix;
 
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -170,10 +173,12 @@ public class Controller {
             maxZ = boxCenter.z + addZ;
             minZ = boxCenter.z - addZ;
 
+            Point3D eye = new Point3D(minX - (maxY - minY)/2/Math.tan(Math.PI/6), boxCenter.y, boxCenter.z);        //todo: провериьь x
 
-            Point3D eye = new Point3D(0, boxCenter.y, boxCenter.z);
+            viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
 
         }
+
 
         //todo
     }
