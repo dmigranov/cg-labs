@@ -44,11 +44,14 @@ public class Sphere extends Primitive {
 
         for (int i = 0; i < n; i++)
         {
+            double delta = (double)i/n;
+            double ux = (center.z - radius) * (1 - delta) + (center.z + radius) * delta;
+            double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - radius, 2));
             for (int j = 0; j <= m /** k*/; j++) {
                 double v = (d - c) * j / m / k + c;
                 double x = gu.y * Math.cos(v);
                 double y = gu.y * Math.sin(v);
-                double z = gu.x;
+                double z = ux;
 
                 Matrix p = new Matrix(4, 1, x, y, z, 1);
 
