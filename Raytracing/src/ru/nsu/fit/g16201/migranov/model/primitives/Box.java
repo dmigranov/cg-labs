@@ -28,6 +28,14 @@ public class Box extends Primitive {
     @Override
     public List<WireframeLine> getWireframeLines() {
         Point3D p000 = minPoint, p111 = maxPoint;
+        double x0 = p000.x, y0 = p000.y, z0 = p000.z;
+        double x1 = p111.x, y1 = p111.y, z1 = p111.z;
+
+        Point3D p100 = new Point3D(x1, y0, z0);
+        Point3D p010 = new Point3D(x0, y1, z0);
+        Point3D p001 = new Point3D(x0, y0, z1);
+
+
         //todo
 
         return null;
