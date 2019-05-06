@@ -46,26 +46,21 @@ public class Sphere extends Primitive {
         {
             double delta = (double)i/n;
             double ux = (center.z - radius) * (1 - delta) + (center.z + radius) * delta;
-            double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - radius, 2));
+            double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - ux, 2));
             for (int j = 0; j <= m /** k*/; j++) {
-                double v = (d - c) * j / m / k + c;
-                double x = gu.y * Math.cos(v);
-                double y = gu.y * Math.sin(v);
+                double v = (Math.PI * 2) * j / m /*/ k*/;
+                double x = uy * Math.cos(v);
+                double y = uy * Math.sin(v);
                 double z = ux;
 
-                Matrix p = new Matrix(4, 1, x, y, z, 1);
+
+                /*Matrix p = new Matrix(4, 1, x, y, z, 1);
 
                 Matrix np = Matrix.multiply(rtm, p);                        //на самом деле произведение r и t имеет простой вид - можно упростить
                 double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
                 //modelPoints[i][j] = new Point3D(nx, ny, nz);
-                modelPoints[i][j] = new Point3D(x, y, z);
+                modelPoints[i][j] = new Point3D(x, y, z);*/
 
-                if (nx < minX) minX = nx;
-                if (nx > maxX) maxX = nx;
-                if (ny < minY) minY = ny;
-                if (ny > maxY) maxY = ny;
-                if (nz < minZ) minZ = nz;
-                if (nz > maxZ) maxZ = nz;
             }
         }
 
