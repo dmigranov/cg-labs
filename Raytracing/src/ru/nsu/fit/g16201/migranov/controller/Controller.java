@@ -188,10 +188,10 @@ public class Controller {
         for(Primitive primitive : primitives)
         {
             List<WireframeLine> lines = primitive.getWireframeLines();
-
             for (WireframeLine line : lines)
             {
                 //todo
+                List<Point3D> points = line.getPoints();
             }
         }
 

@@ -36,8 +36,6 @@ public class Sphere extends Primitive {
 
     @Override
     public List<WireframeLine> getWireframeLines() {
-        //todo
-
         List<WireframeLine> lines = new ArrayList<>();
 
         int n = 5; int m = 5; //k?
@@ -54,18 +52,13 @@ public class Sphere extends Primitive {
                 double y = uy * Math.sin(v);
                 double z = ux;
 
+                //todo: составить параллельные и перпендикулярные линии
 
-                /*Matrix p = new Matrix(4, 1, x, y, z, 1);
-
-                Matrix np = Matrix.multiply(rtm, p);                        //на самом деле произведение r и t имеет простой вид - можно упростить
-                double nx = np.get(0, 0), ny = np.get(1, 0), nz = np.get(2, 0);
-                //modelPoints[i][j] = new Point3D(nx, ny, nz);
-                modelPoints[i][j] = new Point3D(x, y, z);*/
 
             }
         }
 
 
-        return null;
+        return lines;
     }
 }
