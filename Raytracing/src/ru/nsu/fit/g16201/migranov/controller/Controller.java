@@ -180,9 +180,15 @@ public class Controller {
 
             double zn = (minX - eye.x)/2;
             double zf = maxX - eye.x + (maxX - minX)/2;
-            //todo: sq, sh + proj
+
+            double sw = (maxZ - minZ)/zn;    //todo: вписанность в экран!
+            double sh = (maxY - minY)/zf;
+
+            projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
         }
         //иначе - файл загружен, и матрицы proj и view уже заданы
+
+        Matrix projView = Matrix.multiply(projectionMatrix, viewMatrix);
 
         WireframeLine l = primitives.get(0).getWireframeLines().get(0);
         for(Primitive primitive : primitives)
@@ -192,6 +198,17 @@ public class Controller {
             {
                 //todo
                 List<Point3D> points = line.getPoints();
+                Point3D prev = points.get(0);
+                Matrix mprev = new Matrix(4, 1, prev.x, prev.y, prev.z, 1);
+
+
+                for(int i = 1; i < points.size(); i++)
+                {
+                    //линия
+
+                    //установить прев
+                }
+
             }
         }
 
