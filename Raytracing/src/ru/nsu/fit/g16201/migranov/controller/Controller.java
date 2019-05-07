@@ -178,8 +178,8 @@ public class Controller {
 
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
 
-            double zn = (minX - eye.x)/2;
-            double zf = maxX - eye.x + (maxX - minX)/2;
+            double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
+            double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
 
             double sw = (maxZ - minZ)/zn;    //todo: вписанность в экран!
             double sh = (maxY - minY)/zf;
@@ -209,11 +209,13 @@ public class Controller {
                     Matrix mpointModel = new Matrix(4, 1, pointModel.x, pointModel.y, pointModel.z, 1);
                     Matrix rpoint = Matrix.multiply(projView, mpointModel);
 
+                    Point3D point = new Point3D(rpoint.get(0, 0), rpoint.get(1, 0), rpoint.get(2, 0));
+                    double w = rpoint.get(3, 0);
 
+                    if(point.z/w >= 0 && point.z/w <= 1) {
 
-
-
-
+                        System.out.println(point.x/w + point.y/w);
+                    }
                     //установить прев
                 }
 
