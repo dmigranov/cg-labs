@@ -35,7 +35,7 @@ public class RaytracingFrame extends MainFrame {
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                //resize(); //todo
+                resize(); //todo
             }
         });
 
@@ -43,7 +43,14 @@ public class RaytracingFrame extends MainFrame {
 
         mainPanel.add(wireframePanel);
         controller = new Controller(wireframePanel);
+        wireframePanel.setPreferredSize(new Dimension(400, 400));
+        wireframePanel.setBackgroundColor(Color.WHITE);
+        wireframePanel.clear();
+
         addMenus();
+
+        add(mainPanel);
+
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -57,6 +64,10 @@ public class RaytracingFrame extends MainFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+    }
+
+    private void resize() {
+        //todo
     }
 
     private void addMenus() throws NoSuchMethodException{

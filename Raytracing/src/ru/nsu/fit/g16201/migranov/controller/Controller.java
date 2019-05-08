@@ -1,9 +1,6 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
-import ru.nsu.fit.g16201.migranov.model.Light;
-import ru.nsu.fit.g16201.migranov.model.Matrix;
-import ru.nsu.fit.g16201.migranov.model.Point3D;
-import ru.nsu.fit.g16201.migranov.model.WireframeLine;
+import ru.nsu.fit.g16201.migranov.model.*;
 import ru.nsu.fit.g16201.migranov.model.primitives.*;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
@@ -205,12 +202,12 @@ public class Controller {
             {
                 //todo
                 List<Point3D> points = line.getPoints();
-                Point3D prevModel = points.get(0);
+                /*Point3D prevModel = points.get(0);
                 Matrix mprevModel = new Matrix(4, 1, prevModel.x, prevModel.y, prevModel.z, 1);
-                Matrix rprev = Matrix.multiply(projView, mprevModel);
-                //Point3D (prev)
+                Matrix rprev = Matrix.multiply(projView, mprevModel);*/
+                Point prev = null;    //пред точка в экранных координатах
 
-                for(int i = 1; i < points.size(); i++)
+                for(int i = 0; i < points.size(); i++)
                 {
                     Point3D pointModel = points.get(i);
                     Matrix mpointModel = new Matrix(4, 1, pointModel.x, pointModel.y, pointModel.z, 1);
@@ -225,12 +222,25 @@ public class Controller {
 
                         int x = (int)((point.x/w + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((point.y/w + 1)/2*wireframePanel.getCanvasHeight());
+
+                        if(prev != null)
+                        {
+                            wireframePanel.drawLine(prev.x, prev.y, x, y);
+                        }
+
+                        prev = new Point(x, y);
+
+                    }
+                    else
+                    {
+                        prev = null;
                     }
                     //установить прев
                 }
 
             }
         }
+        wireframePanel.repaint();
 
 
         //todo

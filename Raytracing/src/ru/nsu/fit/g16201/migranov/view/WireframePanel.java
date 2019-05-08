@@ -57,7 +57,10 @@ public class WireframePanel extends JPanel {
     public void drawLine(int x1, int y1, int x2, int y2, Color color) {
         canvasGraphics.setColor(color);
         canvasGraphics.drawLine(x1, y1, x2, y2);
+    }
 
+    public void drawLine(int x1, int y1, int x2, int y2) {
+        drawLine(x1, y1, x2, y2, Color.BLACK);
     }
 
     public int getCanvasWidth() {
