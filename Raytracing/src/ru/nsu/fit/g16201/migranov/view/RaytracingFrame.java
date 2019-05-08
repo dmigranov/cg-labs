@@ -43,7 +43,7 @@ public class RaytracingFrame extends MainFrame {
 
         mainPanel.add(wireframePanel);
         controller = new Controller(wireframePanel);
-        wireframePanel.setPreferredSize(new Dimension(400, 400));
+        wireframePanel.setPreferredSize(new Dimension(600, 400));
         wireframePanel.setBackgroundColor(Color.WHITE);
         wireframePanel.clear();
 
