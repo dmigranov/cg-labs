@@ -5,6 +5,7 @@ import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 import ru.nsu.fit.g16201.migranov.model.primitives.*;
+import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -23,6 +24,12 @@ public class Controller {
     private boolean isRenderFileLoaded = false;
 
     private Matrix viewMatrix, projectionMatrix;
+
+    private WireframePanel wireframePanel;
+
+    public Controller(WireframePanel wireframePanel) {
+        this.wireframePanel = wireframePanel;
+    }
 
     public int loadFile(File file) {
         try(BufferedReader br = new BufferedReader(new FileReader(file)))
@@ -214,7 +221,10 @@ public class Controller {
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
 
-                        System.out.println(point.x/w + point.y/w);
+                        //System.out.println(point.x/w + point.y/w);
+
+                        int x = (int)((point.x/w + 1)/2*wireframePanel.getCanvasWidth());
+                        int y = (int)((point.y/w + 1)/2*wireframePanel.getCanvasHeight());
                     }
                     //установить прев
                 }

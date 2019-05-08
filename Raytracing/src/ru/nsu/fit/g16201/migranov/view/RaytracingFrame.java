@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.lang.reflect.Method;
@@ -17,7 +19,8 @@ import java.util.List;
 public class RaytracingFrame extends MainFrame {
     private JLabel statusLabel = new JLabel("");
     private List<AbstractButton> deactivatedButtons = new ArrayList<>();
-
+    private WireframePanel wireframePanel;
+    private JPanel mainPanel;
     private Controller controller;
 
     public static void main(String[] args) throws Exception {
@@ -27,8 +30,19 @@ public class RaytracingFrame extends MainFrame {
     private RaytracingFrame() throws Exception {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
-        controller = new Controller();
 
+        mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                //resize(); //todo
+            }
+        });
+
+        wireframePanel = new WireframePanel();
+
+        mainPanel.add(wireframePanel);
+        controller = new Controller(wireframePanel);
         addMenus();
 
         JPanel statusPanel = new JPanel();
