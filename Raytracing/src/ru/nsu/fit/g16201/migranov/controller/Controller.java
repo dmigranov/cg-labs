@@ -34,6 +34,18 @@ public class Controller {
     public Controller(WireframePanel wireframePanel) {
         this.wireframePanel = wireframePanel;
 
+        wireframePanel.addMouseWheelListener(e -> {
+            int count = e.getWheelRotation();
+
+            /*if(zn - 0.1*count < zf && zn - 0.1*count > 0) {
+                zn -= 0.1 * count;
+                projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+                drawFigures();
+            }*/
+
+            //todo
+        });
+
         wireframePanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -52,10 +64,12 @@ public class Controller {
                     double yAngle = 0.01 * dy;
 
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
-                    Matrix xRot = Matrix.getZRotateMatrix(xAngle);
-                    Matrix yRot = Matrix.getYRotateMatrix(-yAngle);
-
                     Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
+
+                    Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
+                    Matrix yRot = Matrix.getYRotateMatrix(yAngle);
+
+                    //todo: по отдельности вращается неплохо, но после смещени осей..
 
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
@@ -298,8 +312,6 @@ public class Controller {
         }
         wireframePanel.repaint();
 
-
-        //todo
     }
 
 

@@ -52,10 +52,12 @@ public class Sphere extends Primitive {
                 double y = uy * Math.sin(v);
                 double z = ux;
 
+                parLine.addPoint(new Point3D(x, y, z));
                 //todo: составить параллельные и перпендикулярные линии
 
 
             }
+            lines.add(parLine);
         }
 
 
