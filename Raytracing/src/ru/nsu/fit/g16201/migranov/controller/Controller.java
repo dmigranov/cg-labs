@@ -5,9 +5,7 @@ import ru.nsu.fit.g16201.migranov.model.primitives.*;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -44,6 +42,31 @@ public class Controller {
             }*/
 
             //todo
+        });
+
+        wireframePanel.setFocusable(true);
+        wireframePanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+
+                double dx = 0, dy = 0;
+
+                int location = e.getKeyCode();
+                System.out.println(location);
+                if (location == KeyEvent.VK_LEFT) {
+                    dx = -1;
+                } else if (location == KeyEvent.VK_RIGHT) {
+                    dx = 1;
+                }
+
+                System.out.println(dx);
+
+                Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, 0));
+                viewMatrix = Matrix.multiply(viewMatrix, tr);
+                drawWireFigures();
+
+            }
         });
 
         wireframePanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -88,6 +111,12 @@ public class Controller {
                 super.mouseReleased(e);
                 prevX = null;
                 prevY = null;
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                wireframePanel.requestFocusInWindow();
             }
         });
     }

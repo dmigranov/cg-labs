@@ -46,6 +46,7 @@ public class RaytracingFrame extends MainFrame {
         wireframePanel.setPreferredSize(new Dimension(600, 400));
         wireframePanel.setBackgroundColor(Color.WHITE);
         wireframePanel.clear();
+        wireframePanel.requestFocusInWindow();
 
         addMenus();
 
