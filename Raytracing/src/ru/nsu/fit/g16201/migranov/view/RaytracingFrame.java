@@ -67,7 +67,33 @@ public class RaytracingFrame extends MainFrame {
     }
 
     private void resize() {
-        //todo
+        int width = mainPanel.getWidth();
+        int height = mainPanel.getHeight();
+        /*double sw = controller.getSw(), sh = controller.getSh();
+
+        double nwidth, nheight;
+        if(width < height) {
+            nheight = height;
+            nwidth = sw / sh * height;
+            if(nwidth > width)
+            {
+                nheight = nheight / nwidth * width;
+                nwidth = width;
+            }
+        }
+        else
+        {
+            nwidth = width;
+            nheight = sh / sw * width;
+            if(nheight > height)
+            {
+                nwidth = nwidth/ nheight * height;
+                nheight = height;
+            }
+        }
+        wireframePanel.setPreferredSize(new Dimension((int)Math.round(nwidth) - 20, (int)Math.round(nheight) - 20));
+        controller.drawFigures();
+        mainPanel.revalidate();*/
     }
 
     private void addMenus() throws NoSuchMethodException{

@@ -5,6 +5,8 @@ import ru.nsu.fit.g16201.migranov.model.primitives.*;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -24,8 +26,41 @@ public class Controller {
 
     private WireframePanel wireframePanel;
 
+    private Integer prevX = null, prevY = null;
+
     public Controller(WireframePanel wireframePanel) {
         this.wireframePanel = wireframePanel;
+
+        wireframePanel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                super.mouseDragged(e);
+                int x = e.getX();
+                int y = e.getY();
+                if(prevX != null) {
+                    int dx = x - prevX;
+                    int dy = y - prevY;
+
+                    double xAngle = 0.01 * dx;
+                    double yAngle = 0.01 * dy;
+
+                    if(currentRotateFigure < 0) {
+                        xAllAngle+=xAngle;
+                        yAllAngle+=yAngle;
+                        Matrix xRot = Matrix.getYRotateMatrix(xAngle);
+                        Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
+                        Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
+                        Matrix xyr = Matrix.multiply(yRot, xr);
+                        //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
+                        sceneRotateMatrix = xyr;
+                    }
+
+                    drawWireFigures();
+                }
+                prevX = x;
+                prevY = y;
+            }
+        });
     }
 
     public int loadFile(File file) {
