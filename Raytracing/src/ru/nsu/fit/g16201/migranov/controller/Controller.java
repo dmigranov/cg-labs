@@ -5,6 +5,7 @@ import ru.nsu.fit.g16201.migranov.model.primitives.*;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
@@ -20,7 +21,8 @@ public class Controller {
     private List<Light> lights;
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
-    private boolean isRenderFileLoaded = false;
+    //private boolean isRenderFileLoaded = false;
+    private boolean areRenderSettingInitialized;
 
     private Matrix viewMatrix, projectionMatrix;
 
@@ -35,6 +37,10 @@ public class Controller {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+
+                if(!areRenderSettingInitialized)
+                    return;
+
                 int x = e.getX();
                 int y = e.getY();
                 if(prevX != null) {
@@ -44,21 +50,30 @@ public class Controller {
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
-                    if(currentRotateFigure < 0) {
-                        xAllAngle+=xAngle;
-                        yAllAngle+=yAngle;
-                        Matrix xRot = Matrix.getYRotateMatrix(xAngle);
-                        Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
-                        Matrix xr = Matrix.multiply(xRot, sceneRotateMatrix);
-                        Matrix xyr = Matrix.multiply(yRot, xr);
-                        //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
-                        sceneRotateMatrix = xyr;
-                    }
+
+                    Matrix xRot = Matrix.getXRotateMatrix(xAngle);
+                    Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
+                    //Matrix xr = Matrix.multiply(xRot, viewMatrix);
+                    //Matrix xyr = Matrix.multiply(yRot, xr);
+                    Matrix xy = Matrix.multiply(yRot, xRot);
+                    Matrix xyr = Matrix.multiply(viewMatrix, xy);
+
+                    //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
+                    viewMatrix = xyr;
 
                     drawWireFigures();
                 }
                 prevX = x;
                 prevY = y;
+            }
+        });
+
+        wireframePanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                prevX = null;
+                prevY = null;
             }
         });
     }
@@ -174,13 +189,13 @@ public class Controller {
     public int loadRenderFile(File file)
     {
         //todo
-        isRenderFileLoaded = true;
+        areRenderSettingInitialized = true;
         return 0;
     }
 
     public void drawWireFigures()
     {
-        if(!isRenderFileLoaded) //todo: + при нажатии init
+        if(!areRenderSettingInitialized) //todo: + при нажатии init
         {
             Point3D up = new Point3D(0, 0, 1);
 
@@ -224,10 +239,15 @@ public class Controller {
             double sh = (maxY - minY)/zf;
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+
+
+            areRenderSettingInitialized = true;
         }
         //иначе - файл загружен, и матрицы proj и view уже заданы
 
         Matrix projView = Matrix.multiply(projectionMatrix, viewMatrix);
+
+        wireframePanel.clear();
 
         WireframeLine l = primitives.get(0).getWireframeLines().get(0);
         for(Primitive primitive : primitives)
