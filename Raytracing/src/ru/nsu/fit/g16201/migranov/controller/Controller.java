@@ -53,12 +53,12 @@ public class Controller {
 
 
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
-                    Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
+                    Matrix xRot = Matrix.getZRotateMatrix(xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(-yAngle);
 
                     Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
 
-                    Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(xRot, centerTranslate));
+                    Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
                     //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                     viewMatrix = Matrix.multiply(viewMatrix, res);
