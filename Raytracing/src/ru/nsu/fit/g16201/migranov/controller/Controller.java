@@ -61,11 +61,9 @@ public class Controller {
                     //Matrix xy = Matrix.multiply(yRot, xRot);
                     //Matrix xyr = Matrix.multiply(viewMatrix, xy);
 
-                    Matrix xyr = Matrix.multiply(xRot, translatedView);
-
+                    Matrix xyr = Matrix.multiply(translatedView, xRot);
                     Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
                     Matrix res = Matrix.multiply(xyr, invertTranslate);
-
 
                     //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                     viewMatrix = res;
