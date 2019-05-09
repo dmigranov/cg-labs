@@ -238,10 +238,10 @@ public class Controller {
             double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
 
             double sw = (maxZ - minZ)/zn;    //todo: вписанность в экран!
-            double sh = (maxY - minY)/zf;
+            double sh = (maxY - minY)/zn;
 
+//
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
-
 
             areRenderSettingInitialized = true;
         }
@@ -292,7 +292,6 @@ public class Controller {
                     {
                         prev = null;
                     }
-                    //установить прев
                 }
 
             }
