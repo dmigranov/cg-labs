@@ -50,19 +50,24 @@ public class Controller {
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
 
-                double dx = 0, dy = 0;
+                double dx = 0, dy = 0, dz = 0;
 
-                int location = e.getKeyCode();
-                System.out.println(location);
-                if (location == KeyEvent.VK_LEFT) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_LEFT) {
                     dx = -1;
-                } else if (location == KeyEvent.VK_RIGHT) {
+                } else if (key == KeyEvent.VK_RIGHT) {
                     dx = 1;
                 }
+                else if (key == KeyEvent.VK_P) {
+                    dx = 1; dy = 1; dz = 1;
+                }
+                else if (key == KeyEvent.VK_M) {
+                    dx = -1; dy = -1; dz = -1;
+                }
 
-                System.out.println(dx);
+                //todo: та же проблема с изменениями осей
 
-                Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, 0));
+                Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
                 viewMatrix = Matrix.multiply(viewMatrix, tr);
                 drawWireFigures();
 
