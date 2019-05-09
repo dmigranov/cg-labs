@@ -51,12 +51,14 @@ public class Controller {
                     double yAngle = 0.01 * dy;
 
 
-                    Matrix xRot = Matrix.getXRotateMatrix(xAngle);
-                    Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
+                    Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
+                    //Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
                     //Matrix xr = Matrix.multiply(xRot, viewMatrix);
                     //Matrix xyr = Matrix.multiply(yRot, xr);
-                    Matrix xy = Matrix.multiply(yRot, xRot);
-                    Matrix xyr = Matrix.multiply(viewMatrix, xy);
+                    //Matrix xy = Matrix.multiply(yRot, xRot);
+                    //Matrix xyr = Matrix.multiply(viewMatrix, xy);
+
+                    Matrix xyr = Matrix.multiply(viewMatrix, xRot);
 
                     //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                     viewMatrix = xyr;
