@@ -25,6 +25,7 @@ public class Controller {
     private boolean areRenderSettingInitialized;
 
     private Matrix viewMatrix, projectionMatrix;
+    private Point3D eye;
 
     private WireframePanel wireframePanel;
 
@@ -51,17 +52,23 @@ public class Controller {
                     double yAngle = 0.01 * dy;
 
 
-                    Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
+                    Matrix centerTranslate = Matrix.getTranslationMatrix(eye);
+                    Matrix translatedView = Matrix.multiply(viewMatrix, centerTranslate);
+                    Matrix xRot = Matrix.getYRotateMatrix(-xAngle);
                     //Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
                     //Matrix xr = Matrix.multiply(xRot, viewMatrix);
                     //Matrix xyr = Matrix.multiply(yRot, xr);
                     //Matrix xy = Matrix.multiply(yRot, xRot);
                     //Matrix xyr = Matrix.multiply(viewMatrix, xy);
 
-                    Matrix xyr = Matrix.multiply(viewMatrix, xRot);
+                    Matrix xyr = Matrix.multiply(xRot, translatedView);
+
+                    Matrix invertTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(eye));
+                    Matrix res = Matrix.multiply(xyr, invertTranslate);
+
 
                     //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
-                    viewMatrix = xyr;
+                    viewMatrix = res;
 
                     drawWireFigures();
                 }
@@ -231,16 +238,17 @@ public class Controller {
             minZ = boxCenter.z - addZ;
 
             Point3D eye = new Point3D(minX - (maxY - minY)/2/Math.tan(Math.PI/6), boxCenter.y, boxCenter.z);        //todo: провериьь x
-
+            this.eye = eye;
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
 
             double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
 
-            double sw = (maxZ - minZ)/zn;    //todo: вписанность в экран!
-            double sh = (maxY - minY)/zn;
+            double sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
+            double sh = (maxY - minY)/*/Math.abs(zn)*/;
 
-//
+            System.out.println(sw +  " " + sh);
+
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
 
             areRenderSettingInitialized = true;
