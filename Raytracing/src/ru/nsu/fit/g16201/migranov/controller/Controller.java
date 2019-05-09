@@ -51,7 +51,6 @@ public class Controller {
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
-
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
                     Matrix xRot = Matrix.getZRotateMatrix(xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(-yAngle);
@@ -60,7 +59,6 @@ public class Controller {
 
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
-                    //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
                     viewMatrix = Matrix.multiply(viewMatrix, res);
 
                     drawWireFigures();
