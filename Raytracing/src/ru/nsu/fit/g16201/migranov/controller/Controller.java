@@ -53,20 +53,15 @@ public class Controller {
 
 
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
-                    Matrix translatedView = Matrix.multiply(viewMatrix, centerTranslate);
-                    Matrix xRot = Matrix.getYRotateMatrix(-xAngle);
-                    //Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
-                    //Matrix xr = Matrix.multiply(xRot, viewMatrix);
-                    //Matrix xyr = Matrix.multiply(yRot, xr);
-                    //Matrix xy = Matrix.multiply(yRot, xRot);
-                    //Matrix xyr = Matrix.multiply(viewMatrix, xy);
+                    Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
+                    Matrix yRot = Matrix.getYRotateMatrix(-yAngle);
 
-                    Matrix xyr = Matrix.multiply(translatedView, xRot);
                     Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
-                    Matrix res = Matrix.multiply(xyr, invertTranslate);
+
+                    Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(xRot, centerTranslate));
 
                     //Matrix cxyr = Matrix.multiply(Matrix.getViewTranslationMatrix(eye, ref, up), xyr);
-                    viewMatrix = res;
+                    viewMatrix = Matrix.multiply(viewMatrix, res);
 
                     drawWireFigures();
                 }
