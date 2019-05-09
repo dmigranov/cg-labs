@@ -25,7 +25,7 @@ public class Controller {
     private boolean areRenderSettingInitialized;
 
     private Matrix viewMatrix, projectionMatrix;
-    private Point3D eye;
+    private Point3D eye, ref;
 
     private WireframePanel wireframePanel;
 
@@ -52,7 +52,7 @@ public class Controller {
                     double yAngle = 0.01 * dy;
 
 
-                    Matrix centerTranslate = Matrix.getTranslationMatrix(eye);
+                    Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
                     Matrix translatedView = Matrix.multiply(viewMatrix, centerTranslate);
                     Matrix xRot = Matrix.getYRotateMatrix(-xAngle);
                     //Matrix yRot = Matrix.getZRotateMatrix(-yAngle);
@@ -63,7 +63,7 @@ public class Controller {
 
                     Matrix xyr = Matrix.multiply(xRot, translatedView);
 
-                    Matrix invertTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(eye));
+                    Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
                     Matrix res = Matrix.multiply(xyr, invertTranslate);
 
 
@@ -240,6 +240,7 @@ public class Controller {
             Point3D eye = new Point3D(minX - (maxY - minY)/2/Math.tan(Math.PI/6), boxCenter.y, boxCenter.z);        //todo: провериьь x
             this.eye = eye;
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
+            this.ref = boxCenter;
 
             double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
