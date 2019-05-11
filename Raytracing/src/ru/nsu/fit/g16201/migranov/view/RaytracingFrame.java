@@ -6,10 +6,7 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.security.InvalidParameterException;
@@ -108,8 +105,10 @@ public class RaytracingFrame extends MainFrame {
 
         addSubMenu("View", KeyEvent.VK_V);
         addMenuAndToolBarButton("View/Init", "Reset camera", KeyEvent.VK_I, "reload.png", "onInit", true);
-        addMenuAndToolBarButton("View/Settings", "Rendering settings", KeyEvent.VK_I, "settings.png", "onShowSettings", true);
-
+        addMenuAndToolBarButton("View/Settings", "Rendering settings", KeyEvent.VK_S, "settings.png", "onShowSettings", true);
+        ButtonGroup group = new ButtonGroup();
+        addRadioButtonMenuAndToolBarButton("View/Select view","Select view by changing camera position", KeyEvent.VK_V, "camera.png", group, "onSelectView", true, true, true);
+        addRadioButtonMenuAndToolBarButton("View/Render","Render", KeyEvent.VK_R, "render.png", group, "onRender", false, true, true);
 
     }
 
@@ -161,6 +160,16 @@ public class RaytracingFrame extends MainFrame {
 
     }
 
+    public void onSelectView()
+    {
+
+    }
+
+    public void onRender()
+    {
+
+    }
+
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {
         MenuElement element = getParentMenuElement(path);
@@ -201,6 +210,64 @@ public class RaytracingFrame extends MainFrame {
             button.setEnabled(false);
             deactivatedButtons.add(item);
             deactivatedButtons.add(button);
+        }
+    }
+
+    private void addRadioButtonMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, ButtonGroup group, String actionMethod, boolean state, boolean isDeactivated, boolean areToolBarButtonsAdded) throws NoSuchMethodException
+    {
+        MenuElement element = getParentMenuElement(path);
+        if(element == null)
+            throw new InvalidParameterException("Menu path not found: " + path);
+        String title = getMenuPathName(path);
+
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem(title, state);
+
+        item.setMnemonic(mnemonic);
+        item.setToolTipText(tooltip);
+
+        item.addMouseListener(new StatusTitleListener(statusLabel));
+
+        final Method method = getClass().getMethod(actionMethod);
+        item.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    method.invoke(RaytracingFrame.this);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        if(element instanceof JMenu)
+            ((JMenu)element).add(item);
+        else if(element instanceof JPopupMenu)
+            ((JPopupMenu)element).add(item);
+        else
+            throw new InvalidParameterException("Invalid menu path: " + path);
+
+        group.add(item);
+
+        if(areToolBarButtonsAdded) {
+            JToggleButton button = new JToggleButton(item.getIcon());
+
+            if (icon != null)
+                button.setIcon(new ImageIcon(getClass().getResource("resources/" + icon), title));
+            button.setToolTipText(item.getToolTipText());
+            button.setModel(item.getModel());   //кнопки повторяют поведение меню, включая "зажатость"
+            toolBar.add(button);
+            button.addMouseListener(new StatusTitleListener(statusLabel));
+            if(isDeactivated)
+            {
+                button.setEnabled(false);
+                deactivatedButtons.add(button);
+            }
+        }
+
+        if(isDeactivated)
+        {
+            item.setEnabled(false);
+            deactivatedButtons.add(item);
         }
     }
 }
