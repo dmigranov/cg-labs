@@ -54,21 +54,24 @@ public class Controller {
 
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_LEFT) {
-                    dx = -1;
-                } else if (key == KeyEvent.VK_RIGHT) {
                     dx = 1;
+                } else if (key == KeyEvent.VK_RIGHT) {
+                    dx = -1;
+                }
+                if (key == KeyEvent.VK_UP) {
+                    dy = 1;
+                } else if (key == KeyEvent.VK_DOWN) {
+                    dy = -1;
                 }
                 else if (key == KeyEvent.VK_P) {
-                    dx = 1; dy = 1; dz = 1;
+                    /*dx = 1; dy = 1;*/ dz = 1;
                 }
                 else if (key == KeyEvent.VK_M) {
-                    dx = -1; dy = -1; dz = -1;
+                    /*dx = -1; dy = -1;*/ dz = -1;
                 }
 
-                //todo: та же проблема с изменениями осей
-
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
-                viewMatrix = Matrix.multiply(viewMatrix, tr);
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
 
             }
