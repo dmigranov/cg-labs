@@ -102,7 +102,6 @@ public class RaytracingFrame extends MainFrame {
         addMenuAndToolBarButton("File/Save image", "Save image", KeyEvent.VK_I, "pic.png", "onSaveImage", true);
 
 
-
         addSubMenu("View", KeyEvent.VK_V);
         addMenuAndToolBarButton("View/Init", "Reset camera", KeyEvent.VK_I, "reload.png", "onInit", true);
         addMenuAndToolBarButton("View/Settings", "Rendering settings", KeyEvent.VK_S, "settings.png", "onShowSettings", true);
@@ -128,7 +127,7 @@ public class RaytracingFrame extends MainFrame {
                 }
                 String fileName = file.getName().replaceFirst("[.][^.]+$", "");
                 //todo: renderFile
-                File renderFile = new File( file.getParentFile().getAbsolutePath() + "/" + fileName + ".scene");
+                File renderFile = new File( file.getParentFile().getAbsolutePath() + "/" + fileName + ".render");
                 //System.out.println(file.getParentFile().getAbsolutePath());
                 controller.loadRenderFile(renderFile);
                 controller.drawWireFigures();
