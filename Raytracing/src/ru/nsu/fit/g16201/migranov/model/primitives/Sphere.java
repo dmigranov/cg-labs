@@ -43,23 +43,25 @@ public class Sphere extends Primitive {
 
         //todo: K чтоб плавнее
 
-        WireframeLine[] perLines = new WireframeLine[n + 1];
-        for (int i = 0; i <= m; i++)
+        WireframeLine[] perLines = new WireframeLine[m*k + 1];
+        for (int i = 0; i <= m*k; i++)
             perLines[i] = new WireframeLine();
-        for (int i = 0; i <= n; i++)
+        for (int i = 0; i <= n*k; i++)
         {
-            double delta = (double)i/n;
+            double delta = (double)i/n/k;
             double ux = (center.z - radius) * (1 - delta) + (center.z + radius) * delta;
             double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - ux, 2));
             WireframeLine parLine = new WireframeLine();
-            for (int j = 0; j <= m /** k*/; j++) {
-                double v = (Math.PI * 2) * j / m /*/ k*/;
+            for (int j = 0; j <= m * k; j++) {
+                double v = (Math.PI * 2) * j / m / k;
                 double x = uy * Math.cos(v);
                 double y = uy * Math.sin(v);
                 double z = ux;
 
-                parLine.addPoint(new Point3D(x, y, z));
-                perLines[j].addPoint(new Point3D(x, y, z));
+                if(i % k == 0)
+                    parLine.addPoint(new Point3D(x, y, z));
+                if(j % k == 0)
+                    perLines[j].addPoint(new Point3D(x, y, z));
             }
             lines.add(parLine);
         }
