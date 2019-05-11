@@ -102,6 +102,9 @@ public class RaytracingFrame extends MainFrame {
         addMenuAndToolBarButton("File/Open", "Load a scene file", KeyEvent.VK_O, "upload-1.png", "onOpen", false);
         addMenuAndToolBarButton("File/Load render settings", "Load render settings from file", KeyEvent.VK_R, "upload.png", "onOpenRenderSettings", true);
         addMenuAndToolBarButton("File/Save render settings as", "Save render settings to specified file", KeyEvent.VK_S, "download.png", "onSaveRenderSettings", true);
+        addMenuAndToolBarButton("File/Save image", "Save image", KeyEvent.VK_I, "pic.png", "onSaveImage", true);
+
+
 
         addSubMenu("View", KeyEvent.VK_V);
         addMenuAndToolBarButton("View/Init", "Reset camera", KeyEvent.VK_I, "reload.png", "onInit", true);
@@ -120,10 +123,16 @@ public class RaytracingFrame extends MainFrame {
             {
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            String fileName = file.getName().replaceFirst("[.][^.]+$", "");
-            //todo: renderFile
+            else {
+                for (AbstractButton b : deactivatedButtons)
+                {
+                    b.setEnabled(true);
+                }
+                String fileName = file.getName().replaceFirst("[.][^.]+$", "");
+                //todo: renderFile
 
-            controller.drawWireFigures();
+                controller.drawWireFigures();
+            }
         }
     }
 
@@ -147,6 +156,10 @@ public class RaytracingFrame extends MainFrame {
 
     }
 
+    public void onSaveImage()
+    {
+
+    }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
     {

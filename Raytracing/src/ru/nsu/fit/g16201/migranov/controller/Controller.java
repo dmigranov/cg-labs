@@ -53,22 +53,18 @@ public class Controller {
                 double dx = 0, dy = 0, dz = 0;
 
                 int key = e.getKeyCode();
-                if (key == KeyEvent.VK_LEFT) {
+                if (key == KeyEvent.VK_LEFT)
                     dx = 1;
-                } else if (key == KeyEvent.VK_RIGHT) {
+                else if (key == KeyEvent.VK_RIGHT)
                     dx = -1;
-                }
-                if (key == KeyEvent.VK_UP) {
+                else if (key == KeyEvent.VK_UP)
                     dy = 1;
-                } else if (key == KeyEvent.VK_DOWN) {
+                else if (key == KeyEvent.VK_DOWN)
                     dy = -1;
-                }
-                else if (key == KeyEvent.VK_P) {
-                    /*dx = 1; dy = 1;*/ dz = 1;
-                }
-                else if (key == KeyEvent.VK_M) {
-                    /*dx = -1; dy = -1;*/ dz = -1;
-                }
+                else if (key == KeyEvent.VK_P)
+                    dz = 1;
+                else if (key == KeyEvent.VK_M)
+                    dz = -1;
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
@@ -100,7 +96,7 @@ public class Controller {
                     Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
 
-                    //todo: по отдельности вращается неплохо, но после смещени осей..
+                    //todo: по отдельности вращается сначала неплохо, но после смещени осей..
 
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
@@ -283,6 +279,8 @@ public class Controller {
             this.eye = eye;
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
             this.ref = boxCenter;
+
+            //todo: почему-то сильные искаженния (ошибка в матрице проекции?)
 
             double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
