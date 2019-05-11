@@ -34,14 +34,26 @@ public class Controller {
 
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
+            //todo
 
+            if(e.isControlDown())
+            {
+                int dz = -count * 1;    //todo: вместо единицы какая - то дельта
+
+                Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
+                drawWireFigures();
+            }
+            else
+            {
+
+            }
             /*if(zn - 0.1*count < zf && zn - 0.1*count > 0) {
                 zn -= 0.1 * count;
                 projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
                 drawFigures();
             }*/
 
-            //todo
         });
 
         wireframePanel.setFocusable(true);
@@ -308,9 +320,6 @@ public class Controller {
             {
                 //todo
                 List<Point3D> points = line.getPoints();
-                /*Point3D prevModel = points.get(0);
-                Matrix mprevModel = new Matrix(4, 1, prevModel.x, prevModel.y, prevModel.z, 1);
-                Matrix rprev = Matrix.multiply(projView, mprevModel);*/
                 Point prev = null;    //пред точка в экранных координатах
 
                 for(int i = 0; i < points.size(); i++)
@@ -346,7 +355,6 @@ public class Controller {
             }
         }
         wireframePanel.repaint();
-
     }
 
 
