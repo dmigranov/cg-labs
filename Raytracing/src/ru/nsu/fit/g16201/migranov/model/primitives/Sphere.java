@@ -41,8 +41,6 @@ public class Sphere extends Primitive {
 
         int n = 6; int m = 6; int k = 6;
 
-        //todo: K чтоб плавнее
-
         WireframeLine[] perLines = new WireframeLine[m*k + 1];
         for (int i = 0; i <= m*k; i++)
             perLines[i] = new WireframeLine();

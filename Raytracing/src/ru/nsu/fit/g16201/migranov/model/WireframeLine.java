@@ -5,14 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class WireframeLine {
-    //private Point3D p1;
-    //private Point3D p2;
-
     private List<Point3D> line;
 
     public WireframeLine(Point3D ... points)
     {
-        line = new ArrayList<Point3D>();
+        line = new ArrayList<>();
         line.addAll(Arrays.asList(points));
     }
 

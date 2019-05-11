@@ -19,7 +19,10 @@ public class Controller {
     private List<Light> lights;
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
-    //private boolean isRenderFileLoaded = false;
+    private Color backgroundColor;
+    private double gamma;
+    private int depth;
+
     private boolean areRenderSettingInitialized;
 
     private Matrix viewMatrix, projectionMatrix;
@@ -29,12 +32,12 @@ public class Controller {
 
     private Integer prevX = null, prevY = null;
 
+
     public Controller(WireframePanel wireframePanel) {
         this.wireframePanel = wireframePanel;
 
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
-            //todo
 
             if(e.isControlDown())
             {
@@ -46,14 +49,13 @@ public class Controller {
             }
             else
             {
-
-            }
+                //todo
             /*if(zn - 0.1*count < zf && zn - 0.1*count > 0) {
                 zn -= 0.1 * count;
                 projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
                 drawFigures();
             }*/
-
+            }
         });
 
         wireframePanel.setFocusable(true);
@@ -247,7 +249,36 @@ public class Controller {
 
     public int loadRenderFile(File file)
     {
-        //todo
+        try(BufferedReader reader = new BufferedReader(new FileReader(file)))
+        {
+            String[] substrings;
+
+            substrings = readLineAndSplit(reader);
+            int br = Integer.parseInt(substrings[0]);
+            int bg = Integer.parseInt(substrings[1]);
+            int bb = Integer.parseInt(substrings[2]);
+            if(br < 0 || br > 255 || bg < 0 || bg > 255 || bb < 0 || bb > 255)
+                throw new IOException("Wrong background color");
+            this.backgroundColor = new Color(br, bg, bb);
+
+            substrings = readLineAndSplit(reader);
+            gamma = Double.parseDouble(substrings[0]);
+
+            substrings = readLineAndSplit(reader);
+            depth = Integer.parseInt(substrings[0]);
+            if(depth <= 0)
+                throw new IOException("Wrong depth");
+
+
+
+
+        }
+        catch (IOException e)
+        {
+            return -1;
+        }
+
+
         areRenderSettingInitialized = true;
         return 0;
     }
