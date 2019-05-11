@@ -251,6 +251,7 @@ public class Controller {
     {
         try(BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
+            //todo: check
             String[] substrings;
 
             substrings = readLineAndSplit(reader);
@@ -281,7 +282,13 @@ public class Controller {
             substrings = readLineAndSplit(reader);
             Point3D up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
+            substrings = readLineAndSplit(reader);
+            double zn = Double.parseDouble(substrings[0]);
+            double zf = Double.parseDouble(substrings[1]);
 
+            substrings = readLineAndSplit(reader);
+            double sw = Double.parseDouble(substrings[0]);
+            double sh = Double.parseDouble(substrings[1]);
         }
         catch (IOException e)
         {
