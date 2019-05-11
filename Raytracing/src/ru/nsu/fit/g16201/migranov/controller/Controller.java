@@ -269,7 +269,17 @@ public class Controller {
             if(depth <= 0)
                 throw new IOException("Wrong depth");
 
+            substrings = readLineAndSplit(reader);
+            //todo: quality
 
+            substrings = readLineAndSplit(reader);
+            Point3D eye = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+            substrings = readLineAndSplit(reader);
+            Point3D ref = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+
+            substrings = readLineAndSplit(reader);
+            Point3D up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
 
         }
