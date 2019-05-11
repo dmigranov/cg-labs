@@ -364,4 +364,9 @@ public class Controller {
         while(substrings.length == 0 || "".equals(substrings[0]));
         return substrings;
     }
+
+    public void reinitialize() {
+        areRenderSettingInitialized = false;
+        drawWireFigures();
+    }
 }

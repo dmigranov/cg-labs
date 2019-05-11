@@ -109,7 +109,6 @@ public class RaytracingFrame extends MainFrame {
         ButtonGroup group = new ButtonGroup();
         addRadioButtonMenuAndToolBarButton("View/Select view","Select view by changing camera position", KeyEvent.VK_V, "camera.png", group, "onSelectView", true, true, true);
         addRadioButtonMenuAndToolBarButton("View/Render","Render", KeyEvent.VK_R, "render.png", group, "onRender", false, true, true);
-
     }
 
     public void onOpen()
@@ -147,7 +146,7 @@ public class RaytracingFrame extends MainFrame {
 
     public void onInit()
     {
-
+        controller.reinitialize();
     }
 
     public void onShowSettings()
