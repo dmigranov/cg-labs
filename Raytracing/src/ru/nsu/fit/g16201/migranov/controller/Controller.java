@@ -423,8 +423,8 @@ public class Controller {
         return substrings;
     }
 
-    public void reinitialize() {
-        areRenderSettingInitialized = false;
-        drawWireFigures();
+    public void setAreRenderSettingInitialized(boolean state) {
+        areRenderSettingInitialized = state;
+        //drawWireFigures();
     }
 }

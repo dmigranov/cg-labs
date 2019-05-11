@@ -126,10 +126,11 @@ public class RaytracingFrame extends MainFrame {
                     b.setEnabled(true);
                 }
                 String fileName = file.getName().replaceFirst("[.][^.]+$", "");
-                //todo: renderFile
                 File renderFile = new File( file.getParentFile().getAbsolutePath() + "/" + fileName + ".render");
-                //System.out.println(file.getParentFile().getAbsolutePath());
-                controller.loadRenderFile(renderFile);
+                if(renderFile.exists())
+                    controller.loadRenderFile(renderFile);
+                else
+                    controller.setAreRenderSettingInitialized(false);
                 controller.drawWireFigures();
             }
         }
@@ -147,7 +148,8 @@ public class RaytracingFrame extends MainFrame {
 
     public void onInit()
     {
-        controller.reinitialize();
+        controller.setAreRenderSettingInitialized(true);
+        controller.drawWireFigures();
     }
 
     public void onShowSettings()
