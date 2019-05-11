@@ -271,7 +271,7 @@ public class Controller {
                 throw new IOException("Wrong depth");
 
             substrings = readLineAndSplit(reader);
-            //todo: quality
+            //todo: quality?
 
             substrings = readLineAndSplit(reader);
             Point3D eye = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
@@ -296,7 +296,6 @@ public class Controller {
         {
             return -1;
         }
-
 
         areRenderSettingInitialized = true;
         return 0;
@@ -325,7 +324,6 @@ public class Controller {
             }
             //это же ref для матрицы view
             Point3D boxCenter = new Point3D((minX + maxX)/2, (minY + maxY)/2, (minZ + maxZ)/2);
-            //double maxDim = Math.max(Math.max(maxX - minX, maxY - minY), maxZ - minZ);    //пропорц?
 
             double addX = (maxX - minX)/2 * 1.05;
             maxX = boxCenter.x + addX;
@@ -342,7 +340,9 @@ public class Controller {
             viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
             this.ref = boxCenter;
 
-            //todo: почему-то сильные искаженния (ошибка в матрице проекции?)
+            //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
+            // !
+            // !
 
             double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
@@ -382,9 +382,6 @@ public class Controller {
                     double w = rpoint.get(3, 0);
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
-
-                        //System.out.println(point.x/w + point.y/w);
-
                         int x = (int)((point.x/w + 1)/2*wireframePanel.getCanvasWidth());
                         int y = (int)((point.y/w + 1)/2*wireframePanel.getCanvasHeight());
 
@@ -398,6 +395,7 @@ public class Controller {
                     }
                     else
                     {
+                        //todo: подумать над тем, чтобы рисовать в таком случае линию, но не полностью!
                         prev = null;
                     }
                 }
@@ -406,7 +404,6 @@ public class Controller {
         }
         wireframePanel.repaint();
     }
-
 
     private String[] readLineAndSplit(BufferedReader br) throws IOException
     {
@@ -425,6 +422,5 @@ public class Controller {
 
     public void setAreRenderSettingInitialized(boolean state) {
         areRenderSettingInitialized = state;
-        //drawWireFigures();
     }
 }
