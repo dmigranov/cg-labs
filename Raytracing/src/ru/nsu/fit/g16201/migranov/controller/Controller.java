@@ -289,6 +289,8 @@ public class Controller {
             substrings = readLineAndSplit(reader);
             double sw = Double.parseDouble(substrings[0]);
             double sh = Double.parseDouble(substrings[1]);
+
+            //todo: составить матрицы
         }
         catch (IOException e)
         {

@@ -128,7 +128,9 @@ public class RaytracingFrame extends MainFrame {
                 }
                 String fileName = file.getName().replaceFirst("[.][^.]+$", "");
                 //todo: renderFile
-
+                File renderFile = new File( file.getParentFile().getAbsolutePath() + "/" + fileName + ".scene");
+                //System.out.println(file.getParentFile().getAbsolutePath());
+                controller.loadRenderFile(renderFile);
                 controller.drawWireFigures();
             }
         }
