@@ -13,7 +13,7 @@ public class Point3D {
     public static Point3D getVectorProduct(Point3D a, Point3D b) {
         //return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
         //return new Point3D(-(a.y*b.z - a.z*b.y), -(a.z*b.x - a.x*b.z), -(a.x*b.y - a.y*b.x));
-        return getRightVectorProduct(a, b);
+        return getLeftVectorProduct(a, b);
     }
 
     public static Point3D multiplyByScalar(double k, Point3D a) {

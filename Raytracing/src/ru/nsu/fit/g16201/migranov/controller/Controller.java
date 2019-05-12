@@ -96,9 +96,8 @@ public class Controller {
                 //ref = Matrix.multiply(trNew, refM).getPoint();
                 */
 
-                //viewMatrix = Matrix.multiply(tr, viewMatrix);
+                //
 
-                //Point3D w = new Point3D(eye.x - ref.x, eye.y - ref.y, eye.z - ref.z).normalize();
                 Point3D fw = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();
                 Point3D rr = Point3D.getVectorProduct(up, fw);
                 Point3D u = rr.normalize(); //right
@@ -106,12 +105,12 @@ public class Controller {
 
                 ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, fw));
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, fw));
-                ref = Point3D.add(ref, Point3D.multiplyByScalar(dy, v));
-                eye = Point3D.add(eye, Point3D.multiplyByScalar(dy, v));
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(-dy, v));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(-dy, v));
                 ref = Point3D.add(ref, Point3D.multiplyByScalar(dx, u));
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(dx, u));
-                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
-
+                //viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
             }
         });
