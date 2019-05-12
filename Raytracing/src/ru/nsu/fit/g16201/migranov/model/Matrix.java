@@ -57,6 +57,21 @@ public class Matrix {
         );
     }
 
+    public static Matrix getInverseViewMatrix(Point3D eye, Point3D ref, Point3D up)
+    {
+        Point3D w = new Point3D(eye.x - ref.x, eye.y - ref.y, eye.z - ref.z).normalize();
+        Point3D rr = Point3D.getVectorProduct(up, w);
+        Point3D u = rr.normalize();
+        Point3D v = Point3D.getVectorProduct(w, u);
+
+        return new Matrix(4, 4,
+                u.x, v.x, w.x, eye.x,
+                u.y, v.y, w.y, eye.y,
+                u.z, v.z, w.z, eye.z,
+                0, 0, 0, 1
+        );
+    }
+
     //в левосторонней ск вроде верно
     public static Matrix getViewMatrixNew(Point3D eye, Point3D ref, Point3D up) {
         Point3D z = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();

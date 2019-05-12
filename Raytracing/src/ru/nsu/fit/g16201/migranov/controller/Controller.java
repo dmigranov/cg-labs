@@ -91,9 +91,11 @@ public class Controller {
                 eye = Matrix.multiply(tr, eyeM).getPoint();
                 Matrix refM = Matrix.getVector4(ref);
                 ref = Matrix.multiply(tr, refM).getPoint();
-                viewMatrix = Matrix.multiply(tr, viewMatrix);
-                drawWireFigures();
 
+                //viewMatrix = Matrix.multiply(tr, viewMatrix);
+                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+
+                drawWireFigures();
             }
         });
 
