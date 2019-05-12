@@ -252,7 +252,6 @@ public class Controller {
     {
         try(BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
-            //todo: check
             String[] substrings;
 
             substrings = readLineAndSplit(reader);
@@ -277,23 +276,24 @@ public class Controller {
             //todo: quality?
 
             substrings = readLineAndSplit(reader);
-            Point3D eye = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+            eye = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
             substrings = readLineAndSplit(reader);
-            Point3D ref = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+            ref = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
             substrings = readLineAndSplit(reader);
-            Point3D up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+            up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
 
             substrings = readLineAndSplit(reader);
-            double zn = Double.parseDouble(substrings[0]);
-            double zf = Double.parseDouble(substrings[1]);
+            zn = Double.parseDouble(substrings[0]);
+            zf = Double.parseDouble(substrings[1]);
 
             substrings = readLineAndSplit(reader);
-            double sw = Double.parseDouble(substrings[0]);
-            double sh = Double.parseDouble(substrings[1]);
+            sw = Double.parseDouble(substrings[0]);
+            sh = Double.parseDouble(substrings[1]);
 
-            //todo: составить матрицы!!!
+            viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+            projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
         }
         catch (IOException | NullPointerException e)
         {
