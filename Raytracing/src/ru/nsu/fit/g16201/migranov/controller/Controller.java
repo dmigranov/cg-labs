@@ -46,12 +46,16 @@ public class Controller {
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
                 //todo: нет так не сериализуется! не в этой же системе координат надо прибавлять
                 Matrix eyeM = Matrix.getVector4(eye);
-
-
                 Matrix refM = Matrix.getVector4(ref);
+                Point3D trp = new Point3D(0, 0, dz);
+                //eye = Matrix.multiply(Matrix.multiply(viewMatrix, tr), eyeM).getPoint();
+                //ref = Matrix.multiply(Matrix.multiply(viewMatrix, tr), refM).getPoint();
+                eye = Point3D.add(eye, Matrix.multiply(viewMatrix, Matrix.getVector4(trp)).getPoint());
+                ref = Point3D.add(ref, Matrix.multiply(viewMatrix, Matrix.getVector4(trp)).getPoint());
+
+
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
-                eye = Matrix.multiply(viewMatrix, eyeM).getPoint();
-                ref = Matrix.multiply(viewMatrix, refM).getPoint();
+
 
                 drawWireFigures();
             }
