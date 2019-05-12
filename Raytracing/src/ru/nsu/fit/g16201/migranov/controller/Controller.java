@@ -24,13 +24,17 @@ public class Controller {
     private int depth;
 
     private boolean areRenderSettingInitialized;
+    private boolean isBoxCalculated;
+    private double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
+
 
     private Matrix viewMatrix, projectionMatrix;
-    private Point3D eye, ref;
+    private Point3D eye, ref, up;
 
     private WireframePanel wireframePanel;
 
     private Integer prevX = null, prevY = null;
+    private double zn, zf, sw, sh;
 
 
     public Controller(WireframePanel wireframePanel) {
@@ -237,7 +241,8 @@ public class Controller {
                 primitive.setOpticParameters(kDR, kDG, kDB, kSR, kSG, kSB, power);
                 primitives.add(primitive);
             }
-
+            areRenderSettingInitialized = false;
+            isBoxCalculated = false;
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -305,50 +310,50 @@ public class Controller {
     {
         if(!areRenderSettingInitialized) //todo: + при нажатии init
         {
-            Point3D up = new Point3D(0, 0, 1);
+            if(!isBoxCalculated) {
+                up = new Point3D(0, 0, 1);
 
-            double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
+                for (Primitive primitive : primitives) {
+                    Point3D min = primitive.getMinPoint();
+                    Point3D max = primitive.getMaxPoint();
 
-            for(Primitive primitive : primitives)
-            {
-                Point3D min = primitive.getMinPoint();
-                Point3D max = primitive.getMaxPoint();
+                    minX = (min.x < minX ? min.x : minX);
+                    minY = (min.y < minY ? min.y : minY);
+                    minZ = (min.z < minZ ? min.z : minZ);
 
-                minX = (min.x < minX ? min.x : minX);
-                minY = (min.y < minY ? min.y : minY);
-                minZ = (min.z < minZ ? min.z : minZ);
+                    maxX = (max.x > maxX ? max.x : maxX);
+                    maxY = (max.y > maxY ? max.y : maxY);
+                    maxZ = (max.z > maxZ ? max.z : maxZ);
+                }
+                //это же ref для матрицы view
+                Point3D boxCenter = new Point3D((minX + maxX) / 2, (minY + maxY) / 2, (minZ + maxZ) / 2);
+                this.ref = boxCenter;
 
-                maxX = (max.x > maxX ? max.x : maxX);
-                maxY = (max.y > maxY ? max.y : maxY);
-                maxZ = (max.z > maxZ ? max.z : maxZ);
+                double addX = (maxX - minX) / 2 * 1.05;
+                maxX = boxCenter.x + addX;
+                minX = boxCenter.x - addX;
+                double addY = (maxY - minY) / 2 * 1.05;
+                maxY = boxCenter.y + addY;
+                minY = boxCenter.y - addY;
+                double addZ = (maxZ - minZ) / 2 * 1.05;
+                maxZ = boxCenter.z + addZ;
+                minZ = boxCenter.z - addZ;
+
+                eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);        //todo: провериьь x
+
+                viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
+
+                //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
+                // !
+                // !
+
+                zn = (minX /*- eye.x*/) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
+                zf = maxX /*- eye.x*/ + (maxX - minX) / 2;
+
+                isBoxCalculated = true; //чтобы не считать каждый раз так как в рамках одного файла одинаково
             }
-            //это же ref для матрицы view
-            Point3D boxCenter = new Point3D((minX + maxX)/2, (minY + maxY)/2, (minZ + maxZ)/2);
-
-            double addX = (maxX - minX)/2 * 1.05;
-            maxX = boxCenter.x + addX;
-            minX = boxCenter.x - addX;
-            double addY = (maxY - minY)/2 * 1.05;
-            maxY = boxCenter.y + addY;
-            minY = boxCenter.y - addY;
-            double addZ = (maxZ - minZ)/2 * 1.05;
-            maxZ = boxCenter.z + addZ;
-            minZ = boxCenter.z - addZ;
-
-            Point3D eye = new Point3D(minX - (maxY - minY)/2/Math.tan(Math.PI/6), boxCenter.y, boxCenter.z);        //todo: провериьь x
-            this.eye = eye;
-            viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
-            this.ref = boxCenter;
-
-            //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
-            // !
-            // !
-
-            double zn = (minX /*- eye.x*/)/2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
-            double zf = maxX /*- eye.x*/ + (maxX - minX)/2;
-
-            double sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
-            double sh = (maxY - minY)/*/Math.abs(zn)*/;
+            sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
+            sh = (maxY - minY)/*/Math.abs(zn)*/;
 
             System.out.println(sw +  " " + sh);
 
