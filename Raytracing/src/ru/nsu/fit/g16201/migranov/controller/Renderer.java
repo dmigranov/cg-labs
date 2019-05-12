@@ -26,4 +26,32 @@ public class Renderer {
         this.depth = depth;
     }
 
+    public class RendererWorker implements Runnable {
+        private int xStart;
+        private int xEnd;
+        private int yStart;
+        private int yEnd;
+
+        void RendererWorker(int xStart, int xEnd, int yStart, int yEnd)
+        {
+            this.xStart = xStart;
+            this.xEnd = xEnd;
+            this.yStart = yStart;
+            this.yEnd = yEnd;
+        }
+
+        @Override
+        public void run() {
+            for(int i = yStart; i < yEnd; i++)
+            {
+                for(int j = xStart; j < xEnd; j++)
+                {
+                    
+                }
+
+            }
+
+        }
+    }
+
 }

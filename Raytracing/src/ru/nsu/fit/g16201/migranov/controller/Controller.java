@@ -78,10 +78,6 @@ public class Controller {
                     dy = 1;
                 else if (key == KeyEvent.VK_DOWN)
                     dy = -1;
-                /*else if (key == KeyEvent.VK_P)
-                    dz = 1;
-                else if (key == KeyEvent.VK_M)
-                    dz = -1;*/
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
 
@@ -360,9 +356,6 @@ public class Controller {
 
             viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
 
-            //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
-            // !
-            // !
             // todo: проверить все!
 
             zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
