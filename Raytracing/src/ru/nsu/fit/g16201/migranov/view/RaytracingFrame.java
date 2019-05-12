@@ -199,9 +199,23 @@ public class RaytracingFrame extends MainFrame {
             optionsPanel.add(depthPanel);
         }
 
+        //todo: quality?
+
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
             Color backgroundColor = colorChooser.getColor();
+            try
+            {
+                int depth = Integer.parseInt(depthField.getText());
+                if(depth <= 0)
+                    throw new NumberFormatException("Wrong depth! Depth must be positive");
+                double gamma = Double.parseDouble(gammaField.getText());
+
+            }
+            catch()
+            {
+
+            }
         }
 
     }
