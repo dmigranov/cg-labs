@@ -362,7 +362,7 @@ public class Controller {
 
             eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);        //todo: провериьь x
 
-            viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+            viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
 
             //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
             // !
@@ -403,6 +403,8 @@ public class Controller {
                     Matrix rpoint = Matrix.multiply(projView, mpointModel);
 
                     Point3D point = new Point3D(rpoint.get(0, 0), rpoint.get(1, 0), rpoint.get(2, 0));
+
+                    //System.out.println(point.x + " " + point.y + " " + point.z);
                     double w = rpoint.get(3, 0);
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
