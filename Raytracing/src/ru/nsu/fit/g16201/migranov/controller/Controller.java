@@ -444,6 +444,9 @@ public class Controller {
         return depth;
     }
 
-    public void setRenderingParameters() {
+    public void setRenderingParameters(Color backgroundColor, double gamma, int depth) {
+        this.backgroundColor = backgroundColor;
+        this.gamma = gamma;
+        this.depth = depth;
     }
 }

@@ -212,7 +212,7 @@ public class RaytracingFrame extends MainFrame {
                 double gamma = Double.parseDouble(gammaField.getText());
                 if(gamma <= 0 || gamma > 10)
                     throw new NumberFormatException("Wrong gamma!");
-                controller.setRenderingParameters();
+                controller.setRenderingParameters(backgroundColor, gamma, depth);
 
             }
             catch(NumberFormatException e)
