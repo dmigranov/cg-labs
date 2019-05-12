@@ -428,4 +428,13 @@ public class Controller {
     public void setAreRenderSettingInitialized(boolean state) {
         areRenderSettingInitialized = state;
     }
+
+    public void recalculateProjectionParameters() {
+        int width = wireframePanel.getWidth();
+        int height = wireframePanel.getHeight();
+
+        sw = sh * width/height;
+
+        projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+    }
 }

@@ -69,10 +69,11 @@ public class RaytracingFrame extends MainFrame {
         int width = wireframePanel.getWidth();
         int height = wireframePanel.getHeight();
 
-        System.out.println(width);
         wireframePanel.setPreferredSize(new Dimension(width, height));
-        if(isLoaded)
+        if(isLoaded) {
+            controller.recalculateProjectionParameters();
             controller.drawWireFigures();
+        }
         /*double sw = controller.getSw(), sh = controller.getSh();
 
         double nwidth, nheight;
