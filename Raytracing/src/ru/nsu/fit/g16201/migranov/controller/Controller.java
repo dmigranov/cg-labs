@@ -107,7 +107,7 @@ public class Controller {
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
 
                     //todo: по отдельности вращается сначала неплохо, но после смещени осей..
-
+                    //todo: надо обязательно воздействовать ещё на eye ref up Для сериализации
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
                     viewMatrix = Matrix.multiply(viewMatrix, res);
@@ -458,7 +458,9 @@ public class Controller {
             pw.println(depth);
             pw.println(quality);
 
-            //todo Три точки
+            pw.println(eye.x + " " + eye.y + " " + eye.z);
+            pw.println(ref.x + " " + ref.y + " " + ref.z);
+            pw.println(up.x + " " + up.y + " " + up.z);
 
             pw.println(zn + " " + zf);
             pw.println(sw + " " + sh);
