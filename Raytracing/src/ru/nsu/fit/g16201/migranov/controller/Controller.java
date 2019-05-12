@@ -41,17 +41,14 @@ public class Controller {
 
             if(e.isControlDown())
             {
-                double dz = -count * 0.1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
-
-
-
-                Point3D diff = Point3D.add(ref, Point3D.getNegative(eye));
-                ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, diff));
-                eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, diff));
+                double dz = -count * 1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
+                Point3D forward = Point3D.add(ref, Point3D.getNegative(eye));
+                forward = forward.normalize();
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, forward));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, forward));
 
                 //System.out.print(ref.x + " " + ref.y + " " + ref.z + "        ");
                 //System.out.println(eye.x + " " + eye.y + " " + eye.z);
-
                 //viewMatrix = Matrix.getViewMatrix(eye, ref, up);  //матрица получается аналогичная
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
@@ -89,7 +86,7 @@ public class Controller {
                     dz = -1;
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
-                Matrix eyeM = Matrix.getVector4(eye);
+               /* Matrix eyeM = Matrix.getVector4(eye);
                 //eye = Matrix.multiply(tr, eyeM).getPoint();
                 Matrix refM = Matrix.getVector4(ref);
                 //ref = Matrix.multiply(tr, refM).getPoint();
@@ -97,7 +94,11 @@ public class Controller {
                 Matrix trNew = Matrix.multiply(viewMatrix, tr);
                 //eye = Matrix.multiply(trNew, eyeM).getPoint();
                 //ref = Matrix.multiply(trNew, refM).getPoint();
+                */
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
+
+
+
                 //viewMatrix = Matrix.getViewMatrix(eye, ref, up);
 
                 drawWireFigures();
@@ -303,10 +304,12 @@ public class Controller {
 
             substrings = readLineAndSplit(reader);
             up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
+            //todo: проверить up!
 
             substrings = readLineAndSplit(reader);
             zn = Double.parseDouble(substrings[0]);
             zf = Double.parseDouble(substrings[1]);
+            //todo: изменить что-то из, чтобы совпадали пропорции с экраном
 
             substrings = readLineAndSplit(reader);
             sw = Double.parseDouble(substrings[0]);
