@@ -149,13 +149,17 @@ public class RaytracingFrame extends MainFrame {
 
     public void onOpenRenderSettings()
     {
-        File file = getOpenFileName("scene", "A scene description file");
+        File file = getOpenFileName("render", "Rendering description file");
         //todo
     }
 
     public void onSaveRenderSettings()
     {
+        File file = getSaveFileName("scene", "Rendering description file");
 
+        if (file != null) {
+            controller.saveRenderFile(file);
+        }
     }
 
     public void onInit()

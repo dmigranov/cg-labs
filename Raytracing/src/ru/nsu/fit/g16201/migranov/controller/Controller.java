@@ -6,10 +6,7 @@ import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -449,5 +446,16 @@ public class Controller {
         this.backgroundColor = backgroundColor;
         this.gamma = gamma;
         this.depth = depth;
+    }
+
+    public void saveRenderFile(File file) {
+        try(PrintWriter pw = new PrintWriter(file)) {
+
+
+        }
+        catch(IOException e)
+        {
+
+        }
     }
 }
