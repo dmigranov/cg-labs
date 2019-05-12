@@ -182,7 +182,7 @@ public class RaytracingFrame extends MainFrame {
         JTextField gammaField = new JTextField(controller.getGamma() + "", 10);
         {
             JPanel gammaPanel = new JPanel();
-            gammaPanel.add(new JLabel("Enter gamma (0.01 - 10):"));
+            gammaPanel.add(new JLabel("Enter gamma (0, 10]:"));
             gammaPanel.add(Box.createHorizontalStrut(10));
             gammaPanel.add(gammaField);
             gammaField.addKeyListener(new FloatTextFieldKeyListener());
@@ -210,11 +210,14 @@ public class RaytracingFrame extends MainFrame {
                 if(depth <= 0)
                     throw new NumberFormatException("Wrong depth! Depth must be positive");
                 double gamma = Double.parseDouble(gammaField.getText());
+                if(gamma <= 0 || gamma > 10)
+                    throw new NumberFormatException("Wrong gamma!");
+                controller.setRenderingParameters();
 
             }
-            catch()
+            catch(NumberFormatException e)
             {
-
+                JOptionPane.showMessageDialog(RaytracingFrame.this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 

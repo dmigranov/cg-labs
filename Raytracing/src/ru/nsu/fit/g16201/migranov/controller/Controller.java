@@ -443,4 +443,7 @@ public class Controller {
     {
         return depth;
     }
+
+    public void setRenderingParameters() {
+    }
 }
