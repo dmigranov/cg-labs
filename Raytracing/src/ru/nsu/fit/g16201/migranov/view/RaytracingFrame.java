@@ -175,16 +175,29 @@ public class RaytracingFrame extends MainFrame {
                 if (!p.getDisplayName().equals("RGB"))
                     colorChooser.removeChooserPanel(p);
             colorChooser.setPreviewPanel(new JPanel());
+            colorChooser.setColor(controller.getBackgroundColor());
             optionsPanel.add(colorChooser);
         }
 
-        JPanel gammaPanel = new JPanel();
-        JTextField gammaField = new JTextField(controller.getGamma() +"");
-        gammaPanel.add(new JLabel("Enter gamma (0.01 - 10): "));
-        gammaPanel.add(Box.createHorizontalStrut(10));
-        gammaPanel.add(gammaField);
-        gammaField.addKeyListener(new FloatTextFieldKeyListener());
-        optionsPanel.add(gammaPanel);
+        JTextField gammaField = new JTextField(controller.getGamma() + "", 10);
+        {
+            JPanel gammaPanel = new JPanel();
+            gammaPanel.add(new JLabel("Enter gamma (0.01 - 10):"));
+            gammaPanel.add(Box.createHorizontalStrut(10));
+            gammaPanel.add(gammaField);
+            gammaField.addKeyListener(new FloatTextFieldKeyListener());
+            optionsPanel.add(gammaPanel);
+        }
+
+        JTextField depthField = new JTextField(controller.getDepth() + "", 10);
+        {
+            JPanel depthPanel = new JPanel();
+            depthPanel.add(new JLabel("Enter depth"));
+            depthPanel.add(Box.createHorizontalStrut(10));
+            depthPanel.add(depthField);
+            depthField.addKeyListener(new IntegerTextFieldKeyListener());
+            optionsPanel.add(depthPanel);
+        }
 
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {

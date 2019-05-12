@@ -20,7 +20,7 @@ public class Controller {
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
     private Color backgroundColor;
-    private double gamma = 1;
+    private double gamma;
     private int depth;
 
     private boolean areRenderSettingsInitialized;
@@ -236,6 +236,9 @@ public class Controller {
                 primitives.add(primitive);
             }
             areRenderSettingsInitialized = false;
+            gamma = 1;
+            backgroundColor = new Color(45, 60, 45);
+            depth = 1;
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
