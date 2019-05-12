@@ -150,7 +150,11 @@ public class RaytracingFrame extends MainFrame {
     public void onOpenRenderSettings()
     {
         File file = getOpenFileName("render", "Rendering description file");
-        //todo
+        if(file != null)
+        {
+            controller.loadRenderFile(file);
+            controller.drawWireFigures();
+        }
     }
 
     public void onSaveRenderSettings()

@@ -44,6 +44,11 @@ public class Controller {
                 int dz = -count * 1;    //todo: вместо единицы какая-то дельта
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
+                //todo: нет так не сериализуется! не в этой же системе координат надо прибавлять
+                Matrix eyeM = Matrix.getVector4(eye);
+                eye = Matrix.multiply(tr, eyeM).getPoint();
+                Matrix refM = Matrix.getVector4(ref);
+                ref = Matrix.multiply(tr, refM).getPoint();
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
             }
