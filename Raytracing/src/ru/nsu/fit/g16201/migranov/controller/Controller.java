@@ -41,6 +41,7 @@ public class Controller {
 
             if(e.isControlDown())
             {
+                System.out.println(eye.x + " " + eye.y + " " +  eye.z);
                 double dz = -count * 1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
                 Point3D forward = Point3D.add(ref, Point3D.getNegative(eye));
                 forward = forward.normalize();
