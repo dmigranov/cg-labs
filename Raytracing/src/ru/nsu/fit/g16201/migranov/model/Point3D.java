@@ -12,6 +12,17 @@ public class Point3D {
 
     public static Point3D getVectorProduct(Point3D a, Point3D b) {
         //return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+        //return new Point3D(-(a.y*b.z - a.z*b.y), -(a.z*b.x - a.x*b.z), -(a.x*b.y - a.y*b.x));
+        return getLeftVectorProduct(a, b);
+    }
+
+    static Point3D getRightVectorProduct(Point3D a, Point3D b)
+    {
+        return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+    }
+
+    static Point3D getLeftVectorProduct(Point3D a, Point3D b)
+    {
         return new Point3D(-(a.y*b.z - a.z*b.y), -(a.z*b.x - a.x*b.z), -(a.x*b.y - a.y*b.x));
     }
 
