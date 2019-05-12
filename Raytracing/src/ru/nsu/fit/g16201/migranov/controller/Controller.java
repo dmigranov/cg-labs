@@ -86,17 +86,6 @@ public class Controller {
                     dz = -1;
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
-               /* Matrix eyeM = Matrix.getVector4(eye);
-                //eye = Matrix.multiply(tr, eyeM).getPoint();
-                Matrix refM = Matrix.getVector4(ref);
-                //ref = Matrix.multiply(tr, refM).getPoint();
-
-                Matrix trNew = Matrix.multiply(viewMatrix, tr);
-                //eye = Matrix.multiply(trNew, eyeM).getPoint();
-                //ref = Matrix.multiply(trNew, refM).getPoint();
-                */
-
-                //
 
                 Point3D fw = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();
                 Point3D rr = Point3D.getVectorProduct(up, fw);
@@ -377,10 +366,10 @@ public class Controller {
             //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
             // !
             // !
-            // !
 
-            zn = (minX /*- eye.x*/) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
-            zf = maxX /*- eye.x*/ + (maxX - minX) / 2;
+            zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
+            zf = maxX - eye.x + (maxX - minX) / 2;
+            System.out.println(zn + " " + zf);
 
             sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
             sh = (maxY - minY)/*/Math.abs(zn)*/;
