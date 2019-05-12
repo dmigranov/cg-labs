@@ -20,6 +20,8 @@ public class RaytracingFrame extends MainFrame {
     private JPanel mainPanel;
     private Controller controller;
 
+    private boolean isLoaded = false;
+
     public static void main(String[] args) throws Exception {
         new RaytracingFrame();
     }
@@ -28,27 +30,26 @@ public class RaytracingFrame extends MainFrame {
         super(800, 600, "Untitled | Denis Migranov, 16201");
 
 
-        mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.addComponentListener(new ComponentAdapter() {
+        //mainPanel = new JPanel(new GridBagLayout());
+
+
+        wireframePanel = new WireframePanel();
+        controller = new Controller(wireframePanel);
+        wireframePanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 resize(); //todo
             }
         });
-
-        wireframePanel = new WireframePanel();
-
-        mainPanel.add(wireframePanel);
-        controller = new Controller(wireframePanel);
-        wireframePanel.setPreferredSize(new Dimension(600, 400));
+        //mainPanel.add(wireframePanel);
+        //wireframePanel.setPreferredSize(new Dimension(600, 400));
         wireframePanel.setBackgroundColor(Color.WHITE);
         wireframePanel.clear();
         wireframePanel.requestFocusInWindow();
 
         addMenus();
 
-        add(mainPanel);
-
+        add(wireframePanel);
 
         JPanel statusPanel = new JPanel();
         statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -65,8 +66,13 @@ public class RaytracingFrame extends MainFrame {
     }
 
     private void resize() {
-        int width = mainPanel.getWidth();
-        int height = mainPanel.getHeight();
+        int width = wireframePanel.getWidth();
+        int height = wireframePanel.getHeight();
+
+        System.out.println(width);
+        wireframePanel.setPreferredSize(new Dimension(width, height));
+        if(isLoaded)
+            controller.drawWireFigures();
         /*double sw = controller.getSw(), sh = controller.getSh();
 
         double nwidth, nheight;
@@ -119,12 +125,14 @@ public class RaytracingFrame extends MainFrame {
             if(r != 0)
             {
                 JOptionPane.showMessageDialog(this, "Wrong file format.", "Error", JOptionPane.ERROR_MESSAGE);
+                isLoaded = false;
             }
             else {
                 for (AbstractButton b : deactivatedButtons)
                 {
                     b.setEnabled(true);
                 }
+                isLoaded = true;
                 String fileName = file.getName().replaceFirst("[.][^.]+$", "");
                 File renderFile = new File( file.getParentFile().getAbsolutePath() + "/" + fileName + ".render");
                 if(renderFile.exists())

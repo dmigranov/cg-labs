@@ -292,7 +292,7 @@ public class Controller {
 
             //todo: составить матрицы!!!
         }
-        catch (IOException e)
+        catch (IOException | NullPointerException e)
         {
             return -1;
         }
@@ -382,8 +382,8 @@ public class Controller {
                     double w = rpoint.get(3, 0);
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
-                        int x = (int)((point.x/w + 1)/2*wireframePanel.getCanvasWidth());
-                        int y = (int)((point.y/w + 1)/2*wireframePanel.getCanvasHeight());
+                        int x = (int)((point.x/w + 1)/2*wireframePanel.getWidth());
+                        int y = (int)((point.y/w + 1)/2*wireframePanel.getHeight());
 
                         if(prev != null)
                         {
