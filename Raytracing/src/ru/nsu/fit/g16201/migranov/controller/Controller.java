@@ -77,6 +77,10 @@ public class Controller {
                     dz = -1;
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
+                Matrix eyeM = Matrix.getVector4(eye);
+                eye = Matrix.multiply(tr, eyeM).getPoint();
+                Matrix refM = Matrix.getVector4(ref);
+                ref = Matrix.multiply(tr, refM).getPoint();
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
 
@@ -237,6 +241,7 @@ public class Controller {
             gamma = 1;
             backgroundColor = new Color(45, 60, 45);
             depth = 1;
+            quality = "NORMAL";
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -452,7 +457,7 @@ public class Controller {
     public void saveRenderFile(File file) {
         try(PrintWriter pw = new PrintWriter(file))
         {
-            pw.println(backgroundColor.getRed() + " " + backgroundColor.getGreen() + backgroundColor.getBlue());
+            pw.println(backgroundColor.getRed() + " " + backgroundColor.getGreen() + " " + backgroundColor.getBlue());
 
             pw.println(gamma);
             pw.println(depth);

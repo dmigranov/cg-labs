@@ -194,8 +194,12 @@ public class Matrix {
         return data[row * cols + col];
     }
 
-    public static Matrix getVector4(double x, double y, double z)
+    public static Matrix getVector4(Point3D p)
     {
-        return new Matrix(4, 1, x, y, z, 1);
+        return new Matrix(4, 1, p.x, p.y, p.z, 1);
+    }
+
+    public Point3D getPoint() {
+        return new Point3D(data[0], data[1], data[2]);
     }
 }
