@@ -41,23 +41,19 @@ public class Controller {
 
             if(e.isControlDown())
             {
-                int dz = -count * 1;    //todo: вместо единицы какая-то дельта
+                double dz = -count * 0.1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
 
-                Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
-                //todo: нет так не сериализуется! не в этой же системе координат надо прибавлять
-                Matrix eyeM = Matrix.getVector4(eye);
-                Matrix refM = Matrix.getVector4(ref);
-                Point3D trp = new Point3D(0, 0, dz);
-                //eye = Matrix.multiply(Matrix.multiply(viewMatrix, tr), eyeM).getPoint();
-                //ref = Matrix.multiply(Matrix.multiply(viewMatrix, tr), refM).getPoint();
-                //eye = Point3D.add(eye, Matrix.multiply(viewMatrix.get3x3Submatrix(), new Matrix(3, 1, 0, 0, dz)).getPoint());
-                //ref = Point3D.add(ref, Matrix.multiply(viewMatrix.get3x3Submatrix(), new Matrix(3, 1, 0, 0, dz)).getPoint());
+                /*Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
+                viewMatrix = Matrix.multiply(tr, viewMatrix);*/
 
+                Point3D diff = Point3D.add(ref, Point3D.getNegative(eye));
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, diff));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, diff));
 
+                //System.out.print(ref.x + " " + ref.y + " " + ref.z + "        ");
+                //System.out.println(eye.x + " " + eye.y + " " + eye.z);
 
-                viewMatrix = Matrix.multiply(tr, viewMatrix);
-
-                eye = Matrix.multiply(new Matrix(3, 1, -viewMatrix.get(0, 3), -viewMatrix.get(1, 3), -viewMatrix.get(2, 3)), viewMatrix.get3x3Submatrix()).getPoint();
+                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
 
                 drawWireFigures();
             }

@@ -16,6 +16,12 @@ public class Point3D {
         return getLeftVectorProduct(a, b);
     }
 
+    public static Point3D multiplyByScalar(double k, Point3D a) {
+        //return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+        //return new Point3D(-(a.y*b.z - a.z*b.y), -(a.z*b.x - a.x*b.z), -(a.x*b.y - a.y*b.x));
+        return new Point3D(a.x * k, a.y * k, a.z * k);
+    }
+
     static Point3D getRightVectorProduct(Point3D a, Point3D b)
     {
         return new Point3D(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
