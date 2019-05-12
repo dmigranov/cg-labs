@@ -30,6 +30,7 @@ public class Controller {
 
     private Integer prevX = null, prevY = null;
     private double zn, zf, sw, sh;
+    private String quality;
 
 
     public Controller(WireframePanel wireframePanel) {
@@ -270,7 +271,7 @@ public class Controller {
                 throw new IOException("Wrong depth");
 
             substrings = readLineAndSplit(reader);
-            //todo: quality?
+            quality = substrings[0];
 
             substrings = readLineAndSplit(reader);
             eye = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
@@ -449,13 +450,20 @@ public class Controller {
     }
 
     public void saveRenderFile(File file) {
-        try(PrintWriter pw = new PrintWriter(file)) {
-
-
-        }
-        catch(IOException e)
+        try(PrintWriter pw = new PrintWriter(file))
         {
+            pw.println(backgroundColor.getRed() + " " + backgroundColor.getGreen() + backgroundColor.getBlue());
+
+            pw.println(gamma);
+            pw.println(depth);
+            pw.println(quality);
+
+            //todo Три точки
+
+            pw.println(zn + " " + zf);
+            pw.println(sw + " " + sh);
 
         }
+        catch(IOException e) { }
     }
 }
