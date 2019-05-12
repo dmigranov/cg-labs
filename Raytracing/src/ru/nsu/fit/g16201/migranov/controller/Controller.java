@@ -20,7 +20,7 @@ public class Controller {
     private List<Primitive> primitives;     //использовать только для вайрфрейма? а то оптимизация...
 
     private Color backgroundColor;
-    private double gamma;
+    private double gamma = 1;
     private int depth;
 
     private boolean areRenderSettingsInitialized;
@@ -426,5 +426,18 @@ public class Controller {
         sw = sh * width/height;
 
         projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public double getGamma() {
+        return gamma;
+    }
+
+    public int getDepth()
+    {
+        return depth;
     }
 }

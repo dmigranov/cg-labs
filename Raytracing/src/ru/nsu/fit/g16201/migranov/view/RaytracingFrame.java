@@ -179,10 +179,12 @@ public class RaytracingFrame extends MainFrame {
         }
 
         JPanel gammaPanel = new JPanel();
-        JTextField gammaField = new JTextField();
+        JTextField gammaField = new JTextField(controller.getGamma() +"");
         gammaPanel.add(new JLabel("Enter gamma (0.01 - 10): "));
         gammaPanel.add(Box.createHorizontalStrut(10));
-
+        gammaPanel.add(gammaField);
+        gammaField.addKeyListener(new FloatTextFieldKeyListener());
+        optionsPanel.add(gammaPanel);
 
         if(JOptionPane.showConfirmDialog(this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
         {
