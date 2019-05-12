@@ -23,10 +23,8 @@ public class Controller {
     private double gamma;
     private int depth;
 
-    private boolean areRenderSettingInitialized;
-    private boolean isBoxCalculated;
-    private double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
-
+    private boolean areRenderSettingsInitialized;
+    //private boolean isBoxCalculated;
 
     private Matrix viewMatrix, projectionMatrix;
     private Point3D eye, ref, up;
@@ -96,7 +94,7 @@ public class Controller {
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
 
-                if(!areRenderSettingInitialized)
+                if(!areRenderSettingsInitialized)
                     return;
 
                 int x = e.getX();
@@ -241,8 +239,8 @@ public class Controller {
                 primitive.setOpticParameters(kDR, kDG, kDB, kSR, kSG, kSB, power);
                 primitives.add(primitive);
             }
-            areRenderSettingInitialized = false;
-            isBoxCalculated = false;
+            areRenderSettingsInitialized = false;
+            //isBoxCalculated = false;
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -302,17 +300,18 @@ public class Controller {
             return -1;
         }
 
-        areRenderSettingInitialized = true;
+        areRenderSettingsInitialized = true;
         return 0;
     }
 
     public void drawWireFigures()
     {
-        if(!areRenderSettingInitialized) //todo: + при нажатии init
+        if(!areRenderSettingsInitialized) //todo: + при нажатии init
         {
-            if(!isBoxCalculated) {
+            double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
+            //if(!isBoxCalculated) {
                 up = new Point3D(0, 0, 1);
-
+                System.out.println("reinit");
                 for (Primitive primitive : primitives) {
                     Point3D min = primitive.getMinPoint();
                     Point3D max = primitive.getMaxPoint();
@@ -341,7 +340,7 @@ public class Controller {
 
                 eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);        //todo: провериьь x
 
-                viewMatrix = Matrix.getViewMatrix(eye, boxCenter, up);
+                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
 
                 //todo: почему-то сильные искаженния (ошибка в матрице проекции?)!!!!!
                 // !
@@ -350,8 +349,8 @@ public class Controller {
                 zn = (minX /*- eye.x*/) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
                 zf = maxX /*- eye.x*/ + (maxX - minX) / 2;
 
-                isBoxCalculated = true; //чтобы не считать каждый раз так как в рамках одного файла одинаково
-            }
+                //isBoxCalculated = true; //чтобы не считать каждый раз так как в рамках одного файла одинаково
+            //}
             sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
             sh = (maxY - minY)/*/Math.abs(zn)*/;
 
@@ -359,10 +358,9 @@ public class Controller {
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
 
-            areRenderSettingInitialized = true;
+            areRenderSettingsInitialized = true;
         }
         //иначе - файл загружен, и матрицы proj и view уже заданы
-
         Matrix projView = Matrix.multiply(projectionMatrix, viewMatrix);
 
         wireframePanel.clear();
@@ -373,7 +371,6 @@ public class Controller {
             List<WireframeLine> lines = primitive.getWireframeLines();
             for (WireframeLine line : lines)
             {
-                //todo
                 List<Point3D> points = line.getPoints();
                 Point prev = null;    //пред точка в экранных координатах
 
@@ -425,8 +422,8 @@ public class Controller {
         return substrings;
     }
 
-    public void setAreRenderSettingInitialized(boolean state) {
-        areRenderSettingInitialized = state;
+    public void setAreRenderSettingsInitialized(boolean state) {
+        areRenderSettingsInitialized = state;
     }
 
     public void recalculateProjectionParameters() {

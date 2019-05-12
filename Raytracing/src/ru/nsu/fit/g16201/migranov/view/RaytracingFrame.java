@@ -139,7 +139,7 @@ public class RaytracingFrame extends MainFrame {
                 if(renderFile.exists())
                     controller.loadRenderFile(renderFile);
                 else
-                    controller.setAreRenderSettingInitialized(false);
+                    controller.setAreRenderSettingsInitialized(false);
                 controller.drawWireFigures();
             }
         }
@@ -157,7 +157,7 @@ public class RaytracingFrame extends MainFrame {
 
     public void onInit()
     {
-        controller.setAreRenderSettingInitialized(true);
+        controller.setAreRenderSettingsInitialized(false);
         controller.drawWireFigures();
     }
 
