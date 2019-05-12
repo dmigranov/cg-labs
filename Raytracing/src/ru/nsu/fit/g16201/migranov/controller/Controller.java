@@ -52,7 +52,6 @@ public class Controller {
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, -dz));
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
-
                 drawWireFigures();
             }
             else
@@ -79,26 +78,25 @@ public class Controller {
                     dy = 1;
                 else if (key == KeyEvent.VK_DOWN)
                     dy = -1;
-                else if (key == KeyEvent.VK_P)
+                /*else if (key == KeyEvent.VK_P)
                     dz = 1;
                 else if (key == KeyEvent.VK_M)
-                    dz = -1;
+                    dz = -1;*/
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
 
-                Point3D fw = new Point3D(ref.x - eye.x, ref.y - eye.y, ref.z - eye.z).normalize();
-                Point3D rr = Point3D.getVectorProduct(up, fw);
-                Point3D u = rr.normalize(); //right
-                Point3D v = Point3D.getVectorProduct(fw, u);    //up
+                Point3D z = new Point3D(-(ref.x - eye.x), -(ref.y - eye.y), -(ref.z - eye.z)).normalize();
+                Point3D x = Point3D.getVectorProduct(up, z).normalize();
+                Point3D y = Point3D.getVectorProduct(z, x);
 
-                ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, fw));
-                eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, fw));
-                ref = Point3D.add(ref, Point3D.multiplyByScalar(-dy, v));
-                eye = Point3D.add(eye, Point3D.multiplyByScalar(-dy, v));
-                ref = Point3D.add(ref, Point3D.multiplyByScalar(dx, u));
-                eye = Point3D.add(eye, Point3D.multiplyByScalar(dx, u));
-                //viewMatrix = Matrix.getViewMatrix(eye, ref, up);
-                viewMatrix = Matrix.multiply(tr, viewMatrix);
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, z));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, z));
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(-dy, y));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(-dy, y));
+                ref = Point3D.add(ref, Point3D.multiplyByScalar(dx, x));
+                eye = Point3D.add(eye, Point3D.multiplyByScalar(dx, x));
+                viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
+                //viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
             }
         });
@@ -313,7 +311,7 @@ public class Controller {
             sw = Double.parseDouble(substrings[0]);
             sh = Double.parseDouble(substrings[1]);
 
-            viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+            viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
         }
         catch (IOException | NullPointerException e)
