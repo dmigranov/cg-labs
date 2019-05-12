@@ -202,4 +202,15 @@ public class Matrix {
     public Point3D getPoint() {
         return new Point3D(data[0], data[1], data[2]);
     }
+
+    public Matrix get3x3Submatrix()
+    {
+        Matrix r = new Matrix(3, 3);
+        for(int i = 0; i < 3; i++)
+            for(int j = 0; j < 3; j++)
+            {
+                r.set(i, j, get(i, j)) ;
+            }
+        return r;
+    }
 }

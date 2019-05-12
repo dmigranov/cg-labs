@@ -50,12 +50,12 @@ public class Controller {
                 Point3D trp = new Point3D(0, 0, dz);
                 //eye = Matrix.multiply(Matrix.multiply(viewMatrix, tr), eyeM).getPoint();
                 //ref = Matrix.multiply(Matrix.multiply(viewMatrix, tr), refM).getPoint();
-                eye = Point3D.add(eye, Matrix.multiply(viewMatrix, Matrix.getVector4(trp)).getPoint());
-                ref = Point3D.add(ref, Matrix.multiply(viewMatrix, Matrix.getVector4(trp)).getPoint());
+                eye = Point3D.add(eye, Matrix.multiply(viewMatrix.get3x3Submatrix(), new Matrix(3, 1, 0, 0, dz)).getPoint());
+                ref = Point3D.add(ref, Matrix.multiply(viewMatrix.get3x3Submatrix(), new Matrix(3, 1, 0, 0, dz)).getPoint());
 
 
-                viewMatrix = Matrix.multiply(tr, viewMatrix);
-
+                //viewMatrix = Matrix.multiply(tr, viewMatrix);
+                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
 
                 drawWireFigures();
             }
