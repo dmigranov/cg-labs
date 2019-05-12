@@ -43,7 +43,7 @@ public class Controller {
 
             if(e.isControlDown())
             {
-                int dz = -count * 1;    //todo: вместо единицы какая - то дельта
+                int dz = -count * 1;    //todo: вместо единицы какая-то дельта
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
@@ -236,7 +236,6 @@ public class Controller {
                 primitives.add(primitive);
             }
             areRenderSettingsInitialized = false;
-            //isBoxCalculated = false;
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -263,6 +262,8 @@ public class Controller {
 
             substrings = readLineAndSplit(reader);
             gamma = Double.parseDouble(substrings[0]);
+            if(gamma < 0 || gamma > 10)
+                throw new IOException("Wrong gamma");
 
             substrings = readLineAndSplit(reader);
             depth = Integer.parseInt(substrings[0]);

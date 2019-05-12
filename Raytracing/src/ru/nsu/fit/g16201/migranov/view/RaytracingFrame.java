@@ -5,6 +5,8 @@ import ru.nsu.fit.g16201.migranov.view.frametemplate.MainFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.colorchooser.ColorSelectionModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -163,6 +165,29 @@ public class RaytracingFrame extends MainFrame {
 
     public void onShowSettings()
     {
+        JPanel optionsPanel = new JPanel();
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
+        JColorChooser colorChooser = new JColorChooser();
+        {
+            AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+            for (AbstractColorChooserPanel p : panels)
+                if (!p.getDisplayName().equals("RGB"))
+                    colorChooser.removeChooserPanel(p);
+            colorChooser.setPreviewPanel(new JPanel());
+            optionsPanel.add(colorChooser);
+        }
+
+        JPanel gammaPanel = new JPanel();
+        JTextField gammaField = new JTextField();
+        gammaPanel.add(new JLabel("Enter gamma (0.01 - 10): "));
+        gammaPanel.add(Box.createHorizontalStrut(10));
+
+
+        if(JOptionPane.showConfirmDialog(this, optionsPanel, "Options", JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION)
+        {
+            Color backgroundColor = colorChooser.getColor();
+        }
 
     }
 
