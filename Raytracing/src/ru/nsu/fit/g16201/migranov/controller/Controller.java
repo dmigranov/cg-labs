@@ -369,10 +369,10 @@ public class Controller {
 
             zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             zf = maxX - eye.x + (maxX - minX) / 2;
-            System.out.println(zn + " " + zf);
+            System.out.println(zn + " " + zf + " " + eye.x + " " + eye.y + " " + eye.z);
 
-            sw = (maxZ - minZ)/*/Math.abs(zn)*/;    //todo: вписанность в экран!
-            sh = (maxY - minY)/*/Math.abs(zn)*/;
+            sw = (maxZ - minZ)*zn/(minX - eye.x);    //todo: вписанность в экран!
+            sh = (maxY - minY)*zn/(minX - eye.x);
 
             System.out.println(sw +  " " + sh);
 
