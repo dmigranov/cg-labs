@@ -48,11 +48,9 @@ public class Controller {
                 ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, forward));
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, forward));
 
-                //System.out.print(ref.x + " " + ref.y + " " + ref.z + "        ");
-                //System.out.println(eye.x + " " + eye.y + " " + eye.z);
-                //viewMatrix = Matrix.getViewMatrix(eye, ref, up);  //матрица получается аналогичная
+                //viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);  //матрица получается аналогичная
 
-                Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
+                Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, -dz));
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
 
                 drawWireFigures();
