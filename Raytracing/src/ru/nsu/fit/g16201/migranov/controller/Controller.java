@@ -57,7 +57,7 @@ public class Controller {
 
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
 
-                eye = new Point3D(viewMatrix.get(0, 3), viewMatrix.get(1, 3), viewMatrix.get(2, 3));
+                eye = Matrix.multiply(new Matrix(3, 1, -viewMatrix.get(0, 3), -viewMatrix.get(1, 3), -viewMatrix.get(2, 3)), viewMatrix.get3x3Submatrix()).getPoint();
 
                 drawWireFigures();
             }
