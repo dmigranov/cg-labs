@@ -15,7 +15,6 @@ public class WireframePanel extends JPanel {
         super();
         width = 1;
         height = 1;
-        //setPreferredSize(new Dimension(width, height));
         canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasGraphics = canvas.createGraphics();
         canvasGraphics.setColor(Color.BLACK);
@@ -28,8 +27,6 @@ public class WireframePanel extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-
-        //canvasGraphics.drawLine(0, 0, width - 1, height - 1);
 
         g.drawImage(canvas, 0, 0, null, null);
     }
