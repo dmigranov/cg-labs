@@ -43,8 +43,7 @@ public class Controller {
             {
                 double dz = -count * 0.1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
 
-                /*Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
-                viewMatrix = Matrix.multiply(tr, viewMatrix);*/
+
 
                 Point3D diff = Point3D.add(ref, Point3D.getNegative(eye));
                 ref = Point3D.add(ref, Point3D.multiplyByScalar(dz, diff));
@@ -53,7 +52,10 @@ public class Controller {
                 //System.out.print(ref.x + " " + ref.y + " " + ref.z + "        ");
                 //System.out.println(eye.x + " " + eye.y + " " + eye.z);
 
-                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+                //viewMatrix = Matrix.getViewMatrix(eye, ref, up);  //матрица получается аналогичная
+
+                Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, dz));
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
 
                 drawWireFigures();
             }
@@ -88,12 +90,15 @@ public class Controller {
 
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(dx, dy, dz));
                 Matrix eyeM = Matrix.getVector4(eye);
-                eye = Matrix.multiply(tr, eyeM).getPoint();
+                //eye = Matrix.multiply(tr, eyeM).getPoint();
                 Matrix refM = Matrix.getVector4(ref);
-                ref = Matrix.multiply(tr, refM).getPoint();
+                //ref = Matrix.multiply(tr, refM).getPoint();
 
-                //viewMatrix = Matrix.multiply(tr, viewMatrix);
-                viewMatrix = Matrix.getViewMatrix(eye, ref, up);
+                Matrix trNew = Matrix.multiply(viewMatrix, tr);
+                //eye = Matrix.multiply(trNew, eyeM).getPoint();
+                //ref = Matrix.multiply(trNew, refM).getPoint();
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
+                //viewMatrix = Matrix.getViewMatrix(eye, ref, up);
 
                 drawWireFigures();
             }
