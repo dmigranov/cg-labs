@@ -36,24 +36,32 @@ public class Renderer {
     }
 
     public class RendererWorker implements Runnable {
-        private int xStart;
-        private int xEnd;
-        private int yStart;
-        private int yEnd;
+        private int xStartIter;
+        private int xEndIter;
+        private int yStartIter;
+        private int yEndIter;
 
-        void RendererWorker(int xStart, int xEnd, int yStart, int yEnd)
+        void RendererWorker(int xStartIter, int xEndIter, int yStartIter, int yEndIter)
         {
-            this.xStart = xStart;
-            this.xEnd = xEnd;
-            this.yStart = yStart;
-            this.yEnd = yEnd;
+            this.xStartIter = xStartIter;
+            this.xEndIter = xEndIter;
+            this.yStartIter = yStartIter;
+            this.yEndIter = yEndIter;
         }
 
         @Override
         public void run() {
-            for(int i = yStart; i < yEnd; i++)
+            //y
+
+            double nearStartX = eye.x - sw/2;
+            double nearEndX = eye.x + sw/2;
+            double nearStartY = eye.y - sh/2;
+            double nearEndY = eye.y + sh/2;
+
+            for(int i = yStartIter; i < yEndIter; i++)
             {
-                for(int j = xStart; j < xEnd; j++)
+
+                for(int j = xEndIter; j < xEndIter; j++)
                 {
 
                 }
