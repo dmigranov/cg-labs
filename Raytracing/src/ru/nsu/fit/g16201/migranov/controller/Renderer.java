@@ -7,21 +7,26 @@ import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Renderer {
-    private final List<Primitive> primitives;
-    private final List<Light> lights;
-    private final Color ambientLightColor;
-    private final Color backgroundColor;
-    private final double gamma;
-    private final int depth;
-    private final Point3D eye;
-    private final double zn;
-    private final double sw;
-    private final double sh;
+    private List<Primitive> primitives;
+    private List<Light> lights;
+    private Color ambientLightColor;
+    private Color backgroundColor;
+    private double gamma;
+    private int depth;
+    private Point3D eye;
+    private double zn;
+    private double sw;
+    private double sh;
     private WireframePanel panel;
     //private RendererWorker workers[][] = new RendererWorker[2][2];
     private RendererWorker workers[] = new RendererWorker[4];
+
+    private ThreadPoolExecutor executor;
     public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh, WireframePanel panel)
     {
         this.primitives = primitives;
@@ -37,15 +42,17 @@ public class Renderer {
         this.panel = panel;
     }
 
-    public void render()
+    public void render(int numberOfThreads)
     {
         int width = panel.getWidth();
         int height = panel.getHeight(); //в пискелах
 
-        workers[0] = new RendererWorker(0, width/2, 0, height/2);
+        /*workers[0] = new RendererWorker(0, width/2, 0, height/2);
         workers[1] = new RendererWorker(0, width/2, height/2, height);
         workers[2] = new RendererWorker(width/2, width, 0, height/2);
-        workers[3] = new RendererWorker(width/2, width, height/2, height);
+        workers[3] = new RendererWorker(width/2, width, height/2, height);*/
+
+        executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
 
         for(RendererWorker worker : workers)
