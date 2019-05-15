@@ -49,6 +49,7 @@ public class Renderer {
 
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
+        //это неправильно! это ведь ещё не в координатах камеры
         double nearStartX = eye.x - sw/2;
         double nearEndX = eye.x + sw/2;
         double nearStartY = eye.y - sh/2;
@@ -65,7 +66,7 @@ public class Renderer {
             for(int j = 0; j < width; j++)
             {
                 //центры пикселя
-                executor.execute(new RendererTask(x, y));
+                executor.execute(new RendererTask(x, y, i, j));
 
                 x += dx;
             }
@@ -76,15 +77,29 @@ public class Renderer {
     }
 
     public class RendererTask implements Runnable {
-        private int xStartIter;
-        private int xEndIter;
-        private int yStartIter;
-        private int yEndIter;
+        private double pixelX;
+        private double pixelY;
+        private final int picX;
+        private final int picY;
 
-        RendererTask(double pixelX, double pixelY, )
+        //одно легко высчисляется из другого, но время деньги
+        RendererTask(double pixelX, double pixelY, int picX, int picY)
         {
+            this.pixelX = pixelX;
+            this.pixelY = pixelY;
+            this.picX = picX;
+            this.picY = picY;
+
+
+
+            //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
+            Point3D r0 = eye;
+            ..Point3D rd =
+
 
         }
+
+
 
         @Override
         public void run() {
