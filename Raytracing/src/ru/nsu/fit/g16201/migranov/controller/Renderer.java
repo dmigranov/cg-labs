@@ -3,6 +3,7 @@ package ru.nsu.fit.g16201.migranov.controller;
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
+import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
 import java.util.List;
@@ -18,10 +19,10 @@ public class Renderer {
     private final double zn;
     private final double sw;
     private final double sh;
-
-    private RendererWorker workers[][] = new RendererWorker[2][2];
-
-    public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh)
+    private WireframePanel panel;
+    //private RendererWorker workers[][] = new RendererWorker[2][2];
+    private RendererWorker workers[] = new RendererWorker[4];
+    public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh, WireframePanel panel)
     {
         this.primitives = primitives;
         this.lights = lights;
@@ -33,6 +34,24 @@ public class Renderer {
         this.zn = zn;
         this.sw = sw;
         this.sh = sh;
+        this.panel = panel;
+    }
+
+    public void render()
+    {
+        int width = panel.getWidth();
+        int height = panel.getHeight(); //в пискелах
+
+        workers[0] = new RendererWorker(0, width/2, 0, height/2);
+        workers[1] = new RendererWorker(0, width/2, height/2, height);
+        workers[2] = new RendererWorker(width/2, width, 0, height/2);
+        workers[3] = new RendererWorker(width/2, width, height/2, height);
+
+
+        for(RendererWorker worker : workers)
+        {
+            //worker.run();
+        }
     }
 
     public class RendererWorker implements Runnable {
@@ -41,7 +60,7 @@ public class Renderer {
         private int yStartIter;
         private int yEndIter;
 
-        void RendererWorker(int xStartIter, int xEndIter, int yStartIter, int yEndIter)
+        RendererWorker(int xStartIter, int xEndIter, int yStartIter, int yEndIter)  //не включчая концы
         {
             this.xStartIter = xStartIter;
             this.xEndIter = xEndIter;
@@ -58,10 +77,13 @@ public class Renderer {
             double nearStartY = eye.y - sh/2;
             double nearEndY = eye.y + sh/2;
 
+
+            //double startX = ;
+
             for(int i = yStartIter; i < yEndIter; i++)
             {
 
-                for(int j = xEndIter; j < xEndIter; j++)
+                for(int j = xStartIter; j < xEndIter; j++)
                 {
 
                 }
