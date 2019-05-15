@@ -505,4 +505,8 @@ public class Controller {
         }
         catch(IOException e) { }
     }
+
+    public void render() {
+
+    }
 }

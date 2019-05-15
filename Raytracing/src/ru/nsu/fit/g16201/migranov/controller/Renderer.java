@@ -91,11 +91,10 @@ public class Renderer {
             this.picX = picX;
             this.picY = picY;
 
-
             //todo: перейти в координаты камеры
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
             Point3D r0 = eye;
-            Point3D rd =
+            //Point3D rd =
 
 
         }
@@ -104,12 +103,10 @@ public class Renderer {
 
         @Override
         public void run() {
+            for (Primitive p : primitives)
+            {
 
-
-
-
-
-
+            }
 
         }
     }

@@ -239,12 +239,13 @@ public class RaytracingFrame extends MainFrame {
 
     public void onSelectView()
     {
-
+        controller.drawWireFigures();
     }
 
     public void onRender()
     {
-
+        //todo: заблок кнопки
+        controller.render();
     }
 
     private void addMenuAndToolBarButton(String path, String tooltip, int mnemonic, String icon, String actionMethod, boolean isDeactivated) throws NoSuchMethodException
