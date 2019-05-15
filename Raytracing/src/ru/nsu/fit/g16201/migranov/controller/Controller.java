@@ -33,6 +33,8 @@ public class Controller {
     private String quality;
 
 
+    private double gXAngle = 0, gYAngle = 0, gZAngle = 0;
+
     public Controller(WireframePanel wireframePanel) {
         this.wireframePanel = wireframePanel;
 
@@ -114,8 +116,12 @@ public class Controller {
                     double xAngle = 0.01 * dx;
                     double yAngle = 0.01 * dy;
 
+                    gXAngle += xAngle;
+                    gYAngle += yAngle;
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
-                    Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
+                    //Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
+                    /*double distance = Point3D.add(ref, Point3D.getNegative(eye)).getLength();
+                    Matrix invertTranslate = Matrix.getTranslationMatrix(new Point3D(0, 0, -distance));
 
                     Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
@@ -124,7 +130,20 @@ public class Controller {
                     //todo: надо обязательно воздействовать ещё на eye ref up Для сериализации
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
-                    viewMatrix = Matrix.multiply(viewMatrix, res);
+                    viewMatrix = Matrix.multiply(viewMatrix, res);*/
+
+                    /*double distance = Point3D.add(ref, Point3D.getNegative(eye)).getLength();
+                    double camX = distance * -Math.sin(gXAngle) * Math.cos((gYAngle));
+                    double camY = distance * -Math.sin((gYAngle));
+                    double camZ = -distance * Math.cos((gXAngle)) * Math.cos((gYAngle));
+                    eye = new Point3D(camX, camY, camZ);
+
+                    viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);*/
+
+                    //https://stackoverflow.com/questions/46531370/opengl-rotating-camera-around-lookat-point-without-using-glu-functions
+
+
+
 
                     drawWireFigures();
                 }

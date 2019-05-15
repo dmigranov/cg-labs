@@ -54,14 +54,23 @@ public class Renderer {
         double nearStartY = eye.y - sh/2;
         double nearEndY = eye.y + sh/2;
 
-        for(int i = yStartIter; i < yEndIter; i++)
+
+        double dx = sw/width/2, dy = sh/height/2;
+        double x = nearStartX + dx;
+        double y = nearStartY + dy;
+
+
+        for(int i = 0; i < height; i++)
         {
-
-            for(int j = xStartIter; j < xEndIter; j++)
+            for(int j = 0; j < width; j++)
             {
+                //центры пикселя
+                executor.execute(new RendererTask(x, y));
 
+                x += dx;
             }
 
+            y += dy;
         }
 
     }
@@ -72,22 +81,17 @@ public class Renderer {
         private int yStartIter;
         private int yEndIter;
 
-        RendererTask(int xStartIter, int xEndIter, int yStartIter, int yEndIter)  //не включчая концы
+        RendererTask(double pixelX, double pixelY, )
         {
-            this.xStartIter = xStartIter;
-            this.xEndIter = xEndIter;
-            this.yStartIter = yStartIter;
-            this.yEndIter = yEndIter;
+
         }
 
         @Override
         public void run() {
-            //y
 
 
 
 
-            //double startX = ;
 
 
 

@@ -46,4 +46,9 @@ public class Point3D {
         return new Point3D(-p1.x, -p1.y, -p1.z);
     }
 
+    public double getLength()
+    {
+        return Math.sqrt(x*x + y*y + z*z);
+    }
+
 }
