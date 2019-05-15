@@ -50,6 +50,7 @@ public class Renderer {
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
         //это неправильно! это ведь ещё не в координатах камеры
+        //по нулям, буду делать в ккординатах камеры!
         double nearStartX = eye.x - sw/2;
         double nearEndX = eye.x + sw/2;
         double nearStartY = eye.y - sh/2;
@@ -79,8 +80,8 @@ public class Renderer {
     public class RendererTask implements Runnable {
         private double pixelX;
         private double pixelY;
-        private final int picX;
-        private final int picY;
+        private int picX;
+        private int picY;
 
         //одно легко высчисляется из другого, но время деньги
         RendererTask(double pixelX, double pixelY, int picX, int picY)
@@ -91,10 +92,10 @@ public class Renderer {
             this.picY = picY;
 
 
-
+            //todo: перейти в координаты камеры
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
             Point3D r0 = eye;
-            ..Point3D rd =
+            Point3D rd =
 
 
         }
