@@ -91,8 +91,8 @@ public class Controller {
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(-dy, y));
                 ref = Point3D.add(ref, Point3D.multiplyByScalar(dx, x));
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(dx, x));
-                viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
-                //viewMatrix = Matrix.multiply(tr, viewMatrix);
+                //viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
+                viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
             }
         });
@@ -296,7 +296,10 @@ public class Controller {
 
             substrings = readLineAndSplit(reader);
             up = new Point3D(Double.parseDouble(substrings[0]), Double.parseDouble(substrings[1]), Double.parseDouble(substrings[2]));
-            //todo: проверить up!
+            //корректировка up
+            Point3D zCam = Point3D.add(ref, Point3D.getNegative(eye));
+            Point3D rCam = Point3D.getVectorProduct(zCam, up);
+            up = Point3D.getVectorProduct(rCam, zCam).normalize();
 
             substrings = readLineAndSplit(reader);
             zn = Double.parseDouble(substrings[0]);
@@ -355,8 +358,6 @@ public class Controller {
             eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);        //todo: провериьь x
 
             viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
-
-            // todo: проверить все!
 
             zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             zf = maxX - eye.x + (maxX - minX) / 2;

@@ -40,7 +40,7 @@ public class RaytracingFrame extends MainFrame {
         wireframePanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                resize(); //todo
+                resize();
             }
         });
         //mainPanel.add(wireframePanel);

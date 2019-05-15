@@ -39,7 +39,7 @@ public class Sphere extends Primitive {
     public List<WireframeLine> getWireframeLines() {
         List<WireframeLine> lines = new ArrayList<>();
 
-        int n = 6; int m = 6; int k = 6;
+        int n = 6; int m = 6; int k = 10;
 
         WireframeLine[] perLines = new WireframeLine[m*k + 1];
         for (int i = 0; i <= m*k; i++)
