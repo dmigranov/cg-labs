@@ -85,13 +85,18 @@ public class Sphere extends Primitive {
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
         Point3D oc = Point3D.subtract(center, r0);      //вообще r0 всегда 0..
 
-        if(Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2) > radius * radius)
+        double ocLen2 = Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2);
+        if(ocLen2 > Math.pow(radius, 2))
         {
             //начало луча снаружи сферы!
             double tca = Point3D.getScalarProduct(oc, rd);  //расстояние от начала луча до ближайшей к центру сферы точки
 
             if(tca < 0)
                 return null;    //луч не пересекает сферу
+            else
+            {
+                double thc2 = Math.pow(radius, 2) - (ocLen2 - tca*tca);
+            }
 
         }
 
