@@ -86,6 +86,9 @@ public class Sphere extends Primitive {
         Point3D oc = Point3D.subtract(center, r0);      //вообще r0 всегда 0..
 
         double ocLen2 = Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2);
+
+        double t = 0;
+
         if(ocLen2 > Math.pow(radius, 2))
         {
             //начало луча снаружи сферы!
@@ -96,10 +99,18 @@ public class Sphere extends Primitive {
             else
             {
                 double thc2 = Math.pow(radius, 2) - (ocLen2 - tca*tca);
+                if(thc2 < 0)
+                    return null;
+                t = tca - Math.sqrt(thc2);
             }
 
         }
 
-        return null;
+        //todo: случай когда камера внутри сферы?
+
+        Point3D ri = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));
+        Point3D ni = Point3D.multiplyByScalar(1/radius, Point3D.subtract(ri, center));
+
+        return new IntersectionNormal(ri, ni);
     }
 }

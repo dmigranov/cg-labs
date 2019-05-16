@@ -129,12 +129,13 @@ public class Renderer {
         }
 
 
-
         @Override
         public void run() {
             for (Primitive p : primitives)
             {
-
+                IntersectionNormal in = findIntersection(p);
+                if(in != null)
+                    System.out.println("YO");
             }
 
 
