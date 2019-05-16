@@ -7,6 +7,8 @@ import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -49,7 +51,20 @@ public class Renderer {
         this.sh = sh;
 
         int width = panel.getWidth();
-        int height = panel.getHeight(); //в пискелах
+        int height = panel.getHeight(); //в пикселах
+
+        primitives = new ArrayList<>(worldPrimitives.size());
+        for(Primitive worldPrimitive : worldPrimitives)
+        {
+            try {
+                primitives.add(worldPrimitive.getClass().getDeclaredConstructor(Primitive.class, Matrix.class).newInstance(worldPrimitive, viewMatrix));
+            }
+            catch (NoSuchMethodException | InstantiationException | IllegalAccessException  | InvocationTargetException e )
+            {
+
+            }
+        }
+
 
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 

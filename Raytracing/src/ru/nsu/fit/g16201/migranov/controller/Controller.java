@@ -505,6 +505,6 @@ public class Controller {
     }
 
     public void render() {
-        //renderer.render(4, backgroundColor, gamma, depth, eye, viewMatrix, zn, sw, sh);
+        renderer.render(4, backgroundColor, gamma, depth, eye, viewMatrix, zn, sw, sh);
     }
 }
