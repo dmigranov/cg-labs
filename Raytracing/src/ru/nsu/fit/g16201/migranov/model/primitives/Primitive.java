@@ -50,7 +50,7 @@ public abstract class Primitive {
     //а WireframeLine плохо в том отношении, что два раза для одной точки будем переводить матрицами!
     public abstract List<WireframeLine> getWireframeLines();
 
-    public Primitive(Primitive worldPrimitive, Matrix viewMatrix)
+    public Primitive(Primitive worldPrimitive)
     {
         kDR = worldPrimitive.kDR;
         kDG = worldPrimitive.kDG;
@@ -62,4 +62,6 @@ public abstract class Primitive {
 
         power = worldPrimitive.power;
     }
+
+    public abstract Primitive movePrimitive(Matrix matrix);
 }

@@ -52,11 +52,20 @@ public class Box extends Primitive {
         return lines;
     }
 
-    public Box(Box worldPrimitive, Matrix viewMatrix)
-    {
-        super(worldPrimitive, viewMatrix);
 
-        minPoint = viewMatrix.applyMatrix(worldPrimitive.minPoint);
-        maxPoint = viewMatrix.applyMatrix(worldPrimitive.maxPoint);
+    private Box(Box worldPrimitive)
+    {
+        super(worldPrimitive);
+    }
+
+    @Override
+    public Primitive movePrimitive(Matrix matrix)
+    {
+        Box returnBox = new Box(this);
+
+        returnBox.minPoint = matrix.applyMatrix(minPoint);
+        returnBox.maxPoint = matrix.applyMatrix(maxPoint);
+
+        return returnBox;
     }
 }
