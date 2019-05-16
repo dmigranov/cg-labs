@@ -71,13 +71,13 @@ public class Renderer {
         double nearStartX = - sw/2;
         double nearStartY = - sh/2;
 
-        double dx = sw/width/2, dy = sh/height/2;
+        double dx = sw/width, dy = sh/height;
         double x;
-        double y = nearStartY + dy;
+        double y = nearStartY + dy/2;
 
         for(int i = 0; i < height; i++)
         {
-            x = nearStartX + dx;
+            x = nearStartX + dx/2;
             for(int j = 0; j < width; j++)
             {
                 //центры пикселя
@@ -128,6 +128,8 @@ public class Renderer {
         public void run() {
             for (Primitive p : primitives)
             {
+                if(pixelX > -0.004 && pixelX < 0.004)
+                    System.out.println();
                 IntersectionNormal in = findIntersection(p);
                 if(in != null) {
                     panel.setPixel(picX, picY, Color.YELLOW.getRGB());
