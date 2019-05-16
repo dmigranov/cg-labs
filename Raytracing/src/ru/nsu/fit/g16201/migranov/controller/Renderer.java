@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Renderer {
     private List<Primitive> worldPrimitives, primitives;
@@ -29,6 +30,8 @@ public class Renderer {
     private WireframePanel panel;
 
     private ThreadPoolExecutor executor;
+
+    private AtomicInteger pixelsCount;
 
     public Renderer(List<Primitive> worldPrimitives, List<Light> worldLights, Color ambientLightColor, WireframePanel panel)
     {
@@ -53,6 +56,8 @@ public class Renderer {
 
         int width = panel.getWidth();
         int height = panel.getHeight(); //в пикселах
+
+        pixelsCount = new AtomicInteger(0);
 
         primitives = new ArrayList<>(worldPrimitives.size());
         for(Primitive worldPrimitive : worldPrimitives) {
@@ -86,6 +91,17 @@ public class Renderer {
 
             y += dy;
         }
+        executor.shutdown();
+
+        while(true)
+        {
+            try {
+                if (executor.awaitTermination(2, TimeUnit.SECONDS)) break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("done1");
 
     }
 
@@ -121,6 +137,8 @@ public class Renderer {
 
             }
 
+
+            pixelsCount.incrementAndGet();
         }
 
         public IntersectionNormal findIntersection(Primitive p)
