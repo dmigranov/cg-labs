@@ -32,6 +32,7 @@ public class Controller {
     private double zn, zf, sw, sh;
     private String quality;
 
+    private Renderer renderer;
 
     private double gXAngle = 0, gYAngle = 0, gZAngle = 0;
 
@@ -51,7 +52,6 @@ public class Controller {
                 eye = Point3D.add(eye, Point3D.multiplyByScalar(dz, forward));
 
                 //viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);  //матрица получается аналогичная
-
                 Matrix tr = Matrix.getTranslationMatrix(new Point3D(0, 0, -dz));
                 viewMatrix = Matrix.multiply(tr, viewMatrix);
                 drawWireFigures();
@@ -70,7 +70,6 @@ public class Controller {
                 super.keyPressed(e);
 
                 double dx = 0, dy = 0, dz = 0;
-
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_LEFT)
                     dx = 1;
@@ -103,7 +102,6 @@ public class Controller {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
-
                 if(!areRenderSettingsInitialized)
                     return;
 
@@ -141,8 +139,6 @@ public class Controller {
                     viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);*/
 
                     //https://stackoverflow.com/questions/46531370/opengl-rotating-camera-around-lookat-point-without-using-glu-functions
-
-
 
 
                     drawWireFigures();
@@ -271,6 +267,8 @@ public class Controller {
             backgroundColor = new Color(45, 60, 45);
             depth = 1;
             quality = "NORMAL";
+
+            renderer = new Renderer(primitives, lights, ambientLightColor, wireframePanel);
         }
         catch (IOException | ArrayIndexOutOfBoundsException | IllegalArgumentException | NullPointerException e)
         {
@@ -507,6 +505,6 @@ public class Controller {
     }
 
     public void render() {
-
+        //renderer.render(4, backgroundColor, gamma, depth, eye, viewMatrix, zn, sw, sh);
     }
 }
