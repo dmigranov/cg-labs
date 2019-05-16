@@ -23,7 +23,7 @@ public class Renderer {
 
     private ThreadPoolExecutor executor;
 
-    public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, WireframePanel panel)
+    public Renderer(List<Primitive> worldPrimitives, List<Light> worldLights, Color ambientLightColor, WireframePanel panel)
     {
         this.primitives = primitives;
         this.lights = lights;
