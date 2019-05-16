@@ -46,7 +46,6 @@ public class Renderer {
         int width = panel.getWidth();
         int height = panel.getHeight(); //в пискелах
 
-
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
         //это неправильно! это ведь ещё не в координатах камеры
@@ -55,7 +54,6 @@ public class Renderer {
         double nearEndX = eye.x + sw/2;
         double nearStartY = eye.y - sh/2;
         double nearEndY = eye.y + sh/2;
-
 
         double dx = sw/width/2, dy = sh/height/2;
         double x = nearStartX + dx;

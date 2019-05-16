@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
+import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 
@@ -48,4 +49,6 @@ public abstract class Primitive {
     //по идее, можно считать один раз при загрузке
     //а WireframeLine плохо в том отношении, что два раза для одной точки будем переводить матрицами!
     public abstract List<WireframeLine> getWireframeLines();
+
+    public abstract Primitive(Primitive worldPrimitive, Matrix viewMatrix);
 }
