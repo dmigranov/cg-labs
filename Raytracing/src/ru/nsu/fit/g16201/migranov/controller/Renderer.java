@@ -101,7 +101,8 @@ public class Renderer {
                 e.printStackTrace();
             }
         }
-        System.out.println("done1");
+
+        panel.repaint();
 
     }
 

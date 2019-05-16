@@ -71,4 +71,8 @@ public class WireframePanel extends JPanel {
     public void clear() {
         canvasGraphics.clearRect(0, 0, width, height);
     }
+
+    public void setPixel(int x, int y, int color) {
+        canvas.setRGB(x, y, color);
+    }
 }
