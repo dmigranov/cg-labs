@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
+import ru.nsu.fit.g16201.migranov.model.IntersectionNormal;
 import ru.nsu.fit.g16201.migranov.model.Light;
 import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
@@ -120,6 +121,13 @@ public class Renderer {
 
             }
 
+        }
+
+        public IntersectionNormal findIntersection(Primitive p)
+        {
+            //todo: возможно переписать с использование таблиц...
+
+            return p.findIntersection(r0, rd);
         }
     }
 

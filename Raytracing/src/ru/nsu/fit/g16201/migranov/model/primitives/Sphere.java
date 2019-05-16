@@ -1,9 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
-import ru.nsu.fit.g16201.migranov.model.Matrix;
-import ru.nsu.fit.g16201.migranov.model.Point2D;
-import ru.nsu.fit.g16201.migranov.model.Point3D;
-import ru.nsu.fit.g16201.migranov.model.WireframeLine;
+import ru.nsu.fit.g16201.migranov.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,5 +79,10 @@ public class Sphere extends Primitive {
         returnSphere.radius = radius;
 
         return returnSphere;
+    }
+
+    @Override
+    public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
+        return null;
     }
 }
