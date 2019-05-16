@@ -88,7 +88,10 @@ public class Sphere extends Primitive {
         if(Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2) > radius * radius)
         {
             //начало луча снаружи сферы!
-            double tca = Point3D.getScalarProduct(oc, rd);  //
+            double tca = Point3D.getScalarProduct(oc, rd);  //расстояние от начала луча до ближайшей к центру сферы точки
+
+            if(tca < 0)
+                return null;    //луч не пересекает сферу
 
         }
 
