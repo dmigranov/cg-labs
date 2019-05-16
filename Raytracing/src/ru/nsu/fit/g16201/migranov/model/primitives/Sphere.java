@@ -69,10 +69,11 @@ public class Sphere extends Primitive {
         return lines;
     }
 
-    public Sphere(Primitive worldPrimitive, Matrix viewMatrix)
+    public Sphere(Sphere worldPrimitive, Matrix viewMatrix)
     {
         super(worldPrimitive, viewMatrix);
 
-        //todo
+        center = viewMatrix.applyMatrix(worldPrimitive.center);
+        radius = worldPrimitive.radius;
     }
 }
