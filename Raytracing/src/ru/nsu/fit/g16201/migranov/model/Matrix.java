@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class Matrix {
@@ -214,5 +215,14 @@ public class Matrix {
                 r.set(i, j, get(i, j)) ;
             }
         return r;
+    }
+
+    public Point3D applyMatrix(Point3D point)
+    {
+        Matrix pointMatrix = new Matrix(4, 1, point.x, point.y, point.z, 1);
+        Matrix resultPointMatrix = Matrix.multiply(this, pointMatrix);
+        //double w = resultPointMatrix.get(3, 0);
+        //resultPointMatrix = Matrix.multiplyByScalar(w, resultPointMatrix)
+        return resultPointMatrix.getPoint();
     }
 }
