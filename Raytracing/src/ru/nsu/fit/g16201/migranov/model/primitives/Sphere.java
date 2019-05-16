@@ -45,16 +45,16 @@ public class Sphere extends Primitive {
         for (int i = 0; i <= n*k; i++)
         {
             double delta = (double)i/n/k;
-            double ux = (center.z - radius) * (1 - delta) + (center.z + radius) * delta;
-            double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - ux, 2));
+            double ux = (/*center.z*/ - radius) * (1 - delta) + (/*center.z*/ + radius) * delta;
+            double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(/*center.z*/ - ux, 2));
             WireframeLine parLine = null;
             if(i % k == 0)
                 parLine = new WireframeLine();
             for (int j = 0; j <= m * k; j++) {
                 double v = (Math.PI * 2) * j / m / k;
-                double x = uy * Math.cos(v);
-                double y = uy * Math.sin(v);
-                double z = ux;
+                double x = center.x + uy * Math.cos(v);
+                double y = center.y + uy * Math.sin(v);
+                double z = center.z + ux;
 
                 if(i % k == 0)
                     parLine.addPoint(new Point3D(x, y, z));

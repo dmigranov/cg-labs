@@ -414,9 +414,7 @@ public class Controller {
                 {
                     Point3D pointModel = points.get(i);
                     Matrix mpointModel = new Matrix(4, 1, pointModel.x, pointModel.y, pointModel.z, 1);
-                    Matrix rpoint = Matrix.multiply(viewMatrix, mpointModel);
-
-
+                    Matrix rpoint = Matrix.multiply(projView, mpointModel);
 
                     Point3D point = new Point3D(rpoint.get(0, 0), rpoint.get(1, 0), rpoint.get(2, 0));
                     double w = rpoint.get(3, 0);
@@ -426,7 +424,7 @@ public class Controller {
                     if(point.x > maxX)
                         maxX = point.x;
 
-                    System.out.println(point.x/w + " " + point.y/w + " " + point.z/w);
+                    //System.out.println(point.x/w + " " + point.y/w + " " + point.z/w);
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
                         int x = (int)((point.x/w + 1)/2*wireframePanel.getWidth());
@@ -447,7 +445,7 @@ public class Controller {
                 }
 
             }
-            System.out.println(minX + " & " + maxX);
+            //System.out.println(minX + " & " + maxX);
         }
         wireframePanel.repaint();
     }
