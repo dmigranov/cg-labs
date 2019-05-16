@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
+import ru.nsu.fit.g16201.migranov.model.IntersectionNormal;
 import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.WireframeLine;
@@ -67,5 +68,10 @@ public class Box extends Primitive {
         returnBox.maxPoint = matrix.applyMatrix(maxPoint);
 
         return returnBox;
+    }
+
+    @Override
+    public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
+        return null;
     }
 }

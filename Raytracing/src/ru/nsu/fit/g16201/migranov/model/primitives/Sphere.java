@@ -83,6 +83,13 @@ public class Sphere extends Primitive {
 
     @Override
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
+        Point3D oc = Point3D.subtract(center, r0);      //вообще r0 всегда 0..
+
+        if(Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2) < radius * radius)
+        {
+
+        }
+
         return null;
     }
 }
