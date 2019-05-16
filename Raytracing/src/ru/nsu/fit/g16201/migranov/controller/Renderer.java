@@ -77,7 +77,7 @@ public class Renderer {
         double x;
         double y = nearStartY + dy;
 
-        //Point3D p = viewMatrix.applyMatrix(eye);
+        Point3D p = viewMatrix.applyMatrix(eye);
 
         for(int i = 0; i < height; i++)
         {
@@ -89,7 +89,6 @@ public class Renderer {
 
                 x += dx;
             }
-
             y += dy;
         }
         executor.shutdown();

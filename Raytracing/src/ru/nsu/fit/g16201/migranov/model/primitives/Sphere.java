@@ -99,8 +99,6 @@ public class Sphere extends Primitive {
             else
             {
                 double thc2 = Math.pow(radius, 2) - (ocLen2 - tca*tca);
-                //System.out.println(thc2);
-
 
                 if(thc2 < 0)
                     return null;
