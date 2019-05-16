@@ -54,17 +54,9 @@ public class Renderer {
         int height = panel.getHeight(); //в пикселах
 
         primitives = new ArrayList<>(worldPrimitives.size());
-        for(Primitive worldPrimitive : worldPrimitives)
-        {
-            try {
-                primitives.add(worldPrimitive.getClass().getDeclaredConstructor(Primitive.class, Matrix.class).newInstance(worldPrimitive, viewMatrix));
-            }
-            catch (NoSuchMethodException | InstantiationException | IllegalAccessException  | InvocationTargetException e )
-            {
-
-            }
+        for(Primitive worldPrimitive : worldPrimitives) {
+            primitives.add(worldPrimitive.movePrimitive(viewMatrix));
         }
-
 
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 

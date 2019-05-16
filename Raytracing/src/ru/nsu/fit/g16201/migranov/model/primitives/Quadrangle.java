@@ -46,13 +46,21 @@ public class Quadrangle extends Primitive {
         return lines;
     }
 
-    public Quadrangle(Quadrangle worldPrimitive, Matrix viewMatrix)
+    private Quadrangle(Quadrangle worldPrimitive)
     {
-        super(worldPrimitive, viewMatrix);
+        super(worldPrimitive);
+    }
 
-        p1 = viewMatrix.applyMatrix(worldPrimitive.p1);
-        p2 = viewMatrix.applyMatrix(worldPrimitive.p2);
-        p3 = viewMatrix.applyMatrix(worldPrimitive.p3);
-        p4 = viewMatrix.applyMatrix(worldPrimitive.p4);
+    @Override
+    public Primitive movePrimitive(Matrix matrix)
+    {
+        Quadrangle returnQuad = new Quadrangle(this);
+
+        returnQuad.p1 = matrix.applyMatrix(p1);
+        returnQuad.p2 = matrix.applyMatrix(p2);
+        returnQuad.p3 = matrix.applyMatrix(p3);
+        returnQuad.p4 = matrix.applyMatrix(p4);
+
+        return returnQuad;
     }
 }
