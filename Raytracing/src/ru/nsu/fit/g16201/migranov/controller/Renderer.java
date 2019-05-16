@@ -71,6 +71,7 @@ public class Renderer {
         double x = nearStartX + dx;
         double y = nearStartY + dy;
 
+        //Point3D p = viewMatrix.applyMatrix(eye);
 
         for(int i = 0; i < height; i++)
         {
@@ -93,6 +94,8 @@ public class Renderer {
         private int picX;
         private int picY;
 
+        private final Point3D r0, rd;       //ray start, ray Direction
+
         //одно легко высчисляется из другого, но время деньги
         RendererTask(double pixelX, double pixelY, int picX, int picY)
         {
@@ -102,8 +105,8 @@ public class Renderer {
             this.picY = picY;
 
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
-            Point3D r0 = eye;
-            //Point3D rd =
+            r0 = new Point3D(0, 0, 0);
+            rd = new Point3D(pixelX, pixelY, zn).normalize();
 
 
         }
