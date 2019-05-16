@@ -74,13 +74,14 @@ public class Renderer {
         double nearEndY = sh/2;
 
         double dx = sw/width/2, dy = sh/height/2;
-        double x = nearStartX + dx;
+        double x;
         double y = nearStartY + dy;
 
         //Point3D p = viewMatrix.applyMatrix(eye);
 
         for(int i = 0; i < height; i++)
         {
+            x = nearStartX + dx;
             for(int j = 0; j < width; j++)
             {
                 //центры пикселя
@@ -125,7 +126,6 @@ public class Renderer {
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
             r0 = new Point3D(0, 0, 0);
             rd = new Point3D(pixelX, pixelY, zn).normalize();
-
 
         }
 

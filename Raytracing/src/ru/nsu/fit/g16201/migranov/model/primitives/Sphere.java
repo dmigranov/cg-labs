@@ -99,6 +99,9 @@ public class Sphere extends Primitive {
             else
             {
                 double thc2 = Math.pow(radius, 2) - (ocLen2 - tca*tca);
+                //System.out.println(thc2);
+
+
                 if(thc2 < 0)
                     return null;
                 t = tca - Math.sqrt(thc2);
@@ -110,7 +113,6 @@ public class Sphere extends Primitive {
             return null;
         }
 
-        System.out.println("HEre");
         Point3D ri = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));
         Point3D ni = Point3D.multiplyByScalar(1/radius, Point3D.subtract(ri, center));
 
