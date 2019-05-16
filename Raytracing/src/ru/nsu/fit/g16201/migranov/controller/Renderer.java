@@ -14,23 +14,27 @@ import java.util.concurrent.TimeUnit;
 public class Renderer {
     private List<Primitive> primitives;
     private List<Light> lights;
-    private Color ambientLightColor;
-    private Color backgroundColor;
+    private Color ambientLightColor, backgroundColor;
     private double gamma;
     private int depth;
     private Point3D eye;
-    private double zn;
-    private double sw;
-    private double sh;
+    private double zn, sw, sh;
     private WireframePanel panel;
 
     private ThreadPoolExecutor executor;
 
-    public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh, WireframePanel panel)
+    public Renderer(List<Primitive> primitives, List<Light> lights, Color ambientLightColor, WireframePanel panel)
     {
         this.primitives = primitives;
         this.lights = lights;
         this.ambientLightColor = ambientLightColor;
+
+        this.panel = panel;
+
+    }
+
+    public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh)
+    {
         this.backgroundColor = backgroundColor;
         this.gamma = gamma;
         this.depth = depth;
@@ -38,11 +42,7 @@ public class Renderer {
         this.zn = zn;
         this.sw = sw;
         this.sh = sh;
-        this.panel = panel;
-    }
 
-    public void render(int numberOfThreads)
-    {
         int width = panel.getWidth();
         int height = panel.getHeight(); //в пискелах
 

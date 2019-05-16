@@ -120,8 +120,8 @@ public class Controller {
                     gYAngle += yAngle;
                     Matrix centerTranslate = Matrix.getTranslationMatrix(Point3D.getNegative(ref));
                     //Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
-                    /*double distance = Point3D.add(ref, Point3D.getNegative(eye)).getLength();
-                    Matrix invertTranslate = Matrix.getTranslationMatrix(new Point3D(0, 0, -distance));
+                    double distance = Point3D.add(ref, Point3D.getNegative(eye)).getLength();
+                    Matrix invertTranslate = Matrix.getTranslationMatrix(ref);
 
                     Matrix xRot = Matrix.getZRotateMatrix(-xAngle);
                     Matrix yRot = Matrix.getYRotateMatrix(yAngle);
@@ -130,7 +130,7 @@ public class Controller {
                     //todo: надо обязательно воздействовать ещё на eye ref up Для сериализации
                     Matrix res = Matrix.multiply(invertTranslate, Matrix.multiply(Matrix.multiply(yRot, xRot), centerTranslate));
 
-                    viewMatrix = Matrix.multiply(viewMatrix, res);*/
+                    viewMatrix = Matrix.multiply(viewMatrix, res);
 
                     /*double distance = Point3D.add(ref, Point3D.getNegative(eye)).getLength();
                     double camX = distance * -Math.sin(gXAngle) * Math.cos((gYAngle));
