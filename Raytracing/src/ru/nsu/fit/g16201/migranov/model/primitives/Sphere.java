@@ -68,4 +68,11 @@ public class Sphere extends Primitive {
 
         return lines;
     }
+
+    public Sphere(Primitive worldPrimitive, Matrix viewMatrix)
+    {
+        super(worldPrimitive, viewMatrix);
+
+        //todo
+    }
 }

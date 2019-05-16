@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
+import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 
@@ -49,5 +50,12 @@ public class Box extends Primitive {
         lines.add(new WireframeLine(p011, p010));
 
         return lines;
+    }
+
+    public Box(Primitive worldPrimitive, Matrix viewMatrix)
+    {
+        super(worldPrimitive, viewMatrix);
+        //todo
+
     }
 }

@@ -1,5 +1,6 @@
 package ru.nsu.fit.g16201.migranov.model.primitives;
 
+import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 
@@ -43,5 +44,12 @@ public class Quadrangle extends Primitive {
         lines.add(new WireframeLine(p1, p2, p3, p4, p1));
 
         return lines;
+    }
+
+    public Quadrangle(Primitive worldPrimitive, Matrix viewMatrix)
+    {
+        super(worldPrimitive, viewMatrix);
+
+        //todo
     }
 }
