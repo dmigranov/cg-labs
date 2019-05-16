@@ -84,7 +84,7 @@ public class Renderer {
             for(int j = 0; j < width; j++)
             {
                 //центры пикселя
-                executor.execute(new RendererTask(x, y, i, j));
+                executor.execute(new RendererTask(x, y, j, i));
 
                 x += dx;
             }
@@ -135,8 +135,11 @@ public class Renderer {
             for (Primitive p : primitives)
             {
                 IntersectionNormal in = findIntersection(p);
-                if(in != null)
-                    System.out.println("YO");
+                if(in != null) {
+                    panel.setPixel(picX, picY, Color.YELLOW.getRGB());
+                    //System.out.println(picX + " " + picY);
+                }
+
             }
 
 

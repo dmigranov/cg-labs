@@ -85,7 +85,7 @@ public class Sphere extends Primitive {
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
         Point3D oc = Point3D.subtract(center, r0);      //вообще r0 всегда 0..
 
-        double ocLen2 = Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.y, 2);
+        double ocLen2 = Math.pow(oc.x, 2) + Math.pow(oc.y, 2) + Math.pow(oc.z, 2);
 
         double t = 0;
 
@@ -103,11 +103,14 @@ public class Sphere extends Primitive {
                     return null;
                 t = tca - Math.sqrt(thc2);
             }
-
+        }
+        else
+        {
+            //todo: случай когда камера внутри сферы?
+            return null;
         }
 
-        //todo: случай когда камера внутри сферы?
-
+        System.out.println("HEre");
         Point3D ri = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));
         Point3D ni = Point3D.multiplyByScalar(1/radius, Point3D.subtract(ri, center));
 
