@@ -69,15 +69,11 @@ public class Renderer {
         //это неправильно! это ведь ещё не в координатах камеры
         //по нулям, буду делать в ккординатах камеры!
         double nearStartX = - sw/2;
-        double nearEndX = sw/2;
         double nearStartY = - sh/2;
-        double nearEndY = sh/2;
 
         double dx = sw/width/2, dy = sh/height/2;
         double x;
         double y = nearStartY + dy;
-
-        Point3D p = viewMatrix.applyMatrix(eye);
 
         for(int i = 0; i < height; i++)
         {
