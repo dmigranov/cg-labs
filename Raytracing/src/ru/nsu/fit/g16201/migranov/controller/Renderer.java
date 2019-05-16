@@ -62,10 +62,10 @@ public class Renderer {
 
         //это неправильно! это ведь ещё не в координатах камеры
         //по нулям, буду делать в ккординатах камеры!
-        double nearStartX = eye.x - sw/2;
-        double nearEndX = eye.x + sw/2;
-        double nearStartY = eye.y - sh/2;
-        double nearEndY = eye.y + sh/2;
+        double nearStartX = - sw/2;
+        double nearEndX = sw/2;
+        double nearStartY = - sh/2;
+        double nearEndY = sh/2;
 
         double dx = sw/width/2, dy = sh/height/2;
         double x = nearStartX + dx;
@@ -101,7 +101,6 @@ public class Renderer {
             this.picX = picX;
             this.picY = picY;
 
-            //todo: перейти в координаты камеры
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
             Point3D r0 = eye;
             //Point3D rd =

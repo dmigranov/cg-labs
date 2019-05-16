@@ -45,12 +45,20 @@ public class Triangle extends Primitive {
         return lines;
     }
 
-    public Triangle(Triangle worldPrimitive, Matrix viewMatrix)
+    private Triangle(Triangle worldPrimitive)
     {
-        super(worldPrimitive, viewMatrix);
+        super(worldPrimitive);
+    }
 
-        p1 = viewMatrix.applyMatrix(worldPrimitive.p1);
-        p2 = viewMatrix.applyMatrix(worldPrimitive.p2);
-        p3 = viewMatrix.applyMatrix(worldPrimitive.p3);
+    @Override
+    public Primitive movePrimitive(Matrix matrix)
+    {
+        Triangle returnTri = new Triangle(this);
+
+        returnTri.p1 = matrix.applyMatrix(p1);
+        returnTri.p2 = matrix.applyMatrix(p2);
+        returnTri.p3 = matrix.applyMatrix(p3);
+
+        return returnTri;
     }
 }
