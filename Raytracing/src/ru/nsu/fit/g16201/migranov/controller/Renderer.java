@@ -82,7 +82,6 @@ public class Renderer {
             {
                 //центры пикселя
                 executor.execute(new RendererTask(x, y, j, i));
-
                 x += dx;
             }
             y += dy;
