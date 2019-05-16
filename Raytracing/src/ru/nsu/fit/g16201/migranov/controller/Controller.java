@@ -376,6 +376,8 @@ public class Controller {
 
             viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
 
+            //Point3D p = viewMatrix.applyMatrix(boxCenter);
+
             zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             zf = maxX - eye.x + (maxX - minX) / 2;
             System.out.println(zn + " " + zf + " " + eye.x + " " + eye.y + " " + eye.z);
@@ -387,6 +389,9 @@ public class Controller {
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
 
+            //Point3D p2 = projectionMatrix.applyMatrix(p);
+
+
             areRenderSettingsInitialized = true;
         }
         //иначе - файл загружен, и матрицы proj и view уже заданы
@@ -397,6 +402,8 @@ public class Controller {
         WireframeLine l = primitives.get(0).getWireframeLines().get(0);
         for(Primitive primitive : primitives)
         {
+
+            double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE;
             List<WireframeLine> lines = primitive.getWireframeLines();
             for (WireframeLine line : lines)
             {
@@ -407,17 +414,24 @@ public class Controller {
                 {
                     Point3D pointModel = points.get(i);
                     Matrix mpointModel = new Matrix(4, 1, pointModel.x, pointModel.y, pointModel.z, 1);
-                    Matrix rpoint = Matrix.multiply(projView, mpointModel);
+                    Matrix rpoint = Matrix.multiply(viewMatrix, mpointModel);
+
+
 
                     Point3D point = new Point3D(rpoint.get(0, 0), rpoint.get(1, 0), rpoint.get(2, 0));
-
-                    //System.out.println(point.x + " " + point.y + " " + point.z);
                     double w = rpoint.get(3, 0);
+
+                    if(point.x < minX)
+                        minX = point.x;
+                    if(point.x > maxX)
+                        maxX = point.x;
+
+                    System.out.println(point.x/w + " " + point.y/w + " " + point.z/w);
 
                     if(point.z/w >= 0 && point.z/w <= 1) {
                         int x = (int)((point.x/w + 1)/2*wireframePanel.getWidth());
                         int y = (int)((point.y/w + 1)/2*wireframePanel.getHeight());
-
+                        System.out.println(point.x + " " + point.y);
                         if(prev != null)
                         {
                             wireframePanel.drawLine(prev.x, prev.y, x, y);
@@ -433,6 +447,7 @@ public class Controller {
                 }
 
             }
+            System.out.println(minX + " & " + maxX);
         }
         wireframePanel.repaint();
     }

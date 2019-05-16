@@ -4,6 +4,7 @@ import ru.nsu.fit.g16201.migranov.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class Sphere extends Primitive {
@@ -46,7 +47,9 @@ public class Sphere extends Primitive {
             double delta = (double)i/n/k;
             double ux = (center.z - radius) * (1 - delta) + (center.z + radius) * delta;
             double uy = Math.sqrt(Math.pow(radius, 2) - Math.pow(center.z - ux, 2));
-            WireframeLine parLine = new WireframeLine();
+            WireframeLine parLine = null;
+            if(i % k == 0)
+                parLine = new WireframeLine();
             for (int j = 0; j <= m * k; j++) {
                 double v = (Math.PI * 2) * j / m / k;
                 double x = uy * Math.cos(v);
@@ -58,10 +61,17 @@ public class Sphere extends Primitive {
                 if(j % k == 0)
                     perLines[j].addPoint(new Point3D(x, y, z));
             }
-            lines.add(parLine);
+            if(i % k == 0)
+                lines.add(parLine);
         }
         lines.addAll(Arrays.asList(perLines));
 
+        for(Iterator<WireframeLine> iter = lines.listIterator(); iter.hasNext();)
+        {
+            WireframeLine line = iter.next();
+            if(line.getPoints().size() == 0)
+                iter.remove();
+        }
 
         return lines;
     }
