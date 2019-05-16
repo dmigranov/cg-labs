@@ -1,6 +1,7 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.Light;
+import ru.nsu.fit.g16201.migranov.model.Matrix;
 import ru.nsu.fit.g16201.migranov.model.Point3D;
 import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
@@ -12,33 +13,37 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class Renderer {
-    private List<Primitive> primitives;
-    private List<Light> lights;
+    private List<Primitive> worldPrimitives, primitives;
+    private List<Light> worldLights, lights;
     private Color ambientLightColor, backgroundColor;
     private double gamma;
     private int depth;
     private Point3D eye;
-    private double zn, sw, sh;
+    private Matrix viewMatrix;
+    private double zn;
+    private double sw;
+    private double sh;
     private WireframePanel panel;
 
     private ThreadPoolExecutor executor;
 
     public Renderer(List<Primitive> worldPrimitives, List<Light> worldLights, Color ambientLightColor, WireframePanel panel)
     {
-        this.primitives = primitives;
-        this.lights = lights;
+        this.worldPrimitives = worldPrimitives;
+        this.worldLights = worldLights;  //todo
         this.ambientLightColor = ambientLightColor;
 
         this.panel = panel;
 
     }
 
-    public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, double zn, double sw, double sh)
+    public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, Matrix viewMatrix, double zn, double sw, double sh)
     {
         this.backgroundColor = backgroundColor;
         this.gamma = gamma;
         this.depth = depth;
         this.eye = eye;
+        this.viewMatrix = viewMatrix;
         this.zn = zn;
         this.sw = sw;
         this.sh = sh;
