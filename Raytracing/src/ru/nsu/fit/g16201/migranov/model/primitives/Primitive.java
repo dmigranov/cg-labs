@@ -8,9 +8,7 @@ import ru.nsu.fit.g16201.migranov.model.WireframeLine;
 import java.util.List;
 
 public abstract class Primitive {
-    private double kDR;
-    private double kDG;
-    private double kDB;       //коэффициенты диффузного и рассеянного отражения
+    private double kDR, kDG, kDB;       //коэффициенты диффузного И РАССЕЯННОГО (ambient) отражения
     private double kSR;
     private double kSG;
     private double kSB;       //коэффициенты зеркального отражения
@@ -68,8 +66,8 @@ public abstract class Primitive {
 
     public abstract IntersectionNormal findIntersection(Point3D r0, Point3D rd);
 
-    public double getkDG()
+    public double[] getDiffuseAmbientCharacteristics()
     {
-        return kDG;
+        return new double[] {kDR, kDG, kDB};
     }
 }

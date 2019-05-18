@@ -67,6 +67,7 @@ public class Renderer {
             primitives.add(worldPrimitive.movePrimitive(viewMatrix));
         }
 
+        lights = new ArrayList<>(worldLights.size());
         for(Light worldLight : worldLights) {
             lights.add(new Light(worldLight, viewMatrix));
         }
@@ -163,15 +164,21 @@ public class Renderer {
 
                 Point3D reflectionDir = null; //todo
                 int color = trace(minIN.intersectionPoint, reflectionDir);
-
             }
-
-
 
             if(minDistancePrimitive == null)
                 return backgroundColor;
-            int color = (int)(minDistancePrimitive.getkDG() * 255);
-            return new Color(color, color, color).getRGB();
+
+            double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
+            double kAR = diffuseAmbientCharacteristics[0], kAG = diffuseAmbientCharacteristics[1], kAB = diffuseAmbientCharacteristics[2];
+            /*rneighbours.add((color & 0xFF0000) >> 16);
+            gneighbours.add((color & 0x00FF00) >> 8);
+            bneighbours.add(color & 0x0000FF);*/
+            int IR = (int)(kAR * ((ambientLightColor & 0xFF0000) >> 16));
+            int IG = (int)(kAG * ((ambientLightColor & 0x00FF00) >> 8));
+            int IB = (int)(kAR * (ambientLightColor & 0x0000FF));
+
+            return new Color(IR, IG, IB).getRGB();
         }
 
         private IntersectionNormal findIntersection(Primitive p, Point3D r0, Point3D rd)
