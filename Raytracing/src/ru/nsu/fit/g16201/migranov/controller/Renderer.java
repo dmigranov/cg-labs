@@ -133,7 +133,7 @@ public class Renderer {
 
             int color = trace(r0Initial, rdInitial);
 
-            panel.setPixel(picX, picY, color);
+            panel.setPixel(picX, picY, color);  //todo: на самом деле сложить в массив и провести гамма коррекцию
 
             pixelsCount.incrementAndGet();
         }
@@ -171,9 +171,7 @@ public class Renderer {
 
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
             double kAR = diffuseAmbientCharacteristics[0], kAG = diffuseAmbientCharacteristics[1], kAB = diffuseAmbientCharacteristics[2];
-            /*rneighbours.add((color & 0xFF0000) >> 16);
-            gneighbours.add((color & 0x00FF00) >> 8);
-            bneighbours.add(color & 0x0000FF);*/
+
             int IR = (int)(kAR * ((ambientLightColor & 0xFF0000) >> 16));
             int IG = (int)(kAG * ((ambientLightColor & 0x00FF00) >> 8));
             int IB = (int)(kAR * (ambientLightColor & 0x0000FF));
