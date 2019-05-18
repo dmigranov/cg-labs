@@ -429,7 +429,7 @@ public class Controller {
                     if(point.z/w >= 0 && point.z/w <= 1) {
                         int x = (int)((point.x/w + 1)/2*wireframePanel.getWidth());
                         int y = (int)((point.y/w + 1)/2*wireframePanel.getHeight());
-                        System.out.println(point.x + " " + point.y);
+                        //System.out.println(point.x + " " + point.y);
                         if(prev != null)
                         {
                             wireframePanel.drawLine(prev.x, prev.y, x, y);

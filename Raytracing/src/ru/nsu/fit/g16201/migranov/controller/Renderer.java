@@ -19,7 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Renderer {
     private List<Primitive> worldPrimitives, primitives;
     private List<Light> worldLights, lights;
-    private Color ambientLightColor, backgroundColor;
+    //private Color ambientLightColor, backgroundColor;
+    private int ambientLightColor, backgroundColor;
     private double gamma;
     private int depth;
     private Point3D eye;
@@ -29,6 +30,8 @@ public class Renderer {
     private double sh;
     private WireframePanel panel;
 
+    private List<Integer> [][][] grid;
+
     private ThreadPoolExecutor executor;
 
     private AtomicInteger pixelsCount;
@@ -37,7 +40,7 @@ public class Renderer {
     {
         this.worldPrimitives = worldPrimitives;
         this.worldLights = worldLights;  //todo
-        this.ambientLightColor = ambientLightColor;
+        this.ambientLightColor = ambientLightColor.getRGB();
 
         this.panel = panel;
 
@@ -45,7 +48,7 @@ public class Renderer {
 
     public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, Matrix viewMatrix, double zn, double sw, double sh)
     {
-        this.backgroundColor = backgroundColor;
+        this.backgroundColor = backgroundColor.getRGB();
         this.gamma = gamma;
         this.depth = depth;
         this.eye = eye;
@@ -95,6 +98,7 @@ public class Renderer {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //todo: статус бар
         }
 
         panel.repaint();
@@ -126,23 +130,28 @@ public class Renderer {
 
         @Override
         public void run() {
-            for (Primitive p : primitives)
-            {
-                if(pixelX > -0.004 && pixelX < 0.004)
-                    System.out.println();
-                IntersectionNormal in = findIntersection(p);
-                if(in != null) {
-                    panel.setPixel(picX, picY, Color.YELLOW.getRGB());
-                    //System.out.println(picX + " " + picY);
-                }
 
-            }
+            int color = trace(r0, rd);
 
+            panel.setPixel(picX, picY, color);
 
             pixelsCount.incrementAndGet();
         }
 
-        public IntersectionNormal findIntersection(Primitive p)
+        private int trace(Point3D r0, Point3D rd)
+        {
+            for (Primitive p : primitives)
+            {
+                IntersectionNormal in = findIntersection(p);
+                if(in != null) {
+                    return Color.YELLOW.getRGB();
+
+                }
+            }
+            return backgroundColor;
+        }
+
+        private IntersectionNormal findIntersection(Primitive p)
         {
             //todo: возможно переписать с использование таблиц...
 
