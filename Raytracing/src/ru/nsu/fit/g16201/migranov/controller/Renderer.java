@@ -67,10 +67,12 @@ public class Renderer {
             primitives.add(worldPrimitive.movePrimitive(viewMatrix));
         }
 
+        for(Light worldLight : worldLights) {
+            lights.add(new Light(worldLight, viewMatrix));
+        }
+
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
-        //это неправильно! это ведь ещё не в координатах камеры
-        //по нулям, буду делать в ккординатах камеры!
         double nearStartX = - sw/2;
         double nearStartY = - sh/2;
 
@@ -111,7 +113,7 @@ public class Renderer {
         private int picX;
         private int picY;
 
-        private int currentDepth;
+        private int currentDepth = 0;
 
         //одно легко высчисляется из другого, но время деньги
         RendererTask(double pixelX, double pixelY, int picX, int picY)
@@ -120,7 +122,6 @@ public class Renderer {
             this.pixelY = pixelY;
             this.picX = picX;
             this.picY = picY;
-            currentDepth = depth;
         }
 
         @Override
@@ -141,19 +142,32 @@ public class Renderer {
             double minDistance = Double.MAX_VALUE;
             Primitive minDistancePrimitive = null;
             IntersectionNormal minIN = null;
-            for (Primitive p : primitives)
-            {
-                IntersectionNormal in = findIntersection(p, r0, rd);
-                if(in != null) {
-                    double distance = Point3D.getDistanceSquare(r0, in.intersectionPoint);
-                    if(distance < minDistance)
-                    {
-                        minDistance = distance;
-                        minDistancePrimitive = p;
-                        minIN = in;
+
+            if(currentDepth < depth) {
+                for (Primitive p : primitives) {
+                    IntersectionNormal in = findIntersection(p, r0, rd);
+                    if (in != null) {
+                        double distance = Point3D.getDistanceSquare(r0, in.intersectionPoint);
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            minDistancePrimitive = p;
+                            minIN = in;
+                        }
                     }
                 }
+
+                currentDepth++;
+
+                if(minDistancePrimitive == null)
+                    return backgroundColor;
+
+                Point3D reflectionDir = null; //todo
+                int color = trace(minIN.intersectionPoint, reflectionDir);
+
             }
+
+
+
             if(minDistancePrimitive == null)
                 return backgroundColor;
             int color = (int)(minDistancePrimitive.getkDG() * 255);
