@@ -111,6 +111,7 @@ public class Renderer {
         private int picX;
         private int picY;
 
+        private int currentDepth;
 
         //одно легко высчисляется из другого, но время деньги
         RendererTask(double pixelX, double pixelY, int picX, int picY)
@@ -119,6 +120,7 @@ public class Renderer {
             this.pixelY = pixelY;
             this.picX = picX;
             this.picY = picY;
+            currentDepth = depth;
         }
 
         @Override

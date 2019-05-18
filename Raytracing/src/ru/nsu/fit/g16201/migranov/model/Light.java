@@ -1,5 +1,7 @@
 package ru.nsu.fit.g16201.migranov.model;
 
+import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
+
 import java.awt.*;
 
 public class Light {
@@ -11,4 +13,10 @@ public class Light {
         this.center = center;
         this.color = color;
     }
+
+    public Light(Light worldLight, Matrix matrix)
+    {
+
+    }
+
 }
