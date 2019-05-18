@@ -34,6 +34,10 @@ public class Point3D {
         return new Point3D(-(a.y*b.z - a.z*b.y), -(a.z*b.x - a.x*b.z), -(a.x*b.y - a.y*b.x));
     }
 
+    public static double getDistanceSquare(Point3D r0, Point3D intersectionPoint) {
+        return Math.pow(r0.x - intersectionPoint.x, 2) + Math.pow(r0.y - intersectionPoint.y, 2) + Math.pow(r0.z - intersectionPoint.z, 2);
+    }
+
 
     public Point3D normalize()
     {

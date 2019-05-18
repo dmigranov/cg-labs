@@ -140,14 +140,24 @@ public class Renderer {
 
         private int trace(Point3D r0, Point3D rd)
         {
+            double minDistance = Double.MAX_VALUE;
+            Primitive minDistancePrimitive = null;
+            IntersectionNormal minIN = null;
             for (Primitive p : primitives)
             {
                 IntersectionNormal in = findIntersection(p, r0, rd);
                 if(in != null) {
-                    return Color.YELLOW.getRGB();
-                    //todo: Находить крастчайшее!
+                    double distance = Point3D.getDistanceSquare(r0, in.intersectionPoint);
+                    if(distance < minDistance)
+                    {
+                        minDistance = distance;
+                        minDistancePrimitive = p;
+                        minIN = in;
+                    }
                 }
             }
+            if(minDistancePrimitive != null)
+                return Color.YELLOW.getRGB();
             return backgroundColor;
         }
 
