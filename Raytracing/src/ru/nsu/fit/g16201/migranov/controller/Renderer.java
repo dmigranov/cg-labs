@@ -121,15 +121,11 @@ public class Renderer {
             this.picY = picY;
         }
 
-
         @Override
         public void run() {
-
-
             //луч = R0(x0, y0, z0), Rdirection(xd, yd, zd)
             Point3D r0Initial = new Point3D(0, 0, 0);
             Point3D rdInitial = new Point3D(pixelX, pixelY, zn).normalize();
-
 
             int color = trace(r0Initial, rdInitial);
 
@@ -156,9 +152,10 @@ public class Renderer {
                     }
                 }
             }
-            if(minDistancePrimitive != null)
-                return Color.YELLOW.getRGB();
-            return backgroundColor;
+            if(minDistancePrimitive == null)
+                return backgroundColor;
+            int color = (int)(minDistancePrimitive.getkDG() * 255);
+            return new Color(color, color, color).getRGB();
         }
 
         private IntersectionNormal findIntersection(Primitive p, Point3D r0, Point3D rd)

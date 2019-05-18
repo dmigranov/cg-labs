@@ -67,4 +67,9 @@ public abstract class Primitive {
     public abstract Primitive movePrimitive(Matrix matrix);
 
     public abstract IntersectionNormal findIntersection(Point3D r0, Point3D rd);
+
+    public double getkDG()
+    {
+        return kDG;
+    }
 }
