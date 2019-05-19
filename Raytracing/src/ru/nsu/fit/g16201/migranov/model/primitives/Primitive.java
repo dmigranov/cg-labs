@@ -78,4 +78,12 @@ public abstract class Primitive {
     public double[] getSpecularCharacteristics() {
         return new double[] {kSR, kSG, kSB};
     }
+
+    public Point3D getNormal(Point3D p0, Point3D p1, Point3D p2)
+    {
+        double A = p0.y * (p1.z - p2.z) + p0.z * (p2.y - p1.y) + p1.y * p2.z - p1.z * p2.y;
+        double B = -(p0.x * (p1.z - p2.z) + p0.z * (p2.x - p1.x) + p1.x * p2.z - p1.z * p2.x);
+        double C = (p0.x * (p1.y - p2.y) + p0.y * (p2.x - p1.x) + p1.x * p2.y - p1.y * p2.x);
+        return new Point3D(A, B, C).normalize();
+    }
 }

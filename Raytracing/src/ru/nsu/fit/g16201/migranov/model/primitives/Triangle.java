@@ -65,6 +65,10 @@ public class Triangle extends Primitive {
 
     @Override
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
-        return null;
+        Point3D Pn = getNormal(p1, p2, p3);
+
+        double vd = Point3D.getScalarProduct(Pn, rd);
+
+
     }
 }
