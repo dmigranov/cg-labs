@@ -249,6 +249,9 @@ public class Renderer {
                 }
             }
 
+            //double fAtt = 1;  //вроде в задании написано для отраженного не надо затухание
+
+
             double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDSR + kSR * reflectionColor.r;
             double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDSG + kSG * reflectionColor.g;
             double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDSB + kSB * reflectionColor.b;

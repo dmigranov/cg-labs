@@ -51,7 +51,6 @@ public class Controller {
 
             if(e.isControlDown())
             {
-                System.out.println(eye.x + " " + eye.y + " " +  eye.z);
                 double dz = -count * 1;    //todo: вместо единицы какая-то дельта (1 - сликшом много, но думаю нельяз делать гео const)
                 Point3D forward = Point3D.add(ref, Point3D.getNegative(eye));
                 forward = forward.normalize();
@@ -362,7 +361,6 @@ public class Controller {
         {
             double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
             up = new Point3D(0, 0, 1);
-            System.out.println("reinited");
             for (Primitive primitive : primitives) {
                 Point3D min = primitive.getMinPoint();
                 Point3D max = primitive.getMaxPoint();
@@ -397,14 +395,10 @@ public class Controller {
 
             zn = (minX - eye.x) / 2;   //закомментил, хотя в задании написано. но в контексте матрицы проекции, когда уже применена view, eye.x в нуле!
             zf = maxX - eye.x + (maxX - minX) / 2;
-            System.out.println(zn + " " + zf + " " + eye.x + " " + eye.y + " " + eye.z);
 
             //sw = (maxZ - minZ)*zn/(minX - eye.x);
             sh = (maxY - minY)*zn/(minX - eye.x);
             sw = sh * wireframePanel.getWidth()/wireframePanel.getHeight();
-
-
-            System.out.println(sw +  " " + sh);
 
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
 

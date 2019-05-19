@@ -76,9 +76,9 @@ public class Triangle extends Primitive {
 
         double norm = A*A + B*B + C*C;
 
-        double D = p1.x * (p2.y * p3.z - p3.y * p2.z)
+        double D = -(p1.x * (p2.y * p3.z - p3.y * p2.z)
                 + p1.y * (p3.x * p2.z - p2.x * p3.z)
-                + p1.z * (p2.x * p3.y - p2.y * p3.x);
+                + p1.z * (p2.x * p3.y - p2.y * p3.x));
         D = D/Math.sqrt(norm);
 
         double v0 = -Point3D.getScalarProduct(Pn, r0) - D;
@@ -87,16 +87,16 @@ public class Triangle extends Primitive {
             return null;
         Point3D p = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));   //точка плоскости
 
-        /*double sP12 = calculateArea(p, p1, p2);
+        double sP12 = calculateArea(p, p1, p2);
         double sP23 = calculateArea(p, p2, p3);
         double sP13 = calculateArea(p, p1, p3);
 
         double S = calculateArea(p1, p2, p3);
 
-        if(Math.abs(sP12 + sP23 + sP13 - S) < 0.0001)*/
+        if(Math.abs(sP12 + sP23 + sP13 - S) < 0.00001)
             return new IntersectionNormal(p, Pn);
 
-        //return null;
+        return null;
     }
 
     //возвращает площадь в квадрате
@@ -107,7 +107,7 @@ public class Triangle extends Primitive {
         double hp = (a + b + c)/2;
 
         return Math.sqrt(hp * (hp-a) * (hp-b) * (hp - c));*/
-        return ((B.x - A.x)*(C.y-A.y) - (C.x - A.x)*(B.y - A.y))/2;
+        return Math.abs((B.x - A.x)*(C.y-A.y) - (C.x - A.x)*(B.y - A.y))/2;
 
     }
 }
