@@ -206,11 +206,11 @@ public class Renderer {
 
                 boolean noShadow = true;
 
-                /*for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
+                for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
                     IntersectionNormal in = findIntersection(p, lightR0, lightDir);
-                    if(in != null && !in.intersectionPoint.equals(minIN.intersectionPoint))
+                    if(in != null && !p.equals(minDistancePrimitive))
                         noShadow = false;
-                }*/     //todo: тут трабла
+                }     //todo: тут трабла
 
                 Color color = light.getColor();
                 if(noShadow) {
