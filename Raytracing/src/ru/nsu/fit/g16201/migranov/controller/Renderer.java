@@ -4,6 +4,7 @@ import ru.nsu.fit.g16201.migranov.model.*;
 import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Renderer {
 
     }
 
-    public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, Matrix viewMatrix, double zn, double sw, double sh)
+    public void render(int numberOfThreads, Color backgroundColor, double gamma, int depth, Point3D eye, Matrix viewMatrix, double zn, double sw, double sh, JLabel statusLabel)
     {
         this.backgroundColor = backgroundColor.getRGB();
         this.gamma = gamma;
@@ -97,34 +98,32 @@ public class Renderer {
         }
         executor.shutdown();
 
-        while(true)
-        {
-            try {
-                if (executor.awaitTermination(2, TimeUnit.SECONDS)) break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            //todo: статус бар
-        }
-
-        for (int i = 0; i < height; i++)
-        {
-            for(int j = 0; j < width; j++)
+        Runnable checker = () -> {
+            while(true)
             {
-                FloatColor fc = floatColors[i][j];
-                //todo: gamma
-
                 try {
-                    panel.setPixel(j, i, new Color((int) (fc.r / maxColor * 255), (int) (fc.g / maxColor * 255), (int) (fc.b / maxColor * 255)).getRGB());
+                    if (executor.awaitTermination(300, TimeUnit.MILLISECONDS)) break;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                catch (IllegalArgumentException e)
+                statusLabel.setText("Progress: " + (double)pixelsCount.get()/width/height + "%");
+            }
+
+            for (int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
                 {
-                    System.out.println();
+                    FloatColor fc = floatColors[i][j];
+                    //todo: gamma
+
+                    panel.setPixel(j, i, new Color((int) (fc.r / maxColor * 255), (int) (fc.g / maxColor * 255), (int) (fc.b / maxColor * 255)).getRGB());
+
                 }
             }
-        }
 
-        panel.repaint();
+            panel.repaint();
+        };
+        new Thread(checker).start();
 
     }
 
@@ -179,6 +178,7 @@ public class Renderer {
                         minDistance = distance;
                         minDistancePrimitive = p;
                         minIN = in;
+
                     }
                 }
             }
@@ -199,8 +199,6 @@ public class Renderer {
             double kADR = diffuseAmbientCharacteristics[0], kADG = diffuseAmbientCharacteristics[1], kADB = diffuseAmbientCharacteristics[2];
             double power = minDistancePrimitive.getPower();
             double IDSR = 0, IDSG = 0, IDSB = 0;   //diffuse & specular
-            //double ISR = 0, ISG = 0, ISB = 0;   //specular
-
 
             for(Light light : lights) {
                 Point3D lightR0 = light.getCenter();
@@ -241,6 +239,8 @@ public class Renderer {
 
                 }
             }
+
+            //todo: отражения!
             double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDSR;
             double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDSG;
             double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDSB;

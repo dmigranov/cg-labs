@@ -2,8 +2,10 @@ package ru.nsu.fit.g16201.migranov.controller;
 
 import ru.nsu.fit.g16201.migranov.model.*;
 import ru.nsu.fit.g16201.migranov.model.primitives.*;
+import ru.nsu.fit.g16201.migranov.model.primitives.Box;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -35,12 +37,16 @@ public class Controller {
     private Renderer renderer;
 
     private double gXAngle = 0, gYAngle = 0, gZAngle = 0;
+    private boolean renderMode;
 
     public Controller(WireframePanel wireframePanel) {
         this.wireframePanel = wireframePanel;
 
         wireframePanel.addMouseWheelListener(e -> {
             int count = e.getWheelRotation();
+
+            if(renderMode)
+                return;
 
             if(e.isControlDown())
             {
@@ -68,6 +74,9 @@ public class Controller {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
+
+                if(renderMode)
+                    return;
 
                 double dx = 0, dy = 0, dz = 0;
                 int key = e.getKeyCode();
@@ -102,6 +111,9 @@ public class Controller {
             @Override
             public void mouseDragged(MouseEvent e) {
                 super.mouseDragged(e);
+                if(renderMode)
+                    return;
+
                 if(!areRenderSettingsInitialized)
                     return;
 
@@ -152,6 +164,10 @@ public class Controller {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
+
+                if(renderMode)
+                    return;
+
                 prevX = null;
                 prevY = null;
             }
@@ -517,8 +533,16 @@ public class Controller {
         catch(IOException e) { }
     }
 
-    public void render() {
+    public void render(JLabel statusLabel) {
+        renderMode = true;
+        renderer.render(4, backgroundColor, gamma, depth, eye, viewMatrix, zn, sw, sh, statusLabel);
+    }
 
-        renderer.render(4, backgroundColor, gamma, depth, eye, viewMatrix, zn, sw, sh);
+    public void setRenderMode(boolean renderMode) {
+        this.renderMode = renderMode;
+    }
+
+    public boolean getRenderMode() {
+        return renderMode;
     }
 }
