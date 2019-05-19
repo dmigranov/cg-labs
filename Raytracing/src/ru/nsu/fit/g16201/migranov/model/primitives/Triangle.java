@@ -65,10 +65,26 @@ public class Triangle extends Primitive {
 
     @Override
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
-        Point3D Pn = getNormal(p1, p2, p3);
+
+
+        double A = p1.y * (p2.z - p3.z) + p1.z * (p3.y - p2.y) + p2.y * p3.z - p2.z * p3.y;
+        double B = -(p1.x * (p2.z - p3.z) + p1.z * (p3.x - p2.x) + p2.x * p3.z - p2.z * p3.x);
+        double C = (p1.x * (p2.y - p3.y) + p1.y * (p3.x - p2.x) + p2.x * p3.y - p2.y * p3.x);
+        Point3D Pn = new Point3D(A, B, C).normalize();
 
         double vd = Point3D.getScalarProduct(Pn, rd);
+        if(vd >= 0)     //односторонние!
+            return null;
 
+        double D = p1.x * (p2.y * p3.z - p3.y * p2.z)
+                + p1.y * (p3.x * p2.z - p2.x * p3.z)
+                + p1.z * (p2.x * p3.y - p2.y * p3.x);
 
+        double v0 = - Point3D.getScalarProduct(Pn, r0) - D;
+        double t = v0/vd;
+        if(t < 0)
+            return null;
+        Point3D r = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));   //точка плоскости
+        return null;
     }
 }

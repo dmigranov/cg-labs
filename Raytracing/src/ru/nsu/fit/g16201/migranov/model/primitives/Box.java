@@ -95,7 +95,6 @@ public class Box extends Primitive {
                     tNear = t1;
                 if(t2 < tFar)
                     tFar = t2;
-                System.out.println("yo");
 
                 if(tNear > tFar)
                     return null;    //а оно вообще сюда попадет? ведь мы уже поменяли t1 и t2 и t2 > t1...
