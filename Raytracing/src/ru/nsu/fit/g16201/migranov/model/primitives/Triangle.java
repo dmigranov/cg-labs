@@ -65,8 +65,6 @@ public class Triangle extends Primitive {
 
     @Override
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
-
-
         double A = p1.y * (p2.z - p3.z) + p1.z * (p3.y - p2.y) + p2.y * p3.z - p2.z * p3.y;
         double B = -(p1.x * (p2.z - p3.z) + p1.z * (p3.x - p2.x) + p2.x * p3.z - p2.z * p3.x);
         double C = (p1.x * (p2.y - p3.y) + p1.y * (p3.x - p2.x) + p2.x * p3.y - p2.y * p3.x);
@@ -76,33 +74,40 @@ public class Triangle extends Primitive {
         if(vd >= 0)     //односторонние!
             return null;
 
+        double norm = A*A + B*B + C*C;
+
         double D = p1.x * (p2.y * p3.z - p3.y * p2.z)
                 + p1.y * (p3.x * p2.z - p2.x * p3.z)
                 + p1.z * (p2.x * p3.y - p2.y * p3.x);
+        D = D/Math.sqrt(norm);
 
-        double v0 = - Point3D.getScalarProduct(Pn, r0) - D;
+        double v0 = -Point3D.getScalarProduct(Pn, r0) - D;
         double t = v0/vd;
         if(t < 0)
             return null;
         Point3D p = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));   //точка плоскости
 
-
-        double sP12 = calculateAreaSquare(p, p1, p2);
-        double sP23 = calculateAreaSquare(p, p2, p3);
+        /*double sP12 = calculateArea(p, p1, p2);
+        double sP23 = calculateArea(p, p2, p3);
         double sP13 = calculateArea(p, p1, p3);
 
         double S = calculateArea(p1, p2, p3);
 
-        return null;
+        if(Math.abs(sP12 + sP23 + sP13 - S) < 0.0001)*/
+            return new IntersectionNormal(p, Pn);
+
+        //return null;
     }
 
     //возвращает площадь в квадрате
-    private double calculateArea(Point3D p, Point3D p1, Point3D p2) {
-        double a = Math.sqrt(Point3D.getDistanceSquare(p, p1));
+    private double calculateArea(Point3D A, Point3D B, Point3D C) {
+        /*double a = Math.sqrt(Point3D.getDistanceSquare(p, p1));
         double b = Math.sqrt(Point3D.getDistanceSquare(p1, p2));
         double c = Math.sqrt(Point3D.getDistanceSquare(p2, p));
         double hp = (a + b + c)/2;
 
-        return Math.sqrt(hp * (hp-a) * (hp-b) * (hp - c));
+        return Math.sqrt(hp * (hp-a) * (hp-b) * (hp - c));*/
+        return ((B.x - A.x)*(C.y-A.y) - (C.x - A.x)*(B.y - A.y))/2;
+
     }
 }
