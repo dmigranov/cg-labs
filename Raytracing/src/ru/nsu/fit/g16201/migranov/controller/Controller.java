@@ -5,6 +5,7 @@ import ru.nsu.fit.g16201.migranov.model.primitives.*;
 import ru.nsu.fit.g16201.migranov.model.primitives.Box;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -544,5 +545,15 @@ public class Controller {
 
     public boolean getRenderMode() {
         return renderMode;
+    }
+
+    public void saveImage(File file) {
+        try {
+            ImageIO.write(wireframePanel.getCanvas(), "png", file);
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(null, "Could not save this image", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

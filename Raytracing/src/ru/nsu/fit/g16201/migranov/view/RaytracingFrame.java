@@ -234,6 +234,8 @@ public class RaytracingFrame extends MainFrame {
 
     public void onSaveImage()
     {
+        File file = getSaveFileName("png", "PNG image");
+        controller.saveImage(file);
 
     }
 

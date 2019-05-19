@@ -3,6 +3,7 @@ package ru.nsu.fit.g16201.migranov.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 
 public class WireframePanel extends JPanel {
     private int width, height;
@@ -75,4 +76,9 @@ public class WireframePanel extends JPanel {
     public void setPixel(int x, int y, int color) {
         canvas.setRGB(x, y, color);
     }
+
+    public BufferedImage getCanvas() {
+        return canvas;
+    }
+
 }
