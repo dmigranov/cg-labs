@@ -1,9 +1,6 @@
 package ru.nsu.fit.g16201.migranov.controller;
 
-import ru.nsu.fit.g16201.migranov.model.IntersectionNormal;
-import ru.nsu.fit.g16201.migranov.model.Light;
-import ru.nsu.fit.g16201.migranov.model.Matrix;
-import ru.nsu.fit.g16201.migranov.model.Point3D;
+import ru.nsu.fit.g16201.migranov.model.*;
 import ru.nsu.fit.g16201.migranov.model.primitives.Primitive;
 import ru.nsu.fit.g16201.migranov.view.WireframePanel;
 
@@ -131,14 +128,14 @@ public class Renderer {
             Point3D r0Initial = new Point3D(0, 0, 0);
             Point3D rdInitial = new Point3D(pixelX, pixelY, zn).normalize();
 
-            int color = trace(r0Initial, rdInitial);
+            FloatColor color = trace(r0Initial, rdInitial);
 
-            panel.setPixel(picX, picY, color);  //todo: на самом деле сложить в массив и провести гамма коррекцию
+            panel.setPixel(picX, picY, new Color((int)color.r, (int)color.g, (int)color.b).getRGB()); //todo: на самом деле сложить в массив и провести гамма коррекцию
 
             pixelsCount.incrementAndGet();
         }
 
-        private double trace(Point3D r0, Point3D rd)
+        private FloatColor trace(Point3D r0, Point3D rd)
         {
             double minDistance = Double.MAX_VALUE;
             Primitive minDistancePrimitive = null;
@@ -157,13 +154,13 @@ public class Renderer {
             }
 
             if(minDistancePrimitive == null)
-                return backgroundColor;
+                return new FloatColor(backgroundColor);
 
             if(currentDepth < depth) {
                 currentDepth++;
 
                 Point3D reflectionDir = null; //todo
-                double color = trace(minIN.intersectionPoint, reflectionDir);
+                FloatColor reflectionColor = trace(minIN.intersectionPoint, reflectionDir);
             }
 
 
@@ -175,7 +172,7 @@ public class Renderer {
             double IG = (kAG * ((ambientLightColor & 0x00FF00) >> 8));
             double IB = (kAR * (ambientLightColor & 0x0000FF));
 
-            return new Color(IR, IG, IB).getRGB();
+            return new FloatColor(IR, IG, IB);
         }
 
         private IntersectionNormal findIntersection(Primitive p, Point3D r0, Point3D rd)
