@@ -208,9 +208,9 @@ public class Renderer {
 
                 for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
                     IntersectionNormal in = findIntersection(p, lightR0, lightDir);
-                    if(in != null && !p.equals(minDistancePrimitive))
+                    if(in != null && !p.equals(minDistancePrimitive) && Point3D.getDistanceSquare(lightR0, in.intersectionPoint) < Point3D.getDistanceSquare(lightR0, minIN.intersectionPoint))
                         noShadow = false;
-                }     //todo: тут трабла
+                }
 
                 Color color = light.getColor();
                 if(noShadow) {
