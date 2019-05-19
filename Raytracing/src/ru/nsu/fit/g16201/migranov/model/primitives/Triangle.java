@@ -84,7 +84,25 @@ public class Triangle extends Primitive {
         double t = v0/vd;
         if(t < 0)
             return null;
-        Point3D r = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));   //точка плоскости
+        Point3D p = Point3D.add(r0, Point3D.multiplyByScalar(t, rd));   //точка плоскости
+
+
+        double sP12 = calculateAreaSquare(p, p1, p2);
+        double sP23 = calculateAreaSquare(p, p2, p3);
+        double sP13 = calculateArea(p, p1, p3);
+
+        double S = calculateArea(p1, p2, p3);
+
         return null;
+    }
+
+    //возвращает площадь в квадрате
+    private double calculateArea(Point3D p, Point3D p1, Point3D p2) {
+        double a = Math.sqrt(Point3D.getDistanceSquare(p, p1));
+        double b = Math.sqrt(Point3D.getDistanceSquare(p1, p2));
+        double c = Math.sqrt(Point3D.getDistanceSquare(p2, p));
+        double hp = (a + b + c)/2;
+
+        return Math.sqrt(hp * (hp-a) * (hp-b) * (hp - c));
     }
 }
