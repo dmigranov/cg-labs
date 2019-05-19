@@ -25,6 +25,8 @@ public class Renderer {
     private double zn;
     private double sw;
     private double sh;
+
+    double maxColor = 0;
     private WireframePanel panel;
 
     private List<Integer> [][][] grid;
@@ -73,7 +75,7 @@ public class Renderer {
 
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
 
-        floatColors = new FloatColor[width][height];
+        floatColors = new FloatColor[height][width];
 
         double nearStartX = - sw/2;
         double nearStartY = - sh/2;
@@ -105,6 +107,23 @@ public class Renderer {
             //todo: статус бар
         }
 
+        for (int i = 0; i < height; i++)
+        {
+            for(int j = 0; j < width; j++)
+            {
+                FloatColor fc = floatColors[i][j];
+                //todo: gamma
+
+                try {
+                    panel.setPixel(j, i, new Color((int) (fc.r / maxColor * 255), (int) (fc.g / maxColor * 255), (int) (fc.b / maxColor * 255)).getRGB());
+                }
+                catch (IllegalArgumentException e)
+                {
+                    System.out.println();
+                }
+            }
+        }
+
         panel.repaint();
 
     }
@@ -134,8 +153,15 @@ public class Renderer {
 
             FloatColor color = trace(r0Initial, rdInitial);
 
-            panel.setPixel(picX, picY, new Color((int)color.r, (int)color.g, (int)color.b).getRGB()); //todo: на самом деле сложить в массив и провести гамма коррекцию
-            floatColors[picX][picY] = color;
+            floatColors[picY][picX] = color;
+
+            if(color.r > maxColor)
+                maxColor = color.r;
+            if(color.g > maxColor)
+                maxColor = color.g;
+            if(color.b > maxColor)
+                maxColor = color.b;
+
             pixelsCount.incrementAndGet();
         }
 
@@ -160,19 +186,47 @@ public class Renderer {
             if(minDistancePrimitive == null)
                 return new FloatColor(backgroundColor);
 
+
+            FloatColor reflectionColor = new FloatColor(0, 0, 0);
             if(currentDepth < depth) {
                 currentDepth++;
 
                 Point3D reflectionDir = null; //todo
-                FloatColor reflectionColor = trace(minIN.intersectionPoint, reflectionDir);
+                reflectionColor = trace(minIN.intersectionPoint, reflectionDir);
             }
 
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
-            double kAR = diffuseAmbientCharacteristics[0], kAG = diffuseAmbientCharacteristics[1], kAB = diffuseAmbientCharacteristics[2];
+            double kADR = diffuseAmbientCharacteristics[0], kADG = diffuseAmbientCharacteristics[1], kADB = diffuseAmbientCharacteristics[2];
 
-            double IR = (kAR * ((ambientLightColor & 0xFF0000) >> 16));
-            double IG = (kAG * ((ambientLightColor & 0x00FF00) >> 8));
-            double IB = (kAR * (ambientLightColor & 0x0000FF));
+            double IDR = 0, IDG = 0, IDB = 0;
+
+            for(Light light : lights) {
+                Point3D lightR0 = light.getCenter();
+                Point3D lightDir = Point3D.subtract(minIN.intersectionPoint, lightR0).normalize();  //от источника к точке
+
+                boolean noShadow = true;
+
+                /*for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
+                    IntersectionNormal in = findIntersection(p, lightR0, lightDir);
+                    if(in != null && !in.intersectionPoint.equals(minIN.intersectionPoint))
+                        noShadow = false;
+                }*/     //todo: тут трабла
+
+                Color color = light.getColor();
+                if(noShadow) {
+                    //todo: затухание att
+                    double scalar = Point3D.getScalarProduct(minIN.normalVector, Point3D.getNegative(lightDir));
+                    if(scalar < 0)
+                        scalar = 0;
+                    IDR += color.getRed() * kADR * scalar;
+                    IDG += color.getGreen() * kADG * scalar;
+                    IDB += color.getBlue() * kADB * scalar;
+
+                }
+            }
+            double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDR;
+            double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDG;
+            double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDB;
 
             return new FloatColor(IR, IG, IB);
         }

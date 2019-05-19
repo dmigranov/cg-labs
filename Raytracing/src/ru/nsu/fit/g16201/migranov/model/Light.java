@@ -18,4 +18,13 @@ public class Light {
         color = worldLight.color;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public Point3D getCenter()
+    {
+        return center;
+    }
+
 }

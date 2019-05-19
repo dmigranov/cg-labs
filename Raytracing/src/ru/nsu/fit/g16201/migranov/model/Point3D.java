@@ -64,4 +64,9 @@ public class Point3D {
         return Math.sqrt(x*x + y*y + z*z);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Point3D p = (Point3D)obj;
+        return x==p.x && y==p.y && z==p.z;
+    }
 }
