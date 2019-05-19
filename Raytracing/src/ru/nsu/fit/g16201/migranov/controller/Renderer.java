@@ -114,9 +114,16 @@ public class Renderer {
                 for(int j = 0; j < width; j++)
                 {
                     FloatColor fc = floatColors[i][j];
-                    //todo: gamma
 
-                    panel.setPixel(j, i, new Color((int) (fc.r / maxColor * 255), (int) (fc.g / maxColor * 255), (int) (fc.b / maxColor * 255)).getRGB());
+                    double r = fc.r/maxColor;
+                    double g = fc.g/maxColor;
+                    double b = fc.b/maxColor;
+
+                    int nr = (int)(255*Math.pow(r, gamma) + 0.5);
+                    int ng = (int)(255*Math.pow(g, gamma) + 0.5);
+                    int nb = (int)(255*Math.pow(b, gamma) + 0.5);
+
+                    panel.setPixel(j, i, new Color(nr, ng, nb).getRGB());
 
                 }
             }

@@ -358,7 +358,7 @@ public class Controller {
 
     public void drawWireFigures()
     {
-        if(!areRenderSettingsInitialized) //todo: + при нажатии init
+        if(!areRenderSettingsInitialized)
         {
             double minX = Double.MAX_VALUE, maxX = -Double.MAX_VALUE, minY = Double.MAX_VALUE, maxY = -Double.MAX_VALUE, minZ = Double.MAX_VALUE, maxZ = -Double.MAX_VALUE;
             up = new Point3D(0, 0, 1);
@@ -389,7 +389,7 @@ public class Controller {
             maxZ = boxCenter.z + addZ;
             minZ = boxCenter.z - addZ;
 
-            eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);        //todo: провериьь x
+            eye = new Point3D(minX - (maxY - minY) / 2 / Math.tan(Math.PI / 6), boxCenter.y, boxCenter.z);
 
             viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
 
