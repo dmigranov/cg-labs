@@ -72,6 +72,38 @@ public class Box extends Primitive {
 
     @Override
     public IntersectionNormal findIntersection(Point3D r0, Point3D rd) {
+        double tNear = -Double.MAX_VALUE, tFar = Double.MAX_VALUE;
+
+
+        double minX = minPoint.x, maxX = maxPoint.x;
+        //x
+        {
+            if (rd.x == 0) {
+                if (r0.x < minX  || r0.x > maxX)
+                    return null;
+            }
+            else {
+                double t1 = (minX - r0.x)/rd.x;
+                double t2 = (maxX - r0.x)/rd.x;
+                if(t2 < t1)
+                {
+                    double temp = t1;
+                    t1 = t2;
+                    t2 = temp;
+                }   //t2 >= t1 теперь
+                if(t1 > tNear)
+                    tNear = t1;
+                if(t2 < tFar)
+                    tFar = t2;
+                System.out.println("yo");
+
+                if(tNear > tFar)
+                    return null;    //а оно вообще сюда попадет? ведь мы уже поменяли t1 и t2 и t2 > t1...
+                if(tFar < 0)
+                    return null;
+            }
+        }
+
         return null;
     }
 }

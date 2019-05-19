@@ -106,7 +106,7 @@ public class Renderer {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                statusLabel.setText("Progress: " + (double)pixelsCount.get()/width/height + "%");
+                statusLabel.setText("Progress: " + (double)pixelsCount.get()/width/height * 100 + "%");
             }
 
             for (int i = 0; i < height; i++)
