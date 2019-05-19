@@ -206,16 +206,18 @@ public class Renderer {
 
                 boolean noShadow = true;
 
+                double lightDistance = Point3D.getDistanceSquare(lightR0, minIN.intersectionPoint);
+
                 for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
                     IntersectionNormal in = findIntersection(p, lightR0, lightDir);
-                    if(in != null && !p.equals(minDistancePrimitive) && Point3D.getDistanceSquare(lightR0, in.intersectionPoint) < Point3D.getDistanceSquare(lightR0, minIN.intersectionPoint))
+                    if(in != null && !p.equals(minDistancePrimitive) && Point3D.getDistanceSquare(lightR0, in.intersectionPoint) < lightDistance)
                         noShadow = false;
                 }
 
                 Color color = light.getColor();
                 if(noShadow) {
-                    //todo: затухание att
-                    double scalar = Point3D.getScalarProduct(minIN.normalVector, Point3D.getNegative(lightDir));
+                    double fAtt = 1/(1 + lightDistance);
+                    double scalar = fAtt * Point3D.getScalarProduct(minIN.normalVector, Point3D.getNegative(lightDir));
                     if(scalar < 0)
                         scalar = 0;
                     IDR += color.getRed() * kADR * scalar;
