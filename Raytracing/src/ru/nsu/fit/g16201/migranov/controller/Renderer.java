@@ -124,7 +124,6 @@ public class Renderer {
                     int nb = (int)(255*Math.pow(b, gamma) + 0.5);
 
                     panel.setPixel(j, i, new Color(nr, ng, nb).getRGB());
-
                 }
             }
 

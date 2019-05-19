@@ -338,11 +338,11 @@ public class Controller {
             substrings = readLineAndSplit(reader);
             zn = Double.parseDouble(substrings[0]);
             zf = Double.parseDouble(substrings[1]);
-            //todo: изменить что-то из, чтобы совпадали пропорции с экраном
 
             substrings = readLineAndSplit(reader);
             sw = Double.parseDouble(substrings[0]);
             sh = Double.parseDouble(substrings[1]);
+            sw = sh * wireframePanel.getWidth()/wireframePanel.getHeight(); //ок?
 
             viewMatrix = Matrix.getViewMatrixNew(eye, ref, up);
             projectionMatrix = Matrix.getProjectionMatrix(sw, sh, zf, zn);
