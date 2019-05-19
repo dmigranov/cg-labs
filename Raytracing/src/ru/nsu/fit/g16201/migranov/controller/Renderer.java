@@ -29,6 +29,8 @@ public class Renderer {
 
     private List<Integer> [][][] grid;
 
+    private FloatColor[][] floatColors;
+
     private ThreadPoolExecutor executor;
 
     private AtomicInteger pixelsCount;
@@ -70,6 +72,8 @@ public class Renderer {
         }
 
         executor = new ThreadPoolExecutor(numberOfThreads, numberOfThreads, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(width*height));
+
+        floatColors = new FloatColor[width][height];
 
         double nearStartX = - sw/2;
         double nearStartY = - sh/2;
@@ -131,7 +135,7 @@ public class Renderer {
             FloatColor color = trace(r0Initial, rdInitial);
 
             panel.setPixel(picX, picY, new Color((int)color.r, (int)color.g, (int)color.b).getRGB()); //todo: на самом деле сложить в массив и провести гамма коррекцию
-
+            floatColors[picX][picY] = color;
             pixelsCount.incrementAndGet();
         }
 
@@ -162,8 +166,6 @@ public class Renderer {
                 Point3D reflectionDir = null; //todo
                 FloatColor reflectionColor = trace(minIN.intersectionPoint, reflectionDir);
             }
-
-
 
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
             double kAR = diffuseAmbientCharacteristics[0], kAG = diffuseAmbientCharacteristics[1], kAB = diffuseAmbientCharacteristics[2];
