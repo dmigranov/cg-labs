@@ -70,4 +70,8 @@ public abstract class Primitive {
     {
         return new double[] {kDR, kDG, kDB};
     }
+
+    public double getPower() {
+        return power;
+    }
 }

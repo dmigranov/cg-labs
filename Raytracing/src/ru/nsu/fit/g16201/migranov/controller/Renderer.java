@@ -197,8 +197,10 @@ public class Renderer {
 
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
             double kADR = diffuseAmbientCharacteristics[0], kADG = diffuseAmbientCharacteristics[1], kADB = diffuseAmbientCharacteristics[2];
+            double power = minDistancePrimitive.getPower();
+            double IDSR = 0, IDSG = 0, IDSB = 0;   //diffuse & specular
+            //double ISR = 0, ISG = 0, ISB = 0;   //specular
 
-            double IDR = 0, IDG = 0, IDB = 0;
 
             for(Light light : lights) {
                 Point3D lightR0 = light.getCenter();
@@ -210,25 +212,38 @@ public class Renderer {
 
                 for (Primitive p : primitives) {        //проверяем, не находится ли точка в тени
                     IntersectionNormal in = findIntersection(p, lightR0, lightDir);
-                    if(in != null && !p.equals(minDistancePrimitive) && Point3D.getDistanceSquare(lightR0, in.intersectionPoint) < lightDistance)
+                    if(in != null && !p.equals(minDistancePrimitive) && Point3D.getDistanceSquare(lightR0, in.intersectionPoint) < lightDistance) {
                         noShadow = false;
+                        break;
+                    }
                 }
 
-                Color color = light.getColor();
                 if(noShadow) {
+                    Color color = light.getColor();
+
+                    Point3D V = Point3D.subtract(eye, minIN.intersectionPoint);
+                    Point3D H = Point3D.add(Point3D.getNegative(lightDir), V).normalize();
+
                     double fAtt = 1/(1 + lightDistance);
-                    double scalar = fAtt * Point3D.getScalarProduct(minIN.normalVector, Point3D.getNegative(lightDir));
-                    if(scalar < 0)
-                        scalar = 0;
-                    IDR += color.getRed() * kADR * scalar;
-                    IDG += color.getGreen() * kADG * scalar;
-                    IDB += color.getBlue() * kADB * scalar;
+                    double scalarNL = Point3D.getScalarProduct(minIN.normalVector, Point3D.getNegative(lightDir));
+                    if(scalarNL < 0)
+                        scalarNL = 0;
+
+                    double scalarNH = Point3D.getScalarProduct(minIN.normalVector, H);
+                    if(scalarNH < 0)
+                        scalarNH = 0;
+                    scalarNH = Math.pow(scalarNH, power);
+
+                    double scalar = (scalarNH + scalarNL) * fAtt;
+                    IDSR += color.getRed() * kADR * scalar;
+                    IDSG += color.getGreen() * kADG * scalar;
+                    IDSB += color.getBlue() * kADB * scalar;
 
                 }
             }
-            double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDR;
-            double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDG;
-            double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDB;
+            double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDSR;
+            double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDSG;
+            double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDSB;
 
             return new FloatColor(IR, IG, IB);
         }
