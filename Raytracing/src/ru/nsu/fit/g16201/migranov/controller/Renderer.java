@@ -41,7 +41,7 @@ public class Renderer {
     public Renderer(List<Primitive> worldPrimitives, List<Light> worldLights, Color ambientLightColor, WireframePanel panel)
     {
         this.worldPrimitives = worldPrimitives;
-        this.worldLights = worldLights;  //todo
+        this.worldLights = worldLights;
         this.ambientLightColor = ambientLightColor.getRGB();
 
         this.panel = panel;
@@ -203,6 +203,9 @@ public class Renderer {
 
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
             double kADR = diffuseAmbientCharacteristics[0], kADG = diffuseAmbientCharacteristics[1], kADB = diffuseAmbientCharacteristics[2];
+            double[] specularCharacteristics = minDistancePrimitive.getSpecularCharacteristics();
+            double kSR = specularCharacteristics[0], kSG = specularCharacteristics[1], kSB = specularCharacteristics[2];
+
             double power = minDistancePrimitive.getPower();
             double IDSR = 0, IDSG = 0, IDSB = 0;   //diffuse & specular
 
@@ -238,11 +241,9 @@ public class Renderer {
                         scalarNH = 0;
                     scalarNH = Math.pow(scalarNH, power);
 
-                    double scalar = (scalarNH + scalarNL) * fAtt;
-                    IDSR += color.getRed() * kADR * scalar;
-                    IDSG += color.getGreen() * kADG * scalar;
-                    IDSB += color.getBlue() * kADB * scalar;
-
+                    IDSR += color.getRed() * fAtt * (kADR * scalarNL + kSR * scalarNH);
+                    IDSG += color.getGreen() * fAtt * (kADG * scalarNL + kSG * scalarNH);
+                    IDSB += color.getBlue() * fAtt * (kADB * scalarNL + kSB * scalarNH);
                 }
             }
 

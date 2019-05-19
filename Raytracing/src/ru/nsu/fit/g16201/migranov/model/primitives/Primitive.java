@@ -74,4 +74,8 @@ public abstract class Primitive {
     public double getPower() {
         return power;
     }
+
+    public double[] getSpecularCharacteristics() {
+        return new double[] {kSR, kSG, kSB};
+    }
 }
