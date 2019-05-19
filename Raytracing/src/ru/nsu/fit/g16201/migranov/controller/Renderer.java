@@ -197,7 +197,9 @@ public class Renderer {
             if(currentDepth < depth) {
                 currentDepth++;
 
-                Point3D reflectionDir = null; //todo
+                Point3D L = Point3D.getNegative(rd);
+                //2(N, L)*N - L
+                Point3D reflectionDir = Point3D.add(Point3D.multiplyByScalar(2 * Point3D.getScalarProduct(minIN.normalVector, L), minIN.normalVector), rd).normalize();
                 reflectionColor = trace(minIN.intersectionPoint, reflectionDir);
             }
 
@@ -247,10 +249,9 @@ public class Renderer {
                 }
             }
 
-            //todo: отражения!
-            double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDSR;
-            double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDSG;
-            double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDSB;
+            double IR = (kADR * ((ambientLightColor & 0xFF0000) >> 16)) + IDSR + kSR * reflectionColor.r;
+            double IG = (kADG * ((ambientLightColor & 0x00FF00) >> 8)) + IDSG + kSG * reflectionColor.g;
+            double IB = (kADB * (ambientLightColor & 0x0000FF)) + IDSB + kSB * reflectionColor.b;
 
             return new FloatColor(IR, IG, IB);
         }
