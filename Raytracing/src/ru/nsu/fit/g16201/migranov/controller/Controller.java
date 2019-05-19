@@ -399,8 +399,10 @@ public class Controller {
             zf = maxX - eye.x + (maxX - minX) / 2;
             System.out.println(zn + " " + zf + " " + eye.x + " " + eye.y + " " + eye.z);
 
-            sw = (maxZ - minZ)*zn/(minX - eye.x);    //todo: вписанность в экран!
+            //sw = (maxZ - minZ)*zn/(minX - eye.x);
             sh = (maxY - minY)*zn/(minX - eye.x);
+            sw = sh * wireframePanel.getWidth()/wireframePanel.getHeight();
+
 
             System.out.println(sw +  " " + sh);
 

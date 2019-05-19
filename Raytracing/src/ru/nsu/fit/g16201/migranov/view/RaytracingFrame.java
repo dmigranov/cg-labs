@@ -236,7 +236,6 @@ public class RaytracingFrame extends MainFrame {
     {
         File file = getSaveFileName("png", "PNG image");
         controller.saveImage(file);
-
     }
 
     public void onSelectView()
