@@ -114,7 +114,7 @@ public class Renderer {
         private int picX;
         private int picY;
 
-        private int currentDepth = 0;
+        private int currentDepth = 1;
 
         //одно легко высчисляется из другого, но время деньги
         RendererTask(double pixelX, double pixelY, int picX, int picY)
@@ -138,43 +138,42 @@ public class Renderer {
             pixelsCount.incrementAndGet();
         }
 
-        private int trace(Point3D r0, Point3D rd)
+        private double trace(Point3D r0, Point3D rd)
         {
             double minDistance = Double.MAX_VALUE;
             Primitive minDistancePrimitive = null;
             IntersectionNormal minIN = null;
 
-            if(currentDepth < depth) {
-                for (Primitive p : primitives) {
-                    IntersectionNormal in = findIntersection(p, r0, rd);
-                    if (in != null) {
-                        double distance = Point3D.getDistanceSquare(r0, in.intersectionPoint);
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            minDistancePrimitive = p;
-                            minIN = in;
-                        }
+            for (Primitive p : primitives) {
+                IntersectionNormal in = findIntersection(p, r0, rd);
+                if (in != null) {
+                    double distance = Point3D.getDistanceSquare(r0, in.intersectionPoint);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        minDistancePrimitive = p;
+                        minIN = in;
                     }
                 }
-
-                currentDepth++;
-
-                if(minDistancePrimitive == null)
-                    return backgroundColor;
-
-                Point3D reflectionDir = null; //todo
-                int color = trace(minIN.intersectionPoint, reflectionDir);
             }
 
             if(minDistancePrimitive == null)
                 return backgroundColor;
 
+            if(currentDepth < depth) {
+                currentDepth++;
+
+                Point3D reflectionDir = null; //todo
+                double color = trace(minIN.intersectionPoint, reflectionDir);
+            }
+
+
+
             double[] diffuseAmbientCharacteristics = minDistancePrimitive.getDiffuseAmbientCharacteristics();
             double kAR = diffuseAmbientCharacteristics[0], kAG = diffuseAmbientCharacteristics[1], kAB = diffuseAmbientCharacteristics[2];
 
-            int IR = (int)(kAR * ((ambientLightColor & 0xFF0000) >> 16));
-            int IG = (int)(kAG * ((ambientLightColor & 0x00FF00) >> 8));
-            int IB = (int)(kAR * (ambientLightColor & 0x0000FF));
+            double IR = (kAR * ((ambientLightColor & 0xFF0000) >> 16));
+            double IG = (kAG * ((ambientLightColor & 0x00FF00) >> 8));
+            double IB = (kAR * (ambientLightColor & 0x0000FF));
 
             return new Color(IR, IG, IB).getRGB();
         }
